@@ -28,9 +28,9 @@ export const PRODUCTS: Product[] = [
       "A structured shoulder bag with a sculpted flap and hand-burnished edges. Cut from full-grain calfskin that deepens in tone with every wear.",
     specs: [
       { label: "Dimensions", value: '9.5" × 6.0" × 3.0"' },
-      { label: "Leather", value: "Full-grain Tuscan calfskin" },
+      { label: "Leather", value: "Full-grain calfskin" },
       { label: "Lining", value: "Suede goatskin" },
-      { label: "Made in", value: "Florence, Italy" },
+      { label: "Production", value: "Made to order" },
     ],
   },
   {
@@ -48,7 +48,7 @@ export const PRODUCTS: Product[] = [
       { label: "Dimensions", value: '11.0" × 7.5" × 4.0"' },
       { label: "Leather", value: "Vegetable-tanned cowhide" },
       { label: "Lining", value: "Cotton twill" },
-      { label: "Made in", value: "Florence, Italy" },
+      { label: "Production", value: "Made to order" },
     ],
   },
   {
@@ -66,7 +66,7 @@ export const PRODUCTS: Product[] = [
       { label: "Dimensions", value: '10.0" × 7.0" × 3.5"' },
       { label: "Leather", value: "Grained French calf" },
       { label: "Lining", value: "Unlined, raw edge" },
-      { label: "Made in", value: "Florence, Italy" },
+      { label: "Production", value: "Made to order" },
     ],
   },
   {
@@ -84,7 +84,7 @@ export const PRODUCTS: Product[] = [
       { label: "Dimensions", value: '10.5" × 6.5" × 3.2"' },
       { label: "Leather", value: "Box calf, hand-glazed" },
       { label: "Lining", value: "Suede goatskin" },
-      { label: "Made in", value: "Florence, Italy" },
+      { label: "Production", value: "Made to order" },
     ],
   },
 ];

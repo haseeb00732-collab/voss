@@ -163,7 +163,7 @@ export function Nav() {
             ))}
           </ul>
 
-          <p className="caption text-pewter">Firenze</p>
+          <p className="caption text-pewter">Made to order</p>
         </div>
       )}
     </>

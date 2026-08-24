@@ -29,11 +29,11 @@ export const metadata: Metadata = {
     template: "%s · VOSS",
   },
   description:
-    "VOSS selects one bag at a time, and selects it slowly. Full-grain leather from Florence, Italy. Nothing else.",
+    "VOSS selects one bag at a time, and selects it slowly. Full-grain leather, made to order. Nothing else.",
   openGraph: {
     title: "VOSS — One hide. One bag. Nothing else.",
     description:
-      "VOSS selects one bag at a time, and selects it slowly. Sourced in Florence, Italy.",
+      "VOSS selects one bag at a time, and selects it slowly. Full-grain leather, made to order.",
     url: SITE,
     siteName: "VOSS",
     type: "website",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "VOSS — One hide. One bag. Nothing else.",
-    description: "Sourced in Florence, Italy. One hide at a time.",
+    description: "Full-grain leather, made to order. One hide at a time.",
   },
   robots: { index: true, follow: true },
 };

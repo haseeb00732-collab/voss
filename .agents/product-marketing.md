@@ -4,8 +4,8 @@
 **Last updated:** 2026-08-24
 
 ## Product Overview
-**One-liner:** VOSS is a small-batch women's leather handbag label from Florence, Italy — one hide, one bag, nothing else.
-**What it does:** VOSS designs and hand-produces a tightly limited line of full-grain and vegetable-tanned leather handbags, made in small batches in Florence rather than mass-produced. The current site is pre-commerce: a waitlist-driven marketing site showcasing the collection ahead of launch.
+**One-liner:** VOSS is a small-batch women's leather handbag label — one hide, one bag, nothing else.
+**What it does:** VOSS designs and hand-produces a tightly limited line of full-grain and vegetable-tanned leather handbags, made in small batches rather than mass-produced. The current site is pre-commerce: a waitlist-driven marketing site showcasing the collection ahead of launch.
 **Product category:** Luxury / quiet-luxury leather goods — direct-to-consumer handbags, positioned against both mass "accessible luxury" brands and old-guard logo-led luxury houses.
 **Product type:** Physical product, DTC e-commerce (pre-launch — no checkout live yet).
 **Business model:** Single-purchase retail, premium pricing. Placeholder pricing in the codebase runs **$1,290–$1,850** per bag (`voss-website/src/lib/products.ts`) — *these are invented placeholder figures per the project README and need to be replaced with real prices before launch.* Real catalogue (Style 01–06, `voss-website/src/lib/rawProducts.ts`) is currently "Inquire for price."
@@ -17,7 +17,7 @@
 **Jobs to be done:**
 - Own a bag that signals taste and quality without an overt logo ("quiet luxury")
 - Buy something built to last decades, not a season
-- Feel connected to a maker/craft story (Florence, full-grain leather, hand-burnished edges) rather than a faceless luxury conglomerate
+- Feel connected to a maker/craft story (full-grain leather, hand-burnished edges, one hide per bag) rather than a faceless luxury conglomerate
 **Use cases:**
 - *[Needs input — e.g. everyday carry vs. occasion bag, gifting, wardrobe "one good bag" purchase]*
 
@@ -48,8 +48,8 @@
 ## Differentiation
 **Key differentiators:**
 - Small-batch production — "one hide, one bag" — explicit anti-mass-production stance
-- Full-grain / vegetable-tanned leather sourced and worked in Florence, Italy
-- Hand-burnished edges, solid brass hardware, named craft details (per Marquee copy: "Full-grain vachetta," "Solid brass," "Hand-burnished edges," "Sourced in Florence," "Lifetime repair")
+- Full-grain / vegetable-tanned leather, one hide per bag
+- Hand-burnished edges, solid brass hardware, named craft details (per Marquee copy: "Full-grain vachetta," "Solid brass," "Hand-burnished edges," "Vegetable-tanned," "Lifetime repair")
 - Lifetime repair offered
 - Deliberately restrained brand system: no logo-forward design, quiet materials-first storytelling
 **How we do it differently:** Positions material honesty and scarcity (limited runs) as the luxury signal, instead of logo visibility or marketing spend.
@@ -69,7 +69,7 @@
 
 ## Switching Dynamics
 **Push:** Fatigue with fast-fashion bag replacement cycles and/or paying a large logo premium at legacy luxury houses.
-**Pull:** A materials-first, small-batch story with a specific place of origin (Florence) and a tangible craft narrative.
+**Pull:** A materials-first, small-batch story built on scarcity (one hide, one bag) and a tangible craft narrative. NOTE: no place-of-origin claim. Origin is undecided and must never be asserted until confirmed — see the Origin claims rule below.
 **Habit:** Familiarity/status safety of known luxury logos; existing loyalty or gifting patterns tied to recognizable brands.
 **Anxiety:** Buying a $1,000+ item from a new, pre-launch DTC label with no commerce history, reviews, or in-person try-on — sight-unseen risk at a high price point.
 
@@ -79,7 +79,7 @@
 - "[verbatim — TBD]"
 **How they describe us:**
 - "[verbatim — TBD]"
-**Words to use:** full-grain, vegetable-tanned, hand-burnished, small-batch, one hide, made slowly, Florence, lifetime repair
+**Words to use:** full-grain, vegetable-tanned, hand-burnished, small-batch, one hide, made slowly, lifetime repair
 **Words to avoid:** cheap, discount, sale, mass-produced, trendy, seasonal collection (site copy deliberately avoids fast-fashion-coded language)
 **Glossary:**
 | Term | Meaning |
@@ -101,10 +101,40 @@
 **Value themes:**
 | Theme | Proof |
 |-------|-------|
-| Material quality | Full-grain Tuscan calfskin / vegetable-tanned cowhide, specs listed per product (`products.ts`) |
-| Craftsmanship | Hand-burnished edges, solid brass hardware, Florence-made |
+| Material quality | Full-grain calfskin / vegetable-tanned cowhide, specs listed per product (`products.ts`) |
+| Craftsmanship | Hand-burnished edges, solid brass hardware, made to order |
 | Longevity | Lifetime repair offer |
 | Scarcity | Small-batch, "one hide, one bag" production model |
+
+## Origin claims — hard rule
+
+**VOSS asserts no place of origin. Not a city, not a country, not a region.**
+
+The pre-2026-08-25 version of this document and the site copy claimed
+"Florence, Italy," including a fabricated `PostalAddress` in the Schema.org
+`Organization` block (`Via dei Fossi 12, Firenze, 50123, IT`). It was invented
+placeholder, it was not true, and it has been removed everywhere.
+
+Do not reintroduce it, and do not substitute a different place to fill the gap.
+A country-of-origin claim on a physical product is a regulated advertising
+claim, not a copy decision — it is the founder's to make, from fact, in writing.
+
+Also banned until origin is confirmed, because each one implies a place:
+- "Tuscan," "Italian," "Italian-tanned," "European"
+- "Made in ___," "Sourced in ___," "Crafted in ___"
+- Any `PostalAddress`, `addressLocality`, or `addressCountry` in structured data
+- Any city name in the footer, nav, or eyebrow slots
+
+**Carry the story on these instead** — all verifiable from the product itself:
+full-grain and vegetable-tanned hides, hand-burnished edges, solid brass
+hardware, one hide per bag, made to order in small batches, lifetime repair.
+
+*Open question for the founder: where are the bags actually made? Until that is
+answered on the record, the honest position is silence, not a placeholder.*
+
+*(Note: "vachetta" in `Marquee.tsx` is an Italian leather term and arguably
+implies Tuscan tanning. It was kept as a material name, not an origin claim —
+worth a decision if the leather is not in fact vachetta.)*
 
 ## Goals
 **Primary business goal:** Build a waitlist ahead of commerce launch, then convert to paid launch (Shopify/Stripe integration is a known pre-launch gap per README).
@@ -113,4 +143,5 @@
 
 ## Changelog
 *Newest first. One line per revision: what changed and why.*
+- v2 (2026-08-25) — Removed every "Florence, Italy" origin claim from this document and the site: it was invented placeholder, never true. Added the "Origin claims" hard rule so it is not reintroduced. Positioning pull now rests on material + scarcity, not place.
 - v1 (2026-08-24) — Initial context, auto-drafted from the voss-website codebase (README, CLAUDE.md, VOSS-CONTEXT.md, component copy, product data). Several sections are marked "Needs input" — no competitor list, customer research, testimonials, or real pricing exist yet since the brand is pre-launch.

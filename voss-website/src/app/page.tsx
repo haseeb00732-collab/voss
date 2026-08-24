@@ -7,14 +7,7 @@ const orgLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "VOSS",
-  description: "Leather bags, selected one hide at a time from Florence, Italy.",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Via dei Fossi 12",
-    addressLocality: "Firenze",
-    postalCode: "50123",
-    addressCountry: "IT",
-  },
+  description: "Leather bags, selected one hide at a time.",
 };
 
 /**

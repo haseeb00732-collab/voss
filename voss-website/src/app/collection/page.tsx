@@ -8,7 +8,7 @@ import { CATALOGUE } from "@/lib/catalogue";
 export const metadata: Metadata = {
   title: "The Collection",
   description:
-    "Six pieces, made to order in four hides. Full-grain leather, cut and finished in Florence.",
+    "Six pieces, made to order in four hides. Full-grain leather, cut and finished by hand.",
 };
 
 /**

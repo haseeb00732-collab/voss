@@ -67,7 +67,7 @@ export function Hero() {
     >
       <div className="relative mx-auto grid min-h-[100svh] max-w-[120rem] grid-cols-12 gap-x-gap-col px-gutter pt-[8.5rem] pb-block">
         <p data-hero-meta className="eyebrow col-span-12 self-start text-gold-500">
-          Florence &middot; Made to order
+          One hide &middot; Made to order
         </p>
 
         {/* The plate. Right of centre, tall, and it runs past the fold. */}
@@ -121,7 +121,7 @@ export function Hero() {
 
         <div className="relative z-2 col-span-12 mt-block self-end md:col-span-5">
           <p data-hero-meta className="body-l measure-tight text-smoke">
-            Six pieces, cut to order in Florence. Full-grain hides, four finishes, and
+            Six pieces, cut to order by hand. Full-grain hides, four finishes, and
             nothing made twice the same week.
           </p>
 

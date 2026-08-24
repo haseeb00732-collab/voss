@@ -55,7 +55,7 @@ export function Footer() {
           </a>
         </div>
 
-        <p className="caption mt-block text-pewter">&copy; 2026 VOSS. Firenze.</p>
+        <p className="caption mt-block text-pewter">&copy; 2026 VOSS.</p>
       </div>
     </footer>
   );

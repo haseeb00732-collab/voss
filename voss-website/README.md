@@ -89,10 +89,13 @@ These are the deliberate gaps — everything else is production-ready:
    protection.
 2. **"Reserve yours" is not commerce.** It anchors to the newsletter. Connect
    Shopify/Stripe for real checkout.
-3. **Replace the placeholder copy and address.** Product names, prices, specs,
-   testimonials and the Florence address are all invented. Testimonials must be
-   real before publishing — attributed quotes from people who did not say them
-   are a legal and ethical problem.
+3. **Replace the placeholder copy.** Product names, prices, specs and
+   testimonials are all invented. Testimonials must be real before publishing —
+   attributed quotes from people who did not say them are a legal and ethical
+   problem. The invented "Florence, Italy" origin — and the fabricated
+   Schema.org `PostalAddress` that went with it — were removed on 2026-08-25.
+   The site now makes **no** origin claim. Do not add one back without
+   confirmed fact: see `.agents/product-marketing.md` § "Origin claims".
 4. **Set the real domain** in `metadata.metadataBase` (`src/app/layout.tsx`) and
    add an OG share image.
 5. **Nav links** (`#journal`) and all footer links are placeholders.

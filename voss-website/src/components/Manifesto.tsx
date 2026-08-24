@@ -29,7 +29,7 @@ export function Manifesto() {
           </RevealLines>
 
           <RevealCopy as="p" className="body-l measure mt-group text-clay">
-            Full-grain leather from Florence, Italy, and nothing that won&rsquo;t
+            Full-grain leather, hand-finished, and nothing that won&rsquo;t
             outlast the season it was bought in. Nothing&nbsp;else.
           </RevealCopy>
         </div>

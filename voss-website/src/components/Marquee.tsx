@@ -14,7 +14,7 @@ const WORDS = [
   "Full-grain vachetta",
   "Solid brass",
   "Hand-burnished edges",
-  "Sourced in Florence",
+  "Vegetable-tanned",
   "Lifetime repair",
 ];
 

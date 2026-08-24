@@ -12,7 +12,7 @@ import { Hairline, RevealCopy, RevealLines } from "./Reveal";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-const SPEC_LABELS = ["Leather", "Dimensions", "Made in"];
+const SPEC_LABELS = ["Leather", "Dimensions", "Production"];
 
 /**
  * A 3:2 frame is 1.5× as wide as it is tall, so a 31° edge in real space is a
