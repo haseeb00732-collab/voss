@@ -1,0 +1,40 @@
+# ── dependencies ─────────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.*
+
+# ── build output ─────────────────────────────────────────────
+.next/
+out/
+build/
+dist/
+*.tsbuildinfo
+next-env.d.ts
+
+# ── environment / secrets ────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ── hosting ──────────────────────────────────────────────────
+.vercel
+
+# ── Claude Code local state ──────────────────────────────────
+# .claude/skills/ is 64 symlinks holding absolute paths into
+# .agents/skills/. They only resolve on this machine. The real
+# content lives in .agents/skills/ and is committed; skills-lock.json
+# is what reproduces them. Regenerate, never commit.
+.claude/skills/
+.claude/settings.local.json
+
+# ── logs ─────────────────────────────────────────────────────
+*-debug.log*
+npm-debug.log*
+yarn-error.log*
+
+# ── OS / OneDrive junk ───────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini

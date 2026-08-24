@@ -1,0 +1,520 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════════════
+   VOSS v2 — EDITORIAL
+   A magazine that sells. High contrast, real depth, a grid that is broken
+   on purpose. v1's constitution (flat, radius 0, four colours) is retired;
+   what survives is the gold ramp and the substrate idea, because both were
+   load-bearing and neither was the reason v1 read as quiet.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@theme {
+  /* ── Ink. Deeper and colder than v1's onyx so vermilion can sit on it. ─ */
+  --color-ink-950: #060607;
+  --color-ink-900: #0a0a0c;
+  --color-ink-800: #131316;
+  --color-ink-700: #1e1e22;
+  --color-ink-600: #2c2c32;
+  --color-ink-500: #45454e;
+
+  /* ── Paper. Warm, uncoated, never pure white. ────────────────────────── */
+  --color-paper-50: #faf8f3;
+  --color-paper-100: #f1ede4;
+  --color-paper-200: #e4ded1;
+  --color-paper-300: #cfc7b6;
+
+  /* ── Warm neutrals, carried over. ────────────────────────────────────── */
+  --color-clay: #5c564e;
+  --color-pewter: #4a4640;
+  --color-smoke: #8c8781;
+  --color-chalk: #b5afa4;
+
+  /* ── The gold ramp. The one thing v1 got unambiguously right. ─────────
+     Still inverts across substrate: lighter on ink, darker on paper. */
+  --color-gold-900: #6e5527;
+  --color-gold-700: #9a7c3e;
+  --color-gold-500: #c2a46a;
+  --color-gold-300: #dfcb9b;
+  --color-gold-100: #f0e5c8;
+
+  /* ── VERMILION — the new fifth hue, and the only one added. ───────────
+     Gold is the house. Vermilion is the verb: price, CTA, in-stock, the
+     one thing on the page you are meant to act on. If it appears twice in
+     a viewport, one of them is wrong. */
+  --color-vermilion-700: #b21f08;
+  --color-vermilion-600: #e42d12;
+  --color-vermilion-500: #ff3b1f;
+  --color-vermilion-300: #ff7a66;
+  --color-vermilion-100: #ffd9d1;
+
+  /* ── Type. Didone display against a grotesque. ───────────────────────── */
+  --font-display: var(--font-bodoni), "Didot", "Bodoni MT", ui-serif, Georgia, serif;
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* ── Space. A magazine breathes wider than a boutique. ───────────────── */
+  --spacing-section: clamp(6rem, 12vw, 14rem);
+  --spacing-block: clamp(3rem, 5.5vw, 6rem);
+  --spacing-group: clamp(1.5rem, 2.5vw, 2.5rem);
+  --spacing-item: 1rem;
+  --spacing-tight: 0.5rem;
+  --spacing-gutter: clamp(1.25rem, 4vw, 5rem);
+  --spacing-gap-col: clamp(1rem, 1.6vw, 1.75rem);
+
+  /* Control padding, carried from v1's extraction. */
+  --spacing-control-x: 1.5rem;
+  --spacing-control-y: 0.875rem;
+  --spacing-control-x-l: 2.5rem;
+  --spacing-control-y-l: 1.125rem;
+  --spacing-control: 2.75rem;
+
+  /* ── Radius. v1 said 0 everywhere. v2 says: 0 for plates and images,
+     a hair on controls so they read as pressable rather than printed. ─── */
+  --radius-none: 0;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+
+  /* ── Easing. Overshoot is now allowed, but only on `--ease-snap`, and
+     only on things the reader just clicked. Entrances never overshoot. ─── */
+  --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-snap: cubic-bezier(0.34, 1.36, 0.64, 1);
+}
+
+:root {
+  --angle-vee: 59deg;
+  --hairline-w: 1px;
+  --grain-paper: 0.035;
+  --grain-vitrine: 0.02;
+
+  /* Motion: the 200ms beat survives. */
+  --dur-1: 200ms;
+  --dur-2: 400ms;
+  --dur-3: 600ms;
+  --dur-4: 900ms;
+  --dur-5: 1200ms;
+  --dur-6: 1600ms;
+
+  --stagger-line: 0.07s;
+  --stagger-item: 0.09s;
+  --stagger-char: 0.02s;
+
+  /* Tracking stays a function of size. Didone at display size needs to go
+     tighter than v1's Cormorant did — the thin strokes close the gaps. */
+  --track-2xl: -0.045em;
+  --track-xl: -0.035em;
+  --track-l: -0.025em;
+  --track-m: -0.015em;
+  --track-s: -0.005em;
+  --track-caps: 0.2em;
+  --track-wordmark: 0.34em;
+
+  --measure: 64ch;
+  --measure-tight: 44ch;
+
+  /* ── Elevation. v1 banned shadows; v2 lights the room. Every shadow is
+     one light source, high and slightly left, so nothing contradicts the
+     3D vitrine's own key light. */
+  --elev-1: 0 1px 2px rgb(0 0 0 / 0.18), 0 2px 8px rgb(0 0 0 / 0.12);
+  --elev-2: 0 2px 6px rgb(0 0 0 / 0.2), 0 12px 28px rgb(0 0 0 / 0.18);
+  --elev-3: 0 4px 12px rgb(0 0 0 / 0.24), 0 28px 64px rgb(0 0 0 / 0.26);
+  --elev-glow: 0 0 0 1px var(--border-strong), 0 12px 40px rgb(255 59 31 / 0.12);
+}
+
+@media (min-resolution: 2dppx) {
+  :root {
+    --hairline-w: 0.5px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   SUBSTRATE
+   Unchanged in principle: a section declares its material, children
+   resolve. The token names are stable so v1 components keep working.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+[data-surface="dark"] {
+  --surface: var(--color-ink-900);
+  --surface-raised: var(--color-ink-800);
+  --surface-sunken: var(--color-ink-950);
+  --text-primary: var(--color-paper-100);
+  --text-secondary: var(--color-smoke);
+  --text-tertiary: var(--color-gold-700);
+  --text-accent: var(--color-gold-500);
+  --text-signal: var(--color-vermilion-500);
+  --border-hairline: color-mix(in srgb, var(--color-gold-700) 30%, transparent);
+  --border-strong: color-mix(in srgb, var(--color-gold-500) 55%, transparent);
+  --border-neutral: var(--color-ink-700);
+  --focus: var(--color-gold-300);
+  --link: var(--color-gold-300);
+  --link-hover: var(--color-gold-100);
+  --error: var(--color-vermilion-300);
+  --disabled-fg: var(--color-pewter);
+}
+
+[data-surface="light"] {
+  --surface: var(--color-paper-100);
+  --surface-raised: var(--color-paper-50);
+  --surface-sunken: var(--color-paper-200);
+  --text-primary: var(--color-ink-900);
+  --text-secondary: var(--color-clay);
+  --text-tertiary: var(--color-smoke);
+  --text-accent: var(--color-gold-900);
+  --text-signal: var(--color-vermilion-600);
+  --border-hairline: color-mix(in srgb, var(--color-gold-900) 24%, transparent);
+  --border-strong: color-mix(in srgb, var(--color-gold-900) 45%, transparent);
+  --border-neutral: var(--color-paper-200);
+  --focus: var(--color-gold-900);
+  --link: var(--color-gold-900);
+  --link-hover: var(--color-ink-900);
+  --error: var(--color-vermilion-700);
+  --disabled-fg: var(--color-chalk);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: 7rem;
+  }
+
+  body {
+    background-color: var(--color-ink-900);
+    color: var(--color-paper-100);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    overflow-x: hidden;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus, var(--color-gold-300));
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-vermilion-500);
+    color: var(--color-paper-50);
+  }
+
+  svg {
+    display: block;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   TYPE — the masthead scale
+   Didone wants to be either very large or not used. There is no medium
+   Bodoni on this site: display-* are headline sizes, and everything under
+   1.5rem is Archivo.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@utility display-2xl {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(3.5rem, 13vw, 13rem);
+  letter-spacing: var(--track-2xl);
+  line-height: 0.82;
+}
+
+@utility display-xl {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.75rem, 8vw, 7.5rem);
+  letter-spacing: var(--track-xl);
+  line-height: 0.88;
+}
+
+@utility display-l {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.25rem, 5vw, 4.5rem);
+  letter-spacing: var(--track-l);
+  line-height: 0.96;
+}
+
+@utility display-m {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  letter-spacing: var(--track-m);
+  line-height: 1.06;
+}
+
+@utility display-s {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.375rem, 2vw, 1.75rem);
+  letter-spacing: -0.01em;
+  line-height: 1.18;
+}
+
+/* The italic is a real voice, not an emphasis. Pull quotes and nothing else. */
+@utility display-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.75rem, 3.4vw, 3rem);
+  letter-spacing: var(--track-m);
+  line-height: 1.16;
+}
+
+@utility body-l {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: clamp(1.0625rem, 1.2vw, 1.1875rem);
+  line-height: 1.62;
+}
+
+@utility body-base {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.66;
+}
+
+@utility body-s {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 0.875rem;
+  letter-spacing: 0.005em;
+  line-height: 1.58;
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.6875rem;
+  letter-spacing: var(--track-caps);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+@utility wordmark {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: var(--track-wordmark);
+  line-height: 1;
+  text-transform: uppercase;
+  text-indent: var(--track-wordmark);
+}
+
+@utility caption {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 0.8125rem;
+  letter-spacing: 0.015em;
+  line-height: 1.48;
+  color: var(--text-secondary);
+}
+
+/* Prices and numerals are the one place the mono shows up. Tabular so a
+   grid of prices aligns on the decimal without a table. */
+@utility numeral {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(0.75rem, 1vw, 0.875rem);
+  letter-spacing: 0.06em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility price {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+  color: var(--text-signal);
+}
+
+@utility measure {
+  max-width: var(--measure);
+}
+
+@utility measure-tight {
+  max-width: var(--measure-tight);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   MATERIAL
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@utility substrate {
+  position: relative;
+  background-color: var(--surface);
+  color: var(--text-primary);
+  isolation: isolate;
+}
+
+@utility grain {
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: var(--grain-paper);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+@utility vignette {
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: radial-gradient(
+      140% 100% at 50% 45%,
+      transparent 0%,
+      transparent 42%,
+      var(--color-ink-950) 100%
+    );
+    opacity: 0.85;
+  }
+}
+
+@utility above-material {
+  position: relative;
+  z-index: 2;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* The image frame. v1 drew a hairline because it had no shadows; v2 has
+   both, and uses the hairline on paper and the shadow on ink. */
+@utility plate {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--surface-raised);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    box-shadow: inset 0 0 0 var(--hairline-w) var(--border-hairline);
+  }
+}
+
+@utility plate-lifted {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--surface-raised);
+  box-shadow: var(--elev-2);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   FOIL & RULES
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@utility foil {
+  background-image: linear-gradient(
+    165deg,
+    var(--color-gold-700) 0%,
+    var(--color-gold-500) 22%,
+    var(--color-gold-100) 38%,
+    var(--color-gold-300) 52%,
+    var(--color-gold-700) 74%,
+    var(--color-gold-900) 100%
+  );
+}
+
+@utility foil-text {
+  background-image: linear-gradient(
+    165deg,
+    var(--color-gold-700) 0%,
+    var(--color-gold-500) 22%,
+    var(--color-gold-100) 38%,
+    var(--color-gold-300) 52%,
+    var(--color-gold-700) 74%,
+    var(--color-gold-900) 100%
+  );
+  background-clip: text;
+  color: transparent;
+}
+
+@utility rule-h {
+  height: var(--hairline-w);
+  background-color: var(--border-hairline);
+}
+
+/* A magazine rule: heavier, and it carries the signal colour. */
+@utility rule-signal {
+  height: 2px;
+  background-color: var(--color-vermilion-500);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   MOTION PRIMITIVES
+   Server-rendered markup carries the FINAL state. GSAP sets the start
+   state on mount — never the other way round, or a trigger that fails to
+   fire leaves content invisible.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@utility line-clip {
+  display: block;
+  overflow: hidden;
+  /* Bodoni's descenders sit well below the em box. */
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
+}
+
+@layer utilities {
+  .will-reveal {
+    will-change: transform, opacity;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-1: 1ms;
+    --dur-2: 1ms;
+    --dur-3: 1ms;
+    --dur-4: 1ms;
+    --dur-5: 1ms;
+    --dur-6: 1ms;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+
+  :focus-visible {
+    transition: none !important;
+  }
+}
+
+html {
+  scrollbar-color: var(--color-ink-700) var(--color-ink-900);
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink-900);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-ink-700);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink-600);
+}

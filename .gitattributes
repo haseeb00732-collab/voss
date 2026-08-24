@@ -1,0 +1,11 @@
+# Normalise line endings in the repo, leave native in the working tree.
+* text=auto
+
+# Never let git touch binary media.
+*.jpg  binary
+*.jpeg binary
+*.png  binary
+*.webp binary
+*.ico  binary
+*.mp4  binary
+*.webm binary

@@ -1,0 +1,111 @@
+[
+ {
+  "id": "WA0A7OMbJSk",
+  "out": "hero-aperture",
+  "grade": "vitrine",
+  "ratio": "4:5",
+  "width": 1600,
+  "position": "centre"
+ },
+ {
+  "id": "hCG34GSdYTA",
+  "out": "object-macro",
+  "grade": "paper",
+  "ratio": "3:2",
+  "width": 2400,
+  "position": "centre",
+  "sat": 0.56
+ },
+ {
+  "id": "ughmkvM5jis",
+  "out": "piece-vesper",
+  "grade": "paper",
+  "ratio": "4:5",
+  "width": 1400,
+  "position": "centre"
+ },
+ {
+  "id": "bufXTLFipfY",
+  "out": "piece-solene",
+  "grade": "paper",
+  "ratio": "4:5",
+  "width": 1400,
+  "position": "centre"
+ },
+ {
+  "id": "CjPQRw3DZSs",
+  "out": "piece-maraux",
+  "grade": "paper",
+  "ratio": "4:5",
+  "width": 1400,
+  "position": "centre"
+ },
+ {
+  "id": "aRTqdeuv_D4",
+  "out": "piece-ilaria",
+  "grade": "paper",
+  "ratio": "4:5",
+  "width": 1400,
+  "position": "centre"
+ },
+ {
+  "id": "xddXkY3TovI",
+  "out": "atelier-cutting",
+  "grade": "paper",
+  "ratio": "3:2",
+  "width": 1800,
+  "position": "centre",
+  "sat": 0.6
+ },
+ {
+  "id": "S1GcBhASUPk",
+  "out": "atelier-shaping",
+  "grade": "paper",
+  "ratio": "3:2",
+  "width": 1800,
+  "position": "centre"
+ },
+ {
+  "id": "g0zYSJRY8n4",
+  "out": "atelier-finishing",
+  "grade": "vitrine",
+  "ratio": "3:2",
+  "width": 1800,
+  "position": "centre",
+  "sat": 0.46
+ },
+ {
+  "id": "jJIeXY6ojdY",
+  "out": "swatch-vachetta",
+  "grade": "vitrine",
+  "ratio": "1:1",
+  "width": 900,
+  "position": "centre"
+ },
+ {
+  "id": "pllBlh7-MMk",
+  "out": "swatch-grained",
+  "grade": "vitrine",
+  "ratio": "1:1",
+  "width": 900,
+  "position": "centre",
+  "sat": 0.56
+ },
+ {
+  "id": "m5o4dOHAibM",
+  "out": "swatch-cognac",
+  "grade": "vitrine",
+  "ratio": "1:1",
+  "width": 900,
+  "position": "centre",
+  "sat": 0.38
+ },
+ {
+  "id": "dmKhCuPIXjs",
+  "out": "swatch-box",
+  "grade": "vitrine",
+  "ratio": "1:1",
+  "width": 900,
+  "position": "centre"
+ }
+]
