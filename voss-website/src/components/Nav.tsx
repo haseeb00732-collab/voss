@@ -72,7 +72,7 @@ export function Nav() {
           "fixed inset-x-0 top-0 z-50 transition-[height,background-color,backdrop-filter] duration-[var(--dur-2)] ease-[var(--ease-lux)]",
           scrolled
             ? "h-[4.25rem] bg-ink-800/92 backdrop-blur-[12px]"
-            : "h-[5.5rem] bg-transparent backdrop-blur-none",
+            : "h-[5rem] bg-transparent backdrop-blur-none",
         ].join(" ")}
       >
         <div
@@ -89,15 +89,23 @@ export function Nav() {
           <Link
             href="/#top"
             className="group flex items-center gap-3 focus-visible:outline-offset-8"
-            aria-label="VOSS — home"
+            aria-label="VOSS, home"
           >
-            <VMark
-              className={`w-auto transition-[height] duration-[var(--dur-2)] ease-[var(--ease-lux)] ${
-                scrolled ? "h-[18px]" : "h-[21px]"
-              }`}
-              stroke={11}
-            />
-            <span className="wordmark text-[0.8125rem] text-paper-100">Voss</span>
+            {/* The hero measures this element to know where its travelling
+                mark must land, and hides this one while that mark is in
+                flight, so the reader only ever sees a single V. On any page
+                without a hero the wrapper simply stays visible. */}
+            <span data-nav-mark className="block">
+              <VMark
+                foil
+                className={`w-auto transition-[height] duration-[var(--dur-2)] ease-[var(--ease-lux)] ${
+                  scrolled ? "h-[18px]" : "h-[21px]"
+                }`}
+              />
+            </span>
+            <span data-hero-word className="wordmark text-[0.8125rem] text-paper-100">
+              Voss
+            </span>
           </Link>
 
           <ul className="hidden items-center gap-group md:flex">

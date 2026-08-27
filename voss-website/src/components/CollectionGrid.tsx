@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { pieceImages, priceLabel, type Piece } from "@/lib/catalogue";
+import { HideSwatches } from "./HideSwatches";
 import { HIDES } from "@/lib/catalogue";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -45,7 +46,7 @@ export function CollectionGrid({ pieces }: { pieces: Piece[] }) {
   return (
     <div
       ref={root}
-      className="mx-auto grid max-w-[120rem] grid-cols-1 gap-x-gap-col gap-y-block px-gutter pb-section sm:grid-cols-2 lg:grid-cols-3"
+      className="mx-auto grid max-w-[120rem] grid-cols-1 gap-x-gap-col gap-y-band px-gutter pb-section sm:grid-cols-2 lg:grid-cols-3"
     >
       {pieces.map((piece, i) => (
         <Card key={piece.slug} piece={piece} priority={i < 3} />
@@ -67,7 +68,7 @@ function Card({ piece, priority }: { piece: Piece; priority: boolean }) {
       <div className="plate aspect-[4/5] transition-shadow duration-[var(--dur-2)] ease-[var(--ease-lux)] group-hover:shadow-[var(--elev-3)]">
         <Image
           src={cover}
-          alt={`${piece.label} — ${piece.silhouette.toLowerCase()} in ${hide?.name ?? "leather"}`}
+          alt={`${piece.label}, ${piece.silhouette.toLowerCase()} in ${hide?.name ?? "leather"}`}
           fill
           priority={priority}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -90,6 +91,12 @@ function Card({ piece, priority }: { piece: Piece; priority: boolean }) {
         <p className="numeral text-gold-500">{piece.silhouette}</p>
       </div>
       <p className="caption mt-tight">{piece.note}</p>
+
+      {/* Four hides, made to order. The ringed one is the hide photographed. */}
+      <div className="mt-item flex items-center justify-between gap-group">
+        <HideSwatches shotIn={piece.shotIn} />
+        <span className="caption">Four hides</span>
+      </div>
     </Link>
   );
 }

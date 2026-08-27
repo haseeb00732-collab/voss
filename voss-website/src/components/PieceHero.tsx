@@ -80,7 +80,7 @@ export function PieceHero({ piece }: { piece: Piece }) {
           </div>
 
           {images[1] && (
-            <div className="plate relative z-2 col-span-8 col-start-4 -mt-block aspect-square shadow-[var(--elev-3)] md:col-span-4 md:col-start-8 md:mt-block">
+            <div className="plate relative z-2 col-span-8 col-start-4 -mt-band aspect-square shadow-[var(--elev-3)] md:col-span-4 md:col-start-8 md:mt-band">
               <Image
                 src={images[1]}
                 alt=""
@@ -92,7 +92,7 @@ export function PieceHero({ piece }: { piece: Piece }) {
           )}
 
           {images[2] && (
-            <div className="plate col-span-6 col-start-1 mt-group aspect-[3/2] shadow-[var(--elev-2)] md:col-span-3 md:col-start-9 md:-mt-block">
+            <div className="plate col-span-6 col-start-1 mt-group aspect-[3/2] shadow-[var(--elev-2)] md:col-span-3 md:col-start-9 md:-mt-band">
               <Image
                 src={images[2]}
                 alt=""
@@ -105,7 +105,7 @@ export function PieceHero({ piece }: { piece: Piece }) {
         </div>
 
         {/* Name below, small. The image led; it does not need announcing. */}
-        <div className="mt-block grid grid-cols-12 gap-x-gap-col">
+        <div className="mt-band grid grid-cols-12 gap-x-gap-col">
           <div className="col-span-12 md:col-span-5">
             <p className="eyebrow text-[var(--text-accent)]">{piece.silhouette}</p>
             <h1 className="display-m mt-item text-[var(--text-primary)]">
@@ -114,7 +114,7 @@ export function PieceHero({ piece }: { piece: Piece }) {
             <p className="body-l measure mt-group text-[var(--text-secondary)]">{piece.note}</p>
           </div>
 
-          <div className="col-span-12 mt-block md:col-span-4 md:col-start-8 md:mt-0">
+          <div className="col-span-12 mt-band md:col-span-4 md:col-start-8 md:mt-0">
             <p className="eyebrow text-[var(--text-secondary)]">Made to order in</p>
 
             <div className="mt-item flex flex-wrap gap-tight">
@@ -143,11 +143,11 @@ export function PieceHero({ piece }: { piece: Piece }) {
             <p className="caption mt-item">
               {hide.name}
               {hide.id !== piece.shotIn && (
-                <> — shown in {HIDES.find((h) => h.id === piece.shotIn)?.name}</>
+                <>, shown in {HIDES.find((h) => h.id === piece.shotIn)?.name}</>
               )}
             </p>
 
-            <div className="mt-block flex flex-wrap items-baseline gap-group">
+            <div className="mt-band flex flex-wrap items-baseline gap-group">
               <span className="price text-[1.75rem]">{priceLabel(piece.price)}</span>
             </div>
 

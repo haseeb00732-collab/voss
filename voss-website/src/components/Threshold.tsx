@@ -35,8 +35,15 @@ export function Threshold() {
   const reduced = useReducedMotion();
 
   // Once per session. A curtain you have to sit through twice is a toll.
+  //
+  // Desktop only. The visitor arrives from Instagram on a phone, on mobile
+  // data, already knowing what the bag looks like — a branded curtain between
+  // that tap and the product is a wall, not a welcome. Coarse pointer or a
+  // narrow viewport means we skip it entirely and the hero is the first thing.
   const [armed] = useState(() => {
     if (typeof window === "undefined") return true;
+    const coarse = window.matchMedia?.("(pointer: coarse)").matches ?? false;
+    if (coarse || window.innerWidth < 768) return false;
     try {
       return sessionStorage.getItem(SEEN_KEY) !== "1";
     } catch {
@@ -87,10 +94,10 @@ export function Threshold() {
       // 0.2s — the outer arm begins, left leading the right by one beat.
       tl.to(strokes, {
         strokeDashoffset: 0,
-        duration: 1.6,
+        duration: 0.8,
         ease: "expo.out",
-        stagger: 0.12,
-        delay: 0.2,
+        stagger: 0.08,
+        delay: 0.1,
       });
 
       // Starts at 60% of the draw-on, so the word arrives while the mark is
@@ -100,15 +107,15 @@ export function Threshold() {
         {
           opacity: 0,
           letterSpacing: "0.5em",
-          duration: 1.2,
+          duration: 0.6,
           ease: "power4.out",
           stagger: 0.02,
         },
-        "<0.96"
+        "<0.5"
       );
 
-      // The hold. 0.6s of nothing.
-      tl.to({}, { duration: 0.6 });
+      // The hold. Long enough to register, short enough not to be a toll.
+      tl.to({}, { duration: 0.15 });
 
       // The doors part from the mark's own centre line, each carrying its
       // half of the seam hairline with it — the line doesn't fade, it splits.
@@ -116,7 +123,7 @@ export function Threshold() {
         [doorL.current, doorR.current],
         {
           xPercent: (i) => (i === 0 ? -100 : 100),
-          duration: 1.4,
+          duration: 0.7,
           ease: "expo.out",
         },
         ">"

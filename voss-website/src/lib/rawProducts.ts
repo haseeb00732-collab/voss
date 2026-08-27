@@ -23,7 +23,7 @@ export const RAW_PRODUCTS: RawProduct[] = [
 ];
 
 export function rawProductImages(slug: string, count: number): string[] {
-  return Array.from({ length: count }, (_, i) => `/products/${slug}/${i + 1}.jpg`);
+  return Array.from({ length: count }, (_, i) => `/products-graded/${slug}/${i + 1}.avif`);
 }
 
 export function getRawProduct(slug: string): RawProduct | undefined {

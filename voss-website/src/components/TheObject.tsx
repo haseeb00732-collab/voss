@@ -74,25 +74,24 @@ export function TheObject() {
     <section
       id="object"
       ref={root}
-      data-surface="light"
+      data-surface="dark"
       className="substrate grain overflow-hidden py-section"
       aria-label="The object"
     >
       <div className="above-material relative mx-auto grid max-w-[120rem] grid-cols-12 gap-x-gap-col px-gutter">
         <div className="col-span-12 md:col-span-6">
-          <p className="eyebrow text-gold-900">The Object</p>
           <Hairline className="mt-5 max-w-[6rem]" />
-          <RevealLines as="h2" className="display-l mt-group text-ink-900">
+          <RevealLines as="h2" className="display-l mt-group text-[var(--text-primary)]">
             {piece.name}
           </RevealLines>
         </div>
 
-        <dl className="col-span-12 mt-block self-end md:col-span-3 md:col-start-10 md:mt-0">
+        <dl className="col-span-12 mt-band self-end md:col-span-3 md:col-start-10 md:mt-0">
           {specs.map((s, i) => (
             <div key={s.label} className="pt-item">
               <Hairline delay={i * 0.09} />
-              <dt className="eyebrow mt-item text-gold-900">{s.label}</dt>
-              <dd className="caption mt-tight pb-group text-clay">{s.value}</dd>
+              <dt className="eyebrow mt-item text-[var(--text-accent)]">{s.label}</dt>
+              <dd className="caption mt-tight pb-group text-[var(--text-secondary)]">{s.value}</dd>
             </div>
           ))}
         </dl>
@@ -101,7 +100,7 @@ export function TheObject() {
       {/* Edge to edge. The gutter does not apply to the object. */}
       <div
         data-object-frame
-        className="relative mt-block aspect-[3/2] w-full overflow-hidden bg-paper-200 will-change-[clip-path]"
+        className="relative mt-band aspect-[3/2] w-full overflow-hidden bg-paper-200 will-change-[clip-path]"
         style={{ clipPath: WIPE_SHOWN }}
       >
         <div data-object-image className="absolute inset-0 will-change-transform">
@@ -117,7 +116,7 @@ export function TheObject() {
       </div>
 
       <div className="above-material relative mx-auto mt-group grid max-w-[120rem] grid-cols-12 gap-x-gap-col px-gutter">
-        <RevealCopy as="p" className="caption col-span-12 text-clay md:col-span-4">
+        <RevealCopy as="p" className="caption col-span-12 text-[var(--text-secondary)] md:col-span-4">
           {piece.description}
         </RevealCopy>
       </div>

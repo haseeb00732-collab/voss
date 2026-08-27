@@ -11,11 +11,11 @@ import { scrollVelocity } from "./SmoothScroll";
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const WORDS = [
-  "Full-grain vachetta",
-  "Solid brass",
-  "Hand-burnished edges",
-  "Vegetable-tanned",
-  "Lifetime repair",
+  "Cash on delivery",
+  "In stock",
+  "Every price on the page",
+  "Lahore",
+  "Ask on WhatsApp",
 ];
 
 /**
@@ -67,9 +67,12 @@ export function Marquee() {
 
   return (
     <div ref={root} className="relative isolate overflow-hidden">
-      {/* Paper, underneath. */}
-      <div data-surface="light" className="substrate grain">
-        <Band tone="light" />
+      {/* Underneath: the raised vitrine tone. The page is dark-dominant, so
+          this wipe is a tonal shift inside one material rather than a flip to
+          paper. A single bright band here would break the page's theme lock
+          and read as a different website for one section. */}
+      <div data-surface="dark" className="substrate grain">
+        <Band tone="raised" />
       </div>
 
       {/* Vitrine, on top, retreating along the diagonal. Under reduced motion
@@ -86,18 +89,20 @@ export function Marquee() {
   );
 }
 
-function Band({ tone }: { tone: "light" | "dark" }) {
-  const text = tone === "dark" ? "text-gold-500" : "text-gold-900";
-  const rule = tone === "dark" ? "bg-gold-700/40" : "bg-gold-900/30";
-  const dot = tone === "dark" ? "bg-gold-500/70" : "bg-gold-900/60";
+function Band({ tone }: { tone: "raised" | "dark" }) {
+  // Both tones are gold on ink now; the raised band simply sits dimmer, so
+  // the diagonal reads as light moving across one surface, not two materials.
+  const text = tone === "dark" ? "text-gold-500" : "text-gold-700";
+  const rule = tone === "dark" ? "bg-gold-700/40" : "bg-gold-700/25";
+  const dot = tone === "dark" ? "bg-gold-500/70" : "bg-gold-700/45";
 
   return (
-    <div className="above-material relative py-block">
+    <div className="above-material relative py-band">
       <div className={`h-px w-full ${rule}`} />
       <div className="overflow-hidden py-7">
         <div data-marquee-track className="flex w-max items-center">
           {[0, 1].map((copy) => (
-            <div key={copy} className="flex items-center" aria-hidden={copy === 1 || tone === "light"}>
+            <div key={copy} className="flex items-center" aria-hidden={copy === 1 || tone === "raised"}>
               {WORDS.map((w) => (
                 <span key={w} className="flex items-center">
                   <span className={`eyebrow whitespace-nowrap ${text}`}>{w}</span>

@@ -1,81 +1,77 @@
 /**
  * The V mark, as geometry.
  *
- * Measured off the logo rasters in `Voss-Logos/`: the mark is two nested
- * strokes sharing their top tips — an outer V with straight arms falling to
- * a low apex, and an inner V whose arms curve up and away to a higher apex.
- * The straight arm spans 88 across and 150 down, which puts it at 59.6° from
- * horizontal and confirms `--angle-vee: 59deg` against the real artwork
- * rather than the by-eye estimate the design doc flagged as unverified.
+ * Rebuilt 2026-08-25 from the transparent source the client supplied
+ * (`bg-1a284f52…png`, 1024², mark in a 382×310 box), sampled at 4× and
+ * measured by scanline rather than by eye.
  *
- * Everything that draws the mark — the threshold, the nav, the hero aperture,
- * the footer — reads these constants, so the logo can only ever be one shape.
+ * The form is two nested chevron bands of equal weight that meet at a sharp
+ * point at each tip. All four edges are straight and parallel below the tip
+ * region; only the two inner edges curve, and only near the tips. The curve
+ * control points are least-squares fitted to the sampled edge with the end
+ * tangent pinned to the straight edge, so the join has no corner in it.
+ *
+ * Measured, superseding the earlier by-eye constants:
+ *   arm angle   58.35° from horizontal  (the doc's `--angle-vee: 59deg` was close)
+ *   band weight  9.01 units of 100 width
+ *   gap          9.68
+ *
+ * The client also supplied an auto-traced SVG of the same mark: 521 paths,
+ * 350 KB, ragged contours, asymmetric. This is 480 bytes and symmetric by
+ * construction. Do not replace it with the trace.
+ *
+ * Everything that draws the mark reads these constants, so the logo can only
+ * ever be one shape.
  */
 
-export const VEE_W = 200;
-export const VEE_H = 172;
+export const VEE_W = 100;
+export const VEE_H = 81.152;
 
-/** Top tips. Both arms of a side meet here, which is what makes it a point. */
-const TIP_L = "12,10";
-const TIP_R = "188,10";
+/** Arm angle from horizontal, measured. Mirrors `--angle-vee`. */
+export const VEE_ANGLE = 58.35;
 
-/** Outer apex sits low; the inner apex rides 55 units above it. */
-const APEX_OUTER = "100,160";
-const APEX_INNER = "100,105";
-
-/** Control points for the inner sweep — bulging up and out from the chord. */
-const CTRL_L = "58,30";
-const CTRL_R = "142,30";
+export const VEE_SIDES = ['left', 'right'] as const;
+export type VeeSide = (typeof VEE_SIDES)[number];
 
 /**
- * Each side is ONE path: up the straight outer arm, a mitered turn at the
- * tip, then back down the inner curve. Drawing it as four separate strokes
- * put a butt cap on either side of every junction, and the resulting notch
- * at the tip is exactly the kind of detail that reads as "drawn by software".
- * A miter gives the sharp point the logo actually has.
- *
- * The short stubs at each end (`STUB_*`) run a few units back along the
- * *opposite* side's path, so the two sides overlap at both apexes and those
- * junctions miter to a point too. The stubs are invisible: they lie exactly
- * underneath the other side's stroke.
+ * Each side is a closed fill, split down the centreline, so the mark can draw
+ * itself in two beats. Rendered together they are seamless — the shared edge
+ * is exactly x = 50 on both.
  */
-const STUB_OUTER_L = "105.5,151"; // lies along the right outer arm
-const STUB_OUTER_R = "94.5,151"; // lies along the left outer arm
-const STUB_INNER_L = "105.1,95.9"; // lies along the right inner curve
-const STUB_INNER_R = "94.9,95.9"; // lies along the left inner curve
-
-export const VEE_PATHS = {
-  left: `M ${STUB_OUTER_L} L ${APEX_OUTER} L ${TIP_L} Q ${CTRL_L} ${APEX_INNER} L ${STUB_INNER_L}`,
-  right: `M ${STUB_OUTER_R} L ${APEX_OUTER} L ${TIP_R} Q ${CTRL_R} ${APEX_INNER} L ${STUB_INNER_R}`,
-} as const;
-
-/** Left leads by one beat; §4.4 puts 0.12s between the two strokes. */
-export const VEE_SIDES = ["left", "right"] as const;
+export const VEE_PATHS: Record<VeeSide, string> = {
+  left:
+    'M 0.374 0.327 L 50 80.555 L 50 66.562 L 12.432 5.301 ' +
+    'C 19.124 8.165, 25.699 11.113, 29.338 17.016 L 50 50.56 L 50 36.236 ' +
+    'L 38.125 17.016 C 30.793 5.122, 13.747 1.844, 0.374 0.327 Z',
+  right:
+    'M 99.626 0.327 L 50 80.555 L 50 66.562 L 87.568 5.301 ' +
+    'C 80.876 8.165, 74.301 11.113, 70.662 17.016 L 50 50.56 L 50 36.236 ' +
+    'L 61.875 17.016 C 69.207 5.122, 86.253 1.844, 99.626 0.327 Z',
+};
 
 /**
- * The aperture: the region enclosed by the outer V, closed across the top.
- *
- * The alternative reading — clipping to the two crescents between the outer
- * and inner strokes — is prettier on paper but at rest those slivers are a
- * few pixels wide, so there is nothing to see until the scale is already
- * large. Clipping the outer interior gives a real opening at every scale and
- * leaves the inner curve free to ride on top of the photograph as a hairline,
- * which is what keeps the shape legible as *the mark* all the way through.
+ * The whole mark as one path with an even-odd counter. Use this anywhere the
+ * two-beat draw isn't needed — favicon, OG image, print.
  */
-export const VEE_APERTURE = `M ${TIP_L} L ${APEX_OUTER} L ${TIP_R} Z`;
+export const VEE_WHOLE =
+  'M 0.374 0.327 L 50 80.555 L 99.626 0.327 ' +
+  'C 86.253 1.844, 69.207 5.122, 61.875 17.016 L 50 36.236 L 38.125 17.016 ' +
+  'C 30.793 5.122, 13.747 1.844, 0.374 0.327 Z ' +
+  'M 12.432 5.301 L 50 66.562 L 87.568 5.301 ' +
+  'C 80.876 8.165, 74.301 11.113, 70.662 17.016 L 50 50.56 L 29.338 17.016 ' +
+  'C 25.699 11.113, 19.124 8.165, 12.432 5.301 Z';
 
-/** The three aperture corners, in path units, for the containment solve. */
+/**
+ * The outer V as a bare triangle — tip, apex, tip.
+ *
+ * Used by the aperture maths in `heroFrame.ts`, which treats the mark as a
+ * hole that scales up to cover the viewport.
+ */
 export const VEE_APERTURE_PTS = [
-  [12, 10],
-  [100, 160],
-  [188, 10],
+  [0.374, 0.327],
+  [50, 80.555],
+  [99.626, 0.327],
 ] as const;
 
-/** The point the mark scales about — its optical centre, not its bbox centre. */
-export const VEE_ANCHOR = [100, 86] as const;
-
-/** Stroke weight in viewBox units. Traced at ~11; 8 reads drawn, not printed. */
-export const VEE_STROKE = 8;
-
-/** Sharp points need headroom above the default limit of 4. */
-export const VEE_MITER = 6;
+/** The point the mark scales about. */
+export const VEE_ANCHOR = [50, 40.576] as const;

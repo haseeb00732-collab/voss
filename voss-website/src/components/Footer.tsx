@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { VMark } from "./VMark";
 
+/**
+ * Two entries said "Collection" and pointed at different places, which reads
+ * as a bug to anyone who notices. The shop is the destination; the homepage
+ * rail is not a separate page and does not need a footer link.
+ */
 const LINKS = [
   { href: "/collection", label: "Collection" },
-  { href: "/#collection", label: "Collection" },
   { href: "/#waitlist", label: "Contact" },
 ];
 
@@ -19,17 +23,17 @@ export function Footer() {
   return (
     <footer
       data-surface="dark"
-      className="substrate vignette relative bg-ink-950 pt-section pb-block"
+      className="substrate vignette relative bg-ink-950 pt-section pb-band"
     >
       <div className="above-material relative mx-auto max-w-[120rem] px-gutter">
         <div className="flex flex-col items-center">
-          <VMark className="h-14 w-auto translate-y-[2%]" title="VOSS" />
+          <VMark foil className="h-14 w-auto translate-y-[2%]" title="VOSS" />
           <p className="wordmark mt-group text-[0.9375rem] text-paper-100">Voss</p>
         </div>
 
-        <div className="rule-h mt-block w-full" />
+        <div className="rule-h mt-band w-full" />
 
-        <div className="mt-block flex flex-col gap-group md:flex-row md:items-center md:justify-between">
+        <div className="mt-band flex flex-col gap-group md:flex-row md:items-center md:justify-between">
           <nav aria-label="Footer">
             <ul className="flex flex-wrap gap-group">
               {LINKS.map((l) => (
@@ -55,7 +59,7 @@ export function Footer() {
           </a>
         </div>
 
-        <p className="caption mt-block text-pewter">&copy; 2026 VOSS.</p>
+        <p className="caption mt-band text-pewter">&copy; 2026 VOSS.</p>
       </div>
     </footer>
   );

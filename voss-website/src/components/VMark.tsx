@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, type CSSProperties } from "react";
-import { VEE_H, VEE_MITER, VEE_PATHS, VEE_SIDES, VEE_STROKE, VEE_W } from "@/lib/vee";
+import { VEE_H, VEE_PATHS, VEE_SIDES, VEE_W } from "@/lib/vee";
 
 /**
  * One light source for every gold on the site.
@@ -25,23 +25,28 @@ export function FoilGradient({ id }: { id: string }) {
 }
 
 /**
- * The V, in foil. Two strokes — one per side — so the mark can draw itself
- * with one beat between them; `data-vee` lets whoever owns the moment select
- * a side without this component knowing anything about the animation.
+ * The V. Two closed fills — one per side — so the mark can draw itself with
+ * one beat between them; `data-vee` lets whoever owns the moment select a
+ * side without this component knowing anything about the animation.
+ *
+ * `foil` opts into the gold gradient. Default is `currentColor`, because the
+ * mark should inherit ink or paper almost everywhere and only be metal where
+ * a foil moment is actually intended.
  */
 export function VMark({
   className = "",
-  stroke = VEE_STROKE,
+  foil = false,
   title,
   style,
 }: {
   className?: string;
-  stroke?: number;
+  foil?: boolean;
   title?: string;
   style?: CSSProperties;
 }) {
   const uid = useId().replace(/[^a-zA-Z0-9]/g, "");
-  const foil = `foil-${uid}`;
+  const gradId = `foil-${uid}`;
+  const fill = foil ? `url(#${gradId})` : "currentColor";
 
   return (
     <svg
@@ -53,20 +58,13 @@ export function VMark({
       aria-hidden={title ? undefined : true}
       fill="none"
     >
-      <defs>
-        <FoilGradient id={foil} />
-      </defs>
+      {foil && (
+        <defs>
+          <FoilGradient id={gradId} />
+        </defs>
+      )}
       {VEE_SIDES.map((side) => (
-        <path
-          key={side}
-          data-vee={side}
-          d={VEE_PATHS[side]}
-          stroke={`url(#${foil})`}
-          strokeWidth={stroke}
-          strokeLinecap="butt"
-          strokeLinejoin="miter"
-          strokeMiterlimit={VEE_MITER}
-        />
+        <path key={side} data-vee={side} d={VEE_PATHS[side]} fill={fill} />
       ))}
     </svg>
   );

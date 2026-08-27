@@ -49,7 +49,7 @@ export function Waitlist() {
           </RevealLines>
         </div>
 
-        <div className="col-span-12 mt-block self-end md:col-span-5 md:col-start-8 md:mt-0">
+        <div className="col-span-12 mt-band self-end md:col-span-5 md:col-start-8 md:mt-0">
           {state === "done" ? (
             <p className="body-l flex items-baseline gap-3 text-paper-100" role="status">
               <span aria-hidden="true" className="text-gold-300">
@@ -84,7 +84,7 @@ export function Waitlist() {
                 </FieldError>
               )}
 
-              <div className="mt-block flex flex-wrap items-center gap-group">
+              <div className="mt-band flex flex-wrap items-center gap-group">
                 <Button type="submit" size="lg">
                   Join the list
                 </Button>

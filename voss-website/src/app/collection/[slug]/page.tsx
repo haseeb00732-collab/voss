@@ -56,7 +56,7 @@ export default async function PiecePage({ params }: { params: Promise<{ slug: st
               </Link>
             </div>
 
-            <div className="mt-block grid grid-cols-1 gap-x-gap-col gap-y-block sm:grid-cols-3">
+            <div className="mt-band grid grid-cols-1 gap-x-gap-col gap-y-band sm:grid-cols-3">
               {related.map((r) => {
                 const [cover] = pieceImages(r);
                 return (

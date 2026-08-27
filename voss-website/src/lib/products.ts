@@ -25,10 +25,10 @@ export const PRODUCTS: Product[] = [
     hardware: "#c9a227",
     hardwareName: "Brushed brass",
     description:
-      "A structured shoulder bag with a sculpted flap and hand-burnished edges. Cut from full-grain calfskin that deepens in tone with every wear.",
+      "A structured shoulder bag with a sculpted flap and a twin-strap front. Cut from grain calfskin that deepens in tone with every wear.",
     specs: [
       { label: "Dimensions", value: '9.5" × 6.0" × 3.0"' },
-      { label: "Leather", value: "Full-grain calfskin" },
+      { label: "Hardware", value: "Gold-tone" },
       { label: "Lining", value: "Suede goatskin" },
       { label: "Production", value: "Made to order" },
     ],
@@ -43,10 +43,10 @@ export const PRODUCTS: Product[] = [
     hardware: "#c9a227",
     hardwareName: "Brushed brass",
     description:
-      "Our softest silhouette. A slouched top-handle in vegetable-tanned cognac that relaxes into the shape of the way you carry it.",
+      "Our softest silhouette. A slouched top-handle in cognac that relaxes into the shape of the way you carry it.",
     specs: [
       { label: "Dimensions", value: '11.0" × 7.5" × 4.0"' },
-      { label: "Leather", value: "Vegetable-tanned cowhide" },
+      { label: "Hardware", value: "Gold-tone" },
       { label: "Lining", value: "Cotton twill" },
       { label: "Production", value: "Made to order" },
     ],

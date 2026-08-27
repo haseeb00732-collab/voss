@@ -25,15 +25,15 @@ const SITE = "https://voss.com";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
   title: {
-    default: "VOSS — One hide. One bag. Nothing else.",
+    default: "Handbags for Women in Pakistan | Cash on Delivery — VOSS",
     template: "%s · VOSS",
   },
   description:
-    "VOSS selects one bag at a time, and selects it slowly. Full-grain leather, made to order. Nothing else.",
+    "Handbags chosen in Lahore. Every price, size and material listed, no DMs for price. Cash on delivery across Pakistan.",
   openGraph: {
-    title: "VOSS — One hide. One bag. Nothing else.",
+    title: "Handbags for Women in Pakistan | Cash on Delivery — VOSS",
     description:
-      "VOSS selects one bag at a time, and selects it slowly. Full-grain leather, made to order.",
+      "Handbags chosen in Lahore. Every price, size and material listed, no DMs for price. Cash on delivery across Pakistan.",
     url: SITE,
     siteName: "VOSS",
     type: "website",
@@ -41,8 +41,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "VOSS — One hide. One bag. Nothing else.",
-    description: "Full-grain leather, made to order. One hide at a time.",
+    title: "Handbags for Women in Pakistan | Cash on Delivery — VOSS",
+    description: "Every price on the page. Cash on delivery, Pakistan-wide.",
   },
   robots: { index: true, follow: true },
 };

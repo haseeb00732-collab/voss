@@ -52,9 +52,19 @@
   --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* ── Space. A magazine breathes wider than a boutique. ───────────────── */
+  /* ── Space. A magazine breathes wider than a boutique. ─────────────────
+     NEVER name a --spacing-* token after a Tailwind utility root — `block`,
+     `flex`, `grid`, `table`, `contents`. Tailwind v4 registers `inline-*` as a
+     functional utility over this namespace emitting `inline-size`, so a token
+     named `block` makes `inline-block` compile TWICE: once as
+     `display:inline-block`, once as `inline-size: <the token>`. They set
+     different properties, so neither wins, and every inline-block silently
+     gets a hard width. This token was `--spacing-block` and did exactly that —
+     it pinned every hero word to 79px (5.5vw at 1440) and the headline
+     overlapped itself. The collision is invisible in this file; you only see
+     it in the compiled stylesheet. */
   --spacing-section: clamp(6rem, 12vw, 14rem);
-  --spacing-block: clamp(3rem, 5.5vw, 6rem);
+  --spacing-band: clamp(3rem, 5.5vw, 6rem);
   --spacing-group: clamp(1.5rem, 2.5vw, 2.5rem);
   --spacing-item: 1rem;
   --spacing-tight: 0.5rem;
@@ -518,3 +528,15 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-ink-600);
 }
+
+/* The bag dissolve in section 2. Opacity plus a 1.04 counter-scale so the
+   incoming frame settles rather than appears; transform and opacity only. */
+@keyframes voss-dissolve {
+  from { opacity: 0; transform: scale(1.04); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Referenced by a plain class, not a Tailwind arbitrary value: an
+   `animate-[...]` containing `var(--ease-lux)` does not survive arbitrary-value
+   parsing, and the resulting invalid shorthand left the product stage blank. */
+.voss-dissolve { animation: voss-dissolve 620ms var(--ease-lux) both; }

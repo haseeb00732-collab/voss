@@ -3,17 +3,19 @@ import { FINISHES, type Finish } from "./vitrine";
 /**
  * The catalogue. Six pieces, photographed, available in four hides each.
  *
- * These are the real product — 35 unretouched photographs in
- * `public/products/`. They are served as plain URLs rather than statically
- * imported because they have not been through `grade-media.mjs`; when they are
- * graded, move them into `src/media` and this file gains a static import
- * instead of a string.
+ * These are the real product: 35 photographs in `public/products/`, now
+ * graded into the vitrine by `scripts/grade-catalogue.mjs` and served from
+ * `public/products-graded/` as AVIF. The page is dark-dominant, and the
+ * ungraded originals read as bright rectangles punched out of it.
  *
- * `name` and `price` are deliberately null. The house has not named or priced
- * these yet, and a placeholder price is worse than no price — it teaches the
- * reader a number that will change. The grid says "Inquire" until real values
- * land, which is the same thing v1 did and the one thing v1 got right about
- * this data.
+ * The originals are never modified. Re-run the script to regrade; never
+ * filter in CSS, so what ships is what was art-directed.
+ *
+ * Names and prices are set (PKR 4,500 across the range, confirmed 2026-08-27).
+ * `priceLabel` still returns null for a null price, and the card still
+ * renders no price row in that case. Keep that branch: the brief says a card
+ * without a confirmed price does not ship, and section 5 sells "the price is
+ * on the page, no DMs" as the promise. Never substitute "Inquire".
  */
 
 export type Piece = {
@@ -26,6 +28,20 @@ export type Piece = {
   price: number | null;
   /** The hide this piece was photographed in — the others are made to order. */
   shotIn: string;
+  /**
+   * One colour per photograph, median-sampled from that image's own centre
+   * box by `scripts/grade-catalogue.mjs`.
+   *
+   * Per IMAGE, not per product, and that is the whole point: product_2 is a
+   * single bag shot in five colourways, so a per-product colour would be a
+   * lie for four of its five photographs. `colourways[i]` always describes
+   * `pieceImages(piece)[i]`, so a chip and the photograph it selects cannot
+   * contradict. Regenerate by re-running the grade script; never hand-edit.
+   *
+   * `shotIn` is NOT the source: it records an intended hide and disagrees
+   * with several of the images.
+   */
+  colourways: string[];
   silhouette: string;
   /** One line, used in the grid and as the meta description. */
   note: string;
@@ -34,63 +50,69 @@ export type Piece = {
 export const CATALOGUE: Piece[] = [
   {
     slug: "01",
-    name: null,
+    colourways: ["#6a4d41", "#483933", "#31343d", "#9b8570", "#2a2929"],
+    name: "Halden",
     label: "Style 01",
-    imageCount: 6,
-    price: null,
+    imageCount: 5,
+    price: 4500,
     shotIn: "cognac",
     silhouette: "Top handle",
-    note: "A structured top-handle with a sculpted flap and hand-burnished edges.",
+    note: "A structured top-handle with a sculpted flap and a twin-strap front.",
   },
   {
     slug: "02",
-    name: null,
+    colourways: ["#4f4e57", "#8e867a", "#6c564f", "#8b5c55", "#ac8360"],
+    name: "Merrow",
     label: "Style 02",
-    imageCount: 6,
-    price: null,
+    imageCount: 5,
+    price: 4500,
     shotIn: "noir",
     silhouette: "Shoulder",
     note: "A shoulder bag cut close to the body, unlined, holding its shape empty.",
   },
   {
     slug: "03",
-    name: null,
+    colourways: ["#394841", "#473131", "#343435", "#795c3f"],
+    name: "Solene",
     label: "Style 03",
-    imageCount: 8,
-    price: null,
+    imageCount: 4,
+    price: 4500,
     shotIn: "cognac",
     silhouette: "Tote",
-    note: "The largest piece in the house. Vegetable-tanned, and it relaxes with use.",
+    note: "The largest bag in the range. Twin handles and a top zip.",
   },
   {
     slug: "04",
-    name: null,
+    colourways: ["#744e38", "#483b31", "#3e3b31", "#3a3b32", "#916e51", "#3a3930"],
+    name: "Corbel",
     label: "Style 04",
     imageCount: 6,
-    price: null,
+    price: 4500,
     shotIn: "oxblood",
     silhouette: "Box",
-    note: "A box bag with a detachable chain — a clutch by night, a shoulder bag by day.",
+    note: "A box bag with a detachable chain. A clutch by night, a shoulder bag by day.",
   },
   {
     slug: "05",
-    name: null,
+    colourways: ["#383f32", "#282626", "#966d4e", "#372d29"],
+    name: "Wren",
     label: "Style 05",
     imageCount: 4,
-    price: null,
+    price: 4500,
     shotIn: "bone",
     silhouette: "Crossbody",
     note: "The smallest silhouette, architectural and pale, made to read as sculpture.",
   },
   {
     slug: "06",
-    name: null,
+    colourways: ["#986c48", "#5d6551", "#3b3a39", "#4d3d39", "#b49982"],
+    name: "Kestrel",
     label: "Style 06",
     imageCount: 5,
-    price: null,
+    price: 4500,
     shotIn: "noir",
     silhouette: "Weekend",
-    note: "Cut for travel and finished like an evening piece. Full-grain throughout.",
+    note: "Cut for travel, finished like an evening piece.",
   },
 ];
 
@@ -98,7 +120,10 @@ export const CATALOGUE: Piece[] = [
 export const HIDES: Finish[] = FINISHES;
 
 export function pieceImages(piece: Piece): string[] {
-  return Array.from({ length: piece.imageCount }, (_, i) => `/products/${piece.slug}/${i + 1}.jpg`);
+  return Array.from(
+    { length: piece.imageCount },
+    (_, i) => `/products-graded/${piece.slug}/${i + 1}.avif`
+  );
 }
 
 export function getPiece(slug: string): Piece | undefined {
@@ -116,11 +141,12 @@ export function relatedPieces(slug: string, count = 3): Piece[] {
   return Array.from({ length: count }, (_, k) => CATALOGUE[(i + k + 1) % CATALOGUE.length]);
 }
 
+/** PKR, tabular figures. Null means "no price row", never a placeholder. */
 export const priceLabel = (price: number | null) =>
   price === null
-    ? "Inquire"
-    : new Intl.NumberFormat("en-US", {
+    ? null
+    : new Intl.NumberFormat("en-PK", {
         style: "currency",
-        currency: "USD",
+        currency: "PKR",
         maximumFractionDigits: 0,
       }).format(price);
