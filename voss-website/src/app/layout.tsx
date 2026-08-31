@@ -1,10 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Bodoni_Moda } from "next/font/google";
+import { Bodoni_Moda } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-/* A didone against a grotesque — the masthead pairing.
-   Bodoni carries the italic because the italic is a voice here (pull
-   quotes), not an emphasis. Archivo carries everything under 1.5rem. */
+/* A didone against a grotesque, plus Nastaliq for Urdu.
+
+   Bodoni carries the italic because the italic is a voice here (pull quotes),
+   not an emphasis. Jost carries everything under 1.5rem — it replaced Archivo
+   on 2026-08-31.
+
+   Jost and Nastaliq are LOCAL, subset by `scripts/subset-fonts.py`. Bodoni
+   comes through next/font/google, which downloads and self-hosts at build
+   time — there is no runtime request to the Google Fonts CDN from any of the
+   three. */
 const bodoni = Bodoni_Moda({
   variable: "--font-bodoni",
   subsets: ["latin"],
@@ -13,36 +21,56 @@ const bodoni = Bodoni_Moda({
   display: "swap",
 });
 
-const archivo = Archivo({
-  variable: "--font-archivo",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+const jost = localFont({
+  src: "./fonts/Jost-subset.woff2",
+  variable: "--font-jost",
   display: "swap",
+  weight: "100 900", // variable axis retained; three weights are used
+});
+
+/* Subset to exactly the glyphs in the six Urdu names. Change a name in
+   `catalogue.ts` and you must re-run `scripts/subset-fonts.py`, or the new
+   letter silently renders in a device font. */
+const nastaliq = localFont({
+  src: "./fonts/NotoNastaliqUrdu-subset.woff2",
+  variable: "--font-nastaliq",
+  display: "swap",
+  weight: "400",
 });
 
 const SITE = "https://voss.com";
 
+/* Content pack §6. Tier-2 keyword first, brand last — the brand name never
+   opens a title, because "VOSS" collides with an established .com in the same
+   category and branded search cannot be relied on to recover a lost visitor.
+
+   The og:title is deliberately not the page title: this card is seen far more
+   often than any Google snippet, because traffic arrives from Instagram and
+   gets forwarded on WhatsApp. It leads with the number. */
+const TITLE = "Handbags for Women in Pakistan — Rs 4,500, Cash on Delivery | VOSS";
+const DESCRIPTION =
+  "Six handbags, launch price Rs 4,500 (list Rs 6,000), cash on delivery. " +
+  "Price on the page — no DM required. Lahore-based.";
+// TODO [nationwide / confirmed cities] — delivery reach is unconfirmed, so the
+// description stops at "Lahore-based" rather than claiming a shipping radius.
+const OG_TITLE = "Rs 4,500 instead of Rs 6,000 — cash on delivery.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
-  title: {
-    default: "Handbags for Women in Pakistan | Cash on Delivery — VOSS",
-    template: "%s · VOSS",
-  },
-  description:
-    "Handbags chosen in Lahore. Every price, size and material listed, no DMs for price. Cash on delivery across Pakistan.",
+  title: { default: TITLE, template: "%s · VOSS" },
+  description: DESCRIPTION,
   openGraph: {
-    title: "Handbags for Women in Pakistan | Cash on Delivery — VOSS",
-    description:
-      "Handbags chosen in Lahore. Every price, size and material listed, no DMs for price. Cash on delivery across Pakistan.",
+    title: OG_TITLE,
+    description: DESCRIPTION,
     url: SITE,
     siteName: "VOSS",
     type: "website",
-    locale: "en_US",
+    locale: "en_PK",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Handbags for Women in Pakistan | Cash on Delivery — VOSS",
-    description: "Every price on the page. Cash on delivery, Pakistan-wide.",
+    title: OG_TITLE,
+    description: "Six bags, one price. Cash when it lands in your hands.",
   },
   robots: { index: true, follow: true },
 };
@@ -57,7 +85,10 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${bodoni.variable} ${archivo.variable}`}>
+    <html
+      lang="en"
+      className={`${bodoni.variable} ${jost.variable} ${nastaliq.variable}`}
+    >
       <body className="antialiased">
         <a
           href="#main"

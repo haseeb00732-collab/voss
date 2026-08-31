@@ -37,19 +37,39 @@
   --color-gold-300: #dfcb9b;
   --color-gold-100: #f0e5c8;
 
-  /* ── VERMILION — the new fifth hue, and the only one added. ───────────
-     Gold is the house. Vermilion is the verb: price, CTA, in-stock, the
-     one thing on the page you are meant to act on. If it appears twice in
-     a viewport, one of them is wrong. */
+  /* ── SIGNAL — the one added hue, and the only accent on the page. ─────
+     Gold is the house. Signal is the verb: price and order CTA, and
+     almost nothing else. If it appears twice in a viewport, one of them
+     is wrong.
+
+     Set to #c66963 by Haseeb 2026-08-31, superseding the vermilion ramp
+     below. This one INVERTS across substrate the way gold does — 500 on
+     ink (5.28:1), 700 on paper (6.01:1). Hard-coding either shade works
+     until the section flips substrate and then it is unreadable, so use
+     `--text-signal`, never `--color-signal-500` directly. */
+  --color-signal-900: #673733;
+  --color-signal-700: #8f4c47;
+  --color-signal-600: #aa5a55;
+  --color-signal-500: #c66963;
+  --color-signal-300: #d6938f;
+  --color-signal-100: #eed2d0;
+
+  /* @deprecated Superseded by the signal ramp above. Still referenced by
+     --error, which wants a hotter red than the accent. Not an accent. */
   --color-vermilion-700: #b21f08;
   --color-vermilion-600: #e42d12;
   --color-vermilion-500: #ff3b1f;
   --color-vermilion-300: #ff7a66;
   --color-vermilion-100: #ffd9d1;
 
-  /* ── Type. Didone display against a grotesque. ───────────────────────── */
+  /* ── Type. Didone display against a grotesque, plus Nastaliq for Urdu.
+     All three are self-hosted and subset in `src/app/fonts`; none of them
+     touch the Google Fonts CDN at runtime. Jost replaced Archivo on
+     2026-08-31. Urdu is NEVER set in display or sans — see the @font-face
+     block below for why the fallback matters. */
   --font-display: var(--font-bodoni), "Didot", "Bodoni MT", ui-serif, Georgia, serif;
-  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+  --font-urdu: var(--font-nastaliq), "Noto Naskh Arabic", serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
 
   /* ── Space. A magazine breathes wider than a boutique. ─────────────────
@@ -130,7 +150,7 @@
   --elev-1: 0 1px 2px rgb(0 0 0 / 0.18), 0 2px 8px rgb(0 0 0 / 0.12);
   --elev-2: 0 2px 6px rgb(0 0 0 / 0.2), 0 12px 28px rgb(0 0 0 / 0.18);
   --elev-3: 0 4px 12px rgb(0 0 0 / 0.24), 0 28px 64px rgb(0 0 0 / 0.26);
-  --elev-glow: 0 0 0 1px var(--border-strong), 0 12px 40px rgb(255 59 31 / 0.12);
+  --elev-glow: 0 0 0 1px var(--border-strong), 0 12px 40px rgb(198 105 99 / 0.14);
 }
 
 @media (min-resolution: 2dppx) {
@@ -153,7 +173,7 @@
   --text-secondary: var(--color-smoke);
   --text-tertiary: var(--color-gold-700);
   --text-accent: var(--color-gold-500);
-  --text-signal: var(--color-vermilion-500);
+  --text-signal: var(--color-signal-500);
   --border-hairline: color-mix(in srgb, var(--color-gold-700) 30%, transparent);
   --border-strong: color-mix(in srgb, var(--color-gold-500) 55%, transparent);
   --border-neutral: var(--color-ink-700);
@@ -172,7 +192,7 @@
   --text-secondary: var(--color-clay);
   --text-tertiary: var(--color-smoke);
   --text-accent: var(--color-gold-900);
-  --text-signal: var(--color-vermilion-600);
+  --text-signal: var(--color-signal-700);
   --border-hairline: color-mix(in srgb, var(--color-gold-900) 24%, transparent);
   --border-strong: color-mix(in srgb, var(--color-gold-900) 45%, transparent);
   --border-neutral: var(--color-paper-200);
@@ -204,7 +224,7 @@
   }
 
   ::selection {
-    background: var(--color-vermilion-500);
+    background: var(--color-signal-500);
     color: var(--color-paper-50);
   }
 
@@ -217,7 +237,7 @@
    TYPE — the masthead scale
    Didone wants to be either very large or not used. There is no medium
    Bodoni on this site: display-* are headline sizes, and everything under
-   1.5rem is Archivo.
+   1.5rem is Jost.
    ═══════════════════════════════════════════════════════════════════════ */
 
 @utility display-2xl {
@@ -462,7 +482,7 @@
 /* A magazine rule: heavier, and it carries the signal colour. */
 @utility rule-signal {
   height: 2px;
-  background-color: var(--color-vermilion-500);
+  background-color: var(--color-signal-500);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -540,3 +560,36 @@ html {
    `animate-[...]` containing `var(--ease-lux)` does not survive arbitrary-value
    parsing, and the resulting invalid shorthand left the product stage blank. */
 .voss-dissolve { animation: voss-dissolve 620ms var(--ease-lux) both; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   URDU
+   Jost and Bodoni contain no Arabic-script glyphs. Left alone, every Urdu
+   name falls back to a device font — Segoe UI on Windows, Noto Naskh on
+   Android, Geeza Pro on iOS — three different faces, none of them Nastaliq.
+   `.urdu` is the only way Urdu is ever set on this site.
+
+   `unicode-bidi: isolate` is not optional. Without it, adjacent Latin
+   punctuation and digits reorder around the RTL run and the name renders
+   mangled — the failure is silent and only shows up next to a price.
+
+   Nastaliq has deep descenders and a steep diagonal baseline, so it needs
+   roughly double the leading Latin does, and about 1.3x the size to read as
+   equally weighted beside it.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@utility urdu {
+  font-family: var(--font-urdu);
+  font-weight: 400;
+  direction: rtl;
+  unicode-bidi: isolate;
+  line-height: 2;
+  /* Optical, not metric: the two scripts do not share a baseline. */
+  transform: translateY(-0.06em);
+}
+
+/* Nastaliq at card size is illegible; it needs size to be beautiful. Product
+   pages only. */
+@utility urdu-display {
+  font-size: clamp(3.5rem, 7vw, 5.5rem);
+  line-height: 1.9;
+}
