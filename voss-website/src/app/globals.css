@@ -593,3 +593,253 @@ html {
   font-size: clamp(3.5rem, 7vw, 5.5rem);
   line-height: 1.9;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   THE BAGS — card motion
+   Every rule here animates transform, opacity or clip-path and nothing
+   else. The scroll writer in Bags.tsx sets --lit and --drift once per
+   frame; CSS does the rest, so there is no per-element JS on scroll.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.bag-card {
+  --lit: 0;
+  --drift: 0px;
+  --stagger: 0ms;
+  /* (c) Counter-drift lives HERE, on its own element, with NO transition.
+     It is rewritten every frame; putting it on the same transform as the
+     arrival restarts that 420ms transition on every write, so the transition
+     never completes and the page never reaches a stable frame. Two moving
+     parts, two elements. */
+  transform: translate3d(0, var(--drift), 0);
+  will-change: transform;
+}
+
+/* (b) Arrival + (d) clip-path reveal. The frame opens from the bottom while
+   the photograph inside counter-moves, so the picture is at rest by the time
+   the frame has finished opening — it is revealed, not slid into place. */
+.bag-frame {
+  clip-path: inset(0 0 100% 0);
+  transform: translate3d(0, 24px, 0);
+  transition:
+    clip-path 420ms var(--ease-expo) var(--stagger),
+    transform 420ms cubic-bezier(0.22, 1.02, 0.36, 1) var(--stagger);
+}
+
+.bag-shot {
+  transform: translate3d(0, -6%, 0) scale(1.08);
+  transition: transform 560ms var(--ease-expo) var(--stagger);
+}
+
+.bag-meta {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  transition:
+    opacity 380ms var(--ease-lux) calc(var(--stagger) + 120ms),
+    transform 380ms var(--ease-lux) calc(var(--stagger) + 120ms);
+}
+
+[data-arrived="true"] .bag-frame {
+  clip-path: inset(0 0 0% 0);
+  transform: translate3d(0, 0, 0);
+}
+
+[data-arrived="true"] .bag-shot {
+  /* Scale DOWN to rest, never up: upscaling during a transform resamples a
+     540px source and softens it. */
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+[data-arrived="true"] .bag-meta {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* (a) The light. One scrim, opacity only. --lit is the card's nearness to the
+   light travelling down the column: 0 is unlit base, 1 is fully lit. */
+.bag-scrim {
+  pointer-events: none;
+  background: var(--color-ink-950);
+  /* No transition: --lit is rewritten every frame, so a transition would
+     restart on each write and never settle. The per-frame value IS the
+     smoothing. */
+  opacity: calc(0.46 - var(--lit) * 0.46);
+}
+
+.bag-vignette {
+  pointer-events: none;
+  background: radial-gradient(
+    115% 85% at 50% 42%,
+    transparent 52%,
+    color-mix(in srgb, var(--color-ink-950) 62%, transparent) 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bag-card,
+  .bag-frame,
+  .bag-shot,
+  .bag-meta {
+    clip-path: none;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .bag-scrim {
+    opacity: 0;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   THE PRICE TRANSITION
+   Rs 6,000 struck by a 1px rule wiping L->R over 400ms; Rs 4,500 rises
+   underneath on a per-character mask at 60% of that wipe, so the two
+   overlap and read as one gesture. Once per session per card.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+
+.price-was {
+  position: relative;
+  display: inline-block;
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+
+.price-strike {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: currentColor;
+  transform-origin: left center;
+  clip-path: inset(0 0 0 0);
+}
+
+.price-now {
+  position: relative;
+  display: inline-block;
+  font-size: 1.0625rem;
+  letter-spacing: var(--track-s);
+  color: var(--text-signal);
+}
+
+.price-now-chars {
+  display: inline-flex;
+}
+
+.price-char-mask {
+  display: inline-block;
+  overflow: hidden;
+  /* Room for descenders and the comma, cancelled so leading is unchanged. */
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
+}
+
+.price-char {
+  display: inline-block;
+  white-space: pre;
+}
+
+/* ARMED: the moment before it plays. The old price is unstruck, the new one
+   is hidden below its mask. */
+[data-price-state="armed"] .price-strike {
+  clip-path: inset(0 100% 0 0);
+}
+[data-price-state="armed"] .price-char {
+  transform: translateY(110%);
+}
+[data-price-state="armed"] .price-now {
+  /* Reserve the width so nothing reflows when the figures arrive. CLS is
+     budgeted at <0.02 and a price row that grows would spend all of it. */
+  visibility: hidden;
+}
+
+/* PLAYING */
+[data-price-state="playing"] .price-strike {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 400ms var(--ease-inout);
+}
+[data-price-state="playing"] .price-char {
+  transform: translateY(0);
+  transition: transform 200ms var(--ease-expo);
+  /* 60% of the 400ms strike, plus a per-character stagger. */
+  transition-delay: calc(240ms + var(--n) * 22ms);
+}
+
+/* DONE is also the server-rendered state: struck, red, settled. */
+[data-price-state="done"] .price-strike {
+  clip-path: inset(0 0 0 0);
+}
+[data-price-state="done"] .price-char {
+  transform: none;
+}
+
+/* (e) Pointer layer. Everything here is inert until PointerTilt attaches, so
+   the card is complete without it and touch never sees any of it. */
+.pointer-tilt {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --glare-x: 50%;
+  --glare-y: 30%;
+  transform: perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transition: transform 260ms var(--ease-lux);
+}
+
+.bag-glare {
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    38% 30% at var(--glare-x) var(--glare-y),
+    color-mix(in srgb, var(--color-gold-100) 16%, transparent) 0%,
+    transparent 70%
+  );
+  transition: opacity var(--dur-2) var(--ease-lux);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .bag-glare {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pointer-tilt {
+    transform: none;
+    transition: none;
+  }
+  .bag-glare {
+    display: none;
+  }
+}
+
+/* (f) Grid -> product page. Native cross-document view transitions, with the
+   bag photograph as the morph target (`viewTransitionName` is set per piece in
+   Bags.tsx and matched on the product page).
+
+   NO Motion `layoutId` fallback. That would mean adding a second animation
+   library alongside GSAP inside a 120KB JS budget, to polish a transition
+   that already degrades to an ordinary, correct navigation in browsers
+   without support. The fallback costs more than the feature. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(*) {
+  animation-duration: var(--dur-2);
+  animation-timing-function: var(--ease-lux);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
