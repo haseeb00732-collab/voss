@@ -15,7 +15,7 @@ const WORDS = [
   "In stock",
   "Every price on the page",
   "Lahore",
-  "Ask on WhatsApp",
+  "Order on Instagram",
 ];
 
 /**

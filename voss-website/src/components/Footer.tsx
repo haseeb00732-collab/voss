@@ -50,7 +50,7 @@ export function Footer() {
           </nav>
 
           <a
-            href="https://instagram.com"
+            href="https://www.instagram.com/voss.pk/"
             rel="noreferrer noopener"
             target="_blank"
             className="body-s text-smoke transition-colors duration-[var(--dur-1)] ease-[var(--ease-lux)] hover:text-gold-300"

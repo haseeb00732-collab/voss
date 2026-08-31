@@ -19,6 +19,9 @@
 /** Public handle. Override per-environment if the account is ever renamed. */
 const HANDLE = (process.env.NEXT_PUBLIC_IG_HANDLE ?? "voss.pk").replace(/^@/, "");
 
+/** The public handle, without the @. Copy that names it must read it here. */
+export const IG_HANDLE = HANDLE;
+
 export const IG_ENABLED = HANDLE.length > 0;
 
 export const igProfile = () => `https://www.instagram.com/${HANDLE}/`;

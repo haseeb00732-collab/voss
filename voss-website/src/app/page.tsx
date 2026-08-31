@@ -2,41 +2,79 @@ import { SmoothScroll } from "@/components/SmoothScroll";
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
 import { Bags } from "@/components/Bags";
-import { TheObject } from "@/components/TheObject";
-import { Manifesto } from "@/components/Manifesto";
+import { WhatItIs } from "@/components/WhatItIs";
+import { BeforeYouPay } from "@/components/BeforeYouPay";
+import { Faqs } from "@/components/Faqs";
 import { Marquee } from "@/components/Marquee";
-import { Waitlist } from "@/components/Waitlist";
 import { Footer } from "@/components/Footer";
+import { CATALOGUE, OFFER, pricing } from "@/lib/catalogue";
+import { igProfile } from "@/lib/instagram";
+
+/**
+ * The homepage, in the order she actually needs it.
+ *
+ *   hero        what it costs and how to buy it, readable at first paint
+ *   bags        the shop; nothing between it and the hero
+ *   what it is  the proposition, once, without manufacturing language
+ *   before      the COD terms, which is the trust question in this market
+ *   questions   the same terms again, in her words
+ *
+ * `Manifesto` and `TheObject` are gone: the content pack replaces both with
+ * one "What it is". `Waitlist` is gone too — there is nothing to wait for, the
+ * bags are on sale today and the CTA is a DM.
+ *
+ * Threshold is still deliberately NOT mounted: it runs ~2.2s of intro before
+ * the hero is reachable, in front of the LCP element.
+ */
+
+/* Product schema, generated from the catalogue so it cannot drift from the
+   prices actually rendered. */
+function catalogueLd() {
+  const offers = CATALOGUE.map((p) => {
+    const price = pricing(p);
+    return {
+      "@type": "Product",
+      name: p.name,
+      description: p.note,
+      url: `https://voss.com/collection/${p.slug}`,
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "PKR",
+        price: String(price.running ? p.price : p.listPrice),
+        availability: "https://schema.org/InStock",
+        ...(OFFER.endsOn ? { priceValidUntil: OFFER.endsOn } : {}),
+      },
+    };
+  });
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: offers.map((o, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: o,
+    })),
+  };
+}
 
 const orgLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "VOSS",
-  description: "Leather bags, selected one hide at a time.",
+  description: "Handbags in Lahore. One price, cash on delivery.",
+  sameAs: [igProfile()],
 };
 
-/**
- * The page is dark-dominant, top to bottom. CLAUDE.md opens with "the whole
- * site reads as the vitrine", and the earlier paper-substrate middle fought
- * that: the hero read expensive, then the page turned cream for three
- * sections and read like any other shop. Rhythm now comes from tone inside
- * one material (ink-950 / ink-900 / raised) and from the diagonal wipe,
- * not from flipping to paper and back.
- *
- * Each section owns its own `id` and `data-surface`, so the order here is the
- * only thing that sets the rhythm. Marquee carries the light→dark wipe, which
- * is why it sits immediately before the dark close rather than with Manifesto.
- *
- * Threshold is deliberately NOT mounted: it runs ~2.2s of intro before the
- * hero is reachable, against a 900ms brand-moment budget, and it would sit in
- * front of the LCP. It stays built and unwired until it fits the budget.
- */
 export default function Home() {
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(catalogueLd()) }}
       />
 
       <SmoothScroll />
@@ -47,13 +85,12 @@ export default function Home() {
 
         {/* she came from Instagram to see bags: nothing goes between */}
         <Bags />
-        <TheObject />
-        <Manifesto />
 
-        {/* the wipe back down */}
+        <WhatItIs />
+        <BeforeYouPay />
+        <Faqs />
+
         <Marquee />
-
-        <Waitlist />
       </main>
 
       <Footer />
