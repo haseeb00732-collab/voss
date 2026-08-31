@@ -26,7 +26,7 @@ import { FINISHES, type Finish } from "./vitrine";
  * PRICE is PKR, list 6000 with a launch offer at 4500. `priceLabel` returns
  * null for a null price and the card renders no price row in that case. Keep
  * that branch: the promise is "the price is on the page, no DMs". Never
- * substitute "Inquire".
+ * substitute a placeholder word for a number.
  */
 
 export type Colourway = {
@@ -57,7 +57,7 @@ export type Piece = {
   label: string;
   /** Total photographs on disk for this style, colourways and details alike. */
   imageCount: number;
-  /** PKR. The price she pays today. Null renders no price row — never "Inquire". */
+  /** PKR. The price she pays today. Null renders no price row, never a word. */
   price: number | null;
   /** PKR. The list price the offer is struck through from. Null = no offer. */
   listPrice: number | null;

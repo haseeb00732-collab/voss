@@ -1,10 +1,10 @@
 import { HIDES } from "@/lib/catalogue";
 
 /**
- * The four hides a piece can be ordered in.
+ * DEPRECATED and unmounted. The finish library for the configurator.
  *
  * Honesty rule: only ONE of these is photographed — the one in `piece.shotIn`.
- * The rest are made to order, and we do not have a picture of them. So the
+ * The rest have no photograph. So the
  * shot hide gets a ring and the others do not, and the label says which is
  * which. Rendering four identical swatches would imply four photographs we
  * cannot show, which is the same lie as a placeholder price.
@@ -38,7 +38,7 @@ export function HideSwatches({
             />
             <span className="sr-only">
               {h.name}
-              {shot ? ", photographed" : ", made to order"}
+              {shot ? ", photographed" : ", not photographed"}
             </span>
           </li>
         );

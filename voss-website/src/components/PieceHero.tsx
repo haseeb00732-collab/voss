@@ -5,7 +5,14 @@ import { useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "@/lib/useReducedMotion";
-import { HIDES, pieceImages, priceLabel, type Piece } from "@/lib/catalogue";
+import {
+  colourwayImage,
+  pieceImages,
+  type Colourway,
+  type Piece,
+} from "@/lib/catalogue";
+import { PriceRow } from "./PriceRow";
+import { igDirectMessage, orderReference } from "@/lib/instagram";
 
 gsap.registerPlugin(useGSAP);
 
@@ -17,11 +24,16 @@ gsap.registerPlugin(useGSAP);
  * and a real photograph of the real object is worth more than a rendering of
  * an approximation of it.
  *
- * Choosing a hide floods the **whole page** with it. The photograph does not
- * change, because it cannot — each style was shot in exactly one hide, and
- * there are no per-colour plates. Pretending otherwise would be a lie the
- * reader discovers on delivery. So the copy says "made to order in", the room
- * takes the colour, and the photograph stays honest about which one was shot.
+ * Choosing a COLOUR floods the whole page with it AND swaps the photograph,
+ * because every colour offered here is a colour that was actually
+ * photographed — `piece.colourways` comes from the real shots, one hex per
+ * frame.
+ *
+ * This replaced a selector for a hide system that does not exist, under a
+ * production claim that was never true. That control offered colours no
+ * photograph showed, which is a lie the reader discovers on delivery. The
+ * Urdu name lives here too — this is the one place with enough size for
+ * Nastaliq to be legible, let alone beautiful.
  */
 
 /** Relative luminance, so a pale hide flips the page to its light substrate. */
@@ -34,11 +46,12 @@ function isLight(hex: string) {
 
 export function PieceHero({ piece }: { piece: Piece }) {
   const images = useMemo(() => pieceImages(piece), [piece]);
-  const [hide, setHide] = useState(HIDES.find((h) => h.id === piece.shotIn) ?? HIDES[0]);
+  const [cw, setCw] = useState<Colourway>(piece.colourways[0]);
   const root = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
+  const dm = igDirectMessage();
 
-  const light = isLight(hide.leather);
+  const light = isLight(cw.hex);
 
   /* The takeover. The background is the only thing tweened — the semantic
      tokens flip instantly via data-surface, because a half-resolved text
@@ -48,12 +61,12 @@ export function PieceHero({ piece }: { piece: Piece }) {
     () => {
       if (!root.current) return;
       gsap.to(root.current, {
-        backgroundColor: hide.leather,
+        backgroundColor: cw.hex,
         duration: reduced ? 0 : 0.6,
         ease: "power2.inOut",
       });
     },
-    { dependencies: [hide.leather, reduced] },
+    { dependencies: [cw.hex, reduced] },
   );
 
   return (
@@ -61,7 +74,7 @@ export function PieceHero({ piece }: { piece: Piece }) {
       ref={root}
       data-surface={light ? "light" : "dark"}
       className="substrate relative pt-[8.5rem]"
-      style={{ backgroundColor: hide.leather }}
+      style={{ backgroundColor: cw.hex }}
       aria-label={piece.name ?? piece.label}
     >
       <div className="mx-auto max-w-[120rem] px-gutter pb-section">
@@ -70,12 +83,13 @@ export function PieceHero({ piece }: { piece: Piece }) {
         <div className="relative grid grid-cols-12 gap-x-gap-col">
           <div className="plate col-span-12 aspect-[4/5] shadow-[var(--elev-3)] md:col-span-7">
             <Image
-              src={images[0]}
-              alt={`${piece.label}, ${piece.silhouette.toLowerCase()}`}
+              src={colourwayImage(piece, cw)}
+              alt={`The ${piece.name} in ${cw.name}, ${piece.silhouette.toLowerCase()}`}
               fill
               priority
               sizes="(max-width: 768px) 100vw, 58vw"
               className="object-cover"
+              style={{ viewTransitionName: `bag-${piece.slug}` }}
             />
           </div>
 
@@ -108,58 +122,131 @@ export function PieceHero({ piece }: { piece: Piece }) {
         <div className="mt-band grid grid-cols-12 gap-x-gap-col">
           <div className="col-span-12 md:col-span-5">
             <p className="eyebrow text-[var(--text-accent)]">{piece.silhouette}</p>
-            <h1 className="display-m mt-item text-[var(--text-primary)]">
+
+            {/* The Urdu, large. This is the ONE place it appears: at card size
+                Nastaliq is illegible, and it needs size to be beautiful.
+                `lang` and `dir` are required, and `unicode-bidi: isolate`
+                (in the .urdu utility) keeps adjacent Latin and digits from
+                reordering around the RTL run. */}
+            <p
+              lang="ur"
+              dir="rtl"
+              // dir="rtl" governs shaping and character order, which is what
+              // must be correct. Alignment is a layout choice: left, so the
+              // Urdu and the Latin name share one optical left edge instead of
+              // drifting to opposite sides of the column.
+              className="urdu urdu-display mt-item text-left text-[var(--text-primary)]"
+            >
+              {piece.urdu}
+            </p>
+
+            <h1 className="display-m mt-tight text-[var(--text-primary)]">
               {piece.name ?? piece.label}
             </h1>
             <p className="body-l measure mt-group text-[var(--text-secondary)]">{piece.note}</p>
           </div>
 
           <div className="col-span-12 mt-band md:col-span-4 md:col-start-8 md:mt-0">
-            <p className="eyebrow text-[var(--text-secondary)]">Made to order in</p>
+            <p className="eyebrow text-[var(--text-secondary)]">Colours</p>
 
-            <div className="mt-item flex flex-wrap gap-tight">
-              {HIDES.map((h) => {
-                const on = h.id === hide.id;
+            <div
+              role="radiogroup"
+              aria-label={`Colour, ${piece.name}`}
+              className="mt-item flex flex-col gap-tight"
+            >
+              {piece.colourways.map((c) => {
+                const on = c.name === cw.name;
                 return (
                   <button
-                    key={h.id}
+                    key={c.name}
                     type="button"
-                    onClick={() => setHide(h)}
-                    aria-pressed={on}
-                    className={[
-                      "size-11 rounded-xs transition-shadow duration-[var(--dur-1)] ease-[var(--ease-snap)]",
-                      on
-                        ? "shadow-[0_0_0_2px_var(--surface),0_0_0_4px_var(--text-primary)]"
-                        : "shadow-[inset_0_0_0_1px_rgb(255_255_255/0.25)] hover:shadow-[inset_0_0_0_1px_rgb(255_255_255/0.55)]",
-                    ].join(" ")}
-                    style={{ backgroundColor: h.leather }}
+                    role="radio"
+                    aria-checked={on}
+                    onClick={() => setCw(c)}
+                    className="flex items-center gap-3 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus)]"
                   >
-                    <span className="sr-only">{h.name}</span>
+                    <span
+                      aria-hidden="true"
+                      className={[
+                        "size-8 shrink-0 rounded-xs transition-shadow duration-[var(--dur-1)]",
+                        on
+                          ? "shadow-[0_0_0_2px_var(--surface),0_0_0_4px_var(--text-primary)]"
+                          : "shadow-[inset_0_0_0_1px_rgb(255_255_255/0.25)] hover:shadow-[inset_0_0_0_1px_rgb(255_255_255/0.55)]",
+                      ].join(" ")}
+                      style={{ backgroundColor: c.hex }}
+                    />
+                    {/* The name always rides with the chip. She cannot type a
+                        swatch into a DM. */}
+                    <span
+                      className={
+                        on
+                          ? "body-s text-[var(--text-primary)]"
+                          : "body-s text-[var(--text-secondary)]"
+                      }
+                    >
+                      {c.name}
+                    </span>
                   </button>
                 );
               })}
             </div>
 
-            <p className="caption mt-item">
-              {hide.name}
-              {hide.id !== piece.shotIn && (
-                <>, shown in {HIDES.find((h) => h.id === piece.shotIn)?.name}</>
-              )}
-            </p>
-
-            <div className="mt-band flex flex-wrap items-baseline gap-group">
-              <span className="price text-[1.75rem]">{priceLabel(piece.price)}</span>
+            <div className="mt-band">
+              <PriceRow piece={piece} reduced={reduced} />
             </div>
 
-            <button
-              type="button"
-              className="eyebrow mt-group w-full rounded-xs bg-vermilion-500 px-control-x-l py-control-y-l text-ink-950 transition-colors duration-[var(--dur-1)] ease-[var(--ease-lux)] hover:bg-vermilion-300 sm:w-auto"
-            >
-              {piece.price === null ? "Inquire" : "Add to bag"}
-            </button>
+            {/* A real link, never a dead button. There is no cart on this
+                site; the order closes in the DM and she pays the rider. The
+                old control did nothing at all, and its fallback label broke
+                the one promise this shop makes: the price is on the page. */}
+            {dm && (
+              <div className="mt-group flex flex-col items-start gap-tight">
+                <a
+                  href={dm}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="eyebrow inline-flex w-full items-center justify-center rounded-xs bg-[var(--text-signal)] px-control-x-l py-control-y-l text-ink-950 transition-opacity duration-[var(--dur-1)] ease-[var(--ease-lux)] hover:opacity-90 sm:w-auto"
+                >
+                  Order on Instagram
+                </a>
+                <CopyLine
+                  text={orderReference({
+                    piece: piece.name,
+                    slug: piece.slug,
+                    colourway: cw.name,
+                  })}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * Instagram deep links cannot prefill a message, so the reader needs the line
+ * to paste. Without it she lands in an empty box and the reply starts with
+ * "which one?".
+ */
+function CopyLine({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+  return (
+    <button
+      type="button"
+      onClick={async () => {
+        try {
+          await navigator.clipboard.writeText(text);
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        } catch {
+          setCopied(false);
+        }
+      }}
+      className="eyebrow text-[var(--text-secondary)] underline underline-offset-4 transition-colors duration-[var(--dur-1)] hover:text-[var(--text-primary)]"
+    >
+      {copied ? "Copied" : "Copy your message"}
+    </button>
   );
 }

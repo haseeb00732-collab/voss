@@ -9,8 +9,8 @@
  * the page — because the whole reason this section exists is that COD fraud is
  * a live trust problem in this market and specific, checkable COD language is
  * what wins. A promise the rider will not honour does more damage here than no
- * promise at all, and it is the same failure as the invented "Florence, Italy"
- * origin that had to be pulled out of this site once already.
+ * promise at all, and it is the same failure as the invented European origin
+ * claim that had to be pulled out of this site once already.
  *
  * Fill these in and add them back — each is a two-line change:
  *

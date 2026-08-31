@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { HideSwatches } from "./HideSwatches";
-import { getPiece } from "@/lib/catalogue";
+import { getPiece, priceLabel } from "@/lib/catalogue";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -252,12 +252,15 @@ function RailCard({
       <p className="numeral mt-group text-[var(--text-accent)]">{String(index + 1).padStart(2, "0")}</p>
       <div className="rule-h mt-item w-12 transition-[width] duration-[var(--dur-3)] ease-[var(--ease-lux)] group-hover:w-20" />
       <p className="body-base mt-item text-[var(--text-primary)]">{product.label}</p>
-      <p className="caption mt-tight text-[var(--text-secondary)]">Inquire for price</p>
+      <p className="caption mt-tight text-[var(--text-secondary)]">
+        {priceLabel(getPiece(product.slug)?.price ?? null)}
+      </p>
 
-      {/* Four hides, made to order. Ringed swatch = the hide photographed. */}
+      {/* DEPRECATED, unmounted. Kept per instruction, but the copy below
+          no longer claims a hide system that does not exist. */}
       <div className="mt-item flex items-center justify-between gap-group">
         <HideSwatches shotIn={getPiece(product.slug)?.shotIn ?? "noir"} />
-        <span className="caption text-[var(--text-secondary)]">Four hides</span>
+        <span className="caption text-[var(--text-secondary)]">Colours</span>
       </div>
     </Link>
   );

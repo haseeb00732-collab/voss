@@ -4,7 +4,7 @@
  * These are the actual pieces being sold, shot on a phone rather than graded
  * — unlike everything in `media.ts`, which is why they are served from
  * `/public` instead of statically imported. Names, prices and descriptions
- * are unset until the real copy exists; the page renders "Inquire" rather
+ * are unset until the real copy exists; the page renders no price row rather
  * than inventing a number.
  */
 export type RawProduct = {

@@ -30,7 +30,7 @@ export const PRODUCTS: Product[] = [
       { label: "Dimensions", value: '9.5" × 6.0" × 3.0"' },
       { label: "Hardware", value: "Gold-tone" },
       { label: "Lining", value: "Suede goatskin" },
-      { label: "Production", value: "Made to order" },
+      { label: "Production", value: "TODO confirm" },
     ],
   },
   {
@@ -48,7 +48,7 @@ export const PRODUCTS: Product[] = [
       { label: "Dimensions", value: '11.0" × 7.5" × 4.0"' },
       { label: "Hardware", value: "Gold-tone" },
       { label: "Lining", value: "Cotton twill" },
-      { label: "Production", value: "Made to order" },
+      { label: "Production", value: "TODO confirm" },
     ],
   },
   {
@@ -66,7 +66,7 @@ export const PRODUCTS: Product[] = [
       { label: "Dimensions", value: '10.0" × 7.0" × 3.5"' },
       { label: "Leather", value: "Grained French calf" },
       { label: "Lining", value: "Unlined, raw edge" },
-      { label: "Production", value: "Made to order" },
+      { label: "Production", value: "TODO confirm" },
     ],
   },
   {
@@ -84,7 +84,7 @@ export const PRODUCTS: Product[] = [
       { label: "Dimensions", value: '10.5" × 6.5" × 3.2"' },
       { label: "Leather", value: "Box calf, hand-glazed" },
       { label: "Lining", value: "Suede goatskin" },
-      { label: "Production", value: "Made to order" },
+      { label: "Production", value: "TODO confirm" },
     ],
   },
 ];
