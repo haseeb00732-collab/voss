@@ -602,6 +602,15 @@ html {
    ═══════════════════════════════════════════════════════════════════════ */
 
 .bag-card {
+  /* HARD LIMIT (design prompt §4): no product photo renders wider than 440
+     CSS px. The source frames are 540px across, so past this the browser is
+     upscaling and the photography visibly falls apart. At 1440 a three-column
+     cell is ~460px and at 1920 it is ~616px, so the cap has to be on the card
+     itself — the grid alone does not enforce it. */
+  max-width: 440px;
+  margin-inline: auto;
+  width: 100%;
+
   --lit: 0;
   --drift: 0px;
   --stagger: 0ms;

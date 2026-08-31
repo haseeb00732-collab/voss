@@ -65,12 +65,12 @@ export default async function PiecePage({ params }: { params: Promise<{ slug: st
                     href={`/collection/${r.slug}`}
                     className="group block transition-transform duration-[var(--dur-2)] ease-[var(--ease-lux)] hover:-translate-y-1.5"
                   >
-                    <div className="plate aspect-[4/5] transition-shadow duration-[var(--dur-2)] ease-[var(--ease-lux)] group-hover:shadow-[var(--elev-3)]">
+                    <div className="plate aspect-[4/5] w-full max-w-[440px] transition-shadow duration-[var(--dur-2)] ease-[var(--ease-lux)] group-hover:shadow-[var(--elev-3)]">
                       <Image
                         src={cover}
                         alt={`${r.label}, ${r.silhouette.toLowerCase()}`}
                         fill
-                        sizes="(max-width: 640px) 100vw, 33vw"
+                        sizes="(max-width: 640px) 100vw, 440px"
                         className="object-cover"
                       />
                     </div>

@@ -224,7 +224,7 @@ function BagCard({
               alt={`The ${piece.name} in ${current.name}, ${piece.silhouette.toLowerCase()}, front view`}
               fill
               priority={index < 2}
-              sizes="(max-width: 640px) min(100vw, 440px), (max-width: 1024px) 44vw, 30vw"
+              sizes="(max-width: 640px) min(100vw, 440px), 440px"
               className="object-cover"
               style={{ viewTransitionName: `bag-${piece.slug}` }}
             />

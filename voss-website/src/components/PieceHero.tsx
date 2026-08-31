@@ -81,37 +81,37 @@ export function PieceHero({ piece }: { piece: Piece }) {
         {/* The collage. Three crops, three scales, none of them aligned to the
             same baseline — the grid is there to be broken against. */}
         <div className="relative grid grid-cols-12 gap-x-gap-col">
-          <div className="plate col-span-12 aspect-[4/5] shadow-[var(--elev-3)] md:col-span-7">
+          <div className="plate col-span-12 aspect-[4/5] w-full max-w-[440px] shadow-[var(--elev-3)] md:col-span-7">
             <Image
               src={colourwayImage(piece, cw)}
               alt={`The ${piece.name} in ${cw.name}, ${piece.silhouette.toLowerCase()}`}
               fill
               priority
-              sizes="(max-width: 768px) 100vw, 58vw"
+              sizes="(max-width: 768px) 100vw, 440px"
               className="object-cover"
               style={{ viewTransitionName: `bag-${piece.slug}` }}
             />
           </div>
 
           {images[1] && (
-            <div className="plate relative z-2 col-span-8 col-start-4 -mt-band aspect-square shadow-[var(--elev-3)] md:col-span-4 md:col-start-8 md:mt-band">
+            <div className="plate relative z-2 col-span-8 col-start-4 -mt-band aspect-square w-full max-w-[340px] shadow-[var(--elev-3)] md:col-span-4 md:col-start-8 md:mt-band">
               <Image
                 src={images[1]}
                 alt=""
                 fill
-                sizes="(max-width: 768px) 66vw, 33vw"
+                sizes="(max-width: 768px) 66vw, 340px"
                 className="object-cover"
               />
             </div>
           )}
 
           {images[2] && (
-            <div className="plate col-span-6 col-start-1 mt-group aspect-[3/2] shadow-[var(--elev-2)] md:col-span-3 md:col-start-9 md:-mt-band">
+            <div className="plate col-span-6 col-start-1 mt-group aspect-[3/2] w-full max-w-[300px] shadow-[var(--elev-2)] md:col-span-3 md:col-start-9 md:-mt-band">
               <Image
                 src={images[2]}
                 alt=""
                 fill
-                sizes="(max-width: 768px) 50vw, 25vw"
+                sizes="(max-width: 768px) 50vw, 300px"
                 className="object-cover"
               />
             </div>
