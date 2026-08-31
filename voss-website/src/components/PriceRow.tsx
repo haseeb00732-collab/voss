@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { pricing, type Piece } from "@/lib/catalogue";
 
 /**
@@ -53,24 +53,24 @@ function markSeen(slug: string) {
 export function PriceRow({ piece, reduced }: { piece: Piece; reduced: boolean }) {
   const price = pricing(piece);
   const root = useRef<HTMLParagraphElement>(null);
-  /* "done" is the settled state and is also the SSR state, so server markup
-     carries the final appearance. "armed" is only ever entered on the client,
-     for a card that has not played yet this session. */
-  const [state, setState] = useState<"done" | "armed" | "playing">("done");
 
+  /* The play state is a DOM attribute, not React state.
+     It starts as "done" in the server markup — the settled, correct price —
+     and the effect below only ever arms it on the client. Driving it through
+     useState would mean calling setState synchronously inside an effect,
+     which cascades a second render of every card on mount for something that
+     is purely presentational. This is the case effects are actually for:
+     writing to an external system, here the DOM. */
   useEffect(() => {
-    if (reduced || !price.was) return;
-    if (seenThisSession(piece.slug)) return;
-    setState("armed");
-  }, [reduced, piece.slug, price.was]);
-
-  useEffect(() => {
-    if (state !== "armed" || !root.current) return;
     const el = root.current;
+    if (!el || reduced || !price.was) return;
+    if (seenThisSession(piece.slug)) return;
+
+    el.dataset.priceState = "armed";
 
     const go = () => {
       markSeen(piece.slug);
-      setState("playing");
+      el.dataset.priceState = "playing";
     };
 
     /* Fire the moment ANY part of the row is on screen.
@@ -104,7 +104,7 @@ export function PriceRow({ piece, reduced }: { piece: Piece; reduced: boolean })
       io.disconnect();
       clearTimeout(failsafe);
     };
-  }, [state, piece.slug]);
+  }, [reduced, piece.slug, price.was]);
 
   // No offer running: one number, no strike, no theatre.
   if (!price.was) {
@@ -118,7 +118,7 @@ export function PriceRow({ piece, reduced }: { piece: Piece; reduced: boolean })
   }
 
   return (
-    <p ref={root} className="price-row mt-tight" data-price-state={state}>
+    <p ref={root} className="price-row mt-tight" data-price-state="done">
       <span className="price-was">
         <span className="price-was-figure">{price.was}</span>
         <span aria-hidden="true" className="price-strike" />

@@ -1,5 +1,4 @@
 "use client";
-
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,14 +7,12 @@ import {
   colourwayImage,
   offerEndsLabel,
   offerRunning,
-  pricing,
   type Piece,
 } from "@/lib/catalogue";
 import { igDirectMessage, orderReference } from "@/lib/instagram";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { PriceRow } from "./PriceRow";
 import { PointerTilt } from "./PointerTilt";
-
 /**
  * Section 2 — THE BAGS.
  *
@@ -57,7 +54,6 @@ import { PointerTilt } from "./PointerTilt";
 export function Bags() {
   const reduced = useReducedMotion();
   const section = useRef<HTMLElement>(null);
-
   /* THE ONE SCROLL WRITER.
      Runs at most once per frame, reads layout in a single pass, then writes.
      Everything scroll-derived on this section goes through here. */
@@ -66,36 +62,30 @@ export function Bags() {
     const el = section.current;
     const cards = Array.from(el.querySelectorAll<HTMLElement>("[data-bag-card]"));
     if (!cards.length) return;
-
     let frame = 0;
     let lastY = window.scrollY;
     let velocity = 0;
     const last = cards.map(() => ({ lit: "", drift: "" }));
-
     const write = () => {
       frame = 0;
       const y = window.scrollY;
       const raw = y - lastY;
       lastY = y;
-
       // Spring toward the live velocity, then clamp hard. Unclamped this
       // turns a flick into a jump.
       velocity += (raw - velocity) * 0.2;
       const drift = Math.max(-12, Math.min(12, velocity * 0.6));
-
       /* READ PHASE. Every rect is measured before a single style is written.
          Interleaving them forces a synchronous layout per card — six per
          frame — and that alone was enough to stall the renderer. */
       const vh = window.innerHeight;
       const rect = el.getBoundingClientRect();
       const boxes = cards.map((c) => c.getBoundingClientRect());
-
       /* WRITE PHASE. Custom properties only; CSS owns the transforms. */
       // 0 when the section's top reaches the viewport bottom, 1 when its
       // bottom reaches the top: the light's travel down the column.
       const progress = Math.max(0, Math.min(1, (vh - rect.top) / (vh + rect.height)));
       el.style.setProperty("--light-y", progress.toFixed(3));
-
       for (let i = 0; i < cards.length; i++) {
         const box = boxes[i];
         const centre = (box.top + box.height / 2) / vh; // 0 = top of screen
@@ -103,7 +93,6 @@ export function Bags() {
         const lit = Math.max(0, 1 - Math.abs(centre - 0.5) * 2.1);
         // Alternating rows lag opposite ways.
         const d = i % 2 ? -drift : drift;
-
         /* Guarded. Writing an identical value still costs a style recalc, and
            this runs on every scroll frame across six cards. Quantising also
            means a slow drag repaints a card a handful of times rather than
@@ -120,11 +109,9 @@ export function Bags() {
         }
       }
     };
-
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(write);
     };
-
     write();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
@@ -134,7 +121,6 @@ export function Bags() {
       if (frame) cancelAnimationFrame(frame);
     };
   }, [reduced]);
-
   /* Arrival. One observer for all six rather than six observers, and it
      disconnects each card once it has arrived — nothing re-animates. */
   useEffect(() => {
@@ -153,10 +139,8 @@ export function Bags() {
     cards.forEach((c) => io.observe(c));
     return () => io.disconnect();
   }, [reduced]);
-
   const running = offerRunning();
   const endsOn = offerEndsLabel();
-
   return (
     <section
       ref={section}
@@ -186,9 +170,7 @@ export function Bags() {
             )}
           </p>
         </div>
-
         <div className="rule-h mt-band w-full" />
-
         <div className="mt-band grid grid-cols-1 gap-x-gap-col gap-y-section sm:grid-cols-2 lg:grid-cols-3">
           {CATALOGUE.map((p, i) => (
             <BagCard key={p.slug} piece={p} index={i} reduced={reduced} />
@@ -198,7 +180,6 @@ export function Bags() {
     </section>
   );
 }
-
 /** One line per bag, ≤8 words. Assigned by silhouette, not forced. */
 const USE_LINE: Record<string, string> = {
   afsun: "The one that goes with everything.",
@@ -208,7 +189,6 @@ const USE_LINE: Record<string, string> = {
   mahrooh: "Weekend bag. Doesn't act like a suitcase.",
   meher: "Small enough for a night out.",
 };
-
 function BagCard({
   piece,
   index,
@@ -223,7 +203,6 @@ function BagCard({
   const i = Math.min(shot, colourways.length - 1);
   const current = colourways[i];
   const dm = igDirectMessage();
-
   return (
     <article
       data-bag-card
@@ -234,7 +213,6 @@ function BagCard({
         {/* The frame: ONE aspect ratio and one plate for all six. The reveal
             clips this box; the photograph inside counter-moves so it is at
             rest by the time the frame is open.
-
             PointerTilt is separable by design — remove it and a-d still read
             as finished. */}
         <PointerTilt>
@@ -251,19 +229,15 @@ function BagCard({
               style={{ viewTransitionName: `bag-${piece.slug}` }}
             />
           </div>
-
           {/* (a) The light. One scrim, opacity only, no second asset. */}
           <div aria-hidden="true" className="bag-scrim absolute inset-0" />
-
           {/* The baked-in falloff that makes six backgrounds sit in one set. */}
           <div aria-hidden="true" className="bag-vignette absolute inset-0" />
-
           {/* (e) The light origin, following the pointer. Desktop only. */}
           <div aria-hidden="true" className="bag-glare absolute inset-0" />
         </div>
         </PointerTilt>
       </Link>
-
       <div className="bag-meta mt-item">
         <div className="flex items-baseline justify-between gap-group">
           <Link
@@ -273,13 +247,10 @@ function BagCard({
             {piece.name}
           </Link>
         </div>
-
         <PriceRow piece={piece} reduced={reduced} />
-
         <p className="caption mt-tight text-[var(--text-secondary)]">
           {USE_LINE[piece.slug] ?? piece.note}
         </p>
-
         {colourways.length > 1 && (
           <div
             role="radiogroup"
@@ -331,13 +302,11 @@ function BagCard({
             })}
           </div>
         )}
-
         {dm && <OrderCta piece={piece} colourway={current.name} href={dm} />}
       </div>
     </article>
   );
 }
-
 /**
  * Instagram cannot prefill a message, so the CTA is two affordances, not one:
  * the link that opens the thread, and the line she pastes into it. Without the
@@ -358,7 +327,6 @@ function OrderCta({
     slug: piece.slug,
     colourway,
   });
-
   const copy = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(reference);
@@ -370,7 +338,6 @@ function OrderCta({
       setCopied(false);
     }
   }, [reference]);
-
   return (
     <div className="mt-group flex flex-wrap items-center gap-x-group gap-y-tight">
       <a
