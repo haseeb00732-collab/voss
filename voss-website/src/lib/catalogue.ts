@@ -83,19 +83,18 @@ export const CATALOGUE: Piece[] = [
     name: "Afsun",
     urdu: "افسون",
     label: "Style 01",
-    imageCount: 6,
+    imageCount: 5,
     price: 4500,
     listPrice: 6000,
     silhouette: "Top handle",
     note: "A structured top-handle with a sculpted flap and a twin-strap front.",
     colourways: [
-      { name: "Black", hex: "#25262a", image: 1 },
-      { name: "Tan", hex: "#785747", image: 2 },
-      { name: "Chocolate", hex: "#49352b", image: 3 },
-      { name: "Navy", hex: "#2c3349", image: 4 },
-      { name: "Sand", hex: "#867a66", image: 5 },
+      { name: "Tan", hex: "#7a523f", image: 1 },
+      { name: "Chocolate", hex: "#4d372c", image: 2 },
+      { name: "Navy", hex: "#283041", image: 3 },
+      { name: "Sand", hex: "#a58b73", image: 4 },
+      { name: "Black", hex: "#232323", image: 5 },
     ],
-    detailImages: [6], // interior, black bag, showing compartments
     shotIn: "cognac",
   },
   {
@@ -104,21 +103,17 @@ export const CATALOGUE: Piece[] = [
     name: "Gulnaar",
     urdu: "گلنار",
     label: "Style 02",
-    imageCount: 6,
+    imageCount: 5,
     price: 4500,
     listPrice: 6000,
     silhouette: "Shoulder",
     note: "Croc-embossed, with a gold turn-lock at the front.",
     colourways: [
-      { name: "Sage", hex: "#5a5b55", image: 1 },
-      // Image 2 photographs a SMOOTH finish with a zip front and no turn-lock,
-      // where the rest of the set is croc-embossed with a lock. Either a second
-      // finish or a different bag — confirm before selling it as a colourway.
-      { name: "Camel", hex: "#876744", image: 2 },
-      { name: "Navy", hex: "#1b2437", image: 3 },
-      { name: "Honey", hex: "#7a5835", image: 4 },
-      { name: "Chocolate", hex: "#47352b", image: 5 },
-      { name: "Crimson", hex: "#7b3635", image: 6 },
+      { name: "Navy", hex: "#454657", image: 1 },
+      { name: "Stone", hex: "#887e74", image: 2 },
+      { name: "Chocolate", hex: "#6b4e46", image: 3 },
+      { name: "Wine", hex: "#90514b", image: 4 },
+      { name: "Camel", hex: "#b1794e", image: 5 },
     ],
     shotIn: "noir",
   },
@@ -128,16 +123,16 @@ export const CATALOGUE: Piece[] = [
     name: "Naubahar",
     urdu: "نو بہار",
     label: "Style 03",
-    imageCount: 8,
+    imageCount: 4,
     price: 4500,
     listPrice: 6000,
     silhouette: "Tote",
     note: "The largest bag in the range, with a matching wallet.",
     colourways: [
-      { name: "Camel", hex: "#573b25", image: 1, alsoShotAs: [6] },
-      { name: "Green", hex: "#3a4944", image: 2, alsoShotAs: [8] },
-      { name: "Burgundy", hex: "#472925", image: 3, alsoShotAs: [4] },
-      { name: "Black", hex: "#282825", image: 5, alsoShotAs: [7] },
+      { name: "Green", hex: "#243b32", image: 1 },
+      { name: "Burgundy", hex: "#3e1f22", image: 2 },
+      { name: "Black", hex: "#242526", image: 3 },
+      { name: "Ochre", hex: "#724c26", image: 4 },
     ],
     shotIn: "cognac",
   },
@@ -153,15 +148,12 @@ export const CATALOGUE: Piece[] = [
     silhouette: "Structured tote",
     note: "A quilted grid tote that holds its shape.",
     colourways: [
-      { name: "Olive", hex: "#35453a", image: 1 },
-      { name: "Black", hex: "#2b2925", image: 2 },
-      { name: "Chocolate", hex: "#493a34", image: 3 },
-      // Images 4 and 5 carry another brand's name ("AURELIA") on a brass
-      // plaque in the background. Do not publish either until they are
-      // recropped or replaced.
-      { name: "Cognac", hex: "#8b5536", image: 4 },
-      { name: "Wine", hex: "#6b3533", image: 5 },
-      { name: "Camel", hex: "#ab7c53", image: 6 },
+      { name: "Tan", hex: "#824e2f", image: 1 },
+      { name: "Wine", hex: "#52322a", image: 2 },
+      { name: "Chocolate", hex: "#3f3429", image: 3 },
+      { name: "Green", hex: "#313830", image: 4 },
+      { name: "Camel", hex: "#9b6d46", image: 5 },
+      { name: "Black", hex: "#2e2e24", image: 6 },
     ],
     shotIn: "oxblood",
   },
@@ -177,10 +169,10 @@ export const CATALOGUE: Piece[] = [
     silhouette: "Shopper",
     note: "A soft-sided shopper, croc-embossed, open at the top.",
     colourways: [
-      { name: "Espresso", hex: "#271b19", image: 1 },
-      { name: "Green", hex: "#34453a", image: 2 },
-      { name: "Tan", hex: "#854c28", image: 3 },
-      { name: "Black", hex: "#191819", image: 4 },
+      { name: "Green", hex: "#2f3a24", image: 1 },
+      { name: "Black", hex: "#181617", image: 2 },
+      { name: "Tan", hex: "#9a633a", image: 3 },
+      { name: "Chocolate", hex: "#2b1d19", image: 4 },
     ],
     shotIn: "bone",
   },
@@ -196,13 +188,11 @@ export const CATALOGUE: Piece[] = [
     silhouette: "Chevron tote",
     note: "Chevron-quilted, with a matching wallet and a detachable strap.",
     colourways: [
-      { name: "Cognac", hex: "#b76a36", image: 1 },
-      // Image 2's background carries a boutique sign reading "Brand Name" —
-      // AI placeholder text left in frame. Do not publish until replaced.
-      { name: "Blush", hex: "#c89877", image: 2 },
-      { name: "Black", hex: "#272629", image: 3 },
-      { name: "Green", hex: "#5a6a53", image: 4 },
-      { name: "Chocolate", hex: "#46322c", image: 5 },
+      { name: "Cognac", hex: "#9b6534", image: 1 },
+      { name: "Green", hex: "#4f4f38", image: 2 },
+      { name: "Black", hex: "#2b2929", image: 3 },
+      { name: "Chocolate", hex: "#4b342f", image: 4 },
+      { name: "Blush", hex: "#bf9b80", image: 5 },
     ],
     shotIn: "noir",
   },
@@ -215,37 +205,60 @@ export const CATALOGUE: Piece[] = [
 export const HIDES: Finish[] = FINISHES;
 
 /**
- * PLACEHOLDER PHOTOGRAPHY — being reshot.
+ * IMAGE SOURCES. Two sets, both kept, and this is the only place either is
+ * named.
  *
- * Every image URL on the site is built by these three functions and nowhere
- * else. When the real photographs land, change `IMAGE_ROOT` and `IMAGE_EXT`
- * here and the whole site follows; no component knows where a picture lives.
+ * `products-hd/` is the GENERATED set, built by `scripts/build-media.mjs` from
+ * the 1792x2400 originals on the desktop. It is the catalogue: consistent
+ * lighting, one background per style, and enough resolution to render large.
+ * Three widths per shot, so the browser picks rather than upscaling.
+ *
+ * `products/` is the ORIGINAL 540x1170 phone set. Kept, not deleted, and shown
+ * as extra gallery frames on a product page. It is why the design prompt caps
+ * product photos at 440 CSS px — that cap belongs to THIS set, not to the
+ * generated one.
+ *
+ * A reshoot is still a one-file change: repoint HD_ROOT and re-run the script.
  */
-const IMAGE_ROOT = "/products";
-const IMAGE_EXT = "jpg";
+const HD_ROOT = "/products-hd";
+const LEGACY_ROOT = "/products";
+const HD_WIDTHS = [440, 880, 1320];
 
-/**
- * The hero photograph. INTERIM — replace when real footage exists.
- *
- * Composed by `scripts/build-hero.mjs` from one catalogue frame: the
- * letterbox and the device AI badge cropped off, a baked vignette so the
- * plate falls off into the page. 540x694, 13.8KB AVIF.
- *
- * It lives here rather than in Hero.tsx so that the reshoot is still a
- * one-file change.
- */
-export const HERO_IMAGE = "/hero/plate.avif";
-
-export function pieceImages(piece: Piece): string[] {
-  return Array.from(
-    { length: piece.imageCount },
-    (_, i) => `${IMAGE_ROOT}/${piece.dir}/${i + 1}.${IMAGE_EXT}`
-  );
+/** Largest generated width — the `src` a plain <img> falls back to. */
+export function hdImage(piece: Piece, n: number): string {
+  return `${HD_ROOT}/${piece.dir}/${n}-1320.avif`;
 }
 
-/** The photograph a given colourway selects. */
+/** Full srcset so the browser downloads the width it will actually paint. */
+export function hdSrcSet(piece: Piece, n: number): string {
+  return HD_WIDTHS.map((w) => `${HD_ROOT}/${piece.dir}/${n}-${w}.avif ${w}w`).join(", ");
+}
+
+/** Every generated shot for a style, in order. */
+export function pieceImages(piece: Piece): string[] {
+  return Array.from({ length: piece.imageCount }, (_, i) => hdImage(piece, i + 1));
+}
+
+/** The photograph a given colourway selects, from the generated set. */
 export function colourwayImage(piece: Piece, c: Colourway): string {
-  return `${IMAGE_ROOT}/${piece.dir}/${c.image}.${IMAGE_EXT}`;
+  return hdImage(piece, c.image);
+}
+
+export function colourwaySrcSet(piece: Piece, c: Colourway): string {
+  return hdSrcSet(piece, c.image);
+}
+
+/**
+ * The original phone-set frames for a style, as extra gallery images. These
+ * are 540px wide: never render one above 440 CSS px.
+ */
+export const LEGACY_COUNTS: Record<string, number> = {
+  "01": 6, "02": 6, "03": 8, "04": 6, "05": 4, "06": 5,
+};
+
+export function legacyImages(piece: Piece): string[] {
+  const n = LEGACY_COUNTS[piece.dir] ?? 0;
+  return Array.from({ length: n }, (_, i) => `${LEGACY_ROOT}/${piece.dir}/${i + 1}.jpg`);
 }
 
 /** The cover shot: the first colourway, never a detail crop. */

@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { PieceHero } from "@/components/PieceHero";
-import { CATALOGUE, getPiece, pieceImages, relatedPieces } from "@/lib/catalogue";
+import {
+  CATALOGUE,
+  getPiece,
+  hdImage,
+  hdSrcSet,
+  relatedPieces,
+} from "@/lib/catalogue";
 
 export function generateStaticParams() {
   return CATALOGUE.map((p) => ({ slug: p.slug }));
@@ -58,20 +63,24 @@ export default async function PiecePage({ params }: { params: Promise<{ slug: st
 
             <div className="mt-band grid grid-cols-1 gap-x-gap-col gap-y-band sm:grid-cols-3">
               {related.map((r) => {
-                const [cover] = pieceImages(r);
+                const cover = hdImage(r, 1);
                 return (
                   <Link
                     key={r.slug}
                     href={`/collection/${r.slug}`}
                     className="group block transition-transform duration-[var(--dur-2)] ease-[var(--ease-lux)] hover:-translate-y-1.5"
                   >
-                    <div className="plate aspect-[4/5] w-full max-w-[440px] transition-shadow duration-[var(--dur-2)] ease-[var(--ease-lux)] group-hover:shadow-[var(--elev-3)]">
-                      <Image
+                    <div className="plate relative aspect-[4/5] w-full transition-shadow duration-[var(--dur-2)] ease-[var(--ease-lux)] group-hover:shadow-[var(--elev-3)]">
+                      <img
                         src={cover}
-                        alt={`${r.label}, ${r.silhouette.toLowerCase()}`}
-                        fill
-                        sizes="(max-width: 640px) 100vw, 440px"
-                        className="object-cover"
+                        srcSet={hdSrcSet(r, 1)}
+                        sizes="(max-width: 640px) 92vw, 31vw"
+                        alt={`The ${r.name}, ${r.silhouette.toLowerCase()}`}
+                        width={1792}
+                        height={2400}
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 h-full w-full object-cover"
                       />
                     </div>
                     <div className="mt-item flex items-baseline justify-between gap-group">

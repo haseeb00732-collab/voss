@@ -1,10 +1,10 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import {
   CATALOGUE,
   colourwayImage,
+  colourwaySrcSet,
   offerEndsLabel,
   offerRunning,
   type Piece,
@@ -218,14 +218,22 @@ function BagCard({
         <PointerTilt>
         <div className="bag-frame plate relative aspect-[3/4] overflow-hidden">
           <div className="bag-shot absolute inset-0">
-            <Image
+            {/* A plain <img> with an explicit srcset, not next/image: these
+                are already AVIF at three widths from `build-media.mjs`, so
+                routing them through the optimiser would re-encode a file that
+                is finished. */}
+            <img
               key={i}
               src={colourwayImage(piece, current)}
+              srcSet={colourwaySrcSet(piece, current)}
+              sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 31vw"
               alt={`The ${piece.name} in ${current.name}, ${piece.silhouette.toLowerCase()}, front view`}
-              fill
-              priority={index < 2}
-              sizes="(max-width: 640px) min(100vw, 440px), 440px"
-              className="object-cover"
+              width={1792}
+              height={2400}
+              loading={index < 2 ? "eager" : "lazy"}
+              fetchPriority={index < 2 ? "high" : "auto"}
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-cover"
               style={{ viewTransitionName: `bag-${piece.slug}` }}
             />
           </div>

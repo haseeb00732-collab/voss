@@ -602,13 +602,11 @@ html {
    ═══════════════════════════════════════════════════════════════════════ */
 
 .bag-card {
-  /* HARD LIMIT (design prompt §4): no product photo renders wider than 440
-     CSS px. The source frames are 540px across, so past this the browser is
-     upscaling and the photography visibly falls apart. At 1440 a three-column
-     cell is ~460px and at 1920 it is ~616px, so the cap has to be on the card
-     itself — the grid alone does not enforce it. */
-  max-width: 440px;
-  margin-inline: auto;
+  /* The 440px cap that used to live here belonged to the OLD 540px phone
+     set, where anything wider was the browser upscaling. The generated set is
+     1792x2400 and ships at three widths, so the cards can render at their
+     natural size and the limit is no longer meaningful here. It still applies
+     to any legacy frame — see `legacyImages` in catalogue.ts. */
   width: 100%;
 
   --lit: 0;
@@ -850,5 +848,26 @@ html {
   ::view-transition-old(*),
   ::view-transition-new(*) {
     animation: none !important;
+  }
+}
+
+/* The hero clip fades in over its own poster.
+   The poster is the LIT final frame so the hero is never a black rectangle
+   before the video arrives. The video therefore has to appear ON TOP of it
+   rather than replace it — otherwise the instant playback begins the hero
+   snaps back to the clip's dark opening. It only becomes visible once it is
+   actually playing, and it starts from the lit part of the reveal. */
+.hero-video {
+  opacity: 0;
+  transition: opacity var(--dur-2) var(--ease-lux);
+}
+
+.hero-video[data-playing="true"] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-video {
+    display: none;
   }
 }

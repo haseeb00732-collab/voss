@@ -1,12 +1,13 @@
 "use client";
 
-import Image from "next/image";
 import { useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import {
   colourwayImage,
+  colourwaySrcSet,
+  hdSrcSet,
   pieceImages,
   type Colourway,
   type Piece,
@@ -81,38 +82,49 @@ export function PieceHero({ piece }: { piece: Piece }) {
         {/* The collage. Three crops, three scales, none of them aligned to the
             same baseline — the grid is there to be broken against. */}
         <div className="relative grid grid-cols-12 gap-x-gap-col">
-          <div className="plate col-span-12 aspect-[4/5] w-full max-w-[440px] shadow-[var(--elev-3)] md:col-span-7">
-            <Image
+          <div className="plate col-span-12 aspect-[4/5] w-full shadow-[var(--elev-3)] md:col-span-7">
+            <img
               src={colourwayImage(piece, cw)}
+              srcSet={colourwaySrcSet(piece, cw)}
+              sizes="(max-width: 768px) 96vw, 56vw"
               alt={`The ${piece.name} in ${cw.name}, ${piece.silhouette.toLowerCase()}`}
-              fill
-              priority
-              sizes="(max-width: 768px) 100vw, 440px"
-              className="object-cover"
+              width={1792}
+              height={2400}
+              fetchPriority="high"
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-cover"
               style={{ viewTransitionName: `bag-${piece.slug}` }}
             />
           </div>
 
           {images[1] && (
-            <div className="plate relative z-2 col-span-8 col-start-4 -mt-band aspect-square w-full max-w-[340px] shadow-[var(--elev-3)] md:col-span-4 md:col-start-8 md:mt-band">
-              <Image
+            <div className="plate relative z-2 col-span-8 col-start-4 -mt-band aspect-square w-full shadow-[var(--elev-3)] md:col-span-4 md:col-start-8 md:mt-band">
+              <img
                 src={images[1]}
+                srcSet={hdSrcSet(piece, 2)}
+                sizes="(max-width: 768px) 66vw, 30vw"
                 alt=""
-                fill
-                sizes="(max-width: 768px) 66vw, 340px"
-                className="object-cover"
+                width={1792}
+                height={2400}
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
           )}
 
           {images[2] && (
-            <div className="plate col-span-6 col-start-1 mt-group aspect-[3/2] w-full max-w-[300px] shadow-[var(--elev-2)] md:col-span-3 md:col-start-9 md:-mt-band">
-              <Image
+            <div className="plate col-span-6 col-start-1 mt-group aspect-[3/2] w-full shadow-[var(--elev-2)] md:col-span-3 md:col-start-9 md:-mt-band">
+              <img
                 src={images[2]}
+                srcSet={hdSrcSet(piece, 3)}
+                sizes="(max-width: 768px) 50vw, 24vw"
                 alt=""
-                fill
-                sizes="(max-width: 768px) 50vw, 300px"
-                className="object-cover"
+                width={1792}
+                height={2400}
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
           )}
