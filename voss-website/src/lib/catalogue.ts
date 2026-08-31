@@ -224,6 +224,18 @@ export const HIDES: Finish[] = FINISHES;
 const IMAGE_ROOT = "/products";
 const IMAGE_EXT = "jpg";
 
+/**
+ * The hero photograph. INTERIM — replace when real footage exists.
+ *
+ * Composed by `scripts/build-hero.mjs` from one catalogue frame: the
+ * letterbox and the device AI badge cropped off, a baked vignette so the
+ * plate falls off into the page. 540x694, 13.8KB AVIF.
+ *
+ * It lives here rather than in Hero.tsx so that the reshoot is still a
+ * one-file change.
+ */
+export const HERO_IMAGE = "/hero/plate.avif";
+
 export function pieceImages(piece: Piece): string[] {
   return Array.from(
     { length: piece.imageCount },
