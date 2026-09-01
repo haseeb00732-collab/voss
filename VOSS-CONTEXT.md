@@ -1,5 +1,16 @@
 # VOSS — full project context
 
+> ## ⛔ RETIRED SNAPSHOT — DO NOT BUILD FROM THIS FILE
+> Assembled **2026-08-24 03:59**. Its §1 embeds the full 834-line **v1** design
+> system and labels it "the approved design system" — **v1 was retired the same
+> day at 16:53.** The current design authority is `Voss-Design.md` (v2). The
+> current situational picture is `VOSS-STATUS-2026-08-27.md`.
+>
+> Use this file for **one thing only**: an index of *what documents existed* as
+> of 2026-08-24. Every design rule, price, and positioning claim inside it is
+> stale. Where it disagrees with `Voss-Design.md` or `voss-website/CLAUDE.md`,
+> those win. See `CLAUDE.md` → "Which document wins".
+
 Every piece of written context that exists for this project, collected into
 one file on 2026-08-24. Nothing here is summarised — each section is the
 verbatim contents of the file named in its heading.

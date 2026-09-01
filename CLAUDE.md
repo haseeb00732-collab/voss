@@ -51,3 +51,23 @@ design rules inside it.
 - The site is the deliverable. Root-level docs exist to serve it.
 - Before adding a new root-level `.md`, check it isn't a fourth copy of the
   design direction. That is how `VOSS-CONTEXT.md` went stale.
+
+## How to work here
+
+**Briefs.** At the end of every task, append a BRIEF to `VOSS-PROGRESS.md`:
+what you did, what you verified and with what number, what you could not do,
+and any decision you made on Haseeb's behalf. Tick the phase box only when
+every line of that phase's verify list passes. Never tick a box on an
+unverified claim.
+
+**Autonomy.** Decide and act. Log the decision under "Decisions I made" in
+`VOSS-PROGRESS.md` and keep going. Do not stop the phase to ask a question
+that `VOSS-VISUAL-TARGET.md` already answers, and do not stop to ask
+permission for a deletion — branch, checkpoint, delete.
+
+**Code standard.** `VOSS-VISUAL-TARGET.md` §11 governs every file: one scroll
+controller, one product source, one `gsap.context` per component with a real
+`revert()` cleanup, behaviour in hooks, zero magic numbers, zero hard-coded hex
+outside `globals.css`, no dead code, no commented-out blocks, no `any`, no file
+over ~200 lines. Comment the why, never the what. Answer §11.6's four
+questions in every brief.

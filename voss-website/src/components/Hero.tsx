@@ -252,7 +252,7 @@ export function Hero() {
       <div className="relative z-2 mx-auto grid min-h-[100svh] max-w-[120rem] grid-cols-12 items-end gap-x-gap-col px-gutter pt-28 pb-section md:items-center">
         <div className="col-span-12 md:col-span-7 lg:col-span-6">
           <p data-hero-rise className="eyebrow text-gold-500">
-            Handbags &middot; Lahore &middot; Cash on delivery
+            Lahore &middot; Cash on delivery
           </p>
 
           <h1
@@ -267,7 +267,7 @@ export function Hero() {
               <>
                 Six bags at{" "}
                 <span className="text-[var(--text-signal)]">{price.now}</span>
-                {price.save ? ` — ${price.save} off` : null}
+                {price.save ? `, ${price.save} off` : null}
                 {/* TODO [end date] — unconfirmed. This clause removes itself
                     rather than printing a placeholder date. */}
                 {endsOn ? `, until ${endsOn}` : null}. Cash when it lands in

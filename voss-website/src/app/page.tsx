@@ -1,4 +1,5 @@
 import { SmoothScroll } from "@/components/SmoothScroll";
+import { SiteBackdrop } from "@/components/SiteBackdrop";
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
 import { Bags } from "@/components/Bags";
@@ -77,6 +78,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(catalogueLd()) }}
       />
 
+      <SiteBackdrop />
       <SmoothScroll />
       <Nav />
 

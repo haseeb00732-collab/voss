@@ -82,7 +82,7 @@ export function PieceHero({ piece }: { piece: Piece }) {
         {/* The collage. Three crops, three scales, none of them aligned to the
             same baseline — the grid is there to be broken against. */}
         <div className="relative grid grid-cols-12 gap-x-gap-col">
-          <div className="plate col-span-12 aspect-[4/5] w-full shadow-[var(--elev-3)] md:col-span-7">
+          <div className="piece-lead plate relative col-span-12 aspect-[4/5] w-full overflow-hidden shadow-[var(--elev-3)] md:col-span-7">
             <img
               src={colourwayImage(piece, cw)}
               srcSet={colourwaySrcSet(piece, cw)}

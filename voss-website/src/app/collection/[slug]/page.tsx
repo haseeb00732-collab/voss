@@ -5,6 +5,8 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { PieceHero } from "@/components/PieceHero";
+import { PieceGallery } from "@/components/PieceGallery";
+import { SiteBackdrop } from "@/components/SiteBackdrop";
 import {
   CATALOGUE,
   getPiece,
@@ -40,11 +42,14 @@ export default async function PiecePage({ params }: { params: Promise<{ slug: st
 
   return (
     <>
+      <SiteBackdrop />
       <SmoothScroll />
       <Nav />
 
       <main id="main">
         <PieceHero piece={piece} />
+
+        <PieceGallery piece={piece} />
 
         {/* Related pieces, immediately below the hero — the brief was explicit
             that this is what follows, not specs. Someone who has decided

@@ -595,81 +595,27 @@ html {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   THE BAGS — card motion
-   Every rule here animates transform, opacity or clip-path and nothing
-   else. The scroll writer in Bags.tsx sets --lit and --drift once per
-   frame; CSS does the rest, so there is no per-element JS on scroll.
+   THE BAGS — card motion, driven by the scroll timeline itself
+   ---------------------------------------------------------------------
+   This replaced a rAF-batched scroll listener that measured six cards a
+   frame. `animation-timeline: view()` hands the same job to the compositor:
+   no listener, no measurement, no main-thread work at all, and it cannot
+   fall out of sync with the scroll the way a JS writer can.
+
+   Everything is inside @supports + prefers-reduced-motion. Where either
+   fails, the cards render in their finished state — lit, in position,
+   fully legible. Motion is the enhancement; the readable card is the
+   baseline.
    ═══════════════════════════════════════════════════════════════════════ */
 
 .bag-card {
-  /* The 440px cap that used to live here belonged to the OLD 540px phone
-     set, where anything wider was the browser upscaling. The generated set is
-     1792x2400 and ships at three widths, so the cards can render at their
-     natural size and the limit is no longer meaningful here. It still applies
-     to any legacy frame — see `legacyImages` in catalogue.ts. */
-  width: 100%;
-
-  --lit: 0;
-  --drift: 0px;
-  --stagger: 0ms;
-  /* (c) Counter-drift lives HERE, on its own element, with NO transition.
-     It is rewritten every frame; putting it on the same transform as the
-     arrival restarts that 420ms transition on every write, so the transition
-     never completes and the page never reaches a stable frame. Two moving
-     parts, two elements. */
-  transform: translate3d(0, var(--drift), 0);
-  will-change: transform;
+  --lit: 1;
 }
 
-/* (b) Arrival + (d) clip-path reveal. The frame opens from the bottom while
-   the photograph inside counter-moves, so the picture is at rest by the time
-   the frame has finished opening — it is revealed, not slid into place. */
-.bag-frame {
-  clip-path: inset(0 0 100% 0);
-  transform: translate3d(0, 24px, 0);
-  transition:
-    clip-path 420ms var(--ease-expo) var(--stagger),
-    transform 420ms cubic-bezier(0.22, 1.02, 0.36, 1) var(--stagger);
-}
-
-.bag-shot {
-  transform: translate3d(0, -6%, 0) scale(1.08);
-  transition: transform 560ms var(--ease-expo) var(--stagger);
-}
-
-.bag-meta {
-  opacity: 0;
-  transform: translate3d(0, 14px, 0);
-  transition:
-    opacity 380ms var(--ease-lux) calc(var(--stagger) + 120ms),
-    transform 380ms var(--ease-lux) calc(var(--stagger) + 120ms);
-}
-
-[data-arrived="true"] .bag-frame {
-  clip-path: inset(0 0 0% 0);
-  transform: translate3d(0, 0, 0);
-}
-
-[data-arrived="true"] .bag-shot {
-  /* Scale DOWN to rest, never up: upscaling during a transform resamples a
-     540px source and softens it. */
-  transform: translate3d(0, 0, 0) scale(1);
-}
-
-[data-arrived="true"] .bag-meta {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-}
-
-/* (a) The light. One scrim, opacity only. --lit is the card's nearness to the
-   light travelling down the column: 0 is unlit base, 1 is fully lit. */
 .bag-scrim {
   pointer-events: none;
   background: var(--color-ink-950);
-  /* No transition: --lit is rewritten every frame, so a transition would
-     restart on each write and never settle. The per-frame value IS the
-     smoothing. */
-  opacity: calc(0.46 - var(--lit) * 0.46);
+  opacity: 0;
 }
 
 .bag-vignette {
@@ -681,18 +627,93 @@ html {
   );
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .bag-card,
-  .bag-frame,
-  .bag-shot,
-  .bag-meta {
-    clip-path: none;
-    opacity: 1;
-    transform: none;
-    transition: none;
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* (b) Arrival + (d) clip reveal. The frame opens from the bottom while
+       the photograph inside counter-moves, so the picture is at rest by the
+       time the frame has finished opening. */
+    .bag-frame {
+      animation: bag-frame-arrive linear both;
+      animation-timeline: view();
+      animation-range: entry 4% entry 46%;
+    }
+
+    .bag-shot {
+      animation: bag-shot-settle linear both;
+      animation-timeline: view();
+      animation-range: entry 4% entry 58%;
+    }
+
+    .bag-meta {
+      animation: bag-meta-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 18% entry 60%;
+    }
+
+    /* (a) The light travels the column. Each card is brightest as it passes
+       the middle of the screen and falls back toward its unlit base at both
+       ends, so the light reads as one source moving down the page rather
+       than as six cards fading independently. */
+    .bag-scrim {
+      animation: bag-light linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
   }
-  .bag-scrim {
+}
+
+@keyframes bag-frame-arrive {
+  from {
+    clip-path: inset(0 0 100% 0);
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    clip-path: inset(0 0 0% 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes bag-shot-settle {
+  /* Scale DOWN to rest, never up. Upscaling during a transform resamples
+     the photograph and softens it. */
+  from {
+    transform: translate3d(0, -5%, 0) scale(1.08);
+  }
+  to {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes bag-meta-rise {
+  from {
     opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes bag-light {
+  /* The lit window is deliberately WIDE. On a phone one card fills most of
+     the viewport and stays there for a long scroll, so a light that peaks
+     only at dead centre leaves the photograph dimmed for most of the time it
+     is being looked at. It reaches full brightness by a quarter of the way
+     in and holds it until three quarters. The falloff at the ends is what
+     reads as a light moving down the column; the hold is what keeps the bag
+     shoppable. */
+  0% {
+    opacity: 0.34;
+  }
+  25% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.34;
   }
 }
 
@@ -869,5 +890,74 @@ html {
 @media (prefers-reduced-motion: reduce) {
   .hero-video {
     display: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PRODUCT PAGE — gallery rail
+   The rail is a native overflow scroller so momentum, the scrollbar and
+   keyboard paging behave the way the platform does. Only the reveal is
+   animated, and only where the browser can do it off the main thread.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.gallery-rail {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-hairline) transparent;
+  /* Momentum scrolling on iOS, and stop the page from scrolling sideways
+     once the rail has hit its end. */
+  overscroll-behavior-x: contain;
+}
+
+.gallery-rail::-webkit-scrollbar {
+  height: 3px;
+}
+.gallery-rail::-webkit-scrollbar-thumb {
+  background: var(--border-hairline);
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Only on the grid. In the horizontal rail the items are already in the
+       viewport's vertical band, so a view() timeline would fire all of them
+       at once and the stagger would be invisible. */
+    @media (min-width: 768px) {
+      .gallery-item {
+        animation: gallery-rise linear both;
+        animation-timeline: view();
+        animation-range: entry 6% entry 48%;
+      }
+    }
+  }
+}
+
+@keyframes gallery-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* The product hero's own entrance. One scroll-driven parallax on the lead
+   photograph, so the page has depth as she moves rather than sitting flat. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .piece-lead img {
+      animation: piece-lead-drift linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+  }
+}
+
+@keyframes piece-lead-drift {
+  from {
+    transform: scale(1.06) translate3d(0, -1.5%, 0);
+  }
+  to {
+    transform: scale(1.06) translate3d(0, 1.5%, 0);
   }
 }
