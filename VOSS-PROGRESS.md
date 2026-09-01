@@ -448,3 +448,166 @@ settled the vermilion by making it a ramp — but `--verm-800` is specified as
 `<derive>` and has not been derived. **That is the next colour task**, and §1.5
 says to report the value and its measured ratio on `--paper-50` rather than
 guess it.
+
+---
+
+## Phase 1b — Outfit-style range, twelve styles, campaign band — 2026-09-01
+
+Scope changed mid-phase at Haseeb's direction: the §3.2 spacing rename was
+stopped before any edit (tree was clean at `c798444`) and replaced with this.
+
+### What was ported from `outfit-clone.zip`, and what was not
+
+The reference is a Vite/React clone of hellohello's *Outfit* store. **Its
+structure and its hover mechanic came across. Its look did not, and none of
+its assets or copy did.** That page is paper-and-red; VOSS is dark-dominant
+(`voss-website/CLAUDE.md`, and §1.5b: the homepage stays dark top to bottom).
+Copying the palette would have inverted the whole identity to match a
+reference that was only ever cited for layout.
+
+**The mechanic**, now `wipe-media` in `globals.css`:
+
+```
+clip-path  collapsed to the left edge  ->  full rect     (the wipe)
+transform  back scale(1.2) -> 1, front 1 -> 1.03         (two planes, depth)
+filter     brightness(400%) contrast(150%) -> normal     (colour resolving)
+```
+
+All three move together over `--dur-4` on `--ease-io`. Drop any one and it
+reads as a plain image swap — the filter in particular is what makes it read
+as a colour *changing* rather than a second picture appearing.
+
+It earns its place on VOSS rather than being an effect for its own sake:
+`front` and `back` are two **colourways of the same bag**, so hovering answers
+"what else does it come in" — the question the chips underneath already
+existed to answer. Gated on `(hover: hover) and (pointer: fine)`: on touch
+there is no hover to leave and the card would stick on the second colourway.
+
+Verified in the browser, computed styles rather than by eye:
+
+| | at rest | hovered |
+|---|---|---|
+| `clip-path` | `polygon(0 0, 0 0, 0 100%, 0 100%)` | `polygon(0 0, 100% 0, 100% 100%, 0 100%)` |
+| `transform` | `matrix(1.2, 0, 0, 1.2, 0, 0)` | `matrix(1, 0, 0, 1, 0, 0)` |
+| `filter` | `brightness(4) contrast(1.5)` | `brightness(1) contrast(1)` |
+
+### Twelve styles — and two bugs that hid six of them
+
+`scripts/build-media.mjs` had two defects that together produced a six-style
+site from a twelve-style shoot, silently:
+
+1. **The source regex was a single `\d`.** It matched `product 1` .. `product_9`
+   and was blind to `product_10`, `_11`, `_12`.
+2. **It read the ROOT `product_N` folders.** For 07-12 those are raw supplier
+   listing photographs: several have a colour name burned into the pixels —
+   **"WHITE", "Black", and "Dark brown" in a script face** — and are shot in
+   domestic interiors with a dresser and a mirror in frame. Building from them
+   would have put another seller's watermark on the VOSS site.
+
+   The restaged, studio-lit set is in `shoot-out/product_N`. The script now
+   prefers it and falls back to the root folder, which is correct for 01-06
+   because their root folder *is* the restaged set.
+
+I compared both sets as contact sheets before choosing. Result: 12 styles,
+7.3 MB total, every card image under 120 KB.
+
+Third defect found while running it: **OneDrive syncs `public/` while sharp is
+writing into it** and fails a write with "Invalid argument" — a different file
+each run, which is the tell for sync contention rather than a bad encode. The
+script now honours `VOSS_MEDIA_OUT` so the encode can happen outside the
+synced tree and be moved in afterwards.
+
+### The count was a hard-coded product fact in seven places
+
+"Six" was written into the hero (twice), both collection pages, and three
+metadata descriptions — **including the page `<title>` and the Open Graph
+card**, which is the copy that actually travels on WhatsApp. Adding six styles
+left every one of them lying. §11.1 says no component holds a product fact;
+`catalogue.ts` now exports `STYLE_COUNT` / `styleCountWord` / `StyleCountWord`
+and all seven read it.
+
+### Campaign band
+
+One lifestyle frame between the hero and the range — the only frame on the
+site where a bag is being *carried*. Full-bleed, ~21:9, inert (no link, no
+motion: §4.4's inventory does not list one here). No copy over it, because the
+wordmark is already in the photograph. `loading="lazy"`, so it never competes
+with the hero for LCP. 9-35 KB per width across four widths.
+
+Note: it contains a human model, which is a departure from the rest of the
+catalogue photography. It is a campaign frame rather than a product shot, so
+the distinction is deliberate — but it is the only one, and it should stay
+the only one.
+
+### Deleted
+
+`Bags.tsx` (301 lines, superseded by `Range.tsx`), `PointerTilt.tsx`, and 161
+lines of now-orphaned CSS — the `.pointer-tilt` / `.bag-glare` pointer layer
+and the whole `bag-*` `animation-timeline: view()` block. `globals.css` is
+1037 lines, down from 1198.
+
+### Decisions I made
+
+- **Dark, not paper.** The reference is paper-and-red. `CLAUDE.md` and §1.5b
+  both say the homepage is dark top to bottom, so the composition came across
+  and the palette did not. This is the one call that would be expensive to
+  reverse, and the documents answered it.
+- **Deleted `PointerTilt` rather than wiring it into the new card**, even
+  though §4.4 P4 specifies a pointer tilt on product cards. Two reasons: its
+  own doc comment names it "the only part of the bags section that is allowed
+  to be deleted", and a 3D `rotateX/rotateY` under a `clip-path` wipe shears
+  the clip edge — they are not composable. The wipe now does the job P4 was
+  there to do. **If P4 is wanted back, it needs a different mechanic, not this
+  file.**
+- **Names for styles 07-12 are PLACEHOLDER** — Sahar, Nikhat, Shabnam, Saba,
+  Hilal, Zeb. Chosen in the same Urdu register as the confirmed six; Hilal
+  ("crescent") was picked for the crescent silhouette. Marked as unapproved in
+  `catalogue.ts`. They are one edit each and nothing outside that file
+  hard-codes them — **but they are on a public page until confirmed.**
+- **Colourway hexes for 07-12 were read by eye, not sampled.** The pipeline's
+  automatic sampler returned the *backdrop* for several shots — style 11 came
+  back as five shades of the tan wall behind a navy bag. Flagged in the file
+  for re-measurement.
+- **Mobile keeps §5.3's two columns** rather than inheriting the 16-column
+  broken grid. Sixteen columns at 390px is two postage stamps and a lot of
+  nothing; the asymmetry needs width to read as composition rather than error.
+
+### Verified
+
+- 12 cards render, names correct, campaign band before the range in DOM order.
+- **390 x 844: `document.scrollWidth === 390`, no horizontal overflow.** §9.4.
+- Token guard still passes: **83 tokens checked, 0 empty**; `verm-800` still
+  4.67:1 on paper-50.
+- Build and TypeScript clean; eslint clean on the three new components.
+- Screenshotted and looked at, at 390 and at desktop: hero, campaign band,
+  grid rows, and the hover state.
+
+### §11.6 — the four questions
+
+1. **What would confuse someone cold?** That `RangeCard` renders two `<img>`
+   for one product. The comment at the `wipe-media` utility says why the three
+   properties are one rule and why the second image is `aria-hidden`.
+2. **What did I add that nobody asked for?** The `STYLE_COUNT` export. It is
+   not scope creep — adding six styles made seven hard-coded "Six" strings
+   false, including the page title, so it was repair, not addition.
+3. **Where did I repeat myself?** `RangeCard` and `CollectionGrid` both build
+   a product card. That is the second occurrence, so per §11.6 it stays
+   duplicated. A third means extracting it.
+4. **What did I claim without verifying?** The hover mechanic is verified by
+   computed style at both ends, not by eye — I could not get a clean
+   mid-transition screenshot because Lenis kept moving the page under the
+   capture. I have **not** profiled the wipe on a mid-range Android; §4.6's
+   60fps budget remains unverified, same as at the end of Phase 0.
+
+### Still open
+
+1. **Names 07-12 need confirming or replacing.** Highest priority — they ship
+   on a public page.
+2. **Colourway hexes 07-12 need re-measuring** from the restaged photography.
+3. The §3.2 spacing rename is **not done** and is still the next token task.
+   Note for whoever picks it up: `--spacing-7` .. `--spacing-13` must NOT be
+   used for §3.2's scale. Tailwind's own `7..13` are 28/32/36/40/44/48/52px
+   and §3.2's are 32/48/64/80/96/128/160px, and `py-8`, `py-7`, `h-11`,
+   `mx-10` and `size-8` are all in use today — overriding that namespace
+   silently redefines them rather than dropping them. §3.2 writes the scale as
+   `--sp-1..13`, which is not a Tailwind namespace at all. Use that.
