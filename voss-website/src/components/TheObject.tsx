@@ -7,12 +7,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { MEDIA } from "@/lib/media";
-import { PRODUCTS } from "@/lib/products";
+import { CATALOGUE, pricing } from "@/lib/catalogue";
 import { Hairline, RevealCopy, RevealLines } from "./Reveal";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
-
-const SPEC_LABELS = ["Leather", "Dimensions", "Production"];
 
 /**
  * A 3:2 frame is 1.5× as wide as it is tall, so a 31° edge in real space is a
@@ -30,16 +28,31 @@ const WIPE_SHOWN = "polygon(0% 0%, 100% -90%, 100% 100%, 0% 100%)";
  * also does it at 380kB instead of a WebGL context, holds up under reduced
  * motion, and cannot look like a demo.
  *
- * The image is pinned so the reader is inside the frame for a beat, and it
- * arrives on a clip wipe along the V's own angle rather than a fade — the
- * one diagonal this system allows.
+ * The image arrives on a clip wipe along the V's own angle rather than a
+ * fade — the one diagonal this system allows. It is NOT pinned: the pinning
+ * budget in VOSS-VISUAL-TARGET §4.5 is one section for the whole site.
+ *
+ * NOT MOUNTED as of Phase 0. VOSS-VISUAL-TARGET §5.5 gives it a slot on the
+ * homepage; page.tsx does not yet render it. Mount it or delete it in Phase 1
+ * — an unmounted component is the §11.3 violation this cleanup exists to end.
  */
 export function TheObject() {
   const root = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
   const macro = MEDIA.object.macro;
-  const piece = PRODUCTS[1];
-  const specs = piece.specs.filter((s) => SPEC_LABELS.includes(s.label));
+  /* One style stands for the range here, and it is the first in the
+     catalogue rather than a name written into this file — §11.1: no component
+     holds a product name of its own. */
+  const piece = CATALOGUE[0];
+  const price = pricing(piece);
+  /* Only facts the catalogue can back. The old spec list came from
+     `products.ts` and printed a leather grade, a dimension and the literal
+     string "TODO confirm" — all three banned by §7. */
+  const specs = [
+    { label: "Silhouette", value: piece.silhouette },
+    { label: "Colours", value: `${piece.colourways.length} photographed` },
+    { label: "Price", value: price.now ?? "" },
+  ];
 
   useGSAP(
     () => {
@@ -117,7 +130,7 @@ export function TheObject() {
 
       <div className="above-material relative mx-auto mt-group grid max-w-[120rem] grid-cols-12 gap-x-gap-col px-gutter">
         <RevealCopy as="p" className="caption col-span-12 text-[var(--text-secondary)] md:col-span-4">
-          {piece.description}
+          {piece.note}
         </RevealCopy>
       </div>
     </section>

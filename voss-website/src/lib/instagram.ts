@@ -16,6 +16,8 @@
  * Never render a CTA that leaves her with nothing to say.
  */
 
+import { CATALOGUE, pricing } from "./catalogue";
+
 /** Public handle. Override per-environment if the account is ever renamed. */
 const HANDLE = (process.env.NEXT_PUBLIC_IG_HANDLE ?? "voss.pk").replace(/^@/, "");
 
@@ -50,5 +52,10 @@ export function orderReference({ piece, slug, colourway }: OrderContext = {}): s
   if (!piece) return "Hi VOSS — I'd like to order a bag.";
   const ref = slug ? ` (${slug})` : "";
   const colour = colourway ? ` in ${colourway}` : "";
-  return `Hi VOSS — I'd like to order the ${piece}${ref}${colour}, Rs 4,500, cash on delivery.`;
+  /* Read the number, never write it. A literal here survives the offer
+     ending and then quotes her a price the page no longer shows — the drift
+     this function was written to prevent. Every bag is one price, so the
+     first piece answers for all six. */
+  const price = pricing(CATALOGUE[0]).now;
+  return `Hi VOSS — I'd like to order the ${piece}${ref}${colour}, ${price}, cash on delivery.`;
 }

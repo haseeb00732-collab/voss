@@ -1,5 +1,3 @@
-import { FINISHES, type Finish } from "./vitrine";
-
 /**
  * The catalogue. Six bags, one price.
  *
@@ -68,12 +66,6 @@ export type Piece = {
   silhouette: string;
   /** One line, used in the grid and as the meta description. */
   note: string;
-  /**
-   * @deprecated The four-hide system (noir/cognac/bone/oxblood) is a
-   * made-to-order remnant. Kept only until `HideSwatches`, `PieceHero` and
-   * `CollectionGrid` move to `colourways`.
-   */
-  shotIn: string;
 };
 
 export const CATALOGUE: Piece[] = [
@@ -95,7 +87,6 @@ export const CATALOGUE: Piece[] = [
       { name: "Sand", hex: "#a58b73", image: 4 },
       { name: "Black", hex: "#232323", image: 5 },
     ],
-    shotIn: "cognac",
   },
   {
     slug: "gulnaar",
@@ -115,7 +106,6 @@ export const CATALOGUE: Piece[] = [
       { name: "Wine", hex: "#90514b", image: 4 },
       { name: "Camel", hex: "#b1794e", image: 5 },
     ],
-    shotIn: "noir",
   },
   {
     slug: "naubahar",
@@ -134,7 +124,6 @@ export const CATALOGUE: Piece[] = [
       { name: "Black", hex: "#242526", image: 3 },
       { name: "Ochre", hex: "#724c26", image: 4 },
     ],
-    shotIn: "cognac",
   },
   {
     slug: "dilara",
@@ -155,7 +144,6 @@ export const CATALOGUE: Piece[] = [
       { name: "Camel", hex: "#9b6d46", image: 5 },
       { name: "Black", hex: "#2e2e24", image: 6 },
     ],
-    shotIn: "oxblood",
   },
   {
     slug: "mahrooh",
@@ -174,7 +162,6 @@ export const CATALOGUE: Piece[] = [
       { name: "Tan", hex: "#9a633a", image: 3 },
       { name: "Chocolate", hex: "#2b1d19", image: 4 },
     ],
-    shotIn: "bone",
   },
   {
     slug: "meher",
@@ -194,15 +181,27 @@ export const CATALOGUE: Piece[] = [
       { name: "Chocolate", hex: "#4b342f", image: 4 },
       { name: "Blush", hex: "#bf9b80", image: 5 },
     ],
-    shotIn: "noir",
   },
 ];
 
 /**
- * @deprecated The four-hide finish library. Still feeds the 3D configurator
- * and the legacy `HideSwatches`; it is NOT the catalogue's colour source.
+ * The four finish hexes carried over from the deleted 3D configurator
+ * (`lib/vitrine.ts`), retained per VOSS-VISUAL-TARGET §6.
+ *
+ * These are NOT the catalogue's colour source — `Piece.colourways` is, and it
+ * is measured from the actual photography. These four are a retired
+ * made-to-order finish library, kept only so the values are not lost, and
+ * they are a different set from the six product hues in §1.6.
+ *
+ * They have no consumer today. If §1.6's `--hue-*` tokens supersede them,
+ * delete this block rather than finding it a job.
  */
-export const HIDES: Finish[] = FINISHES;
+export const HUE_TOKENS: Record<string, string> = {
+  noir: "#14100e",
+  cognac: "#7a4423",
+  bone: "#c8bba8",
+  oxblood: "#5a1f26",
+};
 
 /**
  * IMAGE SOURCES. Two sets, both kept, and this is the only place either is
@@ -268,10 +267,6 @@ export function coverImage(piece: Piece): string {
 
 export function getPiece(slug: string): Piece | undefined {
   return CATALOGUE.find((p) => p.slug === slug);
-}
-
-export function getHide(id: string): Finish {
-  return HIDES.find((h) => h.id === id) ?? HIDES[0];
 }
 
 /** Neighbours, wrapping, for the "related pieces" rail below a product. */

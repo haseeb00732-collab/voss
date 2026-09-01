@@ -8,7 +8,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { pieceImages, priceLabel, type Piece } from "@/lib/catalogue";
-import { HIDES } from "@/lib/catalogue";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -56,7 +55,7 @@ export function CollectionGrid({ pieces }: { pieces: Piece[] }) {
 
 function Card({ piece, priority }: { piece: Piece; priority: boolean }) {
   const [cover] = pieceImages(piece);
-  const hide = HIDES.find((h) => h.id === piece.shotIn);
+  const colour = piece.colourways[0];
 
   return (
     <Link
@@ -67,7 +66,7 @@ function Card({ piece, priority }: { piece: Piece; priority: boolean }) {
       <div className="plate aspect-[4/5] transition-shadow duration-[var(--dur-2)] ease-[var(--ease-lux)] group-hover:shadow-[var(--elev-3)]">
         <Image
           src={cover}
-          alt={`${piece.label}, ${piece.silhouette.toLowerCase()} in ${hide?.name ?? "leather"}`}
+          alt={`The ${piece.name} in ${colour.name}, ${piece.silhouette.toLowerCase()}`}
           fill
           priority={priority}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

@@ -1,16 +1,12 @@
 @AGENTS.md
 
-# VOSS — working rules, v2
+# VOSS — working rules
 
-Full direction is `../Voss-Design.md`. This file is the short version: the
-things that are easy to break by accident, and the traps that have already
-cost time once.
+Full direction is `../VOSS-VISUAL-TARGET.md`, and §11 of it is the code
+standard. This file is the short version: the things that are easy to break by
+accident, and the traps that have already cost time once.
 
-**v1's design constitution is retired.** The old rules (radius 0, no shadows,
-four colours, no overshoot, three approved layout placements) are archived in
-`../Voss-Design-v1-archive.md` and are no longer in force. If you are looking
-for permission to try something, you have it — decide, build it, and write
-down what you chose.
+**Mobile at 390 x 844 is the primary surface.** Desktop is the adaptation.
 
 ## The direction, in five lines
 
@@ -46,19 +42,17 @@ because it was guarding a real failure rather than a taste.
 
 Reduced motion is not a degraded site: same composition, arrived at instantly.
 
-## The 3D
+## There is no 3D
 
-`components/three/`. Read `VitrineCanvas.tsx` before touching any of it.
+`components/three/`, `lib/vitrine.ts` and the `three`/`@react-three/*`
+dependencies were deleted in Phase 0 (2026-09-01). The canvas was built and
+never mounted. Product pages are photography and the homepage is a video hero.
 
-- **Nothing is fetched at runtime.** No `.glb`, no `.hdr`, no textures. All
-  geometry is generated in code and the lighting is `<Lightformer>` geometry
-  baked to a cube map. `<Environment preset="…">` pulls megabytes off a CDN
-  and is the fastest way to undo the entire performance argument.
-- The canvas mounts only when in view **and** the browser is idle; it stops
-  rendering when scrolled away and never mounts under reduced motion. The CSS
-  poster underneath is what LCP actually scores. Do not "simplify" this by
-  mounting the canvas directly.
-- 3D lives on the homepage and in the footer. Product pages are photography.
+If 3D is ever reconsidered, the constraint that made the old build viable still
+holds and is worth reading out of git: nothing was fetched at runtime — no
+`.glb`, no `.hdr`, no textures — because `<Environment preset="...">` pulls
+megabytes off a CDN and is the fastest way to undo the whole performance
+argument.
 
 ## ScrollTrigger
 
@@ -80,22 +74,27 @@ re-read.
 `lib/scrollRefresh.ts` re-runs `ScrollTrigger.refresh()` at every point layout
 can still move. Leave it wired up.
 
-## TypeScript trap
+## TypeScript
 
-`@react-three/fiber` augments the global JSX namespace with every three.js
-object. Any component typed as a bare polymorphic `ElementType` will collapse
-its `ref`/`className` props to `never`, or blow up as "union type too complex".
-`Reveal.tsx` shows the fix: narrow to a `ComponentType` with the props you
-actually pass.
+`Reveal.tsx` narrows its polymorphic `as` prop to a `ComponentType` with the
+props actually passed, rather than a bare `ElementType`. That was originally a
+workaround for `@react-three/fiber` augmenting the global JSX namespace — the
+dependency is gone, but the narrower type is still the better one and there is
+no reason to widen it back.
 
 ## Images
 
-`lib/media.ts` for graded art direction; `public/products/` for the real
-catalogue photography, served as plain URLs because it is unretouched.
+`lib/catalogue.ts` is the **only** product source — names, Urdu, slugs,
+colourways, image folders, prices. No component holds a product fact of its own.
 
-The six photographed styles **are** the product. The four named pieces in
-`products.ts` are not a catalogue — they survive as the finish library for the
-configurator.
+Two image sets, both live, both named only in `catalogue.ts`:
+`public/products-hd/` is the generated AVIF catalogue (three widths per shot,
+built by `scripts/build-media.mjs`) and is what the grid renders;
+`public/products/` is the original 540px phone set, kept as extra gallery
+frames and **never rendered above 440 CSS px**.
 
-Re-run `scripts/grade-media.mjs` rather than filtering in CSS, so what ships is
-what was art-directed.
+Re-run the build script rather than filtering in CSS, so what ships is what was
+art-directed.
+
+`products.ts` and `rawProducts.ts` are deleted. If you find a reference to
+either, it is stale.

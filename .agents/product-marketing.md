@@ -12,10 +12,10 @@
 
 ## Product Overview
 **One-liner:** VOSS is a Pakistan-based women's handbag label selling a small line of six styles — in stock, one flat price, cash on delivery.
-**What it does:** VOSS sells six photographed handbag styles direct to consumers in Pakistan. Every price is shown on the page; buyers order over WhatsApp and pay cash on delivery. The premium, editorial brand look is deliberate aspiration — the *direction* the label is building toward — not a claim about the current product's materials or construction.
+**What it does:** VOSS sells six photographed handbag styles direct to consumers in Pakistan. Every price is shown on the page; buyers order on Instagram (@voss.pk) and pay cash on delivery. The premium, editorial brand look is deliberate aspiration — the *direction* the label is building toward — not a claim about the current product's materials or construction.
 **Product category:** Direct-to-consumer women's handbags, Pakistan. Competes in the Instagram/WhatsApp cash-on-delivery handbag market, *not* (yet) in the imported/luxury tier its visual language borrows from.
-**Product type:** Physical product, DTC e-commerce. Order path is WhatsApp → cash on delivery (no on-site checkout).
-**Business model:** Single-purchase retail. **PKR 4,500 flat across all six styles** (`voss-website/src/lib/catalogue.ts`, confirmed 2026-08-27). One hide per style is photographed and treated as in stock; the other three hides are made to order. Cash on delivery across Pakistan; no card/online payment wired yet. *(For reference, ~PKR 4,500 ≈ $15–16 USD at 2026 rates — an accessible price, not a luxury one. The retired USD $1,290–$1,850 figures in `products.ts` are dead placeholder from the old luxury scope and feed only `TheObject` + the 3D finish library.)*
+**Product type:** Physical product, DTC e-commerce. Order path is Instagram DM (@voss.pk) → cash on delivery (no on-site checkout).
+**Business model:** Single-purchase retail. **List PKR 6,000, launch price PKR 4,500 across all six styles** — a saving of Rs 1,500 (25%) (`voss-website/src/lib/catalogue.ts`, confirmed 2026-08-27). Every style is photographed in the colourways it is actually sold in and treated as in stock. Cash on delivery across Pakistan; no card/online payment wired yet. *(For reference, ~PKR 4,500 ≈ $15–16 USD at 2026 rates — an accessible price, not a luxury one.)* **The launch offer has no confirmed end date.** `OFFER.endsOn` is null and every piece of copy omits the date clause rather than printing a placeholder; a discount that never ends is the practice this brand is positioned against.
 
 ## Target Audience
 **Target companies:** N/A — B2C.
@@ -54,12 +54,12 @@
 
 ## Differentiation
 **Verifiable-now differentiators (safe to use today):**
-- **Price transparency** — every price is on the page (Rs 4,500 flat), against a category norm of "DM for price"
+- **Price transparency** — every price is on the page (Rs 6,000 → Rs 4,500), against a category norm of "DM for price"
 - **Cash on delivery** — pay when the bag arrives; no advance payment to an unknown account
 - **In stock** — the photographed styles ship now, not "made to order / pre-order"
 - **An elevated, consistent brand look** — a real design system, not a phone-snap catalogue dump
 **Aspirational (the "premium later" direction — do NOT state as current fact):** material quality, construction detail, and any craft/repair promise. See the material-claim hard rule.
-**Why customers choose us:** *[Needs input — no real customers yet; revisit after first WhatsApp orders / feedback.]*
+**Why customers choose us:** *[Needs input — no real customers yet; revisit after first Instagram orders / feedback.]*
 
 ## Objections
 *[Pre-launch; no real sales conversations yet. Anticipated only.]*
@@ -79,12 +79,12 @@
 **Anxiety:** Prepaying an unknown seller; the bag not matching the photo. (Cash on delivery is the direct answer to both — lead with it.)
 
 ## Customer Language
-*[Needs input — no customer interviews or reviews exist yet. Populate after first WhatsApp orders / feedback. Capture verbatim Urdu/English phrasing then.]*
+*[Needs input — no customer interviews or reviews exist yet. Populate after first Instagram orders / feedback. Capture verbatim Urdu/English phrasing then.]*
 **How they describe the problem:**
 - "[verbatim — TBD]"
 **How they describe us:**
 - "[verbatim — TBD]"
-**Words to use (verifiable today):** in stock, cash on delivery, every price on the page, Rs 4,500, order on WhatsApp, chosen in Lahore *(curation, not manufacture)*.
+**Words to use (verifiable today):** in stock, cash on delivery, every price on the page, Rs 6,000 → Rs 4,500, order on Instagram, chosen in Lahore *(curation, not manufacture)*.
 **Words to avoid:**
 - *Scam-coded / friction:* "DM for price," "price in inbox," advance-payment framing
 - *Unverified craft claims (banned until confirmed — see material-claim rule):* "full-grain," "vachetta," "vegetable-tanned," "hand-burnished," "solid brass," "lifetime repair," "made slowly," "one hide, one bag"
@@ -105,19 +105,19 @@
 ## Proof Points
 *[Pre-launch: no real metrics, named customers, or testimonials exist. Do NOT fabricate any of this — attributed quotes from people who did not say them are a legal and ethical problem.]*
 **Metrics:** None yet.
-**Customers:** None yet (WhatsApp/COD orders not started or not tracked).
+**Customers:** None yet (Instagram/COD orders not started or not tracked).
 **Testimonials:** None yet — must be real, attributed quotes only once collected.
 **Value themes:**
 | Theme | Proof (verifiable today) |
 |-------|--------------------------|
-| Price transparency | Rs 4,500 shown on every card and page (`catalogue.ts`) |
+| Price transparency | Rs 6,000 struck through to Rs 4,500 on every card and page (`catalogue.ts`) |
 | Low-risk purchase | Cash on delivery — pay on arrival |
 | Availability | Photographed styles in stock |
 | Craft / materials / longevity | **UNPROVEN — do not cite until confirmed from fact (see material-claim rule)** |
 
 ## Goals
-**Primary business goal:** Turn Instagram interest into WhatsApp cash-on-delivery orders. (The old waitlist/newsletter goal is retired along with the luxury positioning.)
-**Key conversion action:** "Ask on WhatsApp" → order → cash on delivery. *(Currently dead in the build — `NEXT_PUBLIC_WA_NUMBER` is unset, so every WhatsApp CTA silently doesn't render. Wiring this is the top functional gap.)*
+**Primary business goal:** Turn Instagram interest into Instagram-DM cash-on-delivery orders. (The old waitlist/newsletter goal is retired along with the luxury positioning.)
+**Key conversion action:** "Order on Instagram" → DM → cash on delivery. *(Live: `src/lib/instagram.ts` defaults the handle to `voss.pk` and `NEXT_PUBLIC_IG_HANDLE` overrides it. Instagram deep links **cannot prefill a message**, so every CTA ships beside a copy button carrying `orderReference()` — the bag, the colour and the price — or she lands in an empty box and the reply starts with "which one?".)*
 **Current metrics:** None tracked — no analytics in the codebase yet.
 
 ## Origin claims — hard rule (unchanged, still in force)
@@ -158,6 +158,13 @@ can be used): What is the leather/material? What is the hardware? Where are the
 bags made? Is any repair or guarantee actually offered?*
 
 ## Changelog
+
+- v4 (2026-09-01, Phase 0 cleanup) — Order path **WhatsApp → Instagram @voss.pk**
+  (`whatsapp.ts` deleted; `instagram.ts` is the only buy path). Pricing restated
+  as **list Rs 6,000 → launch Rs 4,500**, not "Rs 4,500 flat". Removed the
+  four-hide made-to-order model and the `products.ts` / 3D-finish-library
+  references — all three files are deleted. **Origin and material hard rules
+  below are unchanged and verbatim.**
 *Newest first. One line per revision: what changed and why.*
 - v3 (2026-08-29) — **Repositioned luxury → "COD now, premium later"** to match the confirmed Rs 4,500 cash-on-delivery reality (founder decision, 2026-08-29). Rewrote Overview, Audience, Problems, Differentiation, Switching, Customer Language, Voice, Proof, and Goals for a Pakistani in-stock COD shop; pointed product data at `catalogue.ts`. Added the **material & craft-claim hard rule** — "full-grain / vegetable-tanned / solid brass / hand-burnished / lifetime repair" are unverified and economically implausible at this price, so they're banned until confirmed from fact. Kept the origin hard rule intact. Competitors, personas, customer language, and proof remain honest "Needs input" — not invented.
 - v2 (2026-08-25) — Removed every "Florence, Italy" origin claim from this document and the site: it was invented placeholder, never true. Added the "Origin claims" hard rule so it is not reintroduced. Positioning pull now rested on material + scarcity, not place.

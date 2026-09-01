@@ -34,7 +34,7 @@ export const MEDIA = {
   object: {
     macro: m(
       objectMacro,
-      "The shoulder of a cognac calfskin bag, the strap curving away across the grain.",
+      "The shoulder of a tan bag in close crop, the strap curving away.",
       "3:2",
       "paper"
     ),
