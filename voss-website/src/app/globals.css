@@ -137,7 +137,7 @@
   --font-display: var(--font-bodoni), "Didot", "Bodoni MT", ui-serif, Georgia, serif;
   --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
   --font-urdu: var(--font-nastaliq), "Noto Naskh Arabic", serif;
-  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
 
   /* ── Space. A magazine breathes wider than a boutique. ─────────────────
      NEVER name a --spacing-* token after a Tailwind utility root — `block`,
@@ -167,32 +167,46 @@
 
   /* ── Radius. v1 said 0 everywhere. v2 says: 0 for plates and images,
      a hair on controls so they read as pressable rather than printed. ─── */
-  --radius-none: 0;
-  --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius-md: 8px;
+  --radius-none: 0; /* images, plates, cards — sharp */
+  --radius-xs: 4px; /* chips, tags */
+  --radius-sm: 8px; /* buttons, inputs */
+  --radius-pill: 999px; /* the scroll cue, the colour chips */
 
-  /* ── Easing. Overshoot is now allowed, but only on `--ease-snap`, and
-     only on things the reader just clicked. Entrances never overshoot. ─── */
-  --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
-  --ease-snap: cubic-bezier(0.34, 1.36, 0.64, 1);
+  /* ── §4.2. Three easings, and only three. `back`, `elastic` and `bounce`
+     are banned on entrances — an entrance that overshoots reads as a toy.
+     --ease-snap is the ONE overshoot and it is only for something the reader
+     just clicked or tapped. */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* the default */
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1); /* symmetric moves */
+  --ease-snap: cubic-bezier(0.34, 1.4, 0.44, 1);
+
+  /* Aliases. --ease-expo and --ease-inout were already §4.2's two curves
+     under other names; --ease-lux was a fourth that §4.2 does not have, so it
+     resolves to the default rather than staying a private curve. */
+  --ease-lux: var(--ease-out);
+  --ease-expo: var(--ease-out);
+  --ease-inout: var(--ease-io);
 }
 
 :root {
   --angle-vee: 59deg;
   --hairline-w: 1px;
   --grain-paper: 0.035;
-  --grain-vitrine: 0.02;
 
-  /* Motion: the 200ms beat survives. */
-  --dur-1: 200ms;
-  --dur-2: 400ms;
-  --dur-3: 600ms;
-  --dur-4: 900ms;
-  --dur-5: 1200ms;
-  --dur-6: 1600ms;
+  /* The active product hue, §1.7. Defaults to cognac — the hero's hue — so
+     the page is never unwashed. Cross-fades because of the @property above. */
+  --wash-hue: var(--color-hue-cognac-wash);
+  transition: --wash-hue var(--dur-5) var(--ease-inout);
+
+  /* ── §4.1. Every duration is a multiple of the 200ms beat, except --dur-1,
+     which is the one deliberate sub-beat: a press has to feel like it
+     happened at the moment of the press, not a fifth of a second after it. */
+  --dur-1: 120ms; /* micro: press, chip, focus ring */
+  --dur-2: 240ms; /* hover, nav */
+  --dur-3: 400ms; /* card state, chip swap */
+  --dur-4: 600ms; /* entrance */
+  --dur-5: 800ms; /* section wash cross-fade */
+  --dur-6: 1200ms; /* hero headline sequence */
 
   --stagger-line: 0.07s;
   --stagger-item: 0.09s;
@@ -208,16 +222,58 @@
   --track-caps: 0.2em;
   --track-wordmark: 0.34em;
 
-  --measure: 64ch;
+  --measure: 65ch; /* §2.3 */
   --measure-tight: 44ch;
+
+  /* ── §2.2 type scale. Mobile-first and fluid. These are the numbers; the
+     display-* utilities below are the only thing allowed to read them, which
+     is what keeps size and tracking from ever being applied separately. */
+  --fs-display-1: clamp(2.75rem, 13vw, 7.5rem);
+  --fs-display-2: clamp(2rem, 8.5vw, 4.5rem);
+  --fs-display-3: clamp(1.5rem, 5.5vw, 2.5rem);
+  --fs-h4: 1.125rem;
+  --fs-body: 1rem; /* 16px floor — never smaller on mobile, §8 */
+  --fs-small: 0.875rem;
+  --fs-meta: 0.6875rem; /* mono only */
+
+  --lh-display: 0.92;
+  --lh-body: 1.6;
+  --lh-meta: 1;
+
+  /* TRAP, and it has already cost this project a headline. --ls-display on
+     running text shattered the hero across five lines: at body size the
+     negative tracking closes the word gaps faster than it closes the letter
+     gaps, and the line-breaker gives up. Tracking is a function of size, so
+     it may only ever be applied by a utility that sets the size in the same
+     rule. Never reach for --ls-display directly. */
+  --ls-display: -0.025em;
+  --ls-body: 0;
+  --ls-meta: 0.12em;
 
   /* ── Elevation. v1 banned shadows; v2 lights the room. Every shadow is
      one light source, high and slightly left, so nothing contradicts the
      3D vitrine's own key light. */
-  --elev-1: 0 1px 2px rgb(0 0 0 / 0.18), 0 2px 8px rgb(0 0 0 / 0.12);
-  --elev-2: 0 2px 6px rgb(0 0 0 / 0.2), 0 12px 28px rgb(0 0 0 / 0.18);
-  --elev-3: 0 4px 12px rgb(0 0 0 / 0.24), 0 28px 64px rgb(0 0 0 / 0.26);
-  --elev-glow: 0 0 0 1px var(--border-strong), 0 12px 40px rgb(198 105 99 / 0.14);
+  --elev-1: 0 2px 8px rgb(0 0 0 / 0.34);
+  --elev-2: 0 8px 28px rgb(0 0 0 / 0.42);
+  --elev-3: 0 22px 64px rgb(0 0 0 / 0.52);
+
+  /* §3.4. The glow reads the ACTIVE hue rather than a baked-in accent — it
+     used to hard-code rgb(198 105 99), which is the old signal colour, so a
+     hovered olive card glowed pink. --hue-active-veil defaults to cognac and
+     is what a card sets when its colourway changes. */
+  --hue-active-veil: var(--color-hue-cognac-veil);
+  --elev-glow: 0 0 0 1px var(--border-strong), 0 12px 48px var(--hue-active-veil);
+}
+
+/* §1.7. An UNREGISTERED custom property has no animatable type, so a
+   `transition` on it is silently ignored and the wash would jump between
+   hues instead of cross-fading. Registering it as <color> is the whole
+   difference. Phase 4 sets --wash-hue per section; the transition lives here
+   so no component has to remember to declare it. */
+@property --wash-hue {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
 }
 
 @media (min-resolution: 2dppx) {
@@ -323,26 +379,55 @@
   line-height: 0.82;
 }
 
+/* §2.2. Size, tracking and leading in ONE rule — that pairing is the whole
+   point of these utilities and is why --ls-display is never a loose class. */
+@utility display-1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-display-1);
+  letter-spacing: var(--ls-display);
+  line-height: var(--lh-display);
+}
+
+@utility display-2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-display-2);
+  letter-spacing: var(--ls-display);
+  line-height: 0.96;
+}
+
+@utility display-3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-display-3);
+  letter-spacing: var(--track-m);
+  line-height: 1.06;
+}
+
+/* Aliases kept so the existing components compile unchanged. They resolve to
+   the SAME numbers as display-1/2/3 above rather than carrying their own, so
+   the scale cannot fork. Prefer the numbered names in new work. */
 @utility display-xl {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(2.75rem, 8vw, 7.5rem);
-  letter-spacing: var(--track-xl);
-  line-height: 0.88;
+  font-size: var(--fs-display-1);
+  letter-spacing: var(--ls-display);
+  line-height: var(--lh-display);
 }
 
 @utility display-l {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(2.25rem, 5vw, 4.5rem);
-  letter-spacing: var(--track-l);
+  font-size: var(--fs-display-2);
+  letter-spacing: var(--ls-display);
   line-height: 0.96;
 }
 
 @utility display-m {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  font-size: var(--fs-display-3);
   letter-spacing: var(--track-m);
   line-height: 1.06;
 }
@@ -356,6 +441,18 @@
 }
 
 /* The italic is a real voice, not an emphasis. Pull quotes and nothing else. */
+/* §2.1 / §2.2. The third texture. Uppercase, tracked, never above 0.75rem —
+   at larger sizes a mono stops reading as a label and starts reading as code. */
+@utility mono {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: var(--fs-meta);
+  letter-spacing: var(--ls-meta);
+  line-height: var(--lh-meta);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
 @utility display-quote {
   font-family: var(--font-display);
   font-style: italic;
@@ -450,18 +547,6 @@
   background-color: var(--surface);
   color: var(--text-primary);
   isolation: isolate;
-}
-
-@utility grain {
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    opacity: var(--grain-paper);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
 }
 
 @utility vignette {

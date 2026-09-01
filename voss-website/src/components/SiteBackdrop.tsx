@@ -20,8 +20,16 @@
  *      Below `lg` they are hidden: at phone width the grid is one column and
  *      the rules would be lying about a structure that is not there.
  *
- *   3. GRAIN. An SVG turbulence tile at very low opacity, which is what keeps
- *      a large flat dark field from banding on cheap panels.
+ *   3. THE HUE WASH. §1.7. A single radial that paints whichever product
+ *      colour is currently active, driven by the --wash-hue custom property.
+ *      It is registered with @property in globals.css, which is what lets it
+ *      CROSS-FADE rather than jump when a section changes it — an unregistered
+ *      custom property is not an animatable type and transitions are ignored
+ *      on it silently. Phase 4 drives it; the default is cognac, the hero's
+ *      hue, so the page is never washless.
+ *
+ * Grain is NOT here. §1.8 puts one grain layer above everything, so it also
+ * covers the photographs; see components/Grain.tsx.
  *
  * It is `position: fixed` deliberately. Grain on a scrolling container repaints
  * the whole layer every frame and destroys framerate on mobile; fixed, it is
@@ -69,13 +77,12 @@ export function SiteBackdrop() {
         </div>
       </div>
 
-      {/* 3. Grain. */}
+      {/* 3. The hue wash, §1.7. */}
       <div
-        className="absolute inset-0 opacity-[0.16] mix-blend-overlay"
+        className="absolute inset-0"
         style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E\")",
-          backgroundRepeat: "repeat",
+          background:
+            "radial-gradient(90% 60% at 50% 40%, var(--wash-hue) 0%, transparent 70%)",
         }}
       />
     </div>

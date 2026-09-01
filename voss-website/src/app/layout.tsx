@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Bodoni_Moda } from "next/font/google";
+import { Bodoni_Moda, IBM_Plex_Mono } from "next/font/google";
 import localFont from "next/font/local";
+import { Grain } from "@/components/Grain";
 import "./globals.css";
 
 /* A didone against a grotesque, plus Nastaliq for Urdu.
@@ -21,6 +22,22 @@ const bodoni = Bodoni_Moda({
   display: "swap",
 });
 
+/* §2.1. The mono is doing real work: it is the cheapest way to make a page
+   read as considered rather than decorated, and it gives the eye a third
+   texture so the page is not "serif headline + sans body" like every
+   template. Micro-labels only — price meta, IN STOCK, COD, specs, indices.
+
+   preload:false because it never sets the LCP element. Preloading three
+   families makes them compete for the same early bandwidth as the hero, and
+   an 11px label swapping in a frame later is imperceptible. */
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+  preload: false,
+});
+
 const jost = localFont({
   src: "./fonts/Jost-subset.woff2",
   variable: "--font-jost",
@@ -36,6 +53,10 @@ const nastaliq = localFont({
   variable: "--font-nastaliq",
   display: "swap",
   weight: "400",
+  /* §2: Urdu sets the product name and nothing else, so it must never be in
+     the critical path. preload:false keeps it out of the LCP race — the file
+     is only fetched once an element actually using `.urdu` renders. */
+  preload: false,
 });
 
 const SITE = "https://voss.com";
@@ -87,7 +108,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${bodoni.variable} ${jost.variable} ${nastaliq.variable}`}
+      className={`${bodoni.variable} ${jost.variable} ${nastaliq.variable} ${plexMono.variable}`}
     >
       <body className="antialiased">
         <a
@@ -97,6 +118,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         {children}
+        {/* §1.8: one grain, above everything, so it covers the photographs
+            too. Last in the body so it needs no z-index gymnastics. */}
+        <Grain />
       </body>
     </html>
   );

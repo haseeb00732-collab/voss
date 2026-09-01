@@ -88,7 +88,7 @@ export function TheObject() {
       id="object"
       ref={root}
       data-surface="dark"
-      className="substrate grain overflow-hidden py-section"
+      className="substrate overflow-hidden py-section"
       aria-label="The object"
     >
       <div className="above-material relative mx-auto grid max-w-[120rem] grid-cols-12 gap-x-gap-col px-gutter">

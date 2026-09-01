@@ -71,7 +71,7 @@ export function Marquee() {
           this wipe is a tonal shift inside one material rather than a flip to
           paper. A single bright band here would break the page's theme lock
           and read as a different website for one section. */}
-      <div data-surface="dark" className="substrate grain">
+      <div data-surface="dark" className="substrate">
         <Band tone="raised" />
       </div>
 
