@@ -9,13 +9,35 @@
    ═══════════════════════════════════════════════════════════════════════ */
 
 @theme {
-  /* ── Ink. Deeper and colder than v1's onyx so vermilion can sit on it. ─ */
-  --color-ink-950: #060607;
-  --color-ink-900: #0a0a0c;
-  --color-ink-800: #131316;
-  --color-ink-700: #1e1e22;
-  --color-ink-600: #2c2c32;
-  --color-ink-500: #45454e;
+  /* ── Ink. WARM black, per VOSS-VISUAL-TARGET §1.2.
+     Every stop of the previous ramp was blue-tinted (B > R at all six), which
+     is what made the page read grey rather than black. Gold is warm — R > G >
+     B — so a cool ground pushes gold's complement and the house colour comes
+     back slightly green. Warming the ground is the whole fix; the luminance
+     barely moves, so nothing's contrast changes (gold-500 measures 8.30:1 on
+     ink-950 before and after). */
+  --color-ink-950: #0b0a09; /* page ground */
+  --color-ink-900: #131110; /* raised surface, nav on scroll */
+  --color-ink-850: #191614; /* card ground */
+  --color-ink-800: #221e1b; /* card ground, hovered */
+  --color-ink-700: #2e2926; /* hairline / border */
+  --color-ink-600: #423b36; /* border, emphasised */
+  --color-ink-500: #574e48; /* not in §1.2; continues the same hue slope */
+
+  /* TRAP, verified in the browser on 2026-09-01: Tailwind v4 only emits a
+     @theme token that something actually references — as a utility class OR
+     as a raw var(). Nothing uses ink-850, ink-500 or paper-300 yet, so
+     `getComputedStyle(root).getPropertyValue("--color-ink-850")` returns the
+     empty string right now, and any raw `var(--color-ink-850)` written today
+     resolves to nothing rather than erroring. It starts working the moment
+     the first reference exists. This matters for §1.6: the six --hue-* values
+     must each be referenced by their derived -wash/-veil/-edge tokens, or
+     half the palette will silently not exist. */
+
+  /* The ONLY cool value on the site. Warm black alone goes sepia over a full
+     viewport — this is mixed into the ground gradient at low percentages so
+     the dark has depth instead of reading flat brown. §1.2. */
+  --color-cool-shade: #0a0c0e;
 
   /* ── Paper. Warm, uncoated, never pure white. ────────────────────────── */
   --color-paper-50: #faf8f3;
@@ -211,7 +233,13 @@
   }
 
   body {
-    background-color: var(--color-ink-900);
+    background-color: var(--color-ink-950);
+    background-image: linear-gradient(
+      180deg,
+      var(--color-ink-950) 0%,
+      color-mix(in srgb, var(--color-cool-shade) 55%, var(--color-ink-950)) 100%
+    );
+    background-attachment: fixed;
     color: var(--color-paper-100);
     font-family: var(--font-sans);
     font-weight: 400;

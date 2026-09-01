@@ -73,7 +73,7 @@ export function Nav() {
         className={[
           "fixed inset-x-0 top-0 z-50 transition-[height,background-color,backdrop-filter] duration-[var(--dur-2)] ease-[var(--ease-lux)]",
           scrolled
-            ? "h-[4.25rem] bg-ink-800/92 backdrop-blur-[12px]"
+            ? "h-[4.25rem] bg-ink-900/92 backdrop-blur-[12px]"
             : "h-[5rem] bg-transparent backdrop-blur-none",
         ].join(" ")}
       >

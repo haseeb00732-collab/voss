@@ -42,8 +42,11 @@ export function SiteBackdrop() {
             "radial-gradient(120% 90% at 18% -10%, color-mix(in srgb, var(--color-gold-500) 13%, transparent) 0%, transparent 58%)",
         }}
       />
-      {/* A cold counter-fill low and right, so the dark side of the page is
-          not a single flat value either. Same light, further away. */}
+      {/* A counter-fill low and right, so the dark side of the page is not a
+          single flat value either. Same light, further away — which is why it
+          is warm. The cool direction lives in the body gradient's vertical
+          fall toward --color-cool-shade, so the lit side is warm and the
+          shadow side goes cool, the way one light actually behaves. */}
       <div
         className="absolute inset-0"
         style={{

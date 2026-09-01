@@ -13,16 +13,29 @@ adaptation. If a decision is good on desktop and bad at 390px, it is a bad decis
 
 ## 0. The problem this file exists to fix
 
-The site today reads dead for four measurable reasons:
+**Corrected 2026-09-01 after the Phase 0 audit.** The first draft of this section
+was written against the 2026-08-27 context pack, which was already several commits
+stale. Three of its four claims were false. Corrected against `grep`, not memory:
 
-| Symptom | Actual cause |
+| Original claim | Verified state |
 |---|---|
-| "Only two colours" | Palette has an ink scale, a gold ramp and one accent — but nothing is *tinted*. Every surface is the same neutral black. There is no hue anywhere except gold text. |
-| "No motion" | Motion exists only as entrance reveals. Nothing responds to the pointer, nothing responds to touch, nothing changes state. |
-| "Product section is dull" | Six static cards in a static grid. No hover, no touch state, no colour change, no depth. |
-| "Hero doesn't animate / too slow" | The pin is `+= 2 × viewport` and the headline is `opacity: 0` in server markup. You scroll ~1,700px of black before a word appears. |
+| ~~"The hero pin is `+= 2 × viewport`"~~ | **Already fixed.** There is no `pin:` anywhere in `src/`. |
+| ~~"Headline is `opacity: 0` in server markup"~~ | **Already fixed.** `Hero.tsx` renders headline, price and both CTAs at full opacity; GSAP sets the start state in a layout effect before paint. |
+| ~~"Six static cards, no hover, no touch, no colour change"~~ | **Partly fixed.** `Bags.tsx` already has colourway chips, a pointer tilt matching §4.4 P4, and compositor-driven `animation-timeline: view()` motion. |
+| **"Only two colours"** | **Still true.** This is the one real symptom, and §1 is the whole answer to it. |
 
-Every fix below is aimed at one of these four.
+So the genuine remaining problems are narrower than the first draft claimed:
+
+1. **The palette is untinted.** Every surface is the same neutral black. §1.
+2. **Motion is per-component and one-shot.** There is no shared scroll state, so
+   nothing on the page knows the reader is still there after the first pass. §4.4b.
+3. **The product section's interactions are the floor, not the ceiling.** What
+   exists is P4 and part of P3. P8–P11 are what make it memorable. §4.4c.
+4. **The site is still not built mobile-first.** §3, §4.6, §9.
+
+**Standing rule from this correction:** verify a symptom against the code before
+building a fix for it. A status document is a description of a moment, and this
+project has now been burned by a stale one twice.
 
 ---
 
@@ -77,11 +90,56 @@ a template.
 
 ### 1.5 Vermilion — the verb
 
+**Amended 2026-09-01.** The first draft specified a single `#E8452A`. That
+overwrote a deliberate decision made on 2026-08-31 to use `#c66963` *because it
+inverts across substrate the way gold does* — and the Phase 0 audit was right to
+flag it. Reinstating a flat value was a decision un-made by accident.
+
+The resolution is neither value alone. **Vermilion becomes a ramp, exactly like
+gold**, because §5.5 piece pages genuinely flip substrate — the page floods with
+the chosen hide and `PieceHero` goes light. A signal colour that only works on ink
+is a real bug on those pages; a single compromise value that works everywhere is a
+weaker signal than a ramp that is correct in both.
+
 ```css
---verm-400: #FF5F3E;  /* hover */
---verm-500: #E8452A;  /* default — price, primary CTA */
---verm-600: #C2331B;  /* pressed */
+--verm-400: #FF5F3E;   /* hover, on ink */
+--verm-500: #E8452A;   /* on ink — measured 5.01:1 on --ink-950, passes AA */
+--verm-600: #C2331B;   /* pressed, on ink */
+--verm-800: <derive>;  /* on paper — start from the #c66963 hue and darken until it
+                          measures ≥ 4.5:1 on --paper-50. Report the value and the
+                          measured ratio in the brief. Do not guess it. */
 ```
+
+Resolve it through the semantic layer per `data-surface`, the same mechanism the
+gold ramp already uses — never by hard-coding either end:
+
+```css
+[data-surface="dark"]  { --text-signal: var(--verm-500); }
+[data-surface="paper"] { --text-signal: var(--verm-800); }
+```
+
+Components reference `--text-signal`. Hard-coding `--verm-500` works right up until
+the section flips substrate, and then the buy button is at 3:1. This is the
+identical trap the gold ramp already documents.
+
+### 1.5b Paper substrate — now defined
+
+The first draft defined no paper substrate at all while `PieceHero` was already
+flipping to light. That gap is what made the vermilion question ambiguous.
+
+```css
+--paper-50:      #F4EFE8;
+--paper-100:     #E9E2D8;
+--paper-200:     #D8CFC2;   /* hairline on paper */
+--ink-on-paper:  #17130F;   /* primary text on paper */
+--smoke-on-paper:#5A524A;
+```
+
+Gold on paper is `--gold-900`; vermilion on paper is `--verm-800`. Both resolve
+through the semantic layer. **Paper appears on piece pages only** — the homepage
+stays dark top to bottom.
+
+### 1.5c The rule
 
 **One vermilion element per viewport.** If two are visible at once, one is wrong.
 Price is vermilion. The primary CTA is vermilion. They must never be in the same
@@ -193,6 +251,16 @@ xl    1280px  12 col   64px margin   24px gutter   max content 1440px
 ```
 
 ### 3.2 Spacing scale — 4px base
+
+> **Migration hazard, raised by the Phase 0 audit and it is a real one.** Renaming
+> spacing utilities in Tailwind **fails silently** — an unknown utility is dropped,
+> not errored. A typo'd token does not break the build; it produces an element with
+> no padding that nobody notices until it ships.
+>
+> So the rename is done in one commit, and that commit includes: a grep of every
+> old utility name proving zero remain, a full-page screenshot at 390 and 1440
+> before and after, and a diff of the two. If a section's height changed, a token
+> was dropped. Do not spread this rename across phases.
 
 ```
 --sp-1: 4px    --sp-4: 16px   --sp-8:  48px   --sp-12: 128px
@@ -466,12 +534,37 @@ Full-bleed 3:2 macro crop, diagonal V-angle clip wipe, scrubbed 1 → 1.08.
 This is already the strongest frame on the site. Keep it. Pull its copy from
 `catalogue.ts`, **not** `products.ts`. Delete "Made to order".
 
-### 5.6 Why VOSS — hue: olive
-Three proof tiles, mono labels, stacked mobile / 3-up desktop:
+### 5.6 The trust block — hue: olive
+
+**Amended 2026-09-01.** The first draft's section list omitted `WhatItIs`,
+`BeforeYouPay` and `Faqs` — not as a decision, but because they did not exist in
+the stale snapshot it was written from. Under §5's "unlisted sections are cut" rule
+that would have deleted them. **They are not cut.** The audit was right to refuse.
+
+Cutting them would have been the worst call in this document. VOSS's entire
+differentiator against "DM for price" Instagram sellers is *this is not a scam
+page*. Three sections that answer the cash-on-delivery trust objection are the
+conversion argument, not decoration.
+
+But four separate trust sections stacked in a row is its own failure. **Merge, do
+not stack.** The trust block is one composed sequence with one hue:
+
 ```
-EVERY PRICE ON THE PAGE    IN STOCK, SHIPS NOW    CASH ON DELIVERY
+WHAT IT IS        →  what you are buying, plainly. Absorbs the three proof tiles
+                     (EVERY PRICE ON THE PAGE / IN STOCK / CASH ON DELIVERY) as
+                     mono labels inside it rather than as their own section.
+BEFORE YOU PAY    →  the COD mechanics: order, courier, you see it, you pay.
+                     This is the objection-killer. Give it the most space.
+FAQS              →  everything that did not fit above. Accordion, one open at a
+                     time, height animated with a real measurement — never a
+                     max-height guess that jumps.
 ```
-Only verifiable claims. No material, craft, or origin language — see §7.
+
+The standalone "Why VOSS" proof-tile section from the first draft is **dropped** —
+its three claims live inside `WhatItIs` now. One trust argument, told once.
+
+Only verifiable claims anywhere in this block. No material, craft, or origin
+language — see §7. Before writing a single word here, read §7 again.
 
 ### 5.7 Marquee — the diagonal light→dark wipe
 `CASH ON DELIVERY · IN STOCK · EVERY PRICE ON THE PAGE · ORDER ON INSTAGRAM ·`
@@ -483,6 +576,17 @@ on a cash-on-delivery shop with no backend is a dead end wearing a form.
 
 ### 5.9 Footer — deepest vignette, hue: none
 V-mark, links, `© 2026 VOSS`. Real Instagram URL, not a placeholder.
+
+### 5.10 How to read this section list
+
+**A section absent from this list is a section this document did not know about,
+not a section that is cut.** The "unlisted sections are cut" rule from the first
+draft is withdrawn — it was written assuming the list was complete, and it was not.
+
+Only the explicit "Cut entirely" list below deletes anything. If you find a section
+in the codebase that is not named anywhere in §5, keep it, and add it to §5 with a
+one-line note on what job it does. Do not delete a shipping section on the strength
+of an omission.
 
 ### Cut entirely
 `Manifesto.tsx` (old luxury voice, unreadable low contrast) ·

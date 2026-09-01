@@ -351,3 +351,100 @@ addressing before Phase 1 — a full disk during a `git` operation inside OneDri
 is the scenario `CLAUDE.md` §11.5 already warns can corrupt `.git/`.
 
 - [x] Phase 0 complete
+
+---
+
+## Phase 1a — Warm the ground — 2026-09-01
+
+Scope: the background colour only. No layout, type or motion changed.
+
+### The actual diagnosis
+
+"Grey" was not a colour anyone picked. **Every stop of the ink ramp was
+blue-tinted** — B > R at all six:
+
+```
+#060607  #0a0a0c  #131316  #1e1e22  #2c2c32  #45454e
+```
+
+Gold is the opposite (`#c2a46a`, R > G > B). A cool ground pushes gold's
+complement, so the house colour came back slightly green and the page read as
+grey rather than black. §1.2 of the target already called this and supplied the
+values.
+
+### What changed
+
+`globals.css` `@theme` — the ink ramp replaced with §1.2's warm black, plus the
+two tokens §1.2 adds:
+
+```
+--color-ink-950: #0b0a09   page ground        (was #060607)
+--color-ink-900: #131110   raised / nav       (was #0a0a0c)
+--color-ink-850: #191614   card ground        (new)
+--color-ink-800: #221e1b   card ground hover  (was #131316)
+--color-ink-700: #2e2926   hairline           (was #1e1e22)
+--color-ink-600: #423b36   border emphasised  (was #2c2c32)
+--color-ink-500: #574e48   not in §1.2, continues the same hue slope
+--color-cool-shade: #0a0c0e  the only cool value on the site
+```
+
+`body` moved from a flat `ink-900` fill to `ink-950` with a vertical gradient
+falling toward `cool-shade`, per §1.7's "never a flat fill on a full-viewport
+surface". Warm black alone over a whole viewport goes sepia; the cool fall is
+what stops it.
+
+`Nav.tsx` — the scrolled surface moved `ink-800` → `ink-900`. On the old cool
+ramp those two were close; on the warm ramp `ink-800` is a card-hover value and
+read too light for a nav. §1.2 names `ink-900` as "nav on scroll".
+
+### Verified, not asserted
+
+Measured live in the browser with a WCAG contrast function, on the new ground:
+
+| | ratio on `#0b0a09` |
+|---|---|
+| `paper-100` body text | 16.93:1 |
+| `gold-300` | 12.39:1 |
+| `chalk` | 9.07:1 |
+| `gold-500` | **8.30:1** |
+| `smoke` | 5.56:1 |
+| `signal-500` (price) | **5.28:1** |
+
+`gold-500` measured **8.30:1 on the old ground too**, and `signal-500` **5.28:1
+on both**. The change is pure hue at unchanged luminance — nothing's contrast
+moved, which is the point. Screenshotted and looked at, 390×844 and 1440×900,
+homepage hero and product grid. Build and TypeScript clean.
+
+### Decisions I made
+
+- **Applied only the linear half of §1.7's ground gradient.** §1.7 also
+  specifies a radial at `50% 0%`, but `SiteBackdrop.tsx` already casts a key
+  light at `18% -10%` — high and slightly left, matching `--elev-*` and the
+  hero clip. A second radial at centre would be a second light direction, which
+  §3.4 forbids. The vertical fall gives the depth without the contradiction.
+- **Kept the `SiteBackdrop` counter-fill warm.** Its comment called it "a cold
+  counter-fill"; the whole ramp is warm now, so the cool direction moved into
+  the body gradient's vertical fall instead. Lit side warm, shadow side cool is
+  how one light actually behaves. Comment corrected at the site.
+
+### Trap found and documented in `globals.css`
+
+**Tailwind v4 only emits a `@theme` token that something references** — as a
+utility or as a raw `var()`. Verified in the browser:
+`getPropertyValue("--color-ink-850")` returns the **empty string** today, and so
+do `--color-ink-500` and `--color-paper-300`, because nothing uses them yet. A
+raw `var(--color-ink-850)` written now resolves to nothing rather than erroring.
+
+**This will bite §1.6 hard.** The six `--hue-*` values must each be referenced
+by their derived `-wash` / `-veil` / `-edge` tokens, or half the product palette
+will silently not exist and every hue wash will render as nothing. Commented at
+the token block.
+
+### Not done, still open
+
+The three items from Phase 0 are unchanged and still need Haseeb: §5.10 has now
+settled the section-list question (nothing is cut on an omission), and §1.5 has
+settled the vermilion by making it a ramp — but `--verm-800` is specified as
+`<derive>` and has not been derived. **That is the next colour task**, and §1.5
+says to report the value and its measured ratio on `--paper-50` rather than
+guess it.
