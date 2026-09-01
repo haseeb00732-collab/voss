@@ -8,7 +8,15 @@
    load-bearing and neither was the reason v1 read as quiet.
    ═══════════════════════════════════════════════════════════════════════ */
 
-@theme {
+/* `static` is load-bearing, do not drop it. By default Tailwind v4 only
+   emits a @theme token that something references — as a utility or a raw
+   var() — so an unused token resolves to the empty string rather than
+   erroring. That is silent: `var(--color-ink-850)` renders as nothing and
+   the element just has no background. `static` emits every token in the
+   block unconditionally. Verified supported in tailwindcss 4.3.3, whose
+   @theme option parser reads: reference|inline|default|static.
+   /_tokens is the guard that proves it stays true. */
+@theme static {
   /* ── Ink. WARM black, per VOSS-VISUAL-TARGET §1.2.
      Every stop of the previous ramp was blue-tinted (B > R at all six), which
      is what made the page read grey rather than black. Gold is warm — R > G >
@@ -24,32 +32,33 @@
   --color-ink-600: #423b36; /* border, emphasised */
   --color-ink-500: #574e48; /* not in §1.2; continues the same hue slope */
 
-  /* TRAP, verified in the browser on 2026-09-01: Tailwind v4 only emits a
-     @theme token that something actually references — as a utility class OR
-     as a raw var(). Nothing uses ink-850, ink-500 or paper-300 yet, so
-     `getComputedStyle(root).getPropertyValue("--color-ink-850")` returns the
-     empty string right now, and any raw `var(--color-ink-850)` written today
-     resolves to nothing rather than erroring. It starts working the moment
-     the first reference exists. This matters for §1.6: the six --hue-* values
-     must each be referenced by their derived -wash/-veil/-edge tokens, or
-     half the palette will silently not exist. */
-
   /* The ONLY cool value on the site. Warm black alone goes sepia over a full
      viewport — this is mixed into the ground gradient at low percentages so
      the dark has depth instead of reading flat brown. §1.2. */
   --color-cool-shade: #0a0c0e;
 
-  /* ── Paper. Warm, uncoated, never pure white. ────────────────────────── */
-  --color-paper-50: #faf8f3;
-  --color-paper-100: #f1ede4;
-  --color-paper-200: #e4ded1;
-  --color-paper-300: #cfc7b6;
+  /* ── Paper, §1.5b. Warm, uncoated, never pure white. Paper is the piece
+     page only — PieceHero computes data-surface from the colourway's own
+     luminance, so a pale hide flips the whole page to this substrate. The
+     homepage is dark top to bottom. */
+  --color-paper-50: #f4efe8;
+  --color-paper-100: #e9e2d8;
+  --color-paper-200: #d8cfc2; /* hairline on paper */
+  --color-ink-on-paper: #17130f; /* primary text on paper */
+  --color-smoke-on-paper: #5a524a;
 
-  /* ── Warm neutrals, carried over. ────────────────────────────────────── */
-  --color-clay: #5c564e;
-  --color-pewter: #4a4640;
-  --color-smoke: #8c8781;
-  --color-chalk: #b5afa4;
+  /* ── Text on ink, §1.3. `chalk` is the primary and is deliberately the
+     same value as paper-50: the brightest thing on ink and the ground of
+     paper are one colour, which is what keeps the two substrates reading as
+     one system rather than two themes.
+
+     `pewter` FAILS WCAG AA for body text (4.1:1) and is permitted ONLY on
+     uppercase mono micro-labels at 11px+ with 0.12em tracking, where it
+     reads as material texture rather than content. Anything a customer has
+     to read is `smoke` or brighter. */
+  --color-chalk: #f4efe8; /* primary — 15.8:1 on ink-950 */
+  --color-smoke: #b3aaa2; /* secondary — 7.6:1 */
+  --color-pewter: #7c736c; /* meta / mono labels ONLY — 4.1:1 */
 
   /* ── The gold ramp. The one thing v1 got unambiguously right. ─────────
      Still inverts across substrate: lighter on ink, darker on paper. */
@@ -59,30 +68,66 @@
   --color-gold-300: #dfcb9b;
   --color-gold-100: #f0e5c8;
 
-  /* ── SIGNAL — the one added hue, and the only accent on the page. ─────
-     Gold is the house. Signal is the verb: price and order CTA, and
-     almost nothing else. If it appears twice in a viewport, one of them
-     is wrong.
+  /* ── VERMILION — the verb, §1.5. Gold is the house; this is the only
+     other accent and it means "act": the price, and the order CTA.
 
-     Set to #c66963 by Haseeb 2026-08-31, superseding the vermilion ramp
-     below. This one INVERTS across substrate the way gold does — 500 on
-     ink (5.28:1), 700 on paper (6.01:1). Hard-coding either shade works
-     until the section flips substrate and then it is unreadable, so use
-     `--text-signal`, never `--color-signal-500` directly. */
-  --color-signal-900: #673733;
-  --color-signal-700: #8f4c47;
-  --color-signal-600: #aa5a55;
-  --color-signal-500: #c66963;
-  --color-signal-300: #d6938f;
-  --color-signal-100: #eed2d0;
+     It is a RAMP, not a value, for the same reason gold is. #c66963 was
+     chosen on 2026-08-31 precisely because it inverts across substrate —
+     but measured against §1.5b's paper-50 it is 3.28:1 and fails AA, which
+     is exactly the bug a single value cannot fix. So the ink end and the
+     paper end are different colours, resolved per substrate.
 
-  /* @deprecated Superseded by the signal ramp above. Still referenced by
-     --error, which wants a hotter red than the accent. Not an accent. */
-  --color-vermilion-700: #b21f08;
-  --color-vermilion-600: #e42d12;
-  --color-vermilion-500: #ff3b1f;
-  --color-vermilion-300: #ff7a66;
-  --color-vermilion-100: #ffd9d1;
+     NEVER reference --color-verm-* directly from a component. Use
+     --text-signal, which resolves per data-surface. Hard-coding the ink end
+     works right up until the section flips to paper and the buy button is
+     at 3:1 — the identical trap the gold ramp documents. */
+  --color-verm-400: #ff5f3e; /* hover, on ink */
+  --color-verm-500: #e8452a; /* on ink — 5.01:1 on ink-950 */
+  --color-verm-600: #c2331b; /* pressed, on ink */
+  --color-verm-800: #a15550; /* on paper — 4.67:1 on paper-50, derived not
+                                guessed: paper-50 is L=0.86790, so AA needs
+                                L <= 0.15398; this is L=0.14655. Same hue as
+                                #c66963 (H 3.7deg), darkened until it passed. */
+
+  /* ── Product hues, §1.6. These are the six bag colours and nothing else
+     gets a hue. That is what makes the palette read as earned rather than
+     decorated — every colour on the page is a colour you can buy.
+
+     The three derived tokens per hue are color-mix against the real ink
+     grounds, never hand-picked, so re-grading a hue moves its wash, veil
+     and edge with it and they cannot drift apart. */
+  --color-hue-olive: #5a5f3c;
+  --color-hue-black: #22212b; /* lifted, so the "black" bag reads as a hue
+                                 rather than disappearing into the ground */
+  --color-hue-chocolate: #4a3128;
+  --color-hue-cognac: #8a4e28;
+  --color-hue-wine: #5c1f2b;
+  --color-hue-camel: #b08556;
+
+  /* wash — section ground when that colour is active. 8% over ink-950. */
+  --color-hue-olive-wash: color-mix(in srgb, var(--color-hue-olive) 8%, var(--color-ink-950));
+  --color-hue-black-wash: color-mix(in srgb, var(--color-hue-black) 8%, var(--color-ink-950));
+  --color-hue-chocolate-wash: color-mix(in srgb, var(--color-hue-chocolate) 8%, var(--color-ink-950));
+  --color-hue-cognac-wash: color-mix(in srgb, var(--color-hue-cognac) 8%, var(--color-ink-950));
+  --color-hue-wine-wash: color-mix(in srgb, var(--color-hue-wine) 8%, var(--color-ink-950));
+  --color-hue-camel-wash: color-mix(in srgb, var(--color-hue-camel) 8%, var(--color-ink-950));
+
+  /* veil — card ground on hover / active colourway. 18% over ink-850. */
+  --color-hue-olive-veil: color-mix(in srgb, var(--color-hue-olive) 18%, var(--color-ink-850));
+  --color-hue-black-veil: color-mix(in srgb, var(--color-hue-black) 18%, var(--color-ink-850));
+  --color-hue-chocolate-veil: color-mix(in srgb, var(--color-hue-chocolate) 18%, var(--color-ink-850));
+  --color-hue-cognac-veil: color-mix(in srgb, var(--color-hue-cognac) 18%, var(--color-ink-850));
+  --color-hue-wine-veil: color-mix(in srgb, var(--color-hue-wine) 18%, var(--color-ink-850));
+  --color-hue-camel-veil: color-mix(in srgb, var(--color-hue-camel) 18%, var(--color-ink-850));
+
+  /* edge — hairline, colour chip, focus ring. 55%, composited over whatever
+     is behind it, because a chip has to read on a card AND on a wash. */
+  --color-hue-olive-edge: color-mix(in srgb, var(--color-hue-olive) 55%, transparent);
+  --color-hue-black-edge: color-mix(in srgb, var(--color-hue-black) 55%, transparent);
+  --color-hue-chocolate-edge: color-mix(in srgb, var(--color-hue-chocolate) 55%, transparent);
+  --color-hue-cognac-edge: color-mix(in srgb, var(--color-hue-cognac) 55%, transparent);
+  --color-hue-wine-edge: color-mix(in srgb, var(--color-hue-wine) 55%, transparent);
+  --color-hue-camel-edge: color-mix(in srgb, var(--color-hue-camel) 55%, transparent);
 
   /* ── Type. Didone display against a grotesque, plus Nastaliq for Urdu.
      All three are self-hosted and subset in `src/app/fonts`; none of them
@@ -191,38 +236,40 @@
   --surface: var(--color-ink-900);
   --surface-raised: var(--color-ink-800);
   --surface-sunken: var(--color-ink-950);
-  --text-primary: var(--color-paper-100);
+  --text-primary: var(--color-chalk);
   --text-secondary: var(--color-smoke);
   --text-tertiary: var(--color-gold-700);
   --text-accent: var(--color-gold-500);
-  --text-signal: var(--color-signal-500);
+  --text-signal: var(--color-verm-500);
+  --text-signal-hover: var(--color-verm-400);
+  --text-signal-press: var(--color-verm-600);
   --border-hairline: color-mix(in srgb, var(--color-gold-700) 30%, transparent);
   --border-strong: color-mix(in srgb, var(--color-gold-500) 55%, transparent);
   --border-neutral: var(--color-ink-700);
   --focus: var(--color-gold-300);
   --link: var(--color-gold-300);
   --link-hover: var(--color-gold-100);
-  --error: var(--color-vermilion-300);
   --disabled-fg: var(--color-pewter);
 }
 
-[data-surface="light"] {
+[data-surface="paper"] {
   --surface: var(--color-paper-100);
   --surface-raised: var(--color-paper-50);
   --surface-sunken: var(--color-paper-200);
-  --text-primary: var(--color-ink-900);
-  --text-secondary: var(--color-clay);
-  --text-tertiary: var(--color-smoke);
+  --text-primary: var(--color-ink-on-paper);
+  --text-secondary: var(--color-smoke-on-paper);
+  --text-tertiary: var(--color-smoke-on-paper);
   --text-accent: var(--color-gold-900);
-  --text-signal: var(--color-signal-700);
+  --text-signal: var(--color-verm-800);
+  --text-signal-hover: var(--color-verm-600);
+  --text-signal-press: var(--color-verm-800);
   --border-hairline: color-mix(in srgb, var(--color-gold-900) 24%, transparent);
   --border-strong: color-mix(in srgb, var(--color-gold-900) 45%, transparent);
   --border-neutral: var(--color-paper-200);
   --focus: var(--color-gold-900);
   --link: var(--color-gold-900);
-  --link-hover: var(--color-ink-900);
-  --error: var(--color-vermilion-700);
-  --disabled-fg: var(--color-chalk);
+  --link-hover: var(--color-ink-on-paper);
+  --disabled-fg: var(--color-smoke-on-paper);
 }
 
 @layer base {
@@ -252,7 +299,7 @@
   }
 
   ::selection {
-    background: var(--color-signal-500);
+    background: var(--text-signal);
     color: var(--color-paper-50);
   }
 
@@ -510,7 +557,7 @@
 /* A magazine rule: heavier, and it carries the signal colour. */
 @utility rule-signal {
   height: 2px;
-  background-color: var(--color-signal-500);
+  background-color: var(--text-signal);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════

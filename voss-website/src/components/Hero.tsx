@@ -262,7 +262,7 @@ export function Hero() {
             <span aria-hidden="true">{chars("Carry it your way.")}</span>
           </h1>
 
-          <p data-hero-rise className="body-l measure-tight mt-band text-chalk">
+          <p data-hero-rise className="body-l measure-tight mt-band text-smoke">
             {running ? (
               <>
                 Six bags at{" "}

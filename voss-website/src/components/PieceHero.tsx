@@ -37,7 +37,7 @@ gsap.registerPlugin(useGSAP);
  * Nastaliq to be legible, let alone beautiful.
  */
 
-/** Relative luminance, so a pale hide flips the page to its light substrate. */
+/** Relative luminance, so a pale hide flips the page to the paper substrate. */
 function isLight(hex: string) {
   const h = hex.replace("#", "");
   const [r, g, b] = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
@@ -73,7 +73,7 @@ export function PieceHero({ piece }: { piece: Piece }) {
   return (
     <section
       ref={root}
-      data-surface={light ? "light" : "dark"}
+      data-surface={light ? "paper" : "dark"}
       className="substrate relative pt-[8.5rem]"
       style={{ backgroundColor: cw.hex }}
       aria-label={piece.name ?? piece.label}
