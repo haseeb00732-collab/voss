@@ -549,6 +549,81 @@
   isolation: isolate;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════
+   THE WIPE CARD
+   Two photographs of the SAME bag in different colourways, stacked. On
+   hover the second one wipes in from the left while it un-zooms and
+   resolves out of a blown-out state.
+
+   Three properties move together and they are doing three different jobs:
+     clip-path  — the wipe itself, left edge to right
+     transform  — the back image lands from 1.2, the front drifts to 1.03,
+                  so the two planes separate and it reads as depth rather
+                  than a cross-fade
+     filter     — the back arrives over-exposed and settles, which is what
+                  makes it read as a colour CHANGING rather than a second
+                  picture appearing
+
+   Drop any one of the three and the whole thing reads as a plain image
+   swap. They are specified in one rule for the same reason the display
+   utilities bind size and tracking: they are not independently meaningful.
+
+   Hover only, and only on a real pointer — on touch there is no hover
+   state to leave, so the card would stick on the second colourway. Touch
+   gets the tap-through to the piece page instead.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@utility wipe-media {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  background-color: var(--color-ink-850);
+
+  & img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition:
+      transform var(--dur-4) var(--ease-io),
+      clip-path var(--dur-4) var(--ease-io),
+      filter var(--dur-4) var(--ease-io);
+  }
+
+  & .wipe-front {
+    transform: scale(1);
+  }
+
+  & .wipe-back {
+    transform: scale(1.2);
+    /* Collapsed onto the left edge, so it has somewhere to arrive from. */
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    filter: brightness(400%) contrast(150%);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .wipe-card:hover .wipe-front {
+    transform: scale(1.03);
+  }
+
+  .wipe-card:hover .wipe-back {
+    transform: scale(1);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    filter: brightness(100%) contrast(100%);
+  }
+}
+
+/* §4.6.6 — same composition, arrived at instantly. The wipe is the whole
+   point of the card, so reduced motion keeps the reveal and drops only the
+   travel: the second colourway appears, it just does not slide. */
+@media (prefers-reduced-motion: reduce) {
+  .wipe-media img {
+    transition: none;
+  }
+}
+
 @utility vignette {
   &::before {
     content: "";

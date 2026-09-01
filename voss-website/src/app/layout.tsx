@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Bodoni_Moda, IBM_Plex_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { Grain } from "@/components/Grain";
+import { StyleCountWord } from "@/lib/catalogue";
 import "./globals.css";
 
 /* A didone against a grotesque, plus Nastaliq for Urdu.
@@ -70,7 +71,7 @@ const SITE = "https://voss.com";
    gets forwarded on WhatsApp. It leads with the number. */
 const TITLE = "Handbags for Women in Pakistan — Rs 4,500, Cash on Delivery | VOSS";
 const DESCRIPTION =
-  "Six handbags, launch price Rs 4,500 (list Rs 6,000), cash on delivery. " +
+  `${StyleCountWord} handbags, launch price Rs 4,500 (list Rs 6,000), cash on delivery. ` +
   "Price on the page — no DM required. Lahore-based.";
 // TODO [nationwide / confirmed cities] — delivery reach is unconfirmed, so the
 // description stops at "Lahore-based" rather than claiming a shipping radius.
@@ -91,7 +92,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: OG_TITLE,
-    description: "Six bags, one price. Cash when it lands in your hands.",
+    description: `${StyleCountWord} bags, one price. Cash when it lands in your hands.`,
   },
   robots: { index: true, follow: true },
 };

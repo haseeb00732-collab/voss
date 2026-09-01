@@ -18,12 +18,37 @@ import fs from "node:fs";
 import path from "node:path";
 
 const ROOT = "C:/Users/pesum/OneDrive/Desktop/Voss";
-const OUT = "public/products-hd";
-const SLUGS = ["01", "02", "03", "04", "05", "06"];
+/* OneDrive syncs `public/` while sharp is writing into it and intermittently
+   fails a write with "Invalid argument" — a different file each run, which is
+   the tell for sync contention rather than a bad encode. Set VOSS_MEDIA_OUT to
+   a directory outside the synced tree, then move the result in one operation.
+     VOSS_MEDIA_OUT=/tmp/voss-media node scripts/build-media.mjs */
+const OUT = process.env.VOSS_MEDIA_OUT || "public/products-hd";
+/* Twelve styles as of 2026-09-01. The source folders are `product 1` (with a
+   space, the odd one out) and `product_2` .. `product_12`. */
+const SLUGS = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 const WIDTHS = [440, 880, 1320];
 
-const dirs = fs.readdirSync(ROOT).filter((d) => /^product[ _]?\d$/i.test(d));
-const find = (n) => dirs.find((d) => d.replace(/[^0-9]/g, "") === String(n));
+/* \d+ not \d. With a single \d this matched product 1..9 and silently
+   skipped product_10, _11 and _12 — the build produced six styles from a
+   twelve-style shoot and nothing anywhere said so. */
+const dirs = fs.readdirSync(ROOT).filter((d) => /^product[ _]?\d+$/i.test(d));
+
+/* SOURCE ORDER MATTERS AND IT IS NOT OBVIOUS.
+   `shoot-out/product_N` is the RESTAGED set — studio-lit, consistent ground,
+   no text on the image. `product N` at the root is the raw supplier listing
+   photograph, and for styles 07-12 several of those have a colour name burned
+   into the pixels ("WHITE", "Black", "Dark brown" in a script face) and are
+   shot in someone's living room. Building from the root folder for those
+   styles puts a competitor's watermark on the VOSS site.
+
+   So: prefer shoot-out, fall back to the root folder. Styles 01-06 have no
+   shoot-out entry because their root folder IS the restaged set. */
+const find = (n) => {
+  const restaged = path.join(ROOT, "shoot-out", `product_${n}`);
+  if (fs.existsSync(restaged)) return path.join("shoot-out", `product_${n}`);
+  return dirs.find((d) => d.replace(/[^0-9]/g, "") === String(n));
+};
 
 /** Median colour of the bag body: a tight centre box, ignoring the ground. */
 async function bodyHex(file) {
@@ -81,6 +106,25 @@ for (const [i, slug] of SLUGS.entries()) {
   }
   manifest[slug] = { from: dir, shots };
   console.log(` ${slug} ${files.length} images`);
+}
+
+/* The campaign band that sits between the hero and the range. One image,
+   full-bleed, so it needs the widths a full-viewport element actually paints
+   rather than the card widths above. Native is 1584px and we never upscale,
+   so that is where the ladder stops. */
+const CAMPAIGN_SRC = path.join(ROOT, "campaign/voss-desert.png");
+if (fs.existsSync(CAMPAIGN_SRC)) {
+  fs.mkdirSync("public/campaign", { recursive: true });
+  const meta = await sharp(CAMPAIGN_SRC).metadata();
+  for (const w of [640, 1024, 1440, 1584]) {
+    const target = Math.min(w, meta.width);
+    await sharp(CAMPAIGN_SRC)
+      .resize(target, null, { fit: "inside", kernel: "lanczos3" })
+      .avif({ quality: 58, effort: 4 })
+      .toFile(`public/campaign/desert-${w}.avif`);
+  }
+  manifest.campaign = { from: "campaign/voss-desert.png", width: meta.width, height: meta.height };
+  console.log(`campaign: ${meta.width}x${meta.height} -> 4 widths`);
 }
 
 fs.writeFileSync("src/lib/media.generated.json", JSON.stringify(manifest, null, 2));

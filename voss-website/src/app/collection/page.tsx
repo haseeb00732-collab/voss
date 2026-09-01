@@ -3,13 +3,12 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { CollectionGrid } from "@/components/CollectionGrid";
-import { CATALOGUE } from "@/lib/catalogue";
+import { CATALOGUE, StyleCountWord } from "@/lib/catalogue";
 
 export const metadata: Metadata = {
   title: "The Collection",
   // No material claim: material is unconfirmed. Do not add it back until it is.
-  description:
-    "Six handbags, one price. Rs 4,500 today, list Rs 6,000. Cash on delivery.",
+  description: `${StyleCountWord} handbags, one price. Rs 4,500 today, list Rs 6,000. Cash on delivery.`,
 };
 
 /**
@@ -34,7 +33,8 @@ export default function CollectionPage() {
               thing that actually sells here: one price, on the page, before
               she has to ask. */}
           <h1 className="display-xl col-span-12 mt-group text-paper-50 md:col-span-9">
-            Six bags. <em className="font-normal italic text-gold-300">One price.</em>
+            {StyleCountWord} bags.{" "}
+            <em className="font-normal italic text-gold-300">One price.</em>
           </h1>
           <p className="body-l measure col-span-12 mt-group text-smoke md:col-span-5">
             Rs 6,000 each, Rs 4,500 today. Pick a colour, message us on

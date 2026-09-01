@@ -1,5 +1,5 @@
 /**
- * The catalogue. Six bags, one price.
+ * The catalogue. Twelve bags, one price.
  *
  * THIS FILE IS THE ONLY PLACE any of it is written down. Names, Urdu, slugs,
  * colour chips, image folders and prices all live here, and every component
@@ -7,7 +7,20 @@
  * component — the whole point is that a reshoot or a rename is an edit to
  * this file and nothing else.
  *
- * NAMES (set 2026-08-31) are the six confirmed by Haseeb. `name` is Latin and
+ * NAMES 01-06 (set 2026-08-31) are confirmed by Haseeb.
+ *
+ * NAMES 07-12 ARE PLACEHOLDER (set 2026-09-01, by Claude). Sahar, Nikhat,
+ * Shabnam, Saba, Hilal and Zeb were chosen to sit in the same Urdu/Persian
+ * register as the confirmed six, and Hilal ("crescent") was picked for the
+ * crescent silhouette. None of them is approved. They are one edit each to
+ * change and nothing outside this file hard-codes them — but they are on a
+ * public page until they are confirmed or replaced.
+ *
+ * COLOURWAY HEXES 07-12 were read off the restaged photography by eye, not
+ * sampled: the pipeline's automatic sampler returned the BACKDROP for several
+ * shots (style 11 came back as five shades of the tan wall behind a navy bag),
+ * so the measured values were not usable. Re-measure before launch.
+ * `name` is Latin and
  * is primary everywhere — cards, alt text, metadata, slugs, the Instagram
  * message — because it is what she types and what the URL carries. `urdu` is
  * display-only and appears large on product pages; at card size Nastaliq is
@@ -182,6 +195,122 @@ export const CATALOGUE: Piece[] = [
       { name: "Blush", hex: "#bf9b80", image: 5 },
     ],
   },
+  {
+    slug: "sahar",
+    dir: "07",
+    name: "Sahar",
+    urdu: "سحر",
+    label: "Style 07",
+    imageCount: 9,
+    price: 4500,
+    listPrice: 6000,
+    silhouette: "Shoulder baguette",
+    note: "A soft baguette on a short strap. The widest colour run in the range.",
+    colourways: [
+      { name: "Ivory", hex: "#d9d2c6", image: 1 },
+      { name: "Oxblood", hex: "#5d2b2b", image: 2 },
+      { name: "Navy", hex: "#2b3550", image: 3 },
+      { name: "Red", hex: "#9e3630", image: 4 },
+      { name: "Chocolate", hex: "#6b4632", image: 5 },
+      { name: "Rose", hex: "#b98275", image: 6 },
+      { name: "Tan", hex: "#9c6134", image: 7 },
+      { name: "Black", hex: "#2a2622", image: 8 },
+      { name: "Sage", hex: "#8b9b76", image: 9 },
+    ],
+  },
+  {
+    slug: "nikhat",
+    dir: "08",
+    name: "Nikhat",
+    urdu: "نکہت",
+    label: "Style 08",
+    imageCount: 4,
+    price: 4500,
+    listPrice: 6000,
+    silhouette: "Textured tote",
+    note: "A woven-texture body with contrast leather handles and corner tabs.",
+    colourways: [
+      { name: "Oatmeal", hex: "#c9bda3", image: 1 },
+      { name: "Sky", hex: "#6ea8cd", image: 2 },
+      { name: "Grey", hex: "#7b7a72", image: 3 },
+      { name: "Cream", hex: "#d7cbb4", image: 4 },
+    ],
+  },
+  {
+    slug: "shabnam",
+    dir: "09",
+    name: "Shabnam",
+    urdu: "شبنم",
+    label: "Style 09",
+    imageCount: 4,
+    price: 4500,
+    listPrice: 6000,
+    silhouette: "Three-piece set",
+    note: "A bucket tote with a matching clutch and a chain purse. Three bags.",
+    colourways: [
+      { name: "Black", hex: "#212122", image: 1 },
+      { name: "Navy", hex: "#1b2f47", image: 2 },
+      { name: "Grey", hex: "#8d8681", image: 3 },
+      { name: "Cream", hex: "#d6c6ad", image: 4 },
+    ],
+  },
+  {
+    slug: "saba",
+    dir: "10",
+    name: "Saba",
+    urdu: "صبا",
+    label: "Style 10",
+    imageCount: 5,
+    price: 4500,
+    listPrice: 6000,
+    silhouette: "Two-tone tote set",
+    note: "A two-tone shopper with a tasselled pouch and a rounded purse.",
+    colourways: [
+      { name: "Cream", hex: "#cfc4b4", image: 1 },
+      { name: "Grey", hex: "#6d6c6b", image: 2 },
+      { name: "Tan", hex: "#ac6740", image: 3 },
+      { name: "Blush", hex: "#b98a7c", image: 4 },
+      { name: "Wine", hex: "#653c3d", image: 5 },
+    ],
+  },
+  {
+    slug: "hilal",
+    dir: "11",
+    name: "Hilal",
+    urdu: "ہلال",
+    label: "Style 11",
+    imageCount: 5,
+    price: 4500,
+    listPrice: 6000,
+    silhouette: "Crescent shoulder",
+    note: "A crescent body on a slim strap, gathered at both ends.",
+    colourways: [
+      { name: "Navy", hex: "#252b3d", image: 1 },
+      { name: "Rose", hex: "#b98287", image: 2 },
+      { name: "Black", hex: "#242222", image: 3 },
+      { name: "Tan", hex: "#9c5f30", image: 4 },
+      { name: "Burgundy", hex: "#4e2323", image: 5 },
+    ],
+  },
+  {
+    slug: "zeb",
+    dir: "12",
+    name: "Zeb",
+    urdu: "زیب",
+    label: "Style 12",
+    imageCount: 5,
+    price: 4500,
+    listPrice: 6000,
+    silhouette: "Structured tote",
+    note: "A squared tote with contrast piping and a detachable shoulder strap.",
+    colourways: [
+      { name: "Taupe", hex: "#8d8079", image: 1 },
+      { name: "Tan", hex: "#a3603d", image: 2 },
+      { name: "Cream", hex: "#ddd4bf", image: 3 },
+      { name: "Black", hex: "#2b2a2b", image: 4 },
+      { name: "Blush", hex: "#dfb9a6", image: 5 },
+    ],
+  },
 ];
 
 /**
@@ -259,6 +388,30 @@ export function legacyImages(piece: Piece): string[] {
   const n = LEGACY_COUNTS[piece.dir] ?? 0;
   return Array.from({ length: n }, (_, i) => `${LEGACY_ROOT}/${piece.dir}/${i + 1}.jpg`);
 }
+
+/**
+ * How many styles ship, as a number and as an English word.
+ *
+ * NEVER write this count into a component. It was hard-coded as "Six" in
+ * seven places — the hero twice, both collection pages, and three metadata
+ * descriptions — and adding styles 07-12 left every one of them lying, in the
+ * page title and the Open Graph card included. §11.1: no component holds a
+ * product fact of its own, and a count is a product fact.
+ */
+export const STYLE_COUNT = CATALOGUE.length;
+
+const COUNT_WORDS = [
+  "zero", "one", "two", "three", "four", "five", "six",
+  "seven", "eight", "nine", "ten", "eleven", "twelve",
+];
+
+/** Lowercase, for running copy. Capitalise at the call site if a line opens with it. */
+export const styleCountWord =
+  COUNT_WORDS[STYLE_COUNT] ?? String(STYLE_COUNT);
+
+/** Capitalised, for a sentence opening. */
+export const StyleCountWord =
+  styleCountWord.charAt(0).toUpperCase() + styleCountWord.slice(1);
 
 /** The cover shot: the first colourway, never a detail crop. */
 export function coverImage(piece: Piece): string {

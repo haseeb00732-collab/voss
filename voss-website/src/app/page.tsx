@@ -2,7 +2,8 @@ import { SmoothScroll } from "@/components/SmoothScroll";
 import { SiteBackdrop } from "@/components/SiteBackdrop";
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
-import { Bags } from "@/components/Bags";
+import { Campaign } from "@/components/Campaign";
+import { Range } from "@/components/Range";
 import { WhatItIs } from "@/components/WhatItIs";
 import { BeforeYouPay } from "@/components/BeforeYouPay";
 import { Faqs } from "@/components/Faqs";
@@ -85,8 +86,10 @@ export default function Home() {
       <main id="main">
         <Hero />
 
-        {/* she came from Instagram to see bags: nothing goes between */}
-        <Bags />
+        <Campaign />
+
+        {/* she came from Instagram to see bags: nothing else goes between */}
+        <Range />
 
         <WhatItIs />
         <BeforeYouPay />

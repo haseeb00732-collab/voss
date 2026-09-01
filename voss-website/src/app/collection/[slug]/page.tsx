@@ -13,6 +13,7 @@ import {
   hdImage,
   hdSrcSet,
   relatedPieces,
+  styleCountWord,
 } from "@/lib/catalogue";
 
 export function generateStaticParams() {
@@ -62,7 +63,7 @@ export default async function PiecePage({ params }: { params: Promise<{ slug: st
                 href="/collection"
                 className="eyebrow text-smoke transition-colors duration-[var(--dur-1)] hover:text-gold-300"
               >
-                All six &rarr;
+                All {styleCountWord} &rarr;
               </Link>
             </div>
 

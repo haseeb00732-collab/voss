@@ -6,6 +6,7 @@ import { useReducedMotion } from "@/lib/useReducedMotion";
 import { igDirectMessage } from "@/lib/instagram";
 import {
   CATALOGUE,
+  StyleCountWord,
   offerEndsLabel,
   offerRunning,
   pricing,
@@ -265,7 +266,7 @@ export function Hero() {
           <p data-hero-rise className="body-l measure-tight mt-band text-smoke">
             {running ? (
               <>
-                Six bags at{" "}
+                {StyleCountWord} bags at{" "}
                 <span className="text-[var(--text-signal)]">{price.now}</span>
                 {price.save ? `, ${price.save} off` : null}
                 {/* TODO [end date] — unconfirmed. This clause removes itself
@@ -275,7 +276,7 @@ export function Hero() {
               </>
             ) : (
               <>
-                Six bags, one price,{" "}
+                {StyleCountWord} bags, one price,{" "}
                 <span className="text-[var(--text-signal)]">{price.now}</span>.
                 Cash when it lands in your hands.
               </>
