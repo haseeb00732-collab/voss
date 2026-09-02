@@ -258,9 +258,9 @@ export function Hero() {
 
           <h1
             className="display-xl mt-group text-paper-50"
-            aria-label="Carry it your way."
+            aria-label="Made to find its way to you."
           >
-            <span aria-hidden="true">{chars("Carry it your way.")}</span>
+            <span aria-hidden="true">{chars("Made to find its way to you.")}</span>
           </h1>
 
           <p data-hero-rise className="body-l measure-tight mt-band text-smoke">

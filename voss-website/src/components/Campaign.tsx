@@ -68,20 +68,24 @@ export function Campaign() {
         decoding="async"
       />
 
-      {/* 2. The page's own grid, continued across the photograph. Hidden below
-             lg for the same reason SiteBackdrop hides it: at phone width the
-             layout is one column and the rules would describe a structure
-             that is not there. */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden lg:block">
-        <div className="mx-auto grid h-full max-w-[120rem] grid-cols-12 gap-x-gap-col px-gutter">
+      {/* 2. The page's own grid, continued across the photograph — same 4 /
+             8 / 12 breakpoint steps SiteBackdrop draws behind the content, so
+             the band is tied to the page's structure at every width rather
+             than floating on top of it. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="relative mx-auto grid h-full max-w-[120rem] grid-cols-4 gap-x-gap-col px-gutter md:grid-cols-8 lg:grid-cols-12">
           {Array.from({ length: 12 }, (_, i) => (
-            <div key={i} className="relative">
+            <div
+              key={i}
+              className={
+                "relative " +
+                (i < 4 ? "" : i < 8 ? "hidden md:block" : "hidden lg:block")
+              }
+            >
               <span className="absolute inset-y-0 left-0 w-px bg-[color-mix(in_srgb,var(--color-gold-300)_10%,transparent)]" />
-              {i === 11 && (
-                <span className="absolute inset-y-0 right-0 w-px bg-[color-mix(in_srgb,var(--color-gold-300)_10%,transparent)]" />
-              )}
             </div>
           ))}
+          <span className="absolute inset-y-0 right-gutter w-px bg-[color-mix(in_srgb,var(--color-gold-300)_10%,transparent)]" />
         </div>
       </div>
 

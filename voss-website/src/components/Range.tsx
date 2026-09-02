@@ -56,11 +56,8 @@ export function Range() {
           The range · Twelve bags
         </p>
         <h2 id="range-heading" className="display-2 mt-item">
-          Every one on the page.
+          Products
         </h2>
-        <p className="body-l measure mt-group text-[var(--text-secondary)]">
-          Rs 6,000 each, Rs 4,500 today. No DMs for the price.
-        </p>
       </header>
 
       <div className="grid grid-cols-2 gap-x-gap-col gap-y-band md:grid-cols-16 md:gap-y-section">

@@ -3,7 +3,7 @@ import { SiteBackdrop } from "@/components/SiteBackdrop";
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
 import { Campaign } from "@/components/Campaign";
-import { TheObject } from "@/components/TheObject";
+import { Statement } from "@/components/Statement";
 import { TrustBlock } from "@/components/TrustBlock";
 import { OrderBlock } from "@/components/OrderBlock";
 import { Range } from "@/components/Range";
@@ -97,9 +97,10 @@ export default function Home() {
         {/* she came from Instagram to see bags: nothing else goes between */}
         <Range />
 
-        {/* §5.5. Built long ago and never mounted — Phase 0 flagged it as the
-            strongest frame on the site sitting in the repo doing nothing. */}
-        <TheObject />
+        {/* Type and counted numbers, no photography. After twelve product
+            frames the page needs a change of texture, not a thirteenth
+            picture — see Statement.tsx for why the leather macro went. */}
+        <Statement />
 
         {/* §5.6, merge do not stack: WhatItIs, BeforeYouPay and Faqs inside
             one composed region with one animated ground. */}

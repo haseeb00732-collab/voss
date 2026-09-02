@@ -17,8 +17,8 @@
  *   2. COLUMN RULES. Hairlines on the SAME 12-column grid the content sits
  *      on, not decoration scattered for texture. They are drawn at the real
  *      container gutters, so a card edge and a rule land on the same pixel.
- *      Below `lg` they are hidden: at phone width the grid is one column and
- *      the rules would be lying about a structure that is not there.
+ *      The count steps 4 / 8 / 12 with §3.1's breakpoints, so what is drawn
+ *      is always the grid the content is actually sitting on.
  *
  *   3. THE HUE WASH. §1.7. A single radial that paints whichever product
  *      colour is currently active, driven by the --wash-hue custom property.
@@ -36,6 +36,8 @@
  * composited once and never touched again. Nothing here takes pointer events
  * and nothing here is announced to assistive tech.
  */
+const RULE = "bg-[color-mix(in_srgb,var(--color-gold-700)_9%,transparent)]";
+
 export function SiteBackdrop() {
   return (
     <div
@@ -63,17 +65,29 @@ export function SiteBackdrop() {
         }}
       />
 
-      {/* 2. The grid it is all built on. */}
-      <div className="absolute inset-0 hidden lg:block">
-        <div className="mx-auto grid h-full max-w-[120rem] grid-cols-12 gap-x-gap-col px-gutter">
+      {/* 2. The grid it is all built on.
+             The column COUNT steps with §3.1's breakpoint table — 4 at phone,
+             8 at md, 12 at lg — so the rules always describe the grid the
+             content is actually on. They used to be hidden below lg on the
+             argument that a phone has no grid to describe; it has a four
+             column one, and drawing it is what carries the editorial
+             structure onto the surface that matters most. */}
+      <div className="absolute inset-0">
+        <div className="relative mx-auto grid h-full max-w-[120rem] grid-cols-4 gap-x-gap-col px-gutter md:grid-cols-8 lg:grid-cols-12">
           {Array.from({ length: 12 }, (_, i) => (
-            <div key={i} className="relative">
-              <span className="absolute inset-y-0 left-0 w-px bg-[color-mix(in_srgb,var(--color-gold-700)_9%,transparent)]" />
-              {i === 11 && (
-                <span className="absolute inset-y-0 right-0 w-px bg-[color-mix(in_srgb,var(--color-gold-700)_9%,transparent)]" />
-              )}
+            <div
+              key={i}
+              className={
+                "relative " +
+                (i < 4 ? "" : i < 8 ? "hidden md:block" : "hidden lg:block")
+              }
+            >
+              <span className={`absolute inset-y-0 left-0 w-px ${RULE}` } />
             </div>
           ))}
+          {/* The closing edge, on the container rather than on a child, so it
+              does not have to move between breakpoints. */}
+          <span className={`absolute inset-y-0 right-gutter w-px ${RULE}`} />
         </div>
       </div>
 
