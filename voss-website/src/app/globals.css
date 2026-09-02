@@ -228,7 +228,19 @@
   /* ── §2.2 type scale. Mobile-first and fluid. These are the numbers; the
      display-* utilities below are the only thing allowed to read them, which
      is what keeps size and tracking from ever being applied separately. */
-  --fs-display-1: clamp(2.75rem, 13vw, 7.5rem);
+  /* AMENDED 2026-09-02. §2.2 first specified clamp(2.75rem, 13vw, 7.5rem),
+     which was sized against the old hero line "Carry it your way." — 18
+     characters. The line is now "Made to find its way to you.", 28
+     characters, and the headline column is 6 of 12 (643px at 1440). At the
+     old max of 120px that is roughly five characters per line: the headline
+     wrapped to three lines, stood 331px tall, and pushed the hero to 926px
+     inside a 900px viewport, so the hero stopped fitting on one screen.
+
+     A display size is only correct against a measure. 5.5rem in a 643px
+     column is ~14 characters a line, which is two lines for this headline
+     and 162px tall. The vw factor comes down with it so the growth between
+     breakpoints is gentler than the jump 13vw was making. */
+  --fs-display-1: clamp(2.5rem, 7vw, 5.5rem);
   --fs-display-2: clamp(2rem, 8.5vw, 4.5rem);
   --fs-display-3: clamp(1.5rem, 5.5vw, 2.5rem);
   --fs-h4: 1.125rem;
@@ -1012,11 +1024,29 @@ html {
 }
 
 /* The hero clip fades in over its own poster.
-   The poster is the LIT final frame so the hero is never a black rectangle
-   before the video arrives. The video therefore has to appear ON TOP of it
-   rather than replace it — otherwise the instant playback begins the hero
-   snaps back to the clip's dark opening. It only becomes visible once it is
-   actually playing, and it starts from the lit part of the reveal. */
+
+   BUG FIXED 2026-09-02, and it was the LCP element. The poster was set as the
+   <video poster> attribute on the element that carries `opacity: 0` — so the
+   poster was invisible too, and any browser that REFUSED autoplay showed a
+   black rectangle where the hero should be. `play()` returns a rejected
+   promise on a data saver, in low power mode, and in any embedded view
+   without a user gesture; `data-playing` is only set in the resolve branch,
+   so the video never faded in and nothing else was ever painted. Reduced
+   motion had the same hole from the other direction: `display: none` on the
+   video takes the poster attribute with it.
+
+   The poster now lives on the WRAPPER as a background, independent of the
+   video's play state, so the lit frame is the floor the hero cannot fall
+   through. The video still fades in on top — it has to, because the clip's
+   own opening is near-dark and showing it before playback would snap the
+   hero back to black. */
+.hero-poster {
+  background-image: url("/hero/poster.avif");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .hero-video {
   opacity: 0;
   transition: opacity var(--dur-2) var(--ease-lux);

@@ -211,7 +211,7 @@ so the page is not just "serif headline + sans body" like every template.
 ### 2.2 Scale — mobile-first, fluid
 
 ```css
---fs-display-1: clamp(2.75rem, 13vw, 7.5rem);   /* hero H1 */
+--fs-display-1: clamp(2.5rem, 7vw, 5.5rem);     /* hero H1 — amended, see below */
 --fs-display-2: clamp(2rem,   8.5vw, 4.5rem);   /* section headline */
 --fs-display-3: clamp(1.5rem, 5.5vw, 2.5rem);   /* pull quote */
 --fs-h4:        1.125rem;                        /* product name */
@@ -225,6 +225,23 @@ so the page is not just "serif headline + sans body" like every template.
 --lh-body:    1.6;    --ls-body:     0;
 --lh-meta:    1;      --ls-meta:     0.12em;
 ```
+
+**Amended 2026-09-02.** `--fs-display-1` was `clamp(2.75rem, 13vw, 7.5rem)`.
+That was sized against the hero line it was written for, "Carry it your way."
+— 18 characters. The line is now "Made to find its way to you.", 28
+characters, in a headline column that is 6 of 12 (643px at 1440). At the old
+7.5rem max that is ~5 characters per line: the headline wrapped to three
+lines, stood 331px tall, and pushed the hero to **926px inside a 900px
+viewport**, so the hero stopped fitting on one screen.
+
+**A display size is only correct against a measure.** The number that matters
+is characters per line, not the size itself. 5.5rem in a 643px column is ~14
+characters a line — two lines for this headline, 162px tall, hero back to
+900px. The vw factor drops with it so the growth between breakpoints is
+gentler than 13vw was making it.
+
+If the hero line changes length again, re-measure. Do not assume the clamp
+still holds.
 
 **Trap already hit once on this project:** display letter-spacing on running text
 shattered the hero across five lines. Tracking is a *display-only* token. Body is

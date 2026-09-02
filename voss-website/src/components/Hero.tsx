@@ -213,7 +213,7 @@ export function Hero() {
       {/* The clip, full-bleed. This IS allowed to be full-bleed where a
           catalogue photograph is not: the source is 2560x1440, not a 540px
           phone capture, so it is being DOWNscaled at every viewport. */}
-      <div className="absolute inset-0 z-0">
+      <div className="hero-poster absolute inset-0 z-0">
         <video
           ref={video}
           className="hero-video h-full w-full object-cover"
