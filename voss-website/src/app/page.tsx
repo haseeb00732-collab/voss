@@ -3,10 +3,10 @@ import { SiteBackdrop } from "@/components/SiteBackdrop";
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
 import { Campaign } from "@/components/Campaign";
+import { TheObject } from "@/components/TheObject";
+import { TrustBlock } from "@/components/TrustBlock";
+import { OrderBlock } from "@/components/OrderBlock";
 import { Range } from "@/components/Range";
-import { WhatItIs } from "@/components/WhatItIs";
-import { BeforeYouPay } from "@/components/BeforeYouPay";
-import { Faqs } from "@/components/Faqs";
 import { Marquee } from "@/components/Marquee";
 import { Footer } from "@/components/Footer";
 import { CATALOGUE, OFFER, pricing } from "@/lib/catalogue";
@@ -86,16 +86,27 @@ export default function Home() {
       <main id="main">
         <Hero />
 
+        {/* The trust strip, directly under the hero. Three facts that answer
+            "is this a scam page" — cash on delivery, in stock, every price on
+            the page — placed where she looks after the headline and before
+            she has to decide whether to scroll at all. */}
+        <Marquee compact />
+
         <Campaign />
 
         {/* she came from Instagram to see bags: nothing else goes between */}
         <Range />
 
-        <WhatItIs />
-        <BeforeYouPay />
-        <Faqs />
+        {/* §5.5. Built long ago and never mounted — Phase 0 flagged it as the
+            strongest frame on the site sitting in the repo doing nothing. */}
+        <TheObject />
 
-        <Marquee />
+        {/* §5.6, merge do not stack: WhatItIs, BeforeYouPay and Faqs inside
+            one composed region with one animated ground. */}
+        <TrustBlock />
+
+        {/* §5.8. The only place the page asks for the sale outright. */}
+        <OrderBlock />
       </main>
 
       <Footer />

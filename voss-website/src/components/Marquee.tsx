@@ -23,7 +23,7 @@ const WORDS = [
  * running across it. The vitrine retreats along the 31° edge as you scroll —
  * see `useDiagonalWipe` for why this wipes rather than dissolves.
  */
-export function Marquee() {
+export function Marquee({ compact = false }: { compact?: boolean } = {}) {
   const root = useRef<HTMLDivElement>(null);
   const dark = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
@@ -66,13 +66,20 @@ export function Marquee() {
   );
 
   return (
-    <div ref={root} className="relative isolate overflow-hidden">
+    <div
+      ref={root}
+      className={
+        /* `compact` is the trust-strip variant that runs directly under the
+           hero: same band, none of the mid-page breathing room. */
+        "relative isolate overflow-hidden"
+      }
+    >
       {/* Underneath: the raised vitrine tone. The page is dark-dominant, so
           this wipe is a tonal shift inside one material rather than a flip to
           paper. A single bright band here would break the page's theme lock
           and read as a different website for one section. */}
       <div data-surface="dark" className="substrate">
-        <Band tone="raised" />
+        <Band tone="raised" compact={compact} />
       </div>
 
       {/* Vitrine, on top, retreating along the diagonal. Under reduced motion
@@ -83,13 +90,13 @@ export function Marquee() {
         className="substrate vignette absolute inset-0"
         aria-hidden="true"
       >
-        <Band tone="dark" />
+        <Band tone="dark" compact={compact} />
       </div>
     </div>
   );
 }
 
-function Band({ tone }: { tone: "raised" | "dark" }) {
+function Band({ tone, compact }: { tone: "raised" | "dark"; compact: boolean }) {
   // Both tones are gold on ink now; the raised band simply sits dimmer, so
   // the diagonal reads as light moving across one surface, not two materials.
   const text = tone === "dark" ? "text-gold-500" : "text-gold-700";
@@ -97,9 +104,12 @@ function Band({ tone }: { tone: "raised" | "dark" }) {
   const dot = tone === "dark" ? "bg-gold-500/70" : "bg-gold-700/45";
 
   return (
-    <div className="above-material relative py-band">
+    /* py-band is the mid-page band's own breathing room. As an announcement
+       bar it has none: a trust strip that is 165px tall pushes the hero down
+       a fifth of a phone viewport to say five words. */
+    <div className={`above-material relative ${compact ? "py-0" : "py-band"}`}>
       <div className={`h-px w-full ${rule}`} />
-      <div className="overflow-hidden py-7">
+      <div className={`overflow-hidden ${compact ? "py-3" : "py-7"}`}>
         <div data-marquee-track className="flex w-max items-center">
           {[0, 1].map((copy) => (
             <div key={copy} className="flex items-center" aria-hidden={copy === 1 || tone === "raised"}>

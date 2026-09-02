@@ -624,6 +624,71 @@
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════════════
+   THE AMBIENT FIELD
+   Slow-drifting colour behind the sections that follow the range.
+
+   §1.6 calls the product hues "the single biggest change to how the site
+   feels" — after them, scrolling moves through olive, chocolate, wine and
+   camel washes, all so subtle no one can name them, but the page stops
+   being one flat black. This is that, animated.
+
+   EVERYTHING HERE IS COMPOSITOR-ONLY: transform and opacity, nothing else.
+   No filter, no background-position, no width. Four large radial fields on
+   very long offset loops — long enough (70-110s) that no one ever sees a
+   cycle, which is what separates ambient from a screensaver.
+
+   It is decoration and it is allowed to be, because it costs no main thread
+   and it carries no information. Under reduced motion the fields hold still
+   at their start position: the colour stays, the drift goes.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@utility ambient-field {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  /* Big and soft. A hard-edged orb reads as a bubble; this has to read as
+     light in the room, so the gradient is gone by 65%. */
+  background: radial-gradient(circle, var(--orb) 0%, transparent 65%);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation:
+    orb-drift var(--orb-dur, 90s) ease-in-out infinite alternate,
+    orb-breathe var(--orb-dur, 90s) ease-in-out infinite alternate;
+  animation-delay: var(--orb-delay, 0s);
+}
+
+@keyframes orb-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(var(--orb-dx, 6%), var(--orb-dy, -4%), 0) scale(1.18);
+  }
+}
+
+@keyframes orb-breathe {
+  from {
+    opacity: 0.22;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-orb {
+    animation: none;
+    opacity: 0.3;
+  }
+}
+
 @utility vignette {
   &::before {
     content: "";
