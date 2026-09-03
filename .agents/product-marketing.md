@@ -45,12 +45,21 @@
 **Emotional tension:** Wanting to buy something that looks considered and a little elevated, without the risk of prepaying a faceless Instagram account.
 
 ## Competitive Landscape
-*[Needs input — no competitor/reference list exists on disk. Establishing a competitor-research methodology and a real named list is an open Phase-0 task. Categories below are hypotheses only; do not present as fact.]*
+**Researched 2026-09-03. Full data and method in `.agents/competitors.md` — read that before writing any competitive copy.** The set below is observed fact, not hypothesis.
 
-**Direct:** Other Pakistani DTC / Instagram women's-handbag shops selling at accessible price points with cash on delivery — *[names TBD]*.
-**Secondary:** Local mall/retail handbag brands and marketplace listings (Daraz etc.) — *[confirm before asserting]*.
-**Indirect:** Imported / "branded" bags and the luxury tier VOSS's look references — a different price bracket and a different buyer.
-**How each falls short for customers:** *[Needs input once real competitors are named and observed — separate observed public facts from interpretation.]*
+**Direct (Pakistani DTC handbag shops, Shopify + COD):** Enshee (enshee.com, @enshee4) · Fineur (fineur.pk, @fineur.pk) · Lyana (thelyanashop.com, @thelyanashop) · RTW Creation (rtwcreation.com, @rtw_creation) · Bag X (bagx.pk, @bag.x.official) · Purse Bazar (pursebazar.pk) · WestStyle (weststyle.pk).
+**Secondary (mall / department tier):** Insignia · Sanaulla · Borjan · Stylo · Bata.
+**Indirect:** Imported / "branded" bags and the luxury tier VOSS's look references — a different bracket and a different buyer.
+
+**The finding that changes the positioning:** the direct set's median bag price is **Rs 1,899–2,499**. **VOSS at Rs 4,500 is the most expensive bag in its own competitive set** — 2.0–2.4x the median, and above the maximum price of five of the seven. Enshee's flagship, anchored at Rs 6,499 like VOSS's Rs 6,000, sells at Rs 3,899. **"Accessible" is true globally and false locally.** Either own the premium slot or reprice; the current copy does neither. Do not describe VOSS as the affordable or accessible option without resolving this.
+
+**How each falls short for customers (observed):**
+- **Permanent fake discounting** — 95–99% of their variants carry a struck-through "was" price, median markdown 33–50%, running indefinitely. Lyana has run one "Upto 60% Off" ad for 391 days straight. *(VOSS's own 25% no-end-date anchor is the same practice, shallower — see `competitors.md` §2.)*
+- **Dead stock** — out-of-stock variant rates of 72% (Insignia), 40% (Fineur), 38% (WestStyle). VOSS's in-stock integrity is a real, uncopied wedge.
+- **Catalogue churn over curation** — 25–500 new SKUs a month, colourways listed as separate products for SEO, no coherent line.
+- **No trust signals on social** — across 269 competitor captions: price named 2%, COD 3%, delivery promise 0%, returns 0%. They shout discounts and say nothing about whether you can trust them.
+
+**Correction to a standing assumption:** in paid ads the top risk-reducer is the **return/exchange window (31% of ads)**, not COD (7%). COD is baseline in Pakistan, not a differentiator. VOSS has no published returns policy and should get one.
 
 ## Differentiation
 **Verifiable-now differentiators (safe to use today):**

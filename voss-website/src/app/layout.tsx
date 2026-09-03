@@ -5,14 +5,14 @@ import { Grain } from "@/components/Grain";
 import { StyleCountWord } from "@/lib/catalogue";
 import "./globals.css";
 
-/* A didone against a grotesque, plus Nastaliq for Urdu.
+/* A didone against a grotesque.
 
    Bodoni carries the italic because the italic is a voice here (pull quotes),
    not an emphasis. Jost carries everything under 1.5rem — it replaced Archivo
    on 2026-08-31.
 
-   Jost and Nastaliq are LOCAL, subset by `scripts/subset-fonts.py`. Bodoni
-   comes through next/font/google, which downloads and self-hosts at build
+   Jost is LOCAL, subset by `scripts/subset-fonts.py`. Bodoni and Plex Mono
+   come through next/font/google, which downloads and self-hosts at build
    time — there is no runtime request to the Google Fonts CDN from any of the
    three. */
 const bodoni = Bodoni_Moda({
@@ -44,20 +44,6 @@ const jost = localFont({
   variable: "--font-jost",
   display: "swap",
   weight: "100 900", // variable axis retained; three weights are used
-});
-
-/* Subset to exactly the glyphs in the six Urdu names. Change a name in
-   `catalogue.ts` and you must re-run `scripts/subset-fonts.py`, or the new
-   letter silently renders in a device font. */
-const nastaliq = localFont({
-  src: "./fonts/NotoNastaliqUrdu-subset.woff2",
-  variable: "--font-nastaliq",
-  display: "swap",
-  weight: "400",
-  /* §2: Urdu sets the product name and nothing else, so it must never be in
-     the critical path. preload:false keeps it out of the LCP race — the file
-     is only fetched once an element actually using `.urdu` renders. */
-  preload: false,
 });
 
 const SITE = "https://voss.com";
@@ -109,7 +95,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${bodoni.variable} ${jost.variable} ${nastaliq.variable} ${plexMono.variable}`}
+      className={`${bodoni.variable} ${jost.variable} ${plexMono.variable}`}
     >
       <body className="antialiased">
         <a

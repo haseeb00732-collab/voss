@@ -1,34 +1,47 @@
 /**
  * The catalogue. Twelve bags, one price.
  *
- * THIS FILE IS THE ONLY PLACE any of it is written down. Names, Urdu, slugs,
+ * THIS FILE IS THE ONLY PLACE any of it is written down. Names, slugs,
  * colour chips, image folders and prices all live here, and every component
  * reads them from here. Nothing below is allowed to be repeated in a
  * component — the whole point is that a reshoot or a rename is an edit to
  * this file and nothing else.
  *
- * NAMES 01-06 (set 2026-08-31) are confirmed by Haseeb.
+ * NAME is a DESCRIPTIVE English name (set 2026-09-02, replacing the Urdu-word
+ * names set 2026-08-31), in the register rtwcreation.com uses:
+ * COLOUR-less TEXTURE/DETAIL + USE/SIZE + BAG TYPE — colour is never in the
+ * name because the card offers 4-9 colours and a colour in a multi-colour
+ * listing's name is a lie on every click but one. Every word was checked
+ * against the actual restaged photography, not assumed: "sculpted flap" was
+ * in style 01's note and there is no flap in the photograph, so it is gone;
+ * "tassel" was claimed for style 05 and there are no tassels in the shot, so
+ * the note now says what is actually there (a two-tone croc body). `name` is
+ * primary everywhere — cards, alt text, page title, meta description,
+ * JSON-LD, the Instagram DM line — because it is what she types and what
+ * search sees.
  *
- * NAMES 07-12 ARE PLACEHOLDER (set 2026-09-01, by Claude). Sahar, Nikhat,
- * Shabnam, Saba, Hilal and Zeb were chosen to sit in the same Urdu/Persian
- * register as the confirmed six, and Hilal ("crescent") was picked for the
- * crescent silhouette. None of them is approved. They are one edit each to
- * change and nothing outside this file hard-codes them — but they are on a
- * public page until they are confirmed or replaced.
+ * URDU IS REMOVED (2026-09-02, Haseeb's call). The `urdu` field, the large
+ * Nastaliq block on the product page, the font and its subsetter are all
+ * gone. It cost a font file on every product page and a whole RTL text path
+ * to render a word that no longer had anything to do with the product's
+ * name. scripts/subset-fonts.py now has no consumer for Nastaliq; it is kept
+ * only for Jost. If Urdu ever returns it returns as a deliberate brand
+ * decision, not as a leftover.
+ *
+ * `label` ("Style 0N") is kept in the data as the short internal code the
+ * naming brief allows, but nothing renders it except as a fallback when
+ * `name` is somehow absent — it was never actually reaching the page.
+ *
+ * SLUGS ARE UNCHANGED (afsun, gulnaar, ...) — a deliberate scope cut. The
+ * naming brief's own Step 3 offers kebab-casing the new name into the URL
+ * with redirects from the old slugs; that is a bigger, separately-approvable
+ * change (every product URL moves) and was not asked for here. Revisit if
+ * the descriptive names are meant to carry SEO weight in the URL too.
  *
  * COLOURWAY HEXES 07-12 were read off the restaged photography by eye, not
  * sampled: the pipeline's automatic sampler returned the BACKDROP for several
  * shots (style 11 came back as five shades of the tan wall behind a navy bag),
  * so the measured values were not usable. Re-measure before launch.
- * `name` is Latin and
- * is primary everywhere — cards, alt text, metadata, slugs, the Instagram
- * message — because it is what she types and what the URL carries. `urdu` is
- * display-only and appears large on product pages; at card size Nastaliq is
- * illegible. See DESIGN-UPGRADE-PROMPT.md §2.
- *
- * Open, and deliberately not blocking: ماہ رُخ transliterates as "Mahrukh"
- * (mah = moon, rukh = face) rather than "Mahrooh". The site is not live and
- * nothing is indexed, so the slug is cheap to change until it is.
  *
  * `dir` is the image folder and `slug` is the URL. They are separate on
  * purpose: the photography is numbered 01–06 and is being reshot, while the
@@ -63,8 +76,6 @@ export type Piece = {
   dir: string;
   /** Latin, primary everywhere. */
   name: string;
-  /** Display-only, product pages at 64px+. Never at card size. */
-  urdu: string;
   label: string;
   /** Total photographs on disk for this style, colourways and details alike. */
   imageCount: number;
@@ -85,14 +96,13 @@ export const CATALOGUE: Piece[] = [
   {
     slug: "afsun",
     dir: "01",
-    name: "Afsun",
-    urdu: "افسون",
+    name: "Structured Workplace Handbag",
     label: "Style 01",
     imageCount: 5,
     price: 4500,
     listPrice: 6000,
     silhouette: "Top handle",
-    note: "A structured top-handle with a sculpted flap and a twin-strap front.",
+    note: "A structured top-handle bag with a twin-strap front and a gold nameplate.",
     colourways: [
       { name: "Tan", hex: "#7a523f", image: 1 },
       { name: "Chocolate", hex: "#4d372c", image: 2 },
@@ -104,14 +114,13 @@ export const CATALOGUE: Piece[] = [
   {
     slug: "gulnaar",
     dir: "02",
-    name: "Gulnaar",
-    urdu: "گلنار",
+    name: "Croc Padlock Handbag",
     label: "Style 02",
     imageCount: 5,
     price: 4500,
     listPrice: 6000,
-    silhouette: "Shoulder",
-    note: "Croc-embossed, with a gold turn-lock at the front.",
+    silhouette: "Structured satchel",
+    note: "Croc-embossed, with a gold padlock at the front.",
     colourways: [
       { name: "Navy", hex: "#454657", image: 1 },
       { name: "Stone", hex: "#887e74", image: 2 },
@@ -123,14 +132,13 @@ export const CATALOGUE: Piece[] = [
   {
     slug: "naubahar",
     dir: "03",
-    name: "Naubahar",
-    urdu: "نو بہار",
+    name: "Croc Office Tote Bag",
     label: "Style 03",
     imageCount: 4,
     price: 4500,
     listPrice: 6000,
     silhouette: "Tote",
-    note: "The largest bag in the range, with a matching wallet.",
+    note: "A croc-embossed tote with a matching wallet.",
     colourways: [
       { name: "Green", hex: "#243b32", image: 1 },
       { name: "Burgundy", hex: "#3e1f22", image: 2 },
@@ -141,14 +149,13 @@ export const CATALOGUE: Piece[] = [
   {
     slug: "dilara",
     dir: "04",
-    name: "Dilara",
-    urdu: "دل آرا",
+    name: "Box Quilted Tote Bag",
     label: "Style 04",
     imageCount: 6,
     price: 4500,
     listPrice: 6000,
     silhouette: "Structured tote",
-    note: "A quilted grid tote that holds its shape.",
+    note: "A box-quilted tote that holds its structured shape.",
     colourways: [
       { name: "Tan", hex: "#824e2f", image: 1 },
       { name: "Wine", hex: "#52322a", image: 2 },
@@ -161,14 +168,13 @@ export const CATALOGUE: Piece[] = [
   {
     slug: "mahrooh",
     dir: "05",
-    name: "Mahrooh",
-    urdu: "ماہ رُخ",
+    name: "Croc Two-Tone Shopper Bag",
     label: "Style 05",
     imageCount: 4,
     price: 4500,
     listPrice: 6000,
     silhouette: "Shopper",
-    note: "A soft-sided shopper, croc-embossed, open at the top.",
+    note: "A croc-embossed shopper in two tones, open at the top.",
     colourways: [
       { name: "Green", hex: "#2f3a24", image: 1 },
       { name: "Black", hex: "#181617", image: 2 },
@@ -179,8 +185,7 @@ export const CATALOGUE: Piece[] = [
   {
     slug: "meher",
     dir: "06",
-    name: "Meher",
-    urdu: "مہر",
+    name: "Chevron Quilted Handbag",
     label: "Style 06",
     imageCount: 5,
     price: 4500,
@@ -198,14 +203,13 @@ export const CATALOGUE: Piece[] = [
   {
     slug: "sahar",
     dir: "07",
-    name: "Sahar",
-    urdu: "سحر",
+    name: "Smooth Slouchy Shoulder Bag",
     label: "Style 07",
     imageCount: 9,
     price: 4500,
     listPrice: 6000,
-    silhouette: "Shoulder baguette",
-    note: "A soft baguette on a short strap. The widest colour run in the range.",
+    silhouette: "Shoulder hobo",
+    note: "A soft, slouchy shoulder bag. The widest colour run in the range.",
     colourways: [
       { name: "Ivory", hex: "#d9d2c6", image: 1 },
       { name: "Oxblood", hex: "#5d2b2b", image: 2 },
@@ -221,14 +225,13 @@ export const CATALOGUE: Piece[] = [
   {
     slug: "nikhat",
     dir: "08",
-    name: "Nikhat",
-    urdu: "نکہت",
+    name: "Woven Texture Tote Bag",
     label: "Style 08",
     imageCount: 4,
     price: 4500,
     listPrice: 6000,
     silhouette: "Textured tote",
-    note: "A woven-texture body with contrast leather handles and corner tabs.",
+    note: "A woven-texture tote with contrast handles and corner tabs.",
     colourways: [
       { name: "Oatmeal", hex: "#c9bda3", image: 1 },
       { name: "Sky", hex: "#6ea8cd", image: 2 },
@@ -239,14 +242,13 @@ export const CATALOGUE: Piece[] = [
   {
     slug: "shabnam",
     dir: "09",
-    name: "Shabnam",
-    urdu: "شبنم",
+    name: "Three-Piece Tote Set",
     label: "Style 09",
     imageCount: 4,
     price: 4500,
     listPrice: 6000,
     silhouette: "Three-piece set",
-    note: "A bucket tote with a matching clutch and a chain purse. Three bags.",
+    note: "A structured tote, a crossbody pouch and a chain purse. Three bags.",
     colourways: [
       { name: "Black", hex: "#212122", image: 1 },
       { name: "Navy", hex: "#1b2f47", image: 2 },
@@ -257,14 +259,13 @@ export const CATALOGUE: Piece[] = [
   {
     slug: "saba",
     dir: "10",
-    name: "Saba",
-    urdu: "صبا",
+    name: "Two-Tone Tassel Tote Set",
     label: "Style 10",
     imageCount: 5,
     price: 4500,
     listPrice: 6000,
     silhouette: "Two-tone tote set",
-    note: "A two-tone shopper with a tasselled pouch and a rounded purse.",
+    note: "A two-tone tote with a tasselled pouch and a rounded purse.",
     colourways: [
       { name: "Cream", hex: "#cfc4b4", image: 1 },
       { name: "Grey", hex: "#6d6c6b", image: 2 },
@@ -276,14 +277,13 @@ export const CATALOGUE: Piece[] = [
   {
     slug: "hilal",
     dir: "11",
-    name: "Hilal",
-    urdu: "ہلال",
+    name: "Crescent Shoulder Bag",
     label: "Style 11",
     imageCount: 5,
     price: 4500,
     listPrice: 6000,
-    silhouette: "Crescent shoulder",
-    note: "A crescent body on a slim strap, gathered at both ends.",
+    silhouette: "Shoulder",
+    note: "A crescent-shaped shoulder bag on a slim strap.",
     colourways: [
       { name: "Navy", hex: "#252b3d", image: 1 },
       { name: "Rose", hex: "#b98287", image: 2 },
@@ -295,14 +295,13 @@ export const CATALOGUE: Piece[] = [
   {
     slug: "zeb",
     dir: "12",
-    name: "Zeb",
-    urdu: "زیب",
+    name: "Contrast-Trim Structured Tote Bag",
     label: "Style 12",
     imageCount: 5,
     price: 4500,
     listPrice: 6000,
     silhouette: "Structured tote",
-    note: "A squared tote with contrast piping and a detachable shoulder strap.",
+    note: "A structured tote with contrast piping and a detachable shoulder strap.",
     colourways: [
       { name: "Taupe", hex: "#8d8079", image: 1 },
       { name: "Tan", hex: "#a3603d", image: 2 },

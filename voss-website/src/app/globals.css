@@ -129,14 +129,11 @@
   --color-hue-wine-edge: color-mix(in srgb, var(--color-hue-wine) 55%, transparent);
   --color-hue-camel-edge: color-mix(in srgb, var(--color-hue-camel) 55%, transparent);
 
-  /* ── Type. Didone display against a grotesque, plus Nastaliq for Urdu.
-     All three are self-hosted and subset in `src/app/fonts`; none of them
-     touch the Google Fonts CDN at runtime. Jost replaced Archivo on
-     2026-08-31. Urdu is NEVER set in display or sans — see the @font-face
-     block below for why the fallback matters. */
+  /* ── Type. Didone display against a grotesque, plus a mono for labels.
+     All are self-hosted; none touch the Google Fonts CDN at runtime. Jost
+     replaced Archivo on 2026-08-31. */
   --font-display: var(--font-bodoni), "Didot", "Bodoni MT", ui-serif, Georgia, serif;
   --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
-  --font-urdu: var(--font-nastaliq), "Noto Naskh Arabic", serif;
   --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
 
   /* ── Space. A magazine breathes wider than a boutique. ─────────────────
@@ -873,38 +870,7 @@ html {
    parsing, and the resulting invalid shorthand left the product stage blank. */
 .voss-dissolve { animation: voss-dissolve 620ms var(--ease-lux) both; }
 
-/* ═══════════════════════════════════════════════════════════════════════
-   URDU
-   Jost and Bodoni contain no Arabic-script glyphs. Left alone, every Urdu
-   name falls back to a device font — Segoe UI on Windows, Noto Naskh on
-   Android, Geeza Pro on iOS — three different faces, none of them Nastaliq.
-   `.urdu` is the only way Urdu is ever set on this site.
 
-   `unicode-bidi: isolate` is not optional. Without it, adjacent Latin
-   punctuation and digits reorder around the RTL run and the name renders
-   mangled — the failure is silent and only shows up next to a price.
-
-   Nastaliq has deep descenders and a steep diagonal baseline, so it needs
-   roughly double the leading Latin does, and about 1.3x the size to read as
-   equally weighted beside it.
-   ═══════════════════════════════════════════════════════════════════════ */
-
-@utility urdu {
-  font-family: var(--font-urdu);
-  font-weight: 400;
-  direction: rtl;
-  unicode-bidi: isolate;
-  line-height: 2;
-  /* Optical, not metric: the two scripts do not share a baseline. */
-  transform: translateY(-0.06em);
-}
-
-/* Nastaliq at card size is illegible; it needs size to be beautiful. Product
-   pages only. */
-@utility urdu-display {
-  font-size: clamp(3.5rem, 7vw, 5.5rem);
-  line-height: 1.9;
-}
 
 /* ═══════════════════════════════════════════════════════════════════════
    THE PRICE TRANSITION

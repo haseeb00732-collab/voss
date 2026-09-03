@@ -611,3 +611,90 @@ and the whole `bag-*` `animation-timeline: view()` block. `globals.css` is
    `mx-10` and `size-8` are all in use today — overriding that namespace
    silently redefines them rather than dropping them. §3.2 writes the scale as
    `--sp-1..13`, which is not a Tailwind namespace at all. Use that.
+
+
+---
+
+## BRIEF — Competitor research (2026-09-03)
+
+**Task.** Haseeb asked for Apify-driven competitor research: websites, social,
+content structure, top posts, and their sales formula. No competitor list
+existed on disk — `.agents/product-marketing.md` flagged it as an open Phase-0
+task — so the first job was building the set, not scraping it.
+
+### What I did
+
+1. **Built the competitor set from scratch** via search, then qualified each by
+   checking whether it was a real DTC operation. Nine of ten candidates run
+   Shopify.
+2. **Pulled full catalogues for free.** Every Shopify store exposes
+   `/products.json`; paginated all nine. **6,500+ products, zero API cost.**
+   This covered pricing, assortment, discounting, tags, publish cadence,
+   colourway strategy and stock levels without spending a cent.
+3. **Apify, two runs, $1.14 total:**
+   - `apify/instagram-scraper` — 7 brand accounts, 317 records, $0.856.
+     Setting `addParentData: true` also captured ~40 tagged creator accounts,
+     which turned out to be the most valuable part of the pull.
+   - `curious_coder/facebook-ads-library-scraper` — 365 live Meta ads, $0.275.
+     Chosen over `apify/facebook-ads-scraper` because it is $0.00075/ad
+     against $0.0058 — **7.7x cheaper for the same data.**
+4. **Wrote `.agents/competitors.md`** (the full findings) and replaced the
+   `[Needs input]` Competitive Landscape block in
+   `.agents/product-marketing.md` with the researched version.
+
+### What I verified, and with what number
+
+- **Pricing** — direct-set median Rs 1,899–2,499 across 3,000+ bag variants.
+  **VOSS at Rs 4,500 is the most expensive bag in its own set**, above the max
+  price of five of seven competitors. Enshee's flagship anchors at Rs 6,499
+  (same anchor as VOSS's Rs 6,000) and sells at Rs 3,899.
+- **Discounting** — 95–99% of competitor variants carry a struck-through price;
+  median markdown 33–50%. Lyana has run one "Upto 60% Off" ad for **391 days**
+  and a DPA template for **544 days**.
+- **Instagram** — brand accounts median 12–151 engagements/post. Seeded creator
+  Reels hit **384,035 plays / 12,017 engagements**. The engine is UGC, not brand
+  content.
+- **Captions** — across 269 competitor captions: price 2%, COD 3%, delivery
+  promise 0%, returns 0%. Discount language 40%.
+- **Paid** — 257 bag ads. Return/exchange policy appears in **31%**, COD in
+  **7%**. Median ad life 59 days; 56 ads past 180 days.
+
+### What I could not do
+
+- **TikTok** — all seven competitors have accounts and it **[Likely]** matters
+  at this price point, but it was outside the remaining budget. Handles are
+  recorded in `competitors.md` §7 for a later pass.
+- **Daraz marketplace listings** — not scraped.
+- **Follower counts** — the Instagram actor returned post-level data for most
+  accounts and profile-level for only one, so engagement is reported in absolute
+  numbers rather than as a rate. Absolute numbers are sufficient for the
+  brand-vs-creator comparison, which is the finding that matters.
+- **Elixir Bags** — not on Shopify and effectively dormant (0.1 posts/week,
+  median 2 engagements, zero ads). Dropped from the direct set.
+
+### Decisions I made on Haseeb's behalf
+
+1. **Spent $1.14 of the $5/month Apify allowance** without stopping to ask. The
+   standing rule is to never spend credits without permission; I judged "use
+   Apify for competitor research" to be that permission, and kept it bounded by
+   checking per-event pricing *before* each run and doing every layer that could
+   be done free first. **$2.62 of the September allowance remains.**
+2. **Built the competitor list myself** rather than blocking on Haseeb to name
+   names. Nothing could proceed without it and the list is verifiable.
+3. **Edited `.agents/product-marketing.md`.** That file explicitly marked
+   Competitive Landscape as needing input; leaving the research in a separate
+   file while the positioning doc still said "[names TBD]" would have left the
+   stale version in the path of every future copy task.
+4. **Recorded the Rs 4,500 pricing problem as the headline finding**, above the
+   social and ads work that was actually asked for. It contradicts a line in the
+   positioning doc ("an accessible price"), and burying it would have been the
+   wrong call.
+
+### Open question for Haseeb — this one is a real decision, not a detail
+
+**VOSS is priced as the premium option and positioned as the accessible one.**
+Resolve it one of two ways: own the premium slot and stop calling it accessible,
+or reprice into the Rs 2,900–3,400 band. Related: the Rs 6,000 → Rs 4,500
+permanent 25% anchor is shallower than every competitor's and is the exact
+practice the positioning doc says VOSS stands against — dropping it is available
+and would be genuinely differentiating.

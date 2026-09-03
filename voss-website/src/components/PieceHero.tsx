@@ -18,51 +18,43 @@ import { igDirectMessage, orderReference } from "@/lib/instagram";
 gsap.registerPlugin(useGSAP);
 
 /**
- * The product hero: an editorial collage, and a page that changes colour.
+ * The product page.
  *
- * Photography only — no canvas on this route. The homepage is where the 3D
- * argues for the house; here the reader is deciding whether to spend money,
- * and a real photograph of the real object is worth more than a rendering of
- * an approximation of it.
+ * ONE GROUND, ALWAYS. This page used to repaint its entire background to the
+ * selected colourway's hex and flip `data-surface` between dark and paper on
+ * a luminance test, so picking Cream turned the whole page to paper and
+ * picking Black turned it back. Two things were wrong with that. The obvious
+ * one is that the page looked like a different site every third tap. The
+ * subtle one is worse: the hexes are swatch values sampled off photographs,
+ * not designed surface colours, so the "background" was an arbitrary muddy
+ * brown or grey that no token controls and no contrast ratio was ever checked
+ * against — text on it was legible by luck.
  *
- * Choosing a COLOUR floods the whole page with it AND swaps the photograph,
- * because every colour offered here is a colour that was actually
- * photographed — `piece.colourways` comes from the real shots, one hex per
- * frame.
- *
- * This replaced a selector for a hide system that does not exist, under a
- * production claim that was never true. That control offered colours no
- * photograph showed, which is a lie the reader discovers on delivery. The
- * Urdu name lives here too — this is the one place with enough size for
- * Nastaliq to be legible, let alone beautiful.
+ * The colour still has to go somewhere, because a selector that changes
+ * nothing but the photograph feels broken. It goes into a WASH behind the
+ * image — the same `--wash-hue` mechanism the homepage uses — so the room
+ * warms toward the colour you picked while the page itself stays the one
+ * ground the rest of the site is on, and every token keeps resolving against
+ * a substrate that never moves.
  */
-
-/** Relative luminance, so a pale hide flips the page to the paper substrate. */
-function isLight(hex: string) {
-  const h = hex.replace("#", "");
-  const [r, g, b] = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
-  const lin = (c: number) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
-  return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b) > 0.34;
-}
 
 export function PieceHero({ piece }: { piece: Piece }) {
   const images = useMemo(() => pieceImages(piece), [piece]);
   const [cw, setCw] = useState<Colourway>(piece.colourways[0]);
   const root = useRef<HTMLElement>(null);
+  const lead = useRef<HTMLImageElement>(null);
   const reduced = useReducedMotion();
   const dm = igDirectMessage();
 
-  const light = isLight(cw.hex);
-
-  /* The takeover. The background is the only thing tweened — the semantic
-     tokens flip instantly via data-surface, because a half-resolved text
-     colour mid-transition is unreadable in a way a half-resolved background
-     is not. */
+  /* The wash follows the selection; the ground does not. Tweening a custom
+     property works here because --wash-hue is registered as <color> in
+     globals.css — an unregistered one has no animatable type and the
+     transition is silently dropped. */
   useGSAP(
     () => {
       if (!root.current) return;
       gsap.to(root.current, {
-        backgroundColor: cw.hex,
+        "--wash-hue": cw.hex,
         duration: reduced ? 0 : 0.6,
         ease: "power2.inOut",
       });
@@ -70,24 +62,59 @@ export function PieceHero({ piece }: { piece: Piece }) {
     { dependencies: [cw.hex, reduced] },
   );
 
+  /* The photograph arrives rather than cuts. Same language as the range
+     card's wipe: it lands from slightly over-scaled and over-exposed, so a
+     colour change reads as the light changing on one object instead of as
+     two unrelated pictures swapping. */
+  useGSAP(
+    () => {
+      if (reduced || !lead.current) return;
+      gsap.fromTo(
+        lead.current,
+        { opacity: 0, scale: 1.05, filter: "brightness(1.35)" },
+        {
+          opacity: 1,
+          scale: 1,
+          filter: "brightness(1)",
+          duration: 0.55,
+          ease: "power3.out",
+        },
+      );
+    },
+    { dependencies: [cw.image, reduced] },
+  );
+
   return (
     <section
       ref={root}
-      data-surface={light ? "paper" : "dark"}
-      className="substrate relative pt-[8.5rem]"
-      style={{ backgroundColor: cw.hex }}
+      data-surface="dark"
+      className="substrate relative isolate overflow-hidden pt-[8.5rem]"
+      style={{ ["--wash-hue" as string]: piece.colourways[0].hex }}
       aria-label={piece.name ?? piece.label}
     >
+      {/* The only place the chosen colour touches the page. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          background:
+            "radial-gradient(70% 55% at 30% 25%, color-mix(in srgb, var(--wash-hue) 30%, transparent) 0%, transparent 70%)",
+        }}
+      />
+
       <div className="mx-auto max-w-[120rem] px-gutter pb-section">
-        {/* The collage. Three crops, three scales, none of them aligned to the
-            same baseline — the grid is there to be broken against. */}
         <div className="relative grid grid-cols-12 gap-x-gap-col">
-          <div className="piece-lead plate relative col-span-12 aspect-[4/5] w-full overflow-hidden shadow-[var(--elev-3)] md:col-span-7">
+          {/* Shrunk. It was col-span-7 at 4:5, which on a laptop is most of
+              the fold and on a phone was a full-width portrait you had to
+              scroll past before reading anything. A capped height keeps it a
+              photograph rather than a wall. */}
+          <div className="piece-lead plate relative col-span-12 aspect-[4/5] max-h-[62svh] w-full overflow-hidden shadow-[var(--elev-3)] sm:col-span-9 md:col-span-5 md:max-h-[70svh]">
             <img
+              ref={lead}
               src={colourwayImage(piece, cw)}
               srcSet={colourwaySrcSet(piece, cw)}
-              sizes="(max-width: 768px) 96vw, 56vw"
-              alt={`The ${piece.name} in ${cw.name}, ${piece.silhouette.toLowerCase()}`}
+              sizes="(max-width: 768px) 92vw, 40vw"
+              alt={`${piece.name} in ${cw.name}, ${piece.silhouette.toLowerCase()}, front view`}
               width={1792}
               height={2400}
               fetchPriority="high"
@@ -98,11 +125,11 @@ export function PieceHero({ piece }: { piece: Piece }) {
           </div>
 
           {images[1] && (
-            <div className="plate relative z-2 col-span-8 col-start-4 -mt-band aspect-square w-full shadow-[var(--elev-3)] md:col-span-4 md:col-start-8 md:mt-band">
+            <div className="plate relative z-2 col-span-7 col-start-5 -mt-band aspect-square w-full max-h-[34svh] shadow-[var(--elev-3)] md:col-span-3 md:col-start-7 md:mt-band md:max-h-none">
               <img
                 src={images[1]}
                 srcSet={hdSrcSet(piece, 2)}
-                sizes="(max-width: 768px) 66vw, 30vw"
+                sizes="(max-width: 768px) 58vw, 24vw"
                 alt=""
                 width={1792}
                 height={2400}
@@ -114,11 +141,11 @@ export function PieceHero({ piece }: { piece: Piece }) {
           )}
 
           {images[2] && (
-            <div className="plate col-span-6 col-start-1 mt-group aspect-[3/2] w-full shadow-[var(--elev-2)] md:col-span-3 md:col-start-9 md:-mt-band">
+            <div className="plate col-span-5 col-start-1 mt-group aspect-[3/2] w-full shadow-[var(--elev-2)] md:col-span-3 md:col-start-10 md:-mt-band">
               <img
                 src={images[2]}
                 srcSet={hdSrcSet(piece, 3)}
-                sizes="(max-width: 768px) 50vw, 24vw"
+                sizes="(max-width: 768px) 42vw, 22vw"
                 alt=""
                 width={1792}
                 height={2400}
@@ -130,36 +157,22 @@ export function PieceHero({ piece }: { piece: Piece }) {
           )}
         </div>
 
-        {/* Name below, small. The image led; it does not need announcing. */}
         <div className="mt-band grid grid-cols-12 gap-x-gap-col">
           <div className="col-span-12 md:col-span-5">
-            <p className="eyebrow text-[var(--text-accent)]">{piece.silhouette}</p>
+            <p className="mono text-[var(--text-accent)]">{piece.silhouette}</p>
 
-            {/* The Urdu, large. This is the ONE place it appears: at card size
-                Nastaliq is illegible, and it needs size to be beautiful.
-                `lang` and `dir` are required, and `unicode-bidi: isolate`
-                (in the .urdu utility) keeps adjacent Latin and digits from
-                reordering around the RTL run. */}
-            <p
-              lang="ur"
-              dir="rtl"
-              // dir="rtl" governs shaping and character order, which is what
-              // must be correct. Alignment is a layout choice: left, so the
-              // Urdu and the Latin name share one optical left edge instead of
-              // drifting to opposite sides of the column.
-              className="urdu urdu-display mt-item text-left text-[var(--text-primary)]"
-            >
-              {piece.urdu}
-            </p>
-
-            <h1 className="display-m mt-tight text-[var(--text-primary)]">
+            <h1 className="display-2 mt-item text-[var(--text-primary)]">
               {piece.name ?? piece.label}
             </h1>
-            <p className="body-l measure mt-group text-[var(--text-secondary)]">{piece.note}</p>
+            <p className="body-l measure mt-group text-[var(--text-secondary)]">
+              {piece.note}
+            </p>
           </div>
 
           <div className="col-span-12 mt-band md:col-span-4 md:col-start-8 md:mt-0">
-            <p className="eyebrow text-[var(--text-secondary)]">Colours</p>
+            <p className="mono text-[var(--text-secondary)]">
+              Colours · {piece.colourways.length}
+            </p>
 
             <div
               role="radiogroup"
@@ -175,25 +188,26 @@ export function PieceHero({ piece }: { piece: Piece }) {
                     role="radio"
                     aria-checked={on}
                     onClick={() => setCw(c)}
-                    className="flex items-center gap-3 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus)]"
+                    /* The whole row is the target, not just the 32px chip —
+                       a swatch alone is under the 44px minimum and this list
+                       is read with a thumb. */
+                    className="group/cw flex min-h-11 items-center gap-3 text-left transition-transform duration-[var(--dur-1)] ease-[var(--ease-out)] hover:translate-x-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus)]"
                   >
                     <span
                       aria-hidden="true"
                       className={[
-                        "size-8 shrink-0 rounded-xs transition-shadow duration-[var(--dur-1)]",
+                        "size-8 shrink-0 rounded-xs transition-all duration-[var(--dur-2)] ease-[var(--ease-out)]",
                         on
-                          ? "shadow-[0_0_0_2px_var(--surface),0_0_0_4px_var(--text-primary)]"
-                          : "shadow-[inset_0_0_0_1px_rgb(255_255_255/0.25)] hover:shadow-[inset_0_0_0_1px_rgb(255_255_255/0.55)]",
+                          ? "scale-110 shadow-[0_0_0_2px_var(--surface),0_0_0_4px_var(--text-primary)]"
+                          : "shadow-[inset_0_0_0_1px_rgb(255_255_255/0.25)] group-hover/cw:shadow-[inset_0_0_0_1px_rgb(255_255_255/0.55)]",
                       ].join(" ")}
                       style={{ backgroundColor: c.hex }}
                     />
-                    {/* The name always rides with the chip. She cannot type a
-                        swatch into a DM. */}
                     <span
                       className={
                         on
                           ? "body-s text-[var(--text-primary)]"
-                          : "body-s text-[var(--text-secondary)]"
+                          : "body-s text-[var(--text-secondary)] group-hover/cw:text-[var(--text-primary)]"
                       }
                     >
                       {c.name}
@@ -207,17 +221,13 @@ export function PieceHero({ piece }: { piece: Piece }) {
               <PriceRow piece={piece} reduced={reduced} />
             </div>
 
-            {/* A real link, never a dead button. There is no cart on this
-                site; the order closes in the DM and she pays the rider. The
-                old control did nothing at all, and its fallback label broke
-                the one promise this shop makes: the price is on the page. */}
             {dm && (
               <div className="mt-group flex flex-col items-start gap-tight">
                 <a
                   href={dm}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="eyebrow inline-flex w-full items-center justify-center rounded-xs bg-[var(--text-signal)] px-control-x-l py-control-y-l text-ink-950 transition-opacity duration-[var(--dur-1)] ease-[var(--ease-lux)] hover:opacity-90 sm:w-auto"
+                  className="eyebrow inline-flex w-full items-center justify-center rounded-sm bg-[var(--text-signal)] px-control-x-l py-control-y-l text-ink-950 transition-transform duration-[var(--dur-1)] ease-[var(--ease-snap)] hover:scale-[1.02] active:scale-[0.98] sm:w-auto"
                 >
                   Order on Instagram
                 </a>
