@@ -78,11 +78,27 @@ or brighter.
 ### 1.4 Gold — the house
 
 ```css
---gold-300: #EBD7A8;  /* highlight, hairline on hover */
---gold-500: #C9A961;  /* default gold on ink */
---gold-700: #9A7C40;  /* gold on lighter ink surfaces */
+--gold-300: #F5CB5C;  /* highlight, hairline on hover — saffron */
+--gold-500: #C8AA5F;  /* default gold on ink — wheat */
+--gold-700: #CD9C20;  /* gold on lighter ink surfaces — deep gold */
 --gold-900: #5E4C28;  /* gold on paper substrate */
 ```
+
+**Re-graded 2026-09-04** from Haseeb's palette. The ramp was right in hue and
+low in chroma — an antique gold that went muddy at small sizes. Measured on
+`--ink-950`, the new values carry more saturation at the same or better
+contrast: 300 goes 12.39:1 → 12.79:1, 500 goes 8.30:1 → 8.83:1, and 700 goes
+5.02:1 → 7.89:1. All three stay WARM (R > G > B).
+
+900 is unchanged. It is the paper-substrate accent and has to stay dark enough
+to clear AA against paper; the sent palette contained no dark gold.
+
+**The neutral greys in that palette were NOT adopted** — `#2F2F2F`, `#333533`,
+`#0B0B0B` and `#000000` are all R = G = B, and §1.2 exists because a neutral
+ground pushes gold toward its complement and makes it read green. That matters
+more after this re-grade, not less: a more saturated gold shows the push more
+readily. `#2F2F2F` is, within a point of lightness, `--ink-700` with the warmth
+removed — there was nothing there we did not already have.
 
 Gold is **never** a button fill. Gold is hairlines, small caps, the V-mark, the
 1px line under an active nav item. The moment gold fills a large area it reads as
@@ -105,7 +121,7 @@ weaker signal than a ramp that is correct in both.
 --verm-400: #FF5F3E;   /* hover, on ink */
 --verm-500: #E8452A;   /* on ink — measured 5.01:1 on --ink-950, passes AA */
 --verm-600: #C2331B;   /* pressed, on ink */
---verm-800: <derive>;  /* on paper — start from the #c66963 hue and darken until it
+--verm-800: #9C524E;  /* on paper — start from the #c66963 hue and darken until it
                           measures ≥ 4.5:1 on --paper-50. Report the value and the
                           measured ratio in the brief. Do not guess it. */
 ```
@@ -128,8 +144,8 @@ The first draft defined no paper substrate at all while `PieceHero` was already
 flipping to light. That gap is what made the vermilion question ambiguous.
 
 ```css
---paper-50:      #F4EFE8;
---paper-100:     #E9E2D8;
+--paper-50:      #F2ECDD;   /* eggshell, 2026-09-04 */
+--paper-100:     #E3D0BB;   /* soft sand, 2026-09-04 */
 --paper-200:     #D8CFC2;   /* hairline on paper */
 --ink-on-paper:  #17130F;   /* primary text on paper */
 --smoke-on-paper:#5A524A;
