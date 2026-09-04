@@ -8,8 +8,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { pieceImages, priceLabel, type Piece } from "@/lib/catalogue";
-import { HideSwatches } from "./HideSwatches";
-import { HIDES } from "@/lib/catalogue";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -57,7 +55,7 @@ export function CollectionGrid({ pieces }: { pieces: Piece[] }) {
 
 function Card({ piece, priority }: { piece: Piece; priority: boolean }) {
   const [cover] = pieceImages(piece);
-  const hide = HIDES.find((h) => h.id === piece.shotIn);
+  const colour = piece.colourways[0];
 
   return (
     <Link
@@ -68,7 +66,7 @@ function Card({ piece, priority }: { piece: Piece; priority: boolean }) {
       <div className="plate aspect-[4/5] transition-shadow duration-[var(--dur-2)] ease-[var(--ease-lux)] group-hover:shadow-[var(--elev-3)]">
         <Image
           src={cover}
-          alt={`${piece.label}, ${piece.silhouette.toLowerCase()} in ${hide?.name ?? "leather"}`}
+          alt={`The ${piece.name} in ${colour.name}, ${piece.silhouette.toLowerCase()}`}
           fill
           priority={priority}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -92,10 +90,23 @@ function Card({ piece, priority }: { piece: Piece; priority: boolean }) {
       </div>
       <p className="caption mt-tight">{piece.note}</p>
 
-      {/* Four hides, made to order. The ringed one is the hide photographed. */}
-      <div className="mt-item flex items-center justify-between gap-group">
-        <HideSwatches shotIn={piece.shotIn} />
-        <span className="caption">Four hides</span>
+      {/* The colours this bag was actually photographed in, each labelled.
+          This replaced a swatch row for a hide system that does not exist —
+          it offered colours no photograph showed. */}
+      <div className="mt-item flex flex-wrap items-center gap-x-3 gap-y-2">
+        {piece.colourways.map((c) => (
+          <span key={c.name} className="flex items-center gap-1.5">
+            <span
+              aria-hidden="true"
+              className="size-3.5 rounded-full"
+              style={{
+                backgroundColor: c.hex,
+                boxShadow: "inset 0 0 0 1px rgb(255 255 255 / 0.2)",
+              }}
+            />
+            <span className="caption">{c.name}</span>
+          </span>
+        ))}
       </div>
     </Link>
   );

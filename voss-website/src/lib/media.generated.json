@@ -1,0 +1,494 @@
+{
+  "10": {
+    "from": "shoot-out\\product_10",
+    "shots": [
+      {
+        "n": 1,
+        "source": "10-01.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#d8cec1"
+      },
+      {
+        "n": 2,
+        "source": "10-02.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#626161"
+      },
+      {
+        "n": 3,
+        "source": "10-03.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#ac6740"
+      },
+      {
+        "n": 4,
+        "source": "10-04.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#cab9a7"
+      },
+      {
+        "n": 5,
+        "source": "10-05.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#653c3d"
+      }
+    ]
+  },
+  "11": {
+    "from": "shoot-out\\product_11",
+    "shots": [
+      {
+        "n": 1,
+        "source": "11-01.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#c4a480"
+      },
+      {
+        "n": 2,
+        "source": "11-02.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#cba987"
+      },
+      {
+        "n": 3,
+        "source": "11-03.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#bc9b74"
+      },
+      {
+        "n": 4,
+        "source": "11-04.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#b48f69"
+      },
+      {
+        "n": 5,
+        "source": "11-05.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#d9c3a6"
+      }
+    ]
+  },
+  "12": {
+    "from": "shoot-out\\product_12",
+    "shots": [
+      {
+        "n": 1,
+        "source": "12-01.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#a99b94"
+      },
+      {
+        "n": 2,
+        "source": "12-02.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#ab6d50"
+      },
+      {
+        "n": 3,
+        "source": "12-03.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#e1d9c5"
+      },
+      {
+        "n": 4,
+        "source": "12-04.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#605f60"
+      },
+      {
+        "n": 5,
+        "source": "12-05.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#e4c0ae"
+      }
+    ]
+  },
+  "01": {
+    "from": "product 1",
+    "shots": [
+      {
+        "n": 1,
+        "source": "Article_1.png",
+        "width": 1122,
+        "height": 1402,
+        "hex": "#7a523f"
+      },
+      {
+        "n": 2,
+        "source": "Article_2.png",
+        "width": 1122,
+        "height": 1402,
+        "hex": "#4d372c"
+      },
+      {
+        "n": 3,
+        "source": "Article_3.png",
+        "width": 1122,
+        "height": 1402,
+        "hex": "#283041"
+      },
+      {
+        "n": 4,
+        "source": "Article_4.png",
+        "width": 1122,
+        "height": 1402,
+        "hex": "#a58b73"
+      },
+      {
+        "n": 5,
+        "source": "Article_5.png",
+        "width": 1122,
+        "height": 1402,
+        "hex": "#232323"
+      }
+    ]
+  },
+  "02": {
+    "from": "product_2",
+    "shots": [
+      {
+        "n": 1,
+        "source": "image_9EF4JJPMJ8M9VBMA_0.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#454657"
+      },
+      {
+        "n": 2,
+        "source": "image_H0DFJBSG0CNIGVZQ_0 (1).png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#887e74"
+      },
+      {
+        "n": 3,
+        "source": "image_JVAWXK1EPKQHHUXX_0.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#6b4e46"
+      },
+      {
+        "n": 4,
+        "source": "image_MX49D06T5JXF36HI_0.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#90514b"
+      },
+      {
+        "n": 5,
+        "source": "image_VFVAOUTQCQPFS1VA_0.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#b1794e"
+      }
+    ]
+  },
+  "03": {
+    "from": "product_3",
+    "shots": [
+      {
+        "n": 1,
+        "source": "image_D5FADQXGWVS89Q45_0.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#243b32"
+      },
+      {
+        "n": 2,
+        "source": "image_DSWI287XZLFKR075_0.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#3e1f22"
+      },
+      {
+        "n": 3,
+        "source": "image_KH7UD12DAEU0WI9Y_0.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#242526"
+      },
+      {
+        "n": 4,
+        "source": "image_ZYHKIQMJ2DCD59WG_0.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#724c26"
+      }
+    ]
+  },
+  "04": {
+    "from": "product_4",
+    "shots": [
+      {
+        "n": 1,
+        "source": "image_29TYTI1Y4FQ5Y273_0.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#824e2f"
+      },
+      {
+        "n": 2,
+        "source": "image_4ESUO4MJVPYBI5R8_0.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#52322a"
+      },
+      {
+        "n": 3,
+        "source": "image_KIVGFKWE1P9KLR33_0.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#3f3429"
+      },
+      {
+        "n": 4,
+        "source": "image_TT9YMWQ40RKFKZKK_0.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#313830"
+      },
+      {
+        "n": 5,
+        "source": "image_W100ZLCKTJ7OG1S4_0.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#9b6d46"
+      },
+      {
+        "n": 6,
+        "source": "image_XO3IM36FTXFCSL8P_0.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#2e2e24"
+      }
+    ]
+  },
+  "05": {
+    "from": "product_5",
+    "shots": [
+      {
+        "n": 1,
+        "source": "DAQ11YOKGQ74TBZO.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#2f3a24"
+      },
+      {
+        "n": 2,
+        "source": "MC33MHKUMT61K0NI.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#181617"
+      },
+      {
+        "n": 3,
+        "source": "NI13WHCZ5RJ51T9C.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#9a633a"
+      },
+      {
+        "n": 4,
+        "source": "image_30QCC62CP7IFHTQA_0.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#2b1d19"
+      }
+    ]
+  },
+  "06": {
+    "from": "product_6",
+    "shots": [
+      {
+        "n": 1,
+        "source": "0TO3TWH9ADF0SILK (1).png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#9b6534"
+      },
+      {
+        "n": 2,
+        "source": "2EKWMOXS5JKY8YAO.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#4f4f38"
+      },
+      {
+        "n": 3,
+        "source": "8U82E15NTLRF073I.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#2b2929"
+      },
+      {
+        "n": 4,
+        "source": "FX1OUZZFATQ047RA.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#4b342f"
+      },
+      {
+        "n": 5,
+        "source": "N92AFHYG1QDOGCBS.png",
+        "width": 1792,
+        "height": 2400,
+        "hex": "#bf9b80"
+      }
+    ]
+  },
+  "07": {
+    "from": "shoot-out\\product_7",
+    "shots": [
+      {
+        "n": 1,
+        "source": "7-01.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#67513a"
+      },
+      {
+        "n": 2,
+        "source": "7-02.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#3d2116"
+      },
+      {
+        "n": 3,
+        "source": "7-03.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#3e3a21"
+      },
+      {
+        "n": 4,
+        "source": "7-04.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#7b4a2c"
+      },
+      {
+        "n": 5,
+        "source": "7-05.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#563422"
+      },
+      {
+        "n": 6,
+        "source": "7-06.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#724730"
+      },
+      {
+        "n": 7,
+        "source": "7-07.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#956442"
+      },
+      {
+        "n": 8,
+        "source": "7-08.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#282013"
+      },
+      {
+        "n": 9,
+        "source": "7-09.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#8b9b76"
+      }
+    ]
+  },
+  "08": {
+    "from": "shoot-out\\product_8",
+    "shots": [
+      {
+        "n": 1,
+        "source": "8-01.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#c1b399"
+      },
+      {
+        "n": 2,
+        "source": "8-02.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#76a6c5"
+      },
+      {
+        "n": 3,
+        "source": "8-03.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#7b7667"
+      },
+      {
+        "n": 4,
+        "source": "8-04.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#d7cbb4"
+      }
+    ]
+  },
+  "09": {
+    "from": "shoot-out\\product_9",
+    "shots": [
+      {
+        "n": 1,
+        "source": "9-01.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#212122"
+      },
+      {
+        "n": 2,
+        "source": "9-02.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#071f36"
+      },
+      {
+        "n": 3,
+        "source": "9-03.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#8d8681"
+      },
+      {
+        "n": 4,
+        "source": "9-04.png",
+        "width": 896,
+        "height": 1200,
+        "hex": "#d6b695"
+      }
+    ]
+  },
+  "campaign": {
+    "from": "campaign/voss-desert.png",
+    "width": 1584,
+    "height": 672
+  }
+}

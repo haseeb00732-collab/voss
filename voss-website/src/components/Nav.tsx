@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { VMark } from "./VMark";
+import { igDirectMessage } from "@/lib/instagram";
 import { Button, buttonVariants } from "./ui/button";
 import { NavLink } from "./ui/nav-link";
 
@@ -27,6 +28,7 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const panel = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
+  const dm = igDirectMessage();
 
   useGSAP(
     () => {
@@ -71,7 +73,7 @@ export function Nav() {
         className={[
           "fixed inset-x-0 top-0 z-50 transition-[height,background-color,backdrop-filter] duration-[var(--dur-2)] ease-[var(--ease-lux)]",
           scrolled
-            ? "h-[4.25rem] bg-ink-800/92 backdrop-blur-[12px]"
+            ? "h-[4.25rem] bg-ink-900/92 backdrop-blur-[12px]"
             : "h-[5rem] bg-transparent backdrop-blur-none",
         ].join(" ")}
       >
@@ -115,9 +117,23 @@ export function Nav() {
               </li>
             ))}
             <li>
-              <Link href="/#waitlist" className={buttonVariants()}>
-                Join the list
-              </Link>
+              {/* The nav CTA is the order path. "Join the list" pointed at a
+                  waitlist section that no longer exists — there is nothing to
+                  wait for, the bags are on sale today. */}
+              {dm ? (
+                <a
+                  href={dm}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={buttonVariants()}
+                >
+                  Order on Instagram
+                </a>
+              ) : (
+                <Link href="/#bags" className={buttonVariants()}>
+                  See the bags
+                </Link>
+              )}
             </li>
           </ul>
 
@@ -158,7 +174,7 @@ export function Nav() {
           </div>
 
           <ul className="flex flex-col gap-group">
-            {[...LINKS, { href: "/#waitlist", label: "Join the list" }].map((l) => (
+            {[...LINKS, { href: "/#faqs", label: "Questions" }].map((l) => (
               <li key={l.href}>
                 <Link
                   href={l.href}
@@ -171,7 +187,16 @@ export function Nav() {
             ))}
           </ul>
 
-          <p className="caption text-pewter">Made to order</p>
+          {dm && (
+            <a
+              href={dm}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="eyebrow text-[var(--text-signal)]"
+            >
+              Order on Instagram &rarr;
+            </a>
+          )}
         </div>
       )}
     </>

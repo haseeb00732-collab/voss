@@ -8,49 +8,156 @@
    load-bearing and neither was the reason v1 read as quiet.
    ═══════════════════════════════════════════════════════════════════════ */
 
-@theme {
-  /* ── Ink. Deeper and colder than v1's onyx so vermilion can sit on it. ─ */
-  --color-ink-950: #060607;
-  --color-ink-900: #0a0a0c;
-  --color-ink-800: #131316;
-  --color-ink-700: #1e1e22;
-  --color-ink-600: #2c2c32;
-  --color-ink-500: #45454e;
+/* `static` is load-bearing, do not drop it. By default Tailwind v4 only
+   emits a @theme token that something references — as a utility or a raw
+   var() — so an unused token resolves to the empty string rather than
+   erroring. That is silent: `var(--color-ink-850)` renders as nothing and
+   the element just has no background. `static` emits every token in the
+   block unconditionally. Verified supported in tailwindcss 4.3.3, whose
+   @theme option parser reads: reference|inline|default|static.
+   /_tokens is the guard that proves it stays true. */
+@theme static {
+  /* ── Ink. WARM black, per VOSS-VISUAL-TARGET §1.2.
+     Every stop of the previous ramp was blue-tinted (B > R at all six), which
+     is what made the page read grey rather than black. Gold is warm — R > G >
+     B — so a cool ground pushes gold's complement and the house colour comes
+     back slightly green. Warming the ground is the whole fix; the luminance
+     barely moves, so nothing's contrast changes (gold-500 measures 8.30:1 on
+     ink-950 before and after). */
+  --color-ink-950: #0b0a09; /* page ground */
+  --color-ink-900: #131110; /* raised surface, nav on scroll */
+  --color-ink-850: #191614; /* card ground */
+  --color-ink-800: #221e1b; /* card ground, hovered */
+  --color-ink-700: #2e2926; /* hairline / border */
+  --color-ink-600: #423b36; /* border, emphasised */
+  --color-ink-500: #574e48; /* not in §1.2; continues the same hue slope */
 
-  /* ── Paper. Warm, uncoated, never pure white. ────────────────────────── */
-  --color-paper-50: #faf8f3;
-  --color-paper-100: #f1ede4;
-  --color-paper-200: #e4ded1;
-  --color-paper-300: #cfc7b6;
+  /* The ONLY cool value on the site. Warm black alone goes sepia over a full
+     viewport — this is mixed into the ground gradient at low percentages so
+     the dark has depth instead of reading flat brown. §1.2. */
+  --color-cool-shade: #0a0c0e;
 
-  /* ── Warm neutrals, carried over. ────────────────────────────────────── */
-  --color-clay: #5c564e;
-  --color-pewter: #4a4640;
-  --color-smoke: #8c8781;
-  --color-chalk: #b5afa4;
+  /* ── Paper, §1.5b. Warm, uncoated, never pure white. Paper is the piece
+     page only — PieceHero computes data-surface from the colourway's own
+     luminance, so a pale hide flips the whole page to this substrate. The
+     homepage is dark top to bottom. */
+  --color-paper-50: #f2ecdd; /* eggshell */
+  --color-paper-100: #e3d0bb; /* soft sand */
+  --color-paper-200: #d8cfc2; /* hairline on paper */
+  --color-ink-on-paper: #17130f; /* primary text on paper */
+  --color-smoke-on-paper: #5a524a;
 
-  /* ── The gold ramp. The one thing v1 got unambiguously right. ─────────
-     Still inverts across substrate: lighter on ink, darker on paper. */
+  /* ── Text on ink, §1.3. `chalk` is the primary and is deliberately the
+     same value as paper-50: the brightest thing on ink and the ground of
+     paper are one colour, which is what keeps the two substrates reading as
+     one system rather than two themes.
+
+     `pewter` FAILS WCAG AA for body text (4.1:1) and is permitted ONLY on
+     uppercase mono micro-labels at 11px+ with 0.12em tracking, where it
+     reads as material texture rather than content. Anything a customer has
+     to read is `smoke` or brighter. */
+  --color-chalk: #f2ecdd; /* primary — eggshell, same value as paper-50 per §1.3 */
+  --color-smoke: #b3aaa2; /* secondary — 7.6:1 */
+  --color-pewter: #7c736c; /* meta / mono labels ONLY — 4.1:1 */
+
+  /* ── The gold ramp. The one thing v1 got unambiguously right, and the
+     house colour: hairlines, small caps, the V-mark, the rule under an
+     active nav item. NEVER a large fill — §1.4, the moment gold fills an
+     area it reads as a template.
+
+     RE-GRADED 2026-09-04 from Haseeb's palette. The old ramp was correct in
+     hue but low in chroma — a muddy antique gold. These carry noticeably
+     more saturation at the same or better contrast, measured on ink-950:
+
+       300  #dfcb9b 12.39:1  ->  #f5cb5c 12.79:1   (saffron)
+       500  #c2a46a  8.30:1  ->  #c8aa5f  8.83:1   (wheat)
+       700  #9a7c3e  5.02:1  ->  #cd9c20  7.89:1   (deep gold)
+
+     All three stay WARM (R > G > B), which is the whole reason the ink ramp
+     was warmed in the first place — and it matters more now, not less,
+     because a more saturated gold shows a neutral ground's push toward its
+     complement far more readily.
+
+     900 is unchanged: it is the paper-substrate accent and has to stay dark
+     enough to clear AA against paper-50. The sent palette has no dark gold. */
   --color-gold-900: #6e5527;
-  --color-gold-700: #9a7c3e;
-  --color-gold-500: #c2a46a;
-  --color-gold-300: #dfcb9b;
+  --color-gold-700: #cd9c20;
+  --color-gold-500: #c8aa5f;
+  --color-gold-300: #f5cb5c;
   --color-gold-100: #f0e5c8;
 
-  /* ── VERMILION — the new fifth hue, and the only one added. ───────────
-     Gold is the house. Vermilion is the verb: price, CTA, in-stock, the
-     one thing on the page you are meant to act on. If it appears twice in
-     a viewport, one of them is wrong. */
-  --color-vermilion-700: #b21f08;
-  --color-vermilion-600: #e42d12;
-  --color-vermilion-500: #ff3b1f;
-  --color-vermilion-300: #ff7a66;
-  --color-vermilion-100: #ffd9d1;
+  /* ── VERMILION — the verb, §1.5. Gold is the house; this is the only
+     other accent and it means "act": the price, and the order CTA.
 
-  /* ── Type. Didone display against a grotesque. ───────────────────────── */
+     It is a RAMP, not a value, for the same reason gold is. #c66963 was
+     chosen on 2026-08-31 precisely because it inverts across substrate —
+     but measured against §1.5b's paper-50 it is 3.28:1 and fails AA, which
+     is exactly the bug a single value cannot fix. So the ink end and the
+     paper end are different colours, resolved per substrate.
+
+     NEVER reference --color-verm-* directly from a component. Use
+     --text-signal, which resolves per data-surface. Hard-coding the ink end
+     works right up until the section flips to paper and the buy button is
+     at 3:1 — the identical trap the gold ramp documents. */
+  --color-verm-400: #ff5f3e; /* hover, on ink */
+  --color-verm-500: #e8452a; /* on ink — 5.01:1 on ink-950 */
+  --color-verm-600: #c2331b; /* pressed, on ink */
+  --color-verm-800: #9c524e; /* on paper — 4.78:1 on paper-50, derived not
+                                guessed, and RE-DERIVED 2026-09-04 when
+                                paper-50 moved to the warmer eggshell
+                                (#f4efe8 -> #f2ecdd). The old #a15550 still
+                                technically passed on the new ground but only
+                                at 4.53:1 — three hundredths of margin on a
+                                value whose entire reason for existing is
+                                that it clears AA. Same hue (H 3.7deg),
+                                walked down until it had headroom again. */
+
+  /* ── Product hues, §1.6. These are the six bag colours and nothing else
+     gets a hue. That is what makes the palette read as earned rather than
+     decorated — every colour on the page is a colour you can buy.
+
+     The three derived tokens per hue are color-mix against the real ink
+     grounds, never hand-picked, so re-grading a hue moves its wash, veil
+     and edge with it and they cannot drift apart. */
+  --color-hue-olive: #5a5f3c;
+  --color-hue-black: #22212b; /* lifted, so the "black" bag reads as a hue
+                                 rather than disappearing into the ground */
+  --color-hue-chocolate: #4a3128;
+  --color-hue-cognac: #8a4e28;
+  --color-hue-wine: #5c1f2b;
+  --color-hue-camel: #b08556;
+
+  /* wash — section ground when that colour is active. 8% over ink-950. */
+  --color-hue-olive-wash: color-mix(in srgb, var(--color-hue-olive) 8%, var(--color-ink-950));
+  --color-hue-black-wash: color-mix(in srgb, var(--color-hue-black) 8%, var(--color-ink-950));
+  --color-hue-chocolate-wash: color-mix(in srgb, var(--color-hue-chocolate) 8%, var(--color-ink-950));
+  --color-hue-cognac-wash: color-mix(in srgb, var(--color-hue-cognac) 8%, var(--color-ink-950));
+  --color-hue-wine-wash: color-mix(in srgb, var(--color-hue-wine) 8%, var(--color-ink-950));
+  --color-hue-camel-wash: color-mix(in srgb, var(--color-hue-camel) 8%, var(--color-ink-950));
+
+  /* veil — card ground on hover / active colourway. 18% over ink-850. */
+  --color-hue-olive-veil: color-mix(in srgb, var(--color-hue-olive) 18%, var(--color-ink-850));
+  --color-hue-black-veil: color-mix(in srgb, var(--color-hue-black) 18%, var(--color-ink-850));
+  --color-hue-chocolate-veil: color-mix(in srgb, var(--color-hue-chocolate) 18%, var(--color-ink-850));
+  --color-hue-cognac-veil: color-mix(in srgb, var(--color-hue-cognac) 18%, var(--color-ink-850));
+  --color-hue-wine-veil: color-mix(in srgb, var(--color-hue-wine) 18%, var(--color-ink-850));
+  --color-hue-camel-veil: color-mix(in srgb, var(--color-hue-camel) 18%, var(--color-ink-850));
+
+  /* edge — hairline, colour chip, focus ring. 55%, composited over whatever
+     is behind it, because a chip has to read on a card AND on a wash. */
+  --color-hue-olive-edge: color-mix(in srgb, var(--color-hue-olive) 55%, transparent);
+  --color-hue-black-edge: color-mix(in srgb, var(--color-hue-black) 55%, transparent);
+  --color-hue-chocolate-edge: color-mix(in srgb, var(--color-hue-chocolate) 55%, transparent);
+  --color-hue-cognac-edge: color-mix(in srgb, var(--color-hue-cognac) 55%, transparent);
+  --color-hue-wine-edge: color-mix(in srgb, var(--color-hue-wine) 55%, transparent);
+  --color-hue-camel-edge: color-mix(in srgb, var(--color-hue-camel) 55%, transparent);
+
+  /* ── Type. Didone display against a grotesque, plus a mono for labels.
+     All are self-hosted; none touch the Google Fonts CDN at runtime. Jost
+     replaced Archivo on 2026-08-31. */
   --font-display: var(--font-bodoni), "Didot", "Bodoni MT", ui-serif, Georgia, serif;
-  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
 
   /* ── Space. A magazine breathes wider than a boutique. ─────────────────
      NEVER name a --spacing-* token after a Tailwind utility root — `block`,
@@ -80,32 +187,46 @@
 
   /* ── Radius. v1 said 0 everywhere. v2 says: 0 for plates and images,
      a hair on controls so they read as pressable rather than printed. ─── */
-  --radius-none: 0;
-  --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius-md: 8px;
+  --radius-none: 0; /* images, plates, cards — sharp */
+  --radius-xs: 4px; /* chips, tags */
+  --radius-sm: 8px; /* buttons, inputs */
+  --radius-pill: 999px; /* the scroll cue, the colour chips */
 
-  /* ── Easing. Overshoot is now allowed, but only on `--ease-snap`, and
-     only on things the reader just clicked. Entrances never overshoot. ─── */
-  --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
-  --ease-snap: cubic-bezier(0.34, 1.36, 0.64, 1);
+  /* ── §4.2. Three easings, and only three. `back`, `elastic` and `bounce`
+     are banned on entrances — an entrance that overshoots reads as a toy.
+     --ease-snap is the ONE overshoot and it is only for something the reader
+     just clicked or tapped. */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* the default */
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1); /* symmetric moves */
+  --ease-snap: cubic-bezier(0.34, 1.4, 0.44, 1);
+
+  /* Aliases. --ease-expo and --ease-inout were already §4.2's two curves
+     under other names; --ease-lux was a fourth that §4.2 does not have, so it
+     resolves to the default rather than staying a private curve. */
+  --ease-lux: var(--ease-out);
+  --ease-expo: var(--ease-out);
+  --ease-inout: var(--ease-io);
 }
 
 :root {
   --angle-vee: 59deg;
   --hairline-w: 1px;
   --grain-paper: 0.035;
-  --grain-vitrine: 0.02;
 
-  /* Motion: the 200ms beat survives. */
-  --dur-1: 200ms;
-  --dur-2: 400ms;
-  --dur-3: 600ms;
-  --dur-4: 900ms;
-  --dur-5: 1200ms;
-  --dur-6: 1600ms;
+  /* The active product hue, §1.7. Defaults to cognac — the hero's hue — so
+     the page is never unwashed. Cross-fades because of the @property above. */
+  --wash-hue: var(--color-hue-cognac-wash);
+  transition: --wash-hue var(--dur-5) var(--ease-inout);
+
+  /* ── §4.1. Every duration is a multiple of the 200ms beat, except --dur-1,
+     which is the one deliberate sub-beat: a press has to feel like it
+     happened at the moment of the press, not a fifth of a second after it. */
+  --dur-1: 120ms; /* micro: press, chip, focus ring */
+  --dur-2: 240ms; /* hover, nav */
+  --dur-3: 400ms; /* card state, chip swap */
+  --dur-4: 600ms; /* entrance */
+  --dur-5: 800ms; /* section wash cross-fade */
+  --dur-6: 1200ms; /* hero headline sequence */
 
   --stagger-line: 0.07s;
   --stagger-item: 0.09s;
@@ -121,16 +242,70 @@
   --track-caps: 0.2em;
   --track-wordmark: 0.34em;
 
-  --measure: 64ch;
+  --measure: 65ch; /* §2.3 */
   --measure-tight: 44ch;
+
+  /* ── §2.2 type scale. Mobile-first and fluid. These are the numbers; the
+     display-* utilities below are the only thing allowed to read them, which
+     is what keeps size and tracking from ever being applied separately. */
+  /* AMENDED 2026-09-02. §2.2 first specified clamp(2.75rem, 13vw, 7.5rem),
+     which was sized against the old hero line "Carry it your way." — 18
+     characters. The line is now "Made to find its way to you.", 28
+     characters, and the headline column is 6 of 12 (643px at 1440). At the
+     old max of 120px that is roughly five characters per line: the headline
+     wrapped to three lines, stood 331px tall, and pushed the hero to 926px
+     inside a 900px viewport, so the hero stopped fitting on one screen.
+
+     A display size is only correct against a measure. 5.5rem in a 643px
+     column is ~14 characters a line, which is two lines for this headline
+     and 162px tall. The vw factor comes down with it so the growth between
+     breakpoints is gentler than the jump 13vw was making. */
+  --fs-display-1: clamp(2.5rem, 7vw, 5.5rem);
+  --fs-display-2: clamp(2rem, 8.5vw, 4.5rem);
+  --fs-display-3: clamp(1.5rem, 5.5vw, 2.5rem);
+  --fs-h4: 1.125rem;
+  --fs-body: 1rem; /* 16px floor — never smaller on mobile, §8 */
+  --fs-small: 0.875rem;
+  --fs-meta: 0.6875rem; /* mono only */
+
+  --lh-display: 0.92;
+  --lh-body: 1.6;
+  --lh-meta: 1;
+
+  /* TRAP, and it has already cost this project a headline. --ls-display on
+     running text shattered the hero across five lines: at body size the
+     negative tracking closes the word gaps faster than it closes the letter
+     gaps, and the line-breaker gives up. Tracking is a function of size, so
+     it may only ever be applied by a utility that sets the size in the same
+     rule. Never reach for --ls-display directly. */
+  --ls-display: -0.025em;
+  --ls-body: 0;
+  --ls-meta: 0.12em;
 
   /* ── Elevation. v1 banned shadows; v2 lights the room. Every shadow is
      one light source, high and slightly left, so nothing contradicts the
      3D vitrine's own key light. */
-  --elev-1: 0 1px 2px rgb(0 0 0 / 0.18), 0 2px 8px rgb(0 0 0 / 0.12);
-  --elev-2: 0 2px 6px rgb(0 0 0 / 0.2), 0 12px 28px rgb(0 0 0 / 0.18);
-  --elev-3: 0 4px 12px rgb(0 0 0 / 0.24), 0 28px 64px rgb(0 0 0 / 0.26);
-  --elev-glow: 0 0 0 1px var(--border-strong), 0 12px 40px rgb(255 59 31 / 0.12);
+  --elev-1: 0 2px 8px rgb(0 0 0 / 0.34);
+  --elev-2: 0 8px 28px rgb(0 0 0 / 0.42);
+  --elev-3: 0 22px 64px rgb(0 0 0 / 0.52);
+
+  /* §3.4. The glow reads the ACTIVE hue rather than a baked-in accent — it
+     used to hard-code rgb(198 105 99), which is the old signal colour, so a
+     hovered olive card glowed pink. --hue-active-veil defaults to cognac and
+     is what a card sets when its colourway changes. */
+  --hue-active-veil: var(--color-hue-cognac-veil);
+  --elev-glow: 0 0 0 1px var(--border-strong), 0 12px 48px var(--hue-active-veil);
+}
+
+/* §1.7. An UNREGISTERED custom property has no animatable type, so a
+   `transition` on it is silently ignored and the wash would jump between
+   hues instead of cross-fading. Registering it as <color> is the whole
+   difference. Phase 4 sets --wash-hue per section; the transition lives here
+   so no component has to remember to declare it. */
+@property --wash-hue {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
 }
 
 @media (min-resolution: 2dppx) {
@@ -149,38 +324,40 @@
   --surface: var(--color-ink-900);
   --surface-raised: var(--color-ink-800);
   --surface-sunken: var(--color-ink-950);
-  --text-primary: var(--color-paper-100);
+  --text-primary: var(--color-chalk);
   --text-secondary: var(--color-smoke);
   --text-tertiary: var(--color-gold-700);
   --text-accent: var(--color-gold-500);
-  --text-signal: var(--color-vermilion-500);
+  --text-signal: var(--color-verm-500);
+  --text-signal-hover: var(--color-verm-400);
+  --text-signal-press: var(--color-verm-600);
   --border-hairline: color-mix(in srgb, var(--color-gold-700) 30%, transparent);
   --border-strong: color-mix(in srgb, var(--color-gold-500) 55%, transparent);
   --border-neutral: var(--color-ink-700);
   --focus: var(--color-gold-300);
   --link: var(--color-gold-300);
   --link-hover: var(--color-gold-100);
-  --error: var(--color-vermilion-300);
   --disabled-fg: var(--color-pewter);
 }
 
-[data-surface="light"] {
+[data-surface="paper"] {
   --surface: var(--color-paper-100);
   --surface-raised: var(--color-paper-50);
   --surface-sunken: var(--color-paper-200);
-  --text-primary: var(--color-ink-900);
-  --text-secondary: var(--color-clay);
-  --text-tertiary: var(--color-smoke);
+  --text-primary: var(--color-ink-on-paper);
+  --text-secondary: var(--color-smoke-on-paper);
+  --text-tertiary: var(--color-smoke-on-paper);
   --text-accent: var(--color-gold-900);
-  --text-signal: var(--color-vermilion-600);
+  --text-signal: var(--color-verm-800);
+  --text-signal-hover: var(--color-verm-600);
+  --text-signal-press: var(--color-verm-800);
   --border-hairline: color-mix(in srgb, var(--color-gold-900) 24%, transparent);
   --border-strong: color-mix(in srgb, var(--color-gold-900) 45%, transparent);
   --border-neutral: var(--color-paper-200);
   --focus: var(--color-gold-900);
   --link: var(--color-gold-900);
-  --link-hover: var(--color-ink-900);
-  --error: var(--color-vermilion-700);
-  --disabled-fg: var(--color-chalk);
+  --link-hover: var(--color-ink-on-paper);
+  --disabled-fg: var(--color-smoke-on-paper);
 }
 
 @layer base {
@@ -191,7 +368,13 @@
   }
 
   body {
-    background-color: var(--color-ink-900);
+    background-color: var(--color-ink-950);
+    background-image: linear-gradient(
+      180deg,
+      var(--color-ink-950) 0%,
+      color-mix(in srgb, var(--color-cool-shade) 55%, var(--color-ink-950)) 100%
+    );
+    background-attachment: fixed;
     color: var(--color-paper-100);
     font-family: var(--font-sans);
     font-weight: 400;
@@ -204,7 +387,7 @@
   }
 
   ::selection {
-    background: var(--color-vermilion-500);
+    background: var(--text-signal);
     color: var(--color-paper-50);
   }
 
@@ -217,7 +400,7 @@
    TYPE — the masthead scale
    Didone wants to be either very large or not used. There is no medium
    Bodoni on this site: display-* are headline sizes, and everything under
-   1.5rem is Archivo.
+   1.5rem is Jost.
    ═══════════════════════════════════════════════════════════════════════ */
 
 @utility display-2xl {
@@ -228,26 +411,55 @@
   line-height: 0.82;
 }
 
+/* §2.2. Size, tracking and leading in ONE rule — that pairing is the whole
+   point of these utilities and is why --ls-display is never a loose class. */
+@utility display-1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-display-1);
+  letter-spacing: var(--ls-display);
+  line-height: var(--lh-display);
+}
+
+@utility display-2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-display-2);
+  letter-spacing: var(--ls-display);
+  line-height: 0.96;
+}
+
+@utility display-3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-display-3);
+  letter-spacing: var(--track-m);
+  line-height: 1.06;
+}
+
+/* Aliases kept so the existing components compile unchanged. They resolve to
+   the SAME numbers as display-1/2/3 above rather than carrying their own, so
+   the scale cannot fork. Prefer the numbered names in new work. */
 @utility display-xl {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(2.75rem, 8vw, 7.5rem);
-  letter-spacing: var(--track-xl);
-  line-height: 0.88;
+  font-size: var(--fs-display-1);
+  letter-spacing: var(--ls-display);
+  line-height: var(--lh-display);
 }
 
 @utility display-l {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(2.25rem, 5vw, 4.5rem);
-  letter-spacing: var(--track-l);
+  font-size: var(--fs-display-2);
+  letter-spacing: var(--ls-display);
   line-height: 0.96;
 }
 
 @utility display-m {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  font-size: var(--fs-display-3);
   letter-spacing: var(--track-m);
   line-height: 1.06;
 }
@@ -261,6 +473,18 @@
 }
 
 /* The italic is a real voice, not an emphasis. Pull quotes and nothing else. */
+/* §2.1 / §2.2. The third texture. Uppercase, tracked, never above 0.75rem —
+   at larger sizes a mono stops reading as a label and starts reading as code. */
+@utility mono {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: var(--fs-meta);
+  letter-spacing: var(--ls-meta);
+  line-height: var(--lh-meta);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
 @utility display-quote {
   font-family: var(--font-display);
   font-style: italic;
@@ -357,15 +581,143 @@
   isolation: isolate;
 }
 
-@utility grain {
-  &::after {
-    content: "";
+/* ═══════════════════════════════════════════════════════════════════════
+   THE WIPE CARD
+   Two photographs of the SAME bag in different colourways, stacked. On
+   hover the second one wipes in from the left while it un-zooms and
+   resolves out of a blown-out state.
+
+   Three properties move together and they are doing three different jobs:
+     clip-path  — the wipe itself, left edge to right
+     transform  — the back image lands from 1.2, the front drifts to 1.03,
+                  so the two planes separate and it reads as depth rather
+                  than a cross-fade
+     filter     — the back arrives over-exposed and settles, which is what
+                  makes it read as a colour CHANGING rather than a second
+                  picture appearing
+
+   Drop any one of the three and the whole thing reads as a plain image
+   swap. They are specified in one rule for the same reason the display
+   utilities bind size and tracking: they are not independently meaningful.
+
+   Hover only, and only on a real pointer — on touch there is no hover
+   state to leave, so the card would stick on the second colourway. Touch
+   gets the tap-through to the piece page instead.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@utility wipe-media {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  background-color: var(--color-ink-850);
+
+  & img {
     position: absolute;
     inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    opacity: var(--grain-paper);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition:
+      transform var(--dur-4) var(--ease-io),
+      clip-path var(--dur-4) var(--ease-io),
+      filter var(--dur-4) var(--ease-io);
+  }
+
+  & .wipe-front {
+    transform: scale(1);
+  }
+
+  & .wipe-back {
+    transform: scale(1.2);
+    /* Collapsed onto the left edge, so it has somewhere to arrive from. */
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    filter: brightness(400%) contrast(150%);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .wipe-card:hover .wipe-front {
+    transform: scale(1.03);
+  }
+
+  .wipe-card:hover .wipe-back {
+    transform: scale(1);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    filter: brightness(100%) contrast(100%);
+  }
+}
+
+/* §4.6.6 — same composition, arrived at instantly. The wipe is the whole
+   point of the card, so reduced motion keeps the reveal and drops only the
+   travel: the second colourway appears, it just does not slide. */
+@media (prefers-reduced-motion: reduce) {
+  .wipe-media img {
+    transition: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   THE AMBIENT FIELD
+   Slow-drifting colour behind the sections that follow the range.
+
+   §1.6 calls the product hues "the single biggest change to how the site
+   feels" — after them, scrolling moves through olive, chocolate, wine and
+   camel washes, all so subtle no one can name them, but the page stops
+   being one flat black. This is that, animated.
+
+   EVERYTHING HERE IS COMPOSITOR-ONLY: transform and opacity, nothing else.
+   No filter, no background-position, no width. Four large radial fields on
+   very long offset loops — long enough (70-110s) that no one ever sees a
+   cycle, which is what separates ambient from a screensaver.
+
+   It is decoration and it is allowed to be, because it costs no main thread
+   and it carries no information. Under reduced motion the fields hold still
+   at their start position: the colour stays, the drift goes.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@utility ambient-field {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  /* Big and soft. A hard-edged orb reads as a bubble; this has to read as
+     light in the room, so the gradient is gone by 65%. */
+  background: radial-gradient(circle, var(--orb) 0%, transparent 65%);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation:
+    orb-drift var(--orb-dur, 90s) ease-in-out infinite alternate,
+    orb-breathe var(--orb-dur, 90s) ease-in-out infinite alternate;
+  animation-delay: var(--orb-delay, 0s);
+}
+
+@keyframes orb-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(var(--orb-dx, 6%), var(--orb-dy, -4%), 0) scale(1.18);
+  }
+}
+
+@keyframes orb-breathe {
+  from {
+    opacity: 0.22;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-orb {
+    animation: none;
+    opacity: 0.3;
   }
 }
 
@@ -462,7 +814,7 @@
 /* A magazine rule: heavier, and it carries the signal colour. */
 @utility rule-signal {
   height: 2px;
-  background-color: var(--color-vermilion-500);
+  background-color: var(--text-signal);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -540,3 +892,230 @@ html {
    `animate-[...]` containing `var(--ease-lux)` does not survive arbitrary-value
    parsing, and the resulting invalid shorthand left the product stage blank. */
 .voss-dissolve { animation: voss-dissolve 620ms var(--ease-lux) both; }
+
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   THE PRICE TRANSITION
+   Rs 6,000 struck by a 1px rule wiping L->R over 400ms; Rs 4,500 rises
+   underneath on a per-character mask at 60% of that wipe, so the two
+   overlap and read as one gesture. Once per session per card.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+
+.price-was {
+  position: relative;
+  display: inline-block;
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+
+.price-strike {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: currentColor;
+  transform-origin: left center;
+  clip-path: inset(0 0 0 0);
+}
+
+.price-now {
+  position: relative;
+  display: inline-block;
+  font-size: 1.0625rem;
+  letter-spacing: var(--track-s);
+  color: var(--text-signal);
+}
+
+.price-now-chars {
+  display: inline-flex;
+}
+
+.price-char-mask {
+  display: inline-block;
+  overflow: hidden;
+  /* Room for descenders and the comma, cancelled so leading is unchanged. */
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
+}
+
+.price-char {
+  display: inline-block;
+  white-space: pre;
+}
+
+/* ARMED: the moment before it plays. The old price is unstruck, the new one
+   is hidden below its mask. */
+[data-price-state="armed"] .price-strike {
+  clip-path: inset(0 100% 0 0);
+}
+[data-price-state="armed"] .price-char {
+  transform: translateY(110%);
+}
+[data-price-state="armed"] .price-now {
+  /* Reserve the width so nothing reflows when the figures arrive. CLS is
+     budgeted at <0.02 and a price row that grows would spend all of it. */
+  visibility: hidden;
+}
+
+/* PLAYING */
+[data-price-state="playing"] .price-strike {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 400ms var(--ease-inout);
+}
+[data-price-state="playing"] .price-char {
+  transform: translateY(0);
+  transition: transform 200ms var(--ease-expo);
+  /* 60% of the 400ms strike, plus a per-character stagger. */
+  transition-delay: calc(240ms + var(--n) * 22ms);
+}
+
+/* DONE is also the server-rendered state: struck, red, settled. */
+[data-price-state="done"] .price-strike {
+  clip-path: inset(0 0 0 0);
+}
+[data-price-state="done"] .price-char {
+  transform: none;
+}
+
+/* (f) Grid -> product page. Native cross-document view transitions, with the
+   bag photograph as the morph target (`viewTransitionName` is set per piece in
+   Bags.tsx and matched on the product page).
+
+   NO Motion `layoutId` fallback. That would mean adding a second animation
+   library alongside GSAP inside a 120KB JS budget, to polish a transition
+   that already degrades to an ordinary, correct navigation in browsers
+   without support. The fallback costs more than the feature. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(*) {
+  animation-duration: var(--dur-2);
+  animation-timing-function: var(--ease-lux);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* The hero clip fades in over its own poster.
+
+   BUG FIXED 2026-09-02, and it was the LCP element. The poster was set as the
+   <video poster> attribute on the element that carries `opacity: 0` — so the
+   poster was invisible too, and any browser that REFUSED autoplay showed a
+   black rectangle where the hero should be. `play()` returns a rejected
+   promise on a data saver, in low power mode, and in any embedded view
+   without a user gesture; `data-playing` is only set in the resolve branch,
+   so the video never faded in and nothing else was ever painted. Reduced
+   motion had the same hole from the other direction: `display: none` on the
+   video takes the poster attribute with it.
+
+   The poster now lives on the WRAPPER as a background, independent of the
+   video's play state, so the lit frame is the floor the hero cannot fall
+   through. The video still fades in on top — it has to, because the clip's
+   own opening is near-dark and showing it before playback would snap the
+   hero back to black. */
+.hero-poster {
+  background-image: url("/hero/poster.avif");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero-video {
+  opacity: 0;
+  transition: opacity var(--dur-2) var(--ease-lux);
+}
+
+.hero-video[data-playing="true"] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-video {
+    display: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PRODUCT PAGE — gallery rail
+   The rail is a native overflow scroller so momentum, the scrollbar and
+   keyboard paging behave the way the platform does. Only the reveal is
+   animated, and only where the browser can do it off the main thread.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.gallery-rail {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-hairline) transparent;
+  /* Momentum scrolling on iOS, and stop the page from scrolling sideways
+     once the rail has hit its end. */
+  overscroll-behavior-x: contain;
+}
+
+.gallery-rail::-webkit-scrollbar {
+  height: 3px;
+}
+.gallery-rail::-webkit-scrollbar-thumb {
+  background: var(--border-hairline);
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Only on the grid. In the horizontal rail the items are already in the
+       viewport's vertical band, so a view() timeline would fire all of them
+       at once and the stagger would be invisible. */
+    @media (min-width: 768px) {
+      .gallery-item {
+        animation: gallery-rise linear both;
+        animation-timeline: view();
+        animation-range: entry 6% entry 48%;
+      }
+    }
+  }
+}
+
+@keyframes gallery-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* The product hero's own entrance. One scroll-driven parallax on the lead
+   photograph, so the page has depth as she moves rather than sitting flat. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .piece-lead img {
+      animation: piece-lead-drift linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+  }
+}
+
+@keyframes piece-lead-drift {
+  from {
+    transform: scale(1.06) translate3d(0, -1.5%, 0);
+  }
+  to {
+    transform: scale(1.06) translate3d(0, 1.5%, 0);
+  }
+}

@@ -1,156 +1,206 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import Image from "next/image";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/lib/useReducedMotion";
-import { useFrameSequence } from "@/lib/useFrameSequence";
-import { waLink } from "@/lib/whatsapp";
-import { VMark } from "./VMark";
-
-gsap.registerPlugin(ScrollTrigger);
+import { igDirectMessage } from "@/lib/instagram";
+import {
+  CATALOGUE,
+  StyleCountWord,
+  offerEndsLabel,
+  offerRunning,
+  pricing,
+} from "@/lib/catalogue";
 
 /**
- * The hero, as one pinned scroll sequence.
+ * The hero: the light-reveal clip, played fast.
  *
- * The clip is NOT a <video> on the page. It is 48 decoded AVIF stills and
- * scroll position picks the frame. That is the difference between a film that
- * plays at you and an object you are turning: the reader controls it, nothing
- * autoplays, it costs one drawImage per frame, and it cannot stall.
+ * WHAT WAS ACTUALLY WRONG BEFORE. The footage was never the problem — it is
+ * 2560x1440 at 24fps and it is good. Three other things were:
  *
- * Choreography across the pin, all from one scrub:
- *   0.00 - 1.00  the light finds the bag, frame by frame
- *   0.00 - 0.55  the V travels from large and centred into the nav's own slot,
- *                shrinking as it goes
- *   0.40 - 0.62  the VOSS wordmark arrives beside it
- *   0.30 - 0.85  the copy wipes up, one line at a time
+ *   1. The poster was frame 0. The clip opens in near-darkness and the light
+ *      arrives over four seconds, so the poster was an almost-black rectangle
+ *      (10.8KB for 1920x1080). On landing the page looked empty.
+ *   2. It was a 48-frame AVIF SEQUENCE painted to a canvas, not a video.
+ *      Every frame was a decode and a drawImage, and scaling those stills up
+ *      to the viewport is what made it look soft.
+ *   3. It was scrubbed against a two-viewport pin, so the reveal only
+ *      advanced as fast as you dragged — which is what made it feel slow.
  *
- * The mark's destination is measured off the real <Nav> mark at runtime rather
- * than eyeballed, so the hand-off lands exactly on the nav logo and survives a
- * resize.
+ * WHAT IT DOES NOW. The poster is a LIT frame, so the hero is complete before
+ * a single byte of video arrives. A real <video> element decodes on the GPU at
+ * native resolution — nothing is resampled, so nothing is soft. It autoplays
+ * once, fast, and SCROLLING MAKES IT FASTER: scroll down and playbackRate
+ * jumps, so the reveal rushes to its end instead of being dragged through it.
+ * It is never scrubbed and never pinned, so it cannot stall or smear.
  *
- * Server markup carries the FINAL state (CLAUDE.md): if GSAP never runs the
- * copy is simply visible, and at tier 1 or reduced motion the travelling mark
- * never renders at all.
+ * Server markup carries the final state (CLAUDE.md): the headline, price and
+ * both CTAs render at full opacity with no script. GSAP only sets the start
+ * state, in a layout effect before paint.
  */
+
+const PLAY_MS = 950;
+const READY_TIMEOUT = 400;
+const BASE_RATE = 1.75;  // 4s of footage in ~2.3s
+const SCROLL_RATE = 5;   // scrolling rushes it to the end
+/* The clip opens in near-darkness and the light only arrives around a second
+   in. Starting there keeps the reveal but skips the black, so the video never
+   jumps backwards out of the lit poster. */
+const START_AT = 0.9;
+
+/** Per-character clip-mask rise. Characters are grouped into unbreakable
+ *  words, or the browser breaks a line mid-word. Latin only: Arabic is
+ *  cursive and joined, and splitting it destroys the shaping. */
+function chars(text: string) {
+  return text.split(" ").map((word, w, all) => (
+    <span key={w}>
+      <span className="inline-block whitespace-nowrap">
+        {word.split("").map((c, i) => (
+          <span
+            key={i}
+            className="inline-block overflow-hidden align-bottom pb-[0.16em] -mb-[0.16em]"
+          >
+            <span data-hero-char className="inline-block">
+              {c}
+            </span>
+          </span>
+        ))}
+      </span>
+      {w < all.length - 1 ? <span className="inline-block">&nbsp;</span> : null}
+    </span>
+  ));
+}
+
 export function Hero() {
   const root = useRef<HTMLElement>(null);
-  const canvas = useRef<HTMLCanvasElement>(null);
-  const mark = useRef<HTMLDivElement>(null);
+  const video = useRef<HTMLVideoElement>(null);
   const reduced = useReducedMotion();
-  const { tier, poster, ready, setProgress } = useFrameSequence(canvas);
+  const dm = igDirectMessage();
 
-  const wa = waLink({ message: "Hi VOSS, I'd like to ask about a bag." });
-  const still = reduced || tier === 1;
+  const price = pricing(CATALOGUE[0]);
+  const running = offerRunning();
+  const endsOn = offerEndsLabel();
 
+  /* Start state, before paint, so the final-state markup never flashes. */
+  useLayoutEffect(() => {
+    if (reduced || !root.current) return;
+    const q = gsap.utils.selector(root.current);
+    gsap.set(q("[data-hero-char]"), { yPercent: 110 });
+    gsap.set(q("[data-hero-rise]"), { yPercent: 40, autoAlpha: 0 });
+  }, [reduced]);
+
+  /* The clip. */
   useEffect(() => {
-    if (still || !root.current) return;
+    const v = video.current;
+    if (!v) return;
+
+    if (reduced) {
+      // Reduced motion gets the composition, arrived at instantly: the poster
+      // is already the lit final frame, so there is nothing to play.
+      v.removeAttribute("autoplay");
+      return;
+    }
+
+    let done = false;
+
+    /* The poster is the LIT final frame, so the hero is complete before any
+       video arrives. The video therefore has to fade IN over it rather than
+       replace it, or the moment playback begins the hero snaps back to the
+       dark opening. It starts already lit, plays to the end, and the end frame
+       matches the poster underneath — so there is no visible hand-off. */
+    const start = () => {
+      try {
+        if (v.currentTime < START_AT) v.currentTime = START_AT;
+      } catch {
+        /* seeking before metadata; the timeupdate path below retries */
+      }
+      v.playbackRate = BASE_RATE;
+      v.play().then(
+        () => {
+          v.dataset.playing = "true";
+        },
+        () => {
+          /* Autoplay refused (data saver, low power mode). The lit poster
+             stays and the hero is still complete — it simply does not move. */
+        }
+      );
+    };
+
+    if (v.readyState >= 1) start();
+    else v.addEventListener("loadedmetadata", start, { once: true });
+    const onEnded = () => {
+      done = true;
+      v.pause();
+    };
+    v.addEventListener("ended", onEnded);
+
+    /* Scrolling does not DRIVE the clip, it hurries it. Scrubbing a video
+       against scroll position is what made the old hero feel slow and look
+       smeared; this keeps playback monotonic and on its own clock, just
+       faster. */
+    const onScroll = () => {
+      if (done) return;
+      v.playbackRate = window.scrollY > 24 ? SCROLL_RATE : BASE_RATE;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      v.removeEventListener("ended", onEnded);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [reduced]);
+
+  /* The copy. */
+  useEffect(() => {
+    if (reduced || !root.current) return;
     const el = root.current;
+    let tl: gsap.core.Timeline | null = null;
+    let cancelled = false;
 
     const ctx = gsap.context(() => {
-      /** Where the nav's mark actually sits. Measured, not guessed. */
-      const measure = () => {
-        const nav = document.querySelector<HTMLElement>("[data-nav-mark]");
-        const m = mark.current;
-        if (!nav || !m) return null;
-        const a = nav.getBoundingClientRect();
-        const b = m.getBoundingClientRect();
-        if (!a.width || !b.width) return null;
-        return {
-          x: a.left + a.width / 2 - (b.left + b.width / 2),
-          y: a.top + a.height / 2 - (b.top + b.height / 2),
-          scale: a.height / b.height,
-        };
+      const q = gsap.utils.selector(el);
+      const chs = q("[data-hero-char]");
+      const rises = q("[data-hero-rise]");
+      const promoted = [...chs, ...rises] as HTMLElement[];
+
+      const play = () => {
+        if (cancelled) return;
+        promoted.forEach((n) => (n.style.willChange = "transform, opacity"));
+        tl = gsap.timeline({
+          defaults: { ease: "power3.out" },
+          // A permanently promoted layer softens text and edges.
+          onComplete: () => promoted.forEach((n) => (n.style.willChange = "")),
+        });
+        tl.to(chs, { yPercent: 0, duration: 0.6, stagger: 0.02 }, 0).to(
+          rises,
+          { yPercent: 0, autoAlpha: 1, duration: 0.55, stagger: 0.08 },
+          0.22
+        );
+        tl.totalDuration(PLAY_MS / 1000);
       };
 
-      let dest = measure();
+      /* `fonts.ready` is unbounded — on a cold connection it can resolve long
+         after the reader has gone. Race it, and play anyway if it is slow. */
+      Promise.race([
+        document.fonts?.ready ?? Promise.resolve(),
+        new Promise((r) => setTimeout(r, READY_TIMEOUT)),
+      ]).then(play);
 
-      /* One V on screen at a time: the nav's own mark stays invisible until
-         the travelling one has arrived on top of it. */
-      const navMark = document.querySelector<HTMLElement>("[data-nav-mark]");
-      if (navMark) navMark.style.opacity = "0";
-      if (mark.current) mark.current.style.willChange = "transform";
-      const setX = gsap.quickSetter(mark.current, "x", "px");
-      const setY = gsap.quickSetter(mark.current, "y", "px");
-      const setS = gsap.quickSetter(mark.current, "scale");
-
-      const lines = gsap.utils.toArray<HTMLElement>("[data-hero-line]");
-      const word = document.querySelector<HTMLElement>("[data-hero-word]");
-      const ease = gsap.parseEase("power2.inOut");
-
-      /* last-written values, so the handler can skip redundant style writes */
-      let lastWord = -1;
-      let lastHanded: boolean | null = null;
-      const lastLine: number[] = [];
-
-      const clamp = (v: number) => Math.min(1, Math.max(0, v));
-      const at = (p: number, a: number, b: number) => clamp((p - a) / (b - a));
-
-      ScrollTrigger.create({
-        trigger: el,
-        start: "top top",
-        end: () => "+=" + window.innerHeight * 2,
-        pin: true,
-        pinSpacing: true,
-        scrub: 0.6,
-        invalidateOnRefresh: true,
-        onRefresh: () => {
-          dest = measure();
-        },
-        onUpdate: (self) => {
-          const p = self.progress;
-          setProgress(p);
-
-          if (dest) {
-            const t = ease(at(p, 0, 0.55));
-            setX(dest.x * t);
-            setY(dest.y * t);
-            setS(1 + (dest.scale - 1) * t);
-          }
-
-          /* Every write below is guarded. Assigning a style property costs a
-             style recalc even when the value is identical, and this handler
-             runs on every scroll frame; unguarded it was ~10 writes and 4
-             fresh template strings per frame. Rounding the wipe to whole
-             percent also means a slow drag re-renders a line ~100 times over
-             its reveal rather than once per sub-pixel change. */
-          const wv = at(p, 0.4, 0.62);
-          if (word && wv !== lastWord) {
-            word.style.opacity = String(wv);
-            lastWord = wv;
-          }
-
-          const handed = p >= 0.55;
-          if (handed !== lastHanded) {
-            if (navMark) navMark.style.opacity = handed ? "1" : "0";
-            if (mark.current) mark.current.style.opacity = handed ? "0" : "1";
-            lastHanded = handed;
-          }
-
-          for (let i = 0; i < lines.length; i++) {
-            const from = 0.3 + i * 0.09;
-            const v = Math.round(at(p, from, from + 0.22) * 100);
-            if (v === lastLine[i]) continue;
-            lastLine[i] = v;
-            const l = lines[i];
-            l.style.clipPath = v >= 100 ? "none" : `inset(${100 - v}% 0 0 0)`;
-            l.style.opacity = v > 0 ? "1" : "0";
-          }
-        },
-      });
+      const onScroll = () => {
+        if (window.scrollY < 48) return;
+        window.removeEventListener("scroll", onScroll);
+        if (tl) tl.progress(1);
+        else play();
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      return () => window.removeEventListener("scroll", onScroll);
     }, el);
 
     return () => {
+      cancelled = true;
       ctx.revert();
-      const navMark = document.querySelector<HTMLElement>("[data-nav-mark]");
-      if (navMark) navMark.style.opacity = "";
-      const word = document.querySelector<HTMLElement>("[data-hero-word]");
-      if (word) word.style.opacity = "";
     };
-  }, [still, setProgress]);
-
-  const hidden = still ? undefined : { opacity: 0 };
+  }, [reduced]);
 
   return (
     <section
@@ -160,97 +210,96 @@ export function Hero() {
       className="substrate relative isolate min-h-[100svh] overflow-hidden"
       aria-label="VOSS"
     >
-      <div className="absolute inset-0 z-0">
-        <Image
-          src={poster}
-          alt="A black VOSS tote emerging from darkness as a warm light finds it."
-          fill
-          priority
-          unoptimized
-          sizes="100vw"
-          className={`object-cover transition-opacity duration-[var(--dur-3)] ${
-            ready && !still ? "opacity-0" : "opacity-100"
-          }`}
-        />
-        {!still && (
-          <canvas
-            ref={canvas}
-            aria-hidden="true"
-            className={`absolute inset-0 h-full w-full transition-opacity duration-[var(--dur-3)] ${
-              ready ? "opacity-100" : "opacity-0"
-            }`}
-          />
-        )}
+      {/* The clip, full-bleed. This IS allowed to be full-bleed where a
+          catalogue photograph is not: the source is 2560x1440, not a 540px
+          phone capture, so it is being DOWNscaled at every viewport. */}
+      <div className="hero-poster absolute inset-0 z-0">
+        <video
+          ref={video}
+          className="hero-video h-full w-full object-cover"
+          poster="/hero/poster.avif"
+          muted
+          playsInline
+          autoPlay
+          preload="auto"
+          aria-hidden="true"
+          tabIndex={-1}
+        >
+          <source src="/hero/hero-1600.webm" type="video/webm" />
+          <source src="/hero/hero-1600.mp4" type="video/mp4" />
+        </video>
       </div>
 
-      {/* Desktop: darken the left column, where the type lives. */}
+      {/* Scrims. The type sits on the left on desktop and at the bottom on
+          mobile, and the clip is brightest exactly where the light lands, so
+          each breakpoint needs its own falloff. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-1 hidden md:block"
         style={{
           background:
-            "linear-gradient(96deg, var(--color-ink-950) 0%, color-mix(in srgb, var(--color-ink-950) 70%, transparent) 34%, transparent 64%)",
+            "linear-gradient(96deg, var(--color-ink-950) 0%, color-mix(in srgb, var(--color-ink-950) 78%, transparent) 38%, color-mix(in srgb, var(--color-ink-950) 30%, transparent) 66%, transparent 88%)",
         }}
       />
-      {/* Mobile: the type sits at the bottom, directly over the light pool the
-          bag is standing in, so the scrim has to come up from the floor
-          instead. Without it the subhead reads over a bright highlight. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-1 h-[62%] md:hidden"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-1 h-[72%] md:hidden"
         style={{
           background:
-            "linear-gradient(to top, var(--color-ink-950) 12%, color-mix(in srgb, var(--color-ink-950) 78%, transparent) 46%, transparent 100%)",
+            "linear-gradient(to top, var(--color-ink-950) 14%, color-mix(in srgb, var(--color-ink-950) 82%, transparent) 48%, transparent 100%)",
         }}
       />
 
-      {/* The travelling mark. Only exists where it can actually travel. */}
-      {!still && (
-        <div
-          ref={mark}
-          aria-hidden="true"
-          className="pointer-events-none absolute left-1/2 top-[15svh] z-3 -translate-x-1/2"
-        >
-          <VMark foil className="h-[clamp(56px,9vw,108px)] w-auto" />
-        </div>
-      )}
-
-      <div className="relative z-2 mx-auto grid min-h-[100svh] max-w-[120rem] grid-cols-12 gap-x-gap-col px-gutter pt-24 pb-band">
-        <div className="col-span-12 flex flex-col justify-end self-end md:col-span-6 lg:col-span-5">
-          <p data-hero-line className="eyebrow text-gold-500" style={hidden}>
-            Handbags &middot; Lahore &middot; Cash on delivery
+      <div className="relative z-2 mx-auto grid min-h-[100svh] max-w-[120rem] grid-cols-12 items-end gap-x-gap-col px-gutter pt-28 pb-section md:items-center">
+        <div className="col-span-12 md:col-span-7 lg:col-span-6">
+          <p data-hero-rise className="eyebrow text-gold-500">
+            Lahore &middot; Cash on delivery
           </p>
 
-          <h1 data-hero-line className="display-xl mt-group text-paper-50" style={hidden}>
-            Carry it your way.
+          <h1
+            className="display-xl mt-group text-paper-50"
+            aria-label="Made to find its way to you."
+          >
+            <span aria-hidden="true">{chars("Made to find its way to you.")}</span>
           </h1>
 
-          <p data-hero-line className="body-l measure-tight mt-band text-smoke" style={hidden}>
-            Every price, size and material is on the page. Pay when it reaches
-            your hands.
+          <p data-hero-rise className="body-l measure-tight mt-band text-smoke">
+            {running ? (
+              <>
+                {StyleCountWord} bags at{" "}
+                <span className="text-[var(--text-signal)]">{price.now}</span>
+                {price.save ? `, ${price.save} off` : null}
+                {/* TODO [end date] — unconfirmed. This clause removes itself
+                    rather than printing a placeholder date. */}
+                {endsOn ? `, until ${endsOn}` : null}. Cash when it lands in
+                your hands.
+              </>
+            ) : (
+              <>
+                {StyleCountWord} bags, one price,{" "}
+                <span className="text-[var(--text-signal)]">{price.now}</span>.
+                Cash when it lands in your hands.
+              </>
+            )}
           </p>
 
-          <div
-            data-hero-line
-            className="mt-band flex flex-wrap items-center gap-group"
-            style={hidden}
-          >
+          <div data-hero-rise className="mt-band flex flex-wrap items-center gap-group">
+            {dm ? (
+              <a
+                href={dm}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="eyebrow inline-flex items-center justify-center rounded-xs bg-[var(--text-signal)] px-control-x-l py-control-y-l text-ink-950 transition-opacity duration-[var(--dur-1)] ease-[var(--ease-lux)] hover:opacity-90"
+              >
+                Order on Instagram
+              </a>
+            ) : null}
             <a
               href="#bags"
-              className="eyebrow inline-flex items-center justify-center rounded-xs bg-vermilion-500 px-control-x-l py-control-y-l text-ink-950 transition-colors duration-[var(--dur-1)] ease-[var(--ease-lux)] hover:bg-vermilion-300"
+              className="eyebrow inline-flex items-center justify-center rounded-xs border border-[var(--border-hairline)] px-control-x-l py-control-y-l text-paper-100 transition-colors duration-[var(--dur-1)] ease-[var(--ease-lux)] hover:border-gold-500 hover:text-gold-500"
             >
               See the bags
             </a>
-            {wa && (
-              <a
-                href={wa}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="eyebrow inline-flex items-center justify-center rounded-xs border border-[var(--border-hairline)] px-control-x-l py-control-y-l text-paper-100 transition-colors duration-[var(--dur-1)] ease-[var(--ease-lux)] hover:border-gold-500 hover:text-gold-500"
-              >
-                Ask on WhatsApp
-              </a>
-            )}
           </div>
         </div>
       </div>

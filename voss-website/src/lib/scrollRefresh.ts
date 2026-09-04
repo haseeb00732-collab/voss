@@ -1,8 +1,5 @@
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-/** Fired once the threshold curtain has finished lifting. */
-export const READY_EVENT = "voss:ready";
-
 /**
  * ScrollTrigger caches every start/end offset the moment a trigger is created.
  * Triggers registered before a pinned section has claimed its extra scroll
@@ -15,7 +12,6 @@ export const READY_EVENT = "voss:ready";
  *   - `load`, when the last subresource has landed
  *   - `fonts.ready`, because the display face swapping in changes every
  *     headline's height
- *   - the curtain release, which un-pins the page and restores its real height
  *
  * Refreshing is idempotent and cheap next to the class of bug it prevents.
  *
@@ -27,12 +23,10 @@ export function scheduleScrollRefresh(): () => void {
   const timers = [250, 1200, 3000].map((ms) => window.setTimeout(refresh, ms));
 
   window.addEventListener("load", refresh);
-  window.addEventListener(READY_EVENT, refresh);
   document.fonts?.ready.then(refresh).catch(() => {});
 
   return () => {
     timers.forEach(clearTimeout);
     window.removeEventListener("load", refresh);
-    window.removeEventListener(READY_EVENT, refresh);
   };
 }

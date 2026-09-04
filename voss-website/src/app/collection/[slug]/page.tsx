@@ -1,12 +1,20 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { PieceHero } from "@/components/PieceHero";
-import { CATALOGUE, getPiece, pieceImages, relatedPieces } from "@/lib/catalogue";
+import { PieceGallery } from "@/components/PieceGallery";
+import { SiteBackdrop } from "@/components/SiteBackdrop";
+import {
+  CATALOGUE,
+  getPiece,
+  hdImage,
+  hdSrcSet,
+  relatedPieces,
+  styleCountWord,
+} from "@/lib/catalogue";
 
 export function generateStaticParams() {
   return CATALOGUE.map((p) => ({ slug: p.slug }));
@@ -35,11 +43,14 @@ export default async function PiecePage({ params }: { params: Promise<{ slug: st
 
   return (
     <>
+      <SiteBackdrop />
       <SmoothScroll />
       <Nav />
 
       <main id="main">
         <PieceHero piece={piece} />
+
+        <PieceGallery piece={piece} />
 
         {/* Related pieces, immediately below the hero — the brief was explicit
             that this is what follows, not specs. Someone who has decided
@@ -52,26 +63,30 @@ export default async function PiecePage({ params }: { params: Promise<{ slug: st
                 href="/collection"
                 className="eyebrow text-smoke transition-colors duration-[var(--dur-1)] hover:text-gold-300"
               >
-                All six &rarr;
+                All {styleCountWord} &rarr;
               </Link>
             </div>
 
             <div className="mt-band grid grid-cols-1 gap-x-gap-col gap-y-band sm:grid-cols-3">
               {related.map((r) => {
-                const [cover] = pieceImages(r);
+                const cover = hdImage(r, 1);
                 return (
                   <Link
                     key={r.slug}
                     href={`/collection/${r.slug}`}
                     className="group block transition-transform duration-[var(--dur-2)] ease-[var(--ease-lux)] hover:-translate-y-1.5"
                   >
-                    <div className="plate aspect-[4/5] transition-shadow duration-[var(--dur-2)] ease-[var(--ease-lux)] group-hover:shadow-[var(--elev-3)]">
-                      <Image
+                    <div className="plate relative aspect-[4/5] w-full transition-shadow duration-[var(--dur-2)] ease-[var(--ease-lux)] group-hover:shadow-[var(--elev-3)]">
+                      <img
                         src={cover}
-                        alt={`${r.label}, ${r.silhouette.toLowerCase()}`}
-                        fill
-                        sizes="(max-width: 640px) 100vw, 33vw"
-                        className="object-cover"
+                        srcSet={hdSrcSet(r, 1)}
+                        sizes="(max-width: 640px) 92vw, 31vw"
+                        alt={`The ${r.name}, ${r.silhouette.toLowerCase()}`}
+                        width={1792}
+                        height={2400}
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 h-full w-full object-cover"
                       />
                     </div>
                     <div className="mt-item flex items-baseline justify-between gap-group">
