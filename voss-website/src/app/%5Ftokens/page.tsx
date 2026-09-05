@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { Loader } from "@/components/Loader";
 import { TokenGuard } from "@/components/dev/TokenGuard";
 import { PALETTE } from "@/lib/tokens";
 
@@ -29,6 +30,23 @@ export default function TokensPage() {
         </p>
       </header>
       <TokenGuard groups={PALETTE} />
+
+      {/* The between-pages loader, parked here so it can be looked at without
+          having to catch a navigation that resolves in 40ms. `position:
+          fixed` is neutralised locally; everything else is the real thing. */}
+      <section className="mt-band">
+        <h2 className="display-3">Loader</h2>
+        <p className="body measure mt-item" style={{ color: "var(--text-secondary)" }}>
+          Shown between pages. It stays invisible for 180ms first, so a fast
+          navigation never flashes it.
+        </p>
+        <div className="mt-group relative h-80 overflow-hidden rounded-sm border"
+             style={{ borderColor: "var(--border-neutral)" }}>
+          <div className="[&>*]:absolute">
+            <Loader />
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
