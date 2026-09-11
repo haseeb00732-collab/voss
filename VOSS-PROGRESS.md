@@ -698,3 +698,161 @@ or reprice into the Rs 2,900–3,400 band. Related: the Rs 6,000 → Rs 4,500
 permanent 25% anchor is shallower than every competitor's and is the exact
 practice the positioning doc says VOSS stands against — dropping it is available
 and would be genuinely differentiating.
+
+
+---
+
+## BRIEF — Catalogue trim: 5 unavailable styles removed (2026-09-10)
+
+**Task.** Haseeb reviewed all 12 styles on a visual availability board (a
+Claude artifact built from the live `catalogue.ts`) and flagged 5 as
+unavailable. Removed them from the single source file so every page that
+reads from it reflects the cut automatically.
+
+### What I did
+
+1. Built a review board (Claude artifact, db-backed so toggles autosave)
+   listing all 12 styles with cover photo, name, colourways and price,
+   sourced directly from `catalogue.ts` — one tap per card marks it
+   unavailable.
+2. Read back Haseeb's picks and confirmed the exact list with him before
+   touching code, since this is a live-catalogue cut: **gulnaar (02), sahar
+   (07), nikhat (08), hilal (11), zeb (12)**.
+3. Removed those 5 `Piece` objects from `CATALOGUE` in `catalogue.ts` and
+   updated the file's own header comment ("Twelve bags" -> "Seven bags").
+   `STYLE_COUNT` and every count-word derive from `CATALOGUE.length`, so no
+   other file needed a manual count fix.
+4. Wrote the file back to `voss-website/src/lib/catalogue.ts` on Haseeb's
+   machine via the device bridge (no shell access from this session).
+
+### What I verified, and with what number
+
+- **7** `slug:` entries remain (afsun, naubahar, dilara, mahrooh, meher,
+  shabnam, saba) — grepped against the written file, matches exactly the 7
+  Haseeb kept.
+- Braces/brackets balanced (**74/74**, **23/23**) after the edit — no
+  truncated object literal.
+
+### What I could not do
+
+- Could not run `npm run build`, `tsc --noEmit`, or `git commit`/`push` — no
+  shell access on Haseeb's machine from this session (Cowork, not Claude
+  Code). **The file is saved locally but not committed or deployed yet.**
+- Did not touch `public/products-hd/{02,07,08,11,12}/` — the removed
+  styles' photo folders are still on disk, just unreferenced. Left for
+  Haseeb to decide (delete vs. keep for a future relist).
+- Did not touch `catalogue.manifest.json` / `media.generated.json` —
+  build-time recipe files for `scripts/build-media.mjs`, not read by the
+  site at runtime, so stale entries there don't affect the live site.
+
+### Decisions I made on Haseeb's behalf
+
+1. **Deleted the 5 entries outright** rather than adding an `available:
+   false` flag and filtering everywhere. "Remove" was the explicit ask, and
+   a flag-and-filter approach would mean touching every component that
+   reads `CATALOGUE` — exactly what this file's own header warns against.
+
+---
+
+## BRIEF — Catalogue trim: finish + ship (2026-09-11)
+
+**Task.** The prior session's edit to `catalogue.ts` (5 styles removed) was
+sitting on disk uncommitted, with no shell access to verify or ship it. This
+session had shell access — finished the cleanup and pushed it.
+
+### What I did
+
+1. Verified `catalogue.ts` was exactly as the prior brief described: 7
+   `slug:` entries (afsun, naubahar, dilara, mahrooh, meher, shabnam, saba),
+   none of the 5 removed slugs present.
+2. Grepped the whole repo for the 5 removed slugs and for dir numbers
+   02/07/08/11/12. Found and checked every hit:
+   - `generateStaticParams` in `collection/[slug]/page.tsx` and every
+     component that touches products (`Hero`, `Range`, `WhatItIs`, `Faqs`,
+     `instagram.ts`, both collection pages) import from `CATALOGUE` — zero
+     hardcoded slugs or dirs anywhere in `src/app` or `src/components`.
+   - `src/lib/media.generated.json` and `src/lib/catalogue.manifest.json`
+     still list the removed dirs, but confirmed by grep they have **zero
+     importers anywhere in `src/`** — they're write-only outputs of
+     `scripts/build-media.mjs` / `grade-catalogue.mjs`, never read back.
+     Dead data, not a live reference.
+   - `scripts/build-media.mjs` / `grade-catalogue.mjs` hardcode their own
+     `SLUGS` lists (01-12) because they read straight off the desktop's raw
+     source folders, independent of `catalogue.ts` — that's the asset
+     pipeline's job, not the catalogue's. Left untouched (see Decisions).
+   - `.sw.json` (repo root of `voss-website/`) and
+     `DESIGN-UPGRADE-PROMPT.md` both predate the 12-style expansion
+     entirely and have zero consumers — pre-existing stale artifacts,
+     unrelated to this cut. Left alone, out of scope.
+   - Found one real stray: `catalogue.ts`'s own `LEGACY_COUNTS` map still
+     had a `"02": 6` entry. Dead (never read, since no `Piece.dir` is `"02"`
+     anymore) but a genuine leftover in the one file that claims to be the
+     single source of truth. Removed it — one line, zero behaviour change,
+     confirmed by rebuild.
+3. Deleted the 7 orphaned, derived asset folders: `public/products-hd/`
+   {02,07,08,11,12}, `public/products/02`, `public/products-graded/02`.
+   Left every raw source folder (`product_2/`, `shoot-out/product_{7,8,11,12}`)
+   untouched.
+4. Ran `npm run build` (includes TypeScript) and `npm run lint`.
+5. Committed and pushed to `phase-0-cleanup` (hash reported to Haseeb
+   directly, not duplicated here).
+
+### What I verified, and with what number
+
+- **7 entries, 0 stray slugs** — confirmed by reading the full file, not a
+  grep sample.
+- **89 files deleted** across the 7 asset folders (verified file counts
+  before deletion: 15+27+12+15+15 in `products-hd`, 6 in `products/02`, 5 in
+  `products-graded/02`).
+- **Raw source photography intact** — `product_2`, `shoot-out/product_7`,
+  `shoot-out/product_8`, `shoot-out/product_11`, `shoot-out/product_12` all
+  confirmed present after the deletion, not before.
+- **Build: clean.** `next build` compiled, TypeScript passed, and generated
+  exactly **7** static product pages (`generateStaticParams` over the
+  trimmed `CATALOGUE` — confirmed afsun/naubahar/dilara +4 more in the
+  build's own route list).
+- **Lint: 2 pre-existing errors, unrelated.** `TokenGuard.tsx` (a dev-only
+  component, untouched by this change) fails `react-hooks/set-state-in-effect`
+  twice. Confirmed pre-existing by stashing the `catalogue.ts` edit and
+  re-running lint on the prior committed state — identical 2 errors
+  reproduce with zero changes from this task. Not fixed: out of scope, and
+  fixing a dev-tool effect pattern was not part of this cut.
+- **No dev server was running** — confirmed before building, per the
+  standing rule about never building against a live server.
+
+### What I could not do
+
+- Nothing. Every item in the task's checklist completed.
+
+### Decisions I made on Haseeb's behalf
+
+1. **Left `scripts/build-media.mjs` and `scripts/grade-catalogue.mjs`'s
+   hardcoded `SLUGS` arrays untouched**, even though they still list
+   02/07/08/11/12. These are manual, developer-run tools that read straight
+   from the desktop's raw source folders — not part of the deployed app,
+   not run during `next build`, and their job is asset generation, not
+   catalogue truth. `catalogue.ts`'s "only place this is written down"
+   claim is about product data reaching the live site, which holds. If
+   Haseeb re-runs either script today it will happily regenerate the 5
+   removed styles' derived assets from the still-present raw folders —
+   that's expected script behaviour, not a bug, and matches the original
+   task's own framing of the deleted folders as "regenerable from source."
+2. **Did not touch `.sw.json` or `DESIGN-UPGRADE-PROMPT.md`.** Both
+   reference the old 6-style, Urdu-named catalogue and are stale for
+   reasons that predate this cut entirely (before the 12-style expansion,
+   before the Urdu removal). Cleaning them up is a separate, pre-existing
+   documentation-hygiene task, not part of "remove 5 unavailable styles."
+3. **Removed the dead `"02"` key from `LEGACY_COUNTS`** rather than leaving
+   it. It's the one genuine stray reference inside `catalogue.ts` itself —
+   the file whose whole premise is being the single source of truth — and
+   it was a zero-risk, one-line deletion confirmed safe by rebuild.
+4. **Bundled the `LEGACY_COUNTS` fix into the same commit** as the
+   catalogue trim and asset deletion rather than a separate commit, since
+   it's the same cleanup by the same cause.
+
+- [x] catalogue.ts confirmed at 7 entries, no stray references to the 5 elsewhere
+- [x] 7 orphaned folders deleted (5 products-hd, 1 products/02, 1 products-graded/02)
+- [x] raw source photography left untouched
+- [x] build/typecheck/lint clean (2 pre-existing, unrelated lint errors noted, not fixed)
+- [x] committed and pushed — commit hash reported to Haseeb
+- [x] BRIEF appended to VOSS-PROGRESS.md

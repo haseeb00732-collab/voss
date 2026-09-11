@@ -1,5 +1,5 @@
 /**
- * The catalogue. Twelve bags, one price.
+ * The catalogue. Seven bags, one price.
  *
  * THIS FILE IS THE ONLY PLACE any of it is written down. Names, slugs,
  * colour chips, image folders and prices all live here, and every component
@@ -112,24 +112,6 @@ export const CATALOGUE: Piece[] = [
     ],
   },
   {
-    slug: "gulnaar",
-    dir: "02",
-    name: "Croc Padlock Handbag",
-    label: "Style 02",
-    imageCount: 5,
-    price: 4500,
-    listPrice: 6000,
-    silhouette: "Structured satchel",
-    note: "Croc-embossed, with a gold padlock at the front.",
-    colourways: [
-      { name: "Navy", hex: "#454657", image: 1 },
-      { name: "Stone", hex: "#887e74", image: 2 },
-      { name: "Chocolate", hex: "#6b4e46", image: 3 },
-      { name: "Wine", hex: "#90514b", image: 4 },
-      { name: "Camel", hex: "#b1794e", image: 5 },
-    ],
-  },
-  {
     slug: "naubahar",
     dir: "03",
     name: "Croc Office Tote Bag",
@@ -201,45 +183,6 @@ export const CATALOGUE: Piece[] = [
     ],
   },
   {
-    slug: "sahar",
-    dir: "07",
-    name: "Smooth Slouchy Shoulder Bag",
-    label: "Style 07",
-    imageCount: 9,
-    price: 4500,
-    listPrice: 6000,
-    silhouette: "Shoulder hobo",
-    note: "A soft, slouchy shoulder bag. The widest colour run in the range.",
-    colourways: [
-      { name: "Ivory", hex: "#d9d2c6", image: 1 },
-      { name: "Oxblood", hex: "#5d2b2b", image: 2 },
-      { name: "Navy", hex: "#2b3550", image: 3 },
-      { name: "Red", hex: "#9e3630", image: 4 },
-      { name: "Chocolate", hex: "#6b4632", image: 5 },
-      { name: "Rose", hex: "#b98275", image: 6 },
-      { name: "Tan", hex: "#9c6134", image: 7 },
-      { name: "Black", hex: "#2a2622", image: 8 },
-      { name: "Sage", hex: "#8b9b76", image: 9 },
-    ],
-  },
-  {
-    slug: "nikhat",
-    dir: "08",
-    name: "Woven Texture Tote Bag",
-    label: "Style 08",
-    imageCount: 4,
-    price: 4500,
-    listPrice: 6000,
-    silhouette: "Textured tote",
-    note: "A woven-texture tote with contrast handles and corner tabs.",
-    colourways: [
-      { name: "Oatmeal", hex: "#c9bda3", image: 1 },
-      { name: "Sky", hex: "#6ea8cd", image: 2 },
-      { name: "Grey", hex: "#7b7a72", image: 3 },
-      { name: "Cream", hex: "#d7cbb4", image: 4 },
-    ],
-  },
-  {
     slug: "shabnam",
     dir: "09",
     name: "Three-Piece Tote Set",
@@ -272,42 +215,6 @@ export const CATALOGUE: Piece[] = [
       { name: "Tan", hex: "#ac6740", image: 3 },
       { name: "Blush", hex: "#b98a7c", image: 4 },
       { name: "Wine", hex: "#653c3d", image: 5 },
-    ],
-  },
-  {
-    slug: "hilal",
-    dir: "11",
-    name: "Crescent Shoulder Bag",
-    label: "Style 11",
-    imageCount: 5,
-    price: 4500,
-    listPrice: 6000,
-    silhouette: "Shoulder",
-    note: "A crescent-shaped shoulder bag on a slim strap.",
-    colourways: [
-      { name: "Navy", hex: "#252b3d", image: 1 },
-      { name: "Rose", hex: "#b98287", image: 2 },
-      { name: "Black", hex: "#242222", image: 3 },
-      { name: "Tan", hex: "#9c5f30", image: 4 },
-      { name: "Burgundy", hex: "#4e2323", image: 5 },
-    ],
-  },
-  {
-    slug: "zeb",
-    dir: "12",
-    name: "Contrast-Trim Structured Tote Bag",
-    label: "Style 12",
-    imageCount: 5,
-    price: 4500,
-    listPrice: 6000,
-    silhouette: "Structured tote",
-    note: "A structured tote with contrast piping and a detachable shoulder strap.",
-    colourways: [
-      { name: "Taupe", hex: "#8d8079", image: 1 },
-      { name: "Tan", hex: "#a3603d", image: 2 },
-      { name: "Cream", hex: "#ddd4bf", image: 3 },
-      { name: "Black", hex: "#2b2a2b", image: 4 },
-      { name: "Blush", hex: "#dfb9a6", image: 5 },
     ],
   },
 ];
@@ -380,7 +287,7 @@ export function colourwaySrcSet(piece: Piece, c: Colourway): string {
  * are 540px wide: never render one above 440 CSS px.
  */
 export const LEGACY_COUNTS: Record<string, number> = {
-  "01": 6, "02": 6, "03": 8, "04": 6, "05": 4, "06": 5,
+  "01": 6, "03": 8, "04": 6, "05": 4, "06": 5,
 };
 
 export function legacyImages(piece: Piece): string[] {
