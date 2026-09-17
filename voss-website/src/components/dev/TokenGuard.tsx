@@ -76,7 +76,10 @@ function runGuard(): GuardResult {
 
 export function TokenGuard({ groups }: { groups: readonly TokenGroup[] }) {
   const [result, setResult] = useState<GuardResult | null>(null);
-  useEffect(() => setResult(runGuard()), []);
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setResult(runGuard()));
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   const failed = result !== null && result.missing.length > 0;
 
@@ -168,6 +171,7 @@ function Swatch({ token }: { token: string }) {
   const [rgb, setRgb] = useState<Rgb | null>(null);
 
   useEffect(() => {
+    const frame = requestAnimationFrame(() => {
     const el = document.createElement("span");
     el.style.color = `var(${token})`;
     el.style.display = "none";
@@ -176,6 +180,8 @@ function Swatch({ token }: { token: string }) {
     el.remove();
     setValue(computed);
     setRgb(parseComputed(computed));
+    });
+    return () => cancelAnimationFrame(frame);
   }, [token]);
 
   const empty = rgb === null;

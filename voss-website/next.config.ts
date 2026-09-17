@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  devIndicators: false,
   images: {
     /**
      * AVIF first. The catalogue is photographic and dark, which is where AVIF

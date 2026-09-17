@@ -1,4 +1,22 @@
 @import "tailwindcss";
+@import "./storefront.css";
+
+/* Sampled from the current studio photographs; one continuous light surface. */
+:root {
+  --v-chalk: #d9ddda;
+  --v-ground: #d9ddda;
+  --v-studio: #d9ddda;
+  --v-studio-line: #b5bcb5;
+  --v-studio-muted: #505851;
+  --v-study-paper: #e8e9e4;
+  --v-study-dark-line: #464841;
+  --v-study-dim: #b6bcb3;
+  --v-studio-duration: 700ms;
+  --v-studio-rise: 24px;
+  --v-nav-height: 64px;
+  --v-nav-compact: 52px;
+  --v-nav-page: clamp(20px,2.4vw,40px);
+}
 
 /* ═══════════════════════════════════════════════════════════════════════
    VOSS v2 — EDITORIAL
@@ -718,6 +736,132 @@
   .ambient-orb {
     animation: none;
     opacity: 0.3;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   THE LOADER
+   The V writes itself in gold between pages.
+
+   THE 180ms DELAY IS THE POINT. Every route here is statically prerendered,
+   so a navigation usually resolves in tens of milliseconds. A loader that
+   paints on frame one would flash and disappear on every click, which reads
+   as a glitch rather than as craft. The veil is transparent until 180ms has
+   passed; a fast navigation unmounts it having never been seen, and only a
+   genuinely slow one is ever shown.
+
+   The stroke uses pathLength="1", so every dash value below is a plain
+   fraction of the path and nothing has to call getTotalLength().
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.loader-veil {
+  background-color: var(--color-ink-950);
+  opacity: 0;
+  animation: loader-appear var(--dur-2) var(--ease-out) 180ms forwards;
+}
+
+@keyframes loader-appear {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Each side is drawn, held, then pulled away from the far end so the loop
+   reads as one continuous hand rather than a restart. */
+.loader-vee [data-vee] {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: loader-draw 2s var(--ease-io) infinite;
+}
+
+/* The right arm follows the left by one beat — the "two beats" vee.ts was
+   split for. */
+.loader-vee [data-vee="right"] {
+  animation-delay: 0.18s;
+}
+
+@keyframes loader-draw {
+  0% {
+    stroke-dashoffset: 1;
+  }
+  45% {
+    stroke-dashoffset: 0;
+  }
+  70% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -1;
+  }
+}
+
+/* The solid mark breathes in under the outline once it has closed, so the
+   logo resolves rather than staying a wireframe. */
+.loader-vee [data-vee-fill] {
+  opacity: 0;
+  animation: loader-fill 2s var(--ease-io) infinite;
+}
+
+.loader-vee [data-vee-fill="right"] {
+  animation-delay: 0.18s;
+}
+
+@keyframes loader-fill {
+  0%,
+  40% {
+    opacity: 0;
+  }
+  62% {
+    opacity: 0.9;
+  }
+  78% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.loader-word {
+  animation: loader-word 2s var(--ease-io) infinite;
+}
+
+@keyframes loader-word {
+  0%,
+  30% {
+    opacity: 0;
+    letter-spacing: 0.52em;
+  }
+  60%,
+  80% {
+    opacity: 1;
+    letter-spacing: var(--track-wordmark);
+  }
+  100% {
+    opacity: 0;
+    letter-spacing: 0.52em;
+  }
+}
+
+/* §4.6.6 — same composition, arrived at instantly. The mark is simply there,
+   drawn and filled, with no loop and no delay. */
+@media (prefers-reduced-motion: reduce) {
+  .loader-veil {
+    opacity: 1;
+    animation: none;
+  }
+  .loader-vee [data-vee] {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+  .loader-vee [data-vee-fill] {
+    opacity: 0.9;
+    animation: none;
+  }
+  .loader-word {
+    opacity: 1;
+    letter-spacing: var(--track-wordmark);
+    animation: none;
   }
 }
 

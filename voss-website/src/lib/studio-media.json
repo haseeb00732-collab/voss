@@ -1,0 +1,304 @@
+{
+  "product-01": {
+    "green": [
+      {
+        "src": "/studio-colours-v1/product-01-green-primary",
+        "label": "Studio view"
+      }
+    ],
+    "black": [
+      {
+        "src": "/studio-colours-v1/product-01-black-primary",
+        "label": "Studio view"
+      }
+    ],
+    "dark-brown": [
+      {
+        "src": "/studio-colours-v1/product-01-dark-brown-primary",
+        "label": "Studio view"
+      }
+    ],
+    "cognac": [
+      {
+        "src": "/studio-colours-v1/product-01-cognac-primary",
+        "label": "Studio view"
+      }
+    ],
+    "burgundy": [
+      {
+        "src": "/studio-colours-v1/product-01-burgundy-primary",
+        "label": "Studio view"
+      }
+    ],
+    "camel": [
+      {
+        "src": "/studio-cutouts/product-01",
+        "label": "Studio view"
+      },
+      {
+        "src": "/studio-colours-v1/product-01-camel-review-front",
+        "label": "Front view"
+      }
+    ]
+  },
+  "product-02": {
+    "ivory": [
+      {
+        "src": "/studio-colours-v1/product-02-ivory-primary",
+        "label": "Studio view"
+      }
+    ],
+    "black": [
+      {
+        "src": "/studio-colours-v1/product-02-black-primary",
+        "label": "Studio view"
+      },
+      {
+        "src": "/studio-colours-v1/product-02-black-review-front",
+        "label": "Front view"
+      }
+    ],
+    "magenta": [
+      {
+        "src": "/studio-cutouts/product-02",
+        "label": "Studio view"
+      }
+    ],
+    "mustard": [
+      {
+        "src": "/studio-colours-v1/product-02-mustard-primary",
+        "label": "Studio view"
+      }
+    ],
+    "royal-blue": [
+      {
+        "src": "/studio-colours-v1/product-02-royal-blue-primary",
+        "label": "Studio view"
+      }
+    ],
+    "navy": [
+      {
+        "src": "/studio-colours-v1/product-02-navy-primary",
+        "label": "Studio view"
+      }
+    ]
+  },
+  "product-03": {
+    "dark-brown": [
+      {
+        "src": "/studio-colours-v1/product-03-dark-brown-primary",
+        "label": "Studio view"
+      }
+    ],
+    "green": [
+      {
+        "src": "/studio-colours-v1/product-03-green-primary",
+        "label": "Studio view"
+      }
+    ],
+    "tan": [
+      {
+        "src": "/studio-colours-v1/product-03-tan-primary",
+        "label": "Studio view"
+      },
+      {
+        "src": "/studio-colours-v1/product-03-tan-review-front",
+        "label": "Front view"
+      }
+    ],
+    "black": [
+      {
+        "src": "/studio-cutouts/product-03",
+        "label": "Studio view"
+      }
+    ]
+  },
+  "product-04": {
+    "taupe": [
+      {
+        "src": "/studio-colours-v1/product-04-taupe-primary",
+        "label": "Studio view"
+      }
+    ],
+    "green": [
+      {
+        "src": "/studio-colours-v1/product-04-green-primary",
+        "label": "Studio view"
+      },
+      {
+        "src": "/studio-colours-v1/product-04-green-review-front",
+        "label": "Front view"
+      }
+    ],
+    "wine": [
+      {
+        "src": "/studio-colours-v1/product-04-wine-primary",
+        "label": "Studio view"
+      }
+    ],
+    "black": [
+      {
+        "src": "/studio-cutouts/product-04",
+        "label": "Studio view"
+      }
+    ]
+  },
+  "product-05": {
+    "tan": [
+      {
+        "src": "/studio-colours-v1/product-05-tan-primary",
+        "label": "Studio view"
+      }
+    ],
+    "black": [
+      {
+        "src": "/studio-colours-v1/product-05-black-primary",
+        "label": "Studio view"
+      },
+      {
+        "src": "/studio-colours-v1/product-05-black-review-front",
+        "label": "Front view"
+      }
+    ],
+    "nude": [
+      {
+        "src": "/studio-colours-v1/product-05-nude-primary",
+        "label": "Studio view"
+      }
+    ],
+    "dark-brown": [
+      {
+        "src": "/studio-colours-v1/product-05-dark-brown-primary",
+        "label": "Studio view"
+      }
+    ],
+    "green": [
+      {
+        "src": "/studio-cutouts/product-05",
+        "label": "Studio view"
+      }
+    ]
+  },
+  "product-06": {
+    "black": [
+      {
+        "src": "/studio-cutouts/product-06",
+        "label": "Studio view"
+      },
+      {
+        "src": "/studio-colours-v1/product-06-black-review-front",
+        "label": "Front view"
+      },
+      {
+        "src": "/studio-colours-v1/product-06-black-review-interior",
+        "label": "Inside the bag"
+      }
+    ],
+    "brown": [
+      {
+        "src": "/studio-colours-v1/product-06-brown-primary",
+        "label": "Studio view"
+      }
+    ],
+    "tan": [
+      {
+        "src": "/studio-colours-v1/product-06-tan-primary",
+        "label": "Studio view"
+      }
+    ],
+    "beige-natural": [
+      {
+        "src": "/studio-colours-v1/product-06-beige-natural-primary",
+        "label": "Studio view"
+      }
+    ],
+    "navy": [
+      {
+        "src": "/studio-colours-v1/product-06-navy-primary",
+        "label": "Studio view"
+      }
+    ]
+  },
+  "product-07": {
+    "blue": [
+      {
+        "src": "/studio-colours-v1/product-07-blue-primary",
+        "label": "Studio view"
+      }
+    ],
+    "black": [
+      {
+        "src": "/studio-colours-v1/product-07-black-primary",
+        "label": "Studio view"
+      },
+      {
+        "src": "/studio-colours-v1/product-07-black-review-front",
+        "label": "Front view"
+      },
+      {
+        "src": "/studio-colours-v1/product-07-black-review-tote",
+        "label": "The tote"
+      },
+      {
+        "src": "/studio-colours-v1/product-07-black-review-accessories",
+        "label": "The smaller pieces"
+      }
+    ],
+    "grey": [
+      {
+        "src": "/studio-colours-v1/product-07-grey-primary",
+        "label": "Studio view"
+      }
+    ],
+    "beige": [
+      {
+        "src": "/studio-cutouts/product-07",
+        "label": "Studio view"
+      }
+    ]
+  },
+  "product-08": {
+    "grey-black": [
+      {
+        "src": "/studio-colours-v1/product-08-grey-black-primary",
+        "label": "Studio view"
+      }
+    ],
+    "cream-black": [
+      {
+        "src": "/studio-colours-v1/product-08-cream-black-primary",
+        "label": "Studio view"
+      }
+    ],
+    "tan-black": [
+      {
+        "src": "/studio-colours-v1/product-08-tan-black-primary",
+        "label": "Studio view"
+      },
+      {
+        "src": "/studio-colours-v1/product-08-tan-black-review-front",
+        "label": "Front view"
+      },
+      {
+        "src": "/studio-colours-v1/product-08-tan-black-review-tote",
+        "label": "The tote"
+      },
+      {
+        "src": "/studio-colours-v1/product-08-tan-black-review-accessories",
+        "label": "The smaller pieces"
+      }
+    ],
+    "burgundy-black": [
+      {
+        "src": "/studio-colours-v1/product-08-burgundy-black-primary",
+        "label": "Studio view"
+      }
+    ],
+    "cream-brown": [
+      {
+        "src": "/studio-cutouts/product-08",
+        "label": "Studio view"
+      }
+    ]
+  }
+}

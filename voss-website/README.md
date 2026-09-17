@@ -25,7 +25,6 @@ npm run lint
 - Rename a bag and you must re-run `scripts/subset-fonts.py`, or the new Urdu
   letter silently falls back to a device font.
 
-## Design authority
+## Engineering traps
 
-`../VOSS-VISUAL-TARGET.md`, plus `CLAUDE.md` here for the engineering traps.
-Mobile at 390×844 is the primary surface.
+`CLAUDE.md` here lists the things that have already broken once.

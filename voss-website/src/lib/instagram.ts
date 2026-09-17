@@ -52,10 +52,8 @@ export function orderReference({ piece, slug, colourway }: OrderContext = {}): s
   if (!piece) return "Hi VOSS — I'd like to order a bag.";
   const ref = slug ? ` (${slug})` : "";
   const colour = colourway ? ` in ${colourway}` : "";
-  /* Read the number, never write it. A literal here survives the offer
-     ending and then quotes her a price the page no longer shows — the drift
-     this function was written to prevent. Every bag is one price, so the
-     first piece answers for all six. */
-  const price = pricing(CATALOGUE[0]).now;
-  return `Hi VOSS — I'd like to order the ${piece}${ref}${colour}, ${price}, cash on delivery.`;
+  // Resolve the selected article: prices differ across the current edit.
+  const selected = CATALOGUE.find(p => p.slug === slug || p.name === piece);
+  const price = selected ? pricing(selected).now : null;
+  return `Hi VOSS — I'd like to order the ${piece}${ref}${colour}${price ? `, ${price}` : ''}. Please confirm availability, delivery charges and payment options.`;
 }
