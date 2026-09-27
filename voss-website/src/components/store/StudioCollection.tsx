@@ -11,7 +11,7 @@ export function StudioCollection() {
   const pieces = CATALOGUE.filter(p => shape === 'All shapes' || p.silhouette === shape);
   return <section className={`v-section v-edit v-studio-collection ${detail?'is-detail-view':''}`} id="collection">
     <div className="v-section-heading">
-      <div><span className="v-kicker">The current edit / 01—08</span><h2>Find your everyday.</h2></div>
+      <div><span className="v-kicker">The current edit / 01—{String(CATALOGUE.length).padStart(2, '0')}</span><h2>Find your everyday.</h2></div>
       <p>A favourite starts with a closer look.<br />Explore the colours. Compare your choices.</p>
     </div>
     <div className="v-studio-controls">

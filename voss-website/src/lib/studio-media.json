@@ -300,5 +300,75 @@
         "label": "Studio view"
       }
     ]
+  },
+  "product-09": {
+    "cognac": [
+      {
+        "src": "/studio-colours-v1/product-09-cognac-primary",
+        "label": "Studio view"
+      }
+    ],
+    "green": [
+      {
+        "src": "/studio-colours-v1/product-09-green-primary",
+        "label": "Studio view"
+      }
+    ],
+    "burgundy": [
+      {
+        "src": "/studio-colours-v1/product-09-burgundy-primary",
+        "label": "Studio view"
+      }
+    ],
+    "dark-brown": [
+      {
+        "src": "/studio-colours-v1/product-09-dark-brown-primary",
+        "label": "Studio view"
+      }
+    ],
+    "black": [
+      {
+        "src": "/studio-colours-v1/product-09-black-primary",
+        "label": "Studio view"
+      }
+    ],
+    "navy": [
+      {
+        "src": "/studio-colours-v1/product-09-navy-primary",
+        "label": "Studio view"
+      }
+    ]
+  },
+  "product-10": {
+    "cognac": [
+      {
+        "src": "/studio-colours-v1/product-10-cognac-primary",
+        "label": "Studio view"
+      }
+    ],
+    "black": [
+      {
+        "src": "/studio-colours-v1/product-10-black-primary",
+        "label": "Studio view"
+      }
+    ],
+    "navy": [
+      {
+        "src": "/studio-colours-v1/product-10-navy-primary",
+        "label": "Studio view"
+      }
+    ],
+    "burgundy": [
+      {
+        "src": "/studio-colours-v1/product-10-burgundy-primary",
+        "label": "Studio view"
+      }
+    ],
+    "dark-brown": [
+      {
+        "src": "/studio-colours-v1/product-10-dark-brown-primary",
+        "label": "Studio view"
+      }
+    ]
   }
 }
