@@ -1,4 +1,5 @@
 'use client';
+import { ArrowIcon } from '@/components/ArrowIcon';
 import { useState } from 'react';
 import { CATALOGUE } from '@/lib/catalogue';
 import { AnimatedProductGrid } from './AnimatedProductGrid';
@@ -15,6 +16,6 @@ export function CollectionBrowser({initialCategory='All bags'}:{initialCategory?
     </div>
     <p className="v-result-count" role="status">{pieces.length} {pieces.length === 1 ? 'style' : 'styles'}</p>
     <AnimatedProductGrid pieces={pieces} />
-    {!pieces.length && <div className="v-empty"><h2>No bags found.</h2><p>Try another shape or colour.</p><button className="v-text-link" onClick={() => { setQuery(''); setCategory('All bags'); }}>Clear filters ↗</button></div>}
+    {!pieces.length && <div className="v-empty"><h2>No bags found.</h2><p>Try another shape or colour.</p><button className="v-text-link" onClick={() => { setQuery(''); setCategory('All bags'); }}>Clear filters <ArrowIcon direction="up-right" /></button></div>}
   </>;
 }

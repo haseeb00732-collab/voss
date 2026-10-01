@@ -1,5 +1,6 @@
 'use client';
 
+import { ArrowIcon } from '@/components/ArrowIcon';
 import Link from 'next/link';
 import { useId, useRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
@@ -53,7 +54,7 @@ export function TextureStudy() {
               const next = event.key === 'ArrowRight' ? (i + 1) % studies.length : event.key === 'ArrowLeft' ? (i + studies.length - 1) % studies.length : event.key === 'Home' ? 0 : event.key === 'End' ? studies.length - 1 : null;
               if (next !== null) { event.preventDefault(); setActive(next); document.getElementById(`${id}-tab-${next}`)?.focus(); }
             }}>{item.label}</button>)}</div>
-        <div className="v-study-text" key={study.slug}><span className="v-study-number">0{active + 1} / 0{studies.length}</span><div className="v-study-macro" aria-hidden="true"><img src={coverImage(piece)} alt="" width="1122" height="1402" loading="lazy"/></div><h3>{study.word}</h3><h4>{study.line}</h4><p>{study.copy}</p><Link className="v-text-link" href={`/collection/${piece.slug}`}>Explore {piece.name} ↗</Link></div>
+        <div className="v-study-text" key={study.slug}><span className="v-study-number">0{active + 1} / 0{studies.length}</span><div className="v-study-macro" aria-hidden="true"><img src={coverImage(piece)} alt="" width="1122" height="1402" loading="lazy"/></div><h3>{study.word}</h3><h4>{study.line}</h4><p>{study.copy}</p><Link className="v-text-link" href={`/collection/${piece.slug}`}>Explore {piece.name} <ArrowIcon direction="up-right" /></Link></div>
         <p className="v-study-footnote">The same photograph. A different perspective.</p>
       </div>
     </div>

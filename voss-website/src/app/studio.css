@@ -225,6 +225,8 @@ body:has(.v-compare-dialog[open]){overflow:hidden}
 @media(hover:hover) and (pointer:fine){.v-product-stage:hover .v-quick-trigger,.v-product-stage:focus-within .v-quick-trigger{transform:none}.is-detail-view .v-product-stage:hover .v-product-float img{transform:scale(1.7)}}
 @media(prefers-reduced-motion:reduce){.v-instagram-tile:hover img{transform:scale(1.45)}}
 /* A tailored black masthead. */
+.v-instagram-alternative{margin-top:24px;font-size:12px}.v-instagram-alternative>summary{cursor:pointer;padding:12px 0}
+.v-delivery-offer{display:flex;justify-content:center;gap:30px;background:#151511;color:#c4a366;padding:15px var(--v-page);font-size:12px;text-align:center}.v-delivery-offer span+span{color:#ded8ca}@media(max-width:760px){.v-delivery-offer{flex-direction:column;gap:5px;font-size:11px}}
 .voss-site .v-header{background:var(--v-black);border-bottom-color:var(--v-dark-line)}
 .voss-site .v-header.is-scrolled{border-radius:2px;border-color:var(--v-dark-line);box-shadow:0 7px 22px rgb(0 0 0 / .12)}
 .v-header-progress{height:1px;opacity:.65}

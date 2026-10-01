@@ -1,0 +1,7 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { issueSession,validSession,requireOwner,ownerCookie } from '../src/lib/server/owner-auth';
+import { GET as orders } from '../src/app/api/orders/route';
+import { GET as insights } from '../src/app/api/insights/route';
+import { engagement,count,socialInsights } from '../src/lib/server/social';
+async function main(){process.env.VOSS_OWNER_KEY_HASH=createHash('sha256').update('test-only').digest('hex');process.env.VOSS_OWNER_SESSION_SECRET='x'.repeat(96);const token=issueSession();assert(validSession(token));assert(!validSession(token+'x'));assert(!validSession(token,Date.now()+9*3600000));assert(ownerCookie(token).includes('HttpOnly; SameSite=Strict'));assert.throws(()=>requireOwner(new Request('http://localhost:3001/api/orders')));assert.equal((await orders(new Request('http://localhost:3001/api/orders'))).status,401);assert.equal((await insights(new Request('http://localhost:3001/api/insights'))).status,401);delete process.env.META_PAGE_ACCESS_TOKEN;const social=await socialInsights();assert.equal(social.connected,false);assert.equal(social.posts.length,0);assert.equal(engagement(10,2,3,5,100),20);assert.equal(engagement(10,2,null,5,100),null);assert.equal(engagement(1,1,1,1,0),null);assert.equal(count(undefined),null);assert.equal(count(0),0);console.log('PASS: private owner access, expiry/tampering, protected orders/metrics, honest missing-data state and engagement formula.');}main().catch(e=>{console.error(e);process.exitCode=1;});

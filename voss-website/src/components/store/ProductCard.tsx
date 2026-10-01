@@ -1,5 +1,6 @@
 'use client';
 
+import { ArrowIcon } from '@/components/ArrowIcon';
 import Link from 'next/link';
 import { useId, useRef, useState } from 'react';
 import { Piece, coverImage, coverSrcSet, colourwayImage, colourwaySrcSet, priceLabel } from '@/lib/catalogue';
@@ -49,7 +50,7 @@ export function ProductCard({ piece, priority = false }: { piece: Piece; priorit
         </div>
       </Link>
       <button className="v-quick-trigger" onClick={() => show()} aria-label={`Quick look at ${piece.name}`}>
-        <span>Quick look</span><span aria-hidden="true">↗</span>
+        <span>Quick look</span><span aria-hidden="true"><ArrowIcon direction="up-right" /></span>
       </button>
     </div>
     <div className="v-card-meta">
@@ -88,11 +89,11 @@ export function ProductCard({ piece, priority = false }: { piece: Piece; priorit
               <span style={{ backgroundColor: c.hex }} />
             </button>)}</div>
           </fieldset>
-          <button className="v-button" onClick={add}>{added ? 'Added to your bag ✓' : 'Add to bag'} <span aria-hidden="true">↗</span></button>
+          <button className="v-button" onClick={add}>{added ? 'Added to your bag ✓' : 'Add to bag'} <span aria-hidden="true"><ArrowIcon direction="up-right" /></span></button>
           <p className="v-quick-status" role="status">{storageError || (added ? `${colour.name} added. Your selection is saved.` : 'Select your colour. Confirm availability with VOSS.')}</p>
           <InstagramOrder key={colour.key} piece={piece} colour={colour}/>
           <Link className="v-text-link" href={added ? '/bag' : `/collection/${piece.slug}`} onClick={() => dialog.current?.close()}>
-            {added ? 'Review bag & order' : 'View all details'} ↗
+            {added ? 'Review bag & order' : 'View all details'} <ArrowIcon direction="up-right" />
           </Link>
         </div>
       </div>}

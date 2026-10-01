@@ -1,3 +1,4 @@
+import { ArrowIcon } from '@/components/ArrowIcon';
 import type {Metadata} from 'next';
 import Link from 'next/link';
 export const metadata:Metadata={title:'Our Point of View',description:'The VOSS point of view: considered handbag shapes, clear photographs and prices you can see before you choose.'};
@@ -9,7 +10,7 @@ export default function About(){
     </section>
     <section className="v-about-story v-about-story-text">
       <div><span className="v-kicker">The details, in view</span><h2>Less guesswork.<br/>More good form.</h2></div>
-      <div><p>A price should be easy to find. Colours should be easy to compare. And a product photograph should help you understand the bag, from its outline to its smaller details.</p><p>Our collection brings those things together. When you need more information, speak to VOSS before you order. We want you to choose with a clear picture.</p><Link href="/collection" className="v-text-link">Explore the collection ↗</Link></div>
+      <div><p>A price should be easy to find. Colours should be easy to compare. And a product photograph should help you understand the bag, from its outline to its smaller details.</p><p>Our collection brings those things together. When you need more information, speak to VOSS before you order. We want you to choose with a clear picture.</p><Link href="/collection" className="v-text-link">Explore the collection <ArrowIcon direction="up-right" /></Link></div>
     </section>
   </main>;
 }

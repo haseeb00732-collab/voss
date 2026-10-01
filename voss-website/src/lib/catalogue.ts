@@ -12,7 +12,7 @@ const specs = [
   ['textured-dome-satchel','Textured Dome Satchel',4049,'Top handle','black','black,brown,tan,beige-natural,navy','A softly rounded top, long handles and a finely textured finish.','An understated shape with detail up close. The rounded top and long handles give this satchel a clean profile, with pointed handle tabs and a small front plaque.'],
   ['arc-handle-bag-set','Arc Handle Bag Set',3399,'Bag sets','beige','blue,black,grey,beige','A coordinated trio, led by a tote with a distinctive curved metal handle.','One colour story across three shapes. A curved-handle tote sits alongside a smaller zip bag and a flap purse. Compare the photographs of each colour: finishes and details can differ.'],
   ['two-tone-bag-set','Two Tone Bag Set',3749,'Totes','cream-brown','grey-black,cream-black,tan-black,burgundy-black,cream-brown','Contrasting panels connect a tote, a smaller zip bag and a rounded pouch.','Light against dark. This three-piece set brings together contrasting panels, a smaller bag with tassel details and a curved pouch. Choose the combination that works with your wardrobe.'],
-  ['tassel-tote','Tassel Tote',3100,'Totes','cognac','green,cognac,burgundy,dark-brown,black,navy','A tapered tote with long handles, curved side seams and a hanging tassel.','A simple shape with a little movement. Long rounded handles frame the tapered body, while curved seams and a small tassel add detail. Choose from six colours and explore the studio photograph of each.'],
+  ['tassel-tote','Tassel Tote',3100,'Totes','black','green,cognac,burgundy,dark-brown,black,navy','A tapered tote with long handles, curved side seams and a hanging tassel.','A simple shape with a little movement. Long rounded handles frame the tapered body, while curved seams and a small tassel add detail. Choose from six colours and explore the studio photograph of each.'],
   ['structured-trio-bag-set','Structured Trio Bag Set',3400,'Bag sets','cognac','black,navy,burgundy,dark-brown,cognac','A structured top handle bag, zipped pouch and gold-bar flap purse in one matching set.','Three matching pieces, each with its own shape. Rounded handle tabs soften the main bag, a zipped pouch sits alongside it, and a slim gold bar finishes the flap purse. Compare five colours before choosing your set.'],
 ] as const;
 export const CATALOGUE: Piece[] = specs.map((s, i) => {
@@ -21,13 +21,13 @@ export const CATALOGUE: Piece[] = specs.map((s, i) => {
 });
 export type StudioPhoto = { src: string; label: string };
 const assets = media as Record<string, Record<string, StudioPhoto[]>>;
-export const coverImage = (p: Piece) => `/studio-cutouts/${p.dir}-960.webp`;
-export const coverSrcSet = (p: Piece) => [480,960,1122].map(w => `/studio-cutouts/${p.dir}-${w}.webp ${w}w`).join(', ');
+export const coverImage = (p: Piece) => studioPhotos(p, p.colourways.find(c => c.key === p.coverColour)!)[0].src;
+export const coverSrcSet = (p: Piece) => studioPhotoSrcSet(studioPhotos(p, p.colourways.find(c => c.key === p.coverColour)!)[0]);
 export const studioPhotos = (p: Piece, c: Colourway) => assets[p.dir][c.key];
-export const studioPhotoSrcSet = (photo: StudioPhoto) => [480,960].map(w => `${photo.src}-${w}.webp ${w}w`).join(', ');
-export const colourwayImage = (p: Piece, c: Colourway) => `${studioPhotos(p,c)[0].src}-960.webp`;
+export const studioPhotoSrcSet = (photo: StudioPhoto) => [480,960].map(w => `${photo.src.replace('-960.webp', `-${w}.webp`)} ${w}w`).join(', ');
+export const colourwayImage = (p: Piece, c: Colourway) => studioPhotos(p,c)[0].src;
 export const colourwaySrcSet = (p: Piece, c: Colourway) => studioPhotoSrcSet(studioPhotos(p,c)[0]);
-export const referenceImages = (p: Piece, c: Colourway) => studioPhotos(p,c).map(photo => `${photo.src}-960.webp`);
+export const referenceImages = (p: Piece, c: Colourway) => studioPhotos(p,c).map(photo => photo.src);
 export const hdImage = (p: Piece, n: number) => colourwayImage(p, p.colourways[n - 1] ?? p.colourways[0]);
 export const hdSrcSet = (p: Piece, n: number) => colourwaySrcSet(p, p.colourways[n - 1] ?? p.colourways[0]);
 export const pieceImages = (p: Piece) => p.colourways.map(c => colourwayImage(p,c));

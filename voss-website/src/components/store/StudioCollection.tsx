@@ -1,5 +1,6 @@
 'use client';
 
+import { ArrowIcon } from '@/components/ArrowIcon';
 import Link from 'next/link';
 import { useState } from 'react';
 import { CATALOGUE } from '@/lib/catalogue';
@@ -22,6 +23,6 @@ export function StudioCollection() {
       <div className="v-view-controls" aria-label="Product photograph view"><button aria-pressed={!detail} onClick={()=>setDetail(false)}>Full view</button><button aria-pressed={detail} onClick={()=>setDetail(true)}>Detail view</button><span className="v-studio-count" role="status">{String(pieces.length).padStart(2, '0')} bags</span></div>
     </div>
     <AnimatedProductGrid pieces={pieces} priority />
-    <div className="v-section-end"><span>Tap a colour. Take a closer look.</span><Link className="v-text-link" href="/collection">Explore all bags ↗</Link></div>
+    <div className="v-section-end"><span>Tap a colour. Take a closer look.</span><Link className="v-text-link" href="/collection">Explore all bags <ArrowIcon direction="up-right" /></Link></div>
   </section>;
 }

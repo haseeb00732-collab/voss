@@ -1,4 +1,5 @@
 'use client';
+import { ArrowIcon } from '@/components/ArrowIcon';
 import Link from 'next/link';
 import {useRef,useState} from 'react';
 import {CATALOGUE,coverImage,priceLabel} from '@/lib/catalogue';
@@ -16,7 +17,7 @@ export function HeaderSearch(){
         <p role="status">{query.trim()?`${pieces.length} ${pieces.length===1?'match':'matches'}`:'Explore the collection'}</p>
         <div className="v-search-results">{pieces.map(piece=><Link href={`/collection/${piece.slug}`} key={piece.slug} onClick={()=>dialog.current?.close()}><img src={coverImage(piece)} width="1122" height="1402" alt="" loading="lazy"/><span>{piece.name}</span><small>{priceLabel(piece.price)}</small></Link>)}</div>
         {!pieces.length&&<div className="v-search-empty"><p>No bags found. Try “tote”, “black” or “quilted”.</p><button onClick={()=>{setQuery('');input.current?.focus();}}>Clear search</button></div>}
-        <Link className="v-text-link" href="/collection" onClick={()=>dialog.current?.close()}>View all handbags ↗</Link>
+        <Link className="v-text-link" href="/collection" onClick={()=>dialog.current?.close()}>View all handbags <ArrowIcon direction="up-right" /></Link>
       </div>
     </dialog>
   </>;

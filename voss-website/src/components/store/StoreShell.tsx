@@ -1,5 +1,6 @@
 'use client';
 
+import { ArrowIcon } from '@/components/ArrowIcon';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { createContext, useContext, useEffect, useRef, useState, useSyncExternalStore } from 'react';
@@ -62,13 +63,13 @@ export function StoreShell({children}: {children: React.ReactNode}) {
       <dialog ref={menu} className="v-menu" onClick={e=>{if(e.target === e.currentTarget) menu.current?.close();}}>
         <div className="v-menu-inner"><div className="v-menu-top"><span className="v-kicker">The VOSS edit</span><button onClick={()=>menu.current?.close()} aria-label="Close menu">Close ×</button></div>
           <nav aria-label="Main navigation"><Link href="/collection" onClick={()=>menu.current?.close()}>The collection <span>01</span></Link><Link href="/about" onClick={()=>menu.current?.close()}>Our point of view <span>02</span></Link><Link href="/help" onClick={()=>menu.current?.close()}>Here to help <span>03</span></Link><Link href="/bag" onClick={()=>menu.current?.close()}>Your bag <span>04</span></Link></nav>
-          <p>Considered shapes. A closer look.</p><a href={igProfile()} target="_blank" rel="noreferrer">@{IG_HANDLE} ↗</a>
+          <p>Considered shapes. A closer look.</p><a href={igProfile()} target="_blank" rel="noreferrer">@{IG_HANDLE} <ArrowIcon direction="up-right" /></a>
         </div>
       </dialog>
       {children}
       {comparison.length > 0 && <aside className="v-compare-tray" aria-label="Selected bags for comparison">
         <span role="status">{comparison.length} / 2 selected</span>
-        <button disabled={comparison.length < 2} onClick={() => comparisonDialog.current?.showModal()}>{comparison.length < 2 ? 'Choose one more bag' : 'Compare bags ↗'}</button>
+        <button disabled={comparison.length < 2} onClick={() => comparisonDialog.current?.showModal()}>{comparison.length < 2 ? 'Choose one more bag' : <>{"Compare bags "}<ArrowIcon direction="up-right" /></>}</button>
         <button aria-label="Clear comparison" onClick={() => setComparison([])}>×</button>
       </aside>}
       <dialog ref={comparisonDialog} className="v-compare-dialog" aria-labelledby="v-compare-title" onClick={event => { if (event.target === event.currentTarget) comparisonDialog.current?.close(); }}>
@@ -79,14 +80,14 @@ export function StoreShell({children}: {children: React.ReactNode}) {
             <img src={coverImage(piece)} width="1122" height="1402" alt={piece.name} />
             <h3>{piece.name}</h3>
             <dl><div><dt>Price</dt><dd>{priceLabel(piece.price)}</dd></div><div><dt>Shape</dt><dd>{piece.silhouette}</dd></div><div><dt>Colours</dt><dd>{piece.colourways.length} options</dd></div></dl>
-            <Link href={`/collection/${piece.slug}`} className="v-text-link" onClick={() => comparisonDialog.current?.close()}>Explore this bag ↗</Link>
+            <Link href={`/collection/${piece.slug}`} className="v-text-link" onClick={() => comparisonDialog.current?.close()}>Explore this bag <ArrowIcon direction="up-right" /></Link>
           </article>; })}</div>
         </div>
       </dialog>
       <footer className="v-footer">
-        <div className="v-footer-intro"><span className="v-kicker">A considered way to carry.</span><p>Good form.<br/>Every day.</p><Link className="v-text-link" href="/collection">Find your VOSS <span>↗</span></Link></div>
-        <div className="v-footer-links"><div><span className="v-kicker">Explore</span><Link href="/collection">The collection</Link><Link href="/about">About VOSS</Link><Link href="/bag">Your bag</Link></div><div><span className="v-kicker">Client care</span><Link href="/help">Ordering & delivery</Link><Link href="/help#exchanges">Exchanges</Link><Link href="/help#care">Bag care</Link><a href={igDirectMessage() ?? igProfile()} target="_blank" rel="noreferrer">Contact on Instagram ↗</a></div></div>
-        <div className="v-footer-wordmark" aria-hidden="true">VOSS</div><div className="v-footer-base"><span>© {new Date().getFullYear()} VOSS</span><span>Pakistan · Prices in PKR</span><a href={igProfile()} target="_blank" rel="noreferrer">Instagram ↗</a></div>
+        <div className="v-footer-intro"><span className="v-kicker">A considered way to carry.</span><p>Good form.<br/>Every day.</p><Link className="v-text-link" href="/collection">Find your VOSS <span><ArrowIcon direction="up-right" /></span></Link></div>
+        <div className="v-footer-links"><div><span className="v-kicker">Explore</span><Link href="/collection">The collection</Link><Link href="/about">About VOSS</Link><Link href="/bag">Your bag</Link></div><div><span className="v-kicker">Client care</span><Link href="/help">Ordering & delivery</Link><Link href="/help#exchanges">Exchanges</Link><Link href="/help#care">Bag care</Link><a href={igDirectMessage() ?? igProfile()} target="_blank" rel="noreferrer">Contact on Instagram <ArrowIcon direction="up-right" /></a></div></div>
+        <div className="v-footer-wordmark" aria-hidden="true">VOSS</div><div className="v-footer-base"><span>© {new Date().getFullYear()} VOSS</span><span>Pakistan · Prices in PKR</span><a href={igProfile()} target="_blank" rel="noreferrer">Instagram <ArrowIcon direction="up-right" /></a></div>
       </footer>
     </div>
   </BagContext.Provider>;
@@ -94,7 +95,7 @@ export function StoreShell({children}: {children: React.ReactNode}) {
 
 export function OrderSummary({text}: {text:string}) {
   const [state,setState] = useState<'idle'|'copied'|'manual'>('idle');
-  return <div className="v-order-summary"><p>Copy your selection, then send it to VOSS on Instagram. We’ll confirm availability and delivery before your order is placed.</p><button className="v-button" onClick={async()=>{try { await navigator.clipboard.writeText(text); setState('copied'); } catch {setState('manual');}}}>{state === 'copied' ? 'Selection copied ✓' : '1. Copy order details'}</button><a className="v-button v-button-outline" href={igDirectMessage() ?? igProfile()} target="_blank" rel="noreferrer">2. Open Instagram ↗</a><p role="status">{state === 'copied' ? 'Ready to paste into your message to VOSS.' : state === 'manual' ? 'Copy the details below manually, then open Instagram.' : 'Your order is confirmed in conversation with VOSS.'}</p><details open={state === 'manual'}><summary>View your order details</summary><textarea aria-label="Order details to copy" readOnly value={text} onFocus={e=>e.target.select()}/></details></div>;
+  return <div className="v-order-summary"><p>Copy your selection, then send it to VOSS on Instagram. We’ll confirm availability and delivery before your order is placed.</p><button className="v-button" onClick={async()=>{try { await navigator.clipboard.writeText(text); setState('copied'); } catch {setState('manual');}}}>{state === 'copied' ? 'Selection copied ✓' : '1. Copy order details'}</button><a className="v-button v-button-outline" href={igDirectMessage() ?? igProfile()} target="_blank" rel="noreferrer">2. Open Instagram <ArrowIcon direction="up-right" /></a><p role="status">{state === 'copied' ? 'Ready to paste into your message to VOSS.' : state === 'manual' ? 'Copy the details below manually, then open Instagram.' : 'Your order is confirmed in conversation with VOSS.'}</p><details open={state === 'manual'}><summary>View your order details</summary><textarea aria-label="Order details to copy" readOnly value={text} onFocus={e=>e.target.select()}/></details></div>;
 }
 
 export function bagMessage(items: BagItem[]) {
