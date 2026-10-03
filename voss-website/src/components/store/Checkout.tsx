@@ -20,26 +20,29 @@ export function Checkout() {
   const [step, setStep] = useState<1 | 2>(1);
   const [customer, setCustomer] = useState<Record<string, string>>({});
   const stepHeading = useRef<HTMLHeadingElement>(null);
-  const key = useRef('');
+  const attempt = useRef<{ hash: string; key: string } | null>(null);
+  const submitting = useRef(false);
   const signature = JSON.stringify(items);
   const quote = priced?.signature === signature ? priced.quote : null;
   const errorBox = useRef<HTMLParagraphElement>(null);
   useEffect(() => { if (step === 2) { stepHeading.current?.focus(); stepHeading.current?.scrollIntoView({ block: 'start', behavior: 'instant' }); } }, [step]);
   useEffect(() => {
     const controller = new AbortController();
-    fetch('/api/checkout', { signal: controller.signal, cache: 'no-store' }).then(r => r.json()).then(setConfig).catch(e => { if (e.name !== 'AbortError') setConfig({ enabled: false, provinces: [] }); });
-    return () => controller.abort();
+    const timer = setTimeout(() => controller.abort(new DOMException('Checkout took too long to load.', 'TimeoutError')), 15000);
+    fetch('/api/checkout', { signal: controller.signal, cache: 'no-store' }).then(async r => { if (!r.ok) throw new Error('Could not load checkout.'); return r.json(); }).then(setConfig).catch(e => { if (e.name !== 'AbortError') setConfig({ enabled: false, provinces: [] }); }).finally(() => clearTimeout(timer));
+    return () => { clearTimeout(timer); controller.abort(); };
   }, []);
   useEffect(() => {
     if ((!config?.enabled && !config?.preview) || signature === '[]' || receipt) return;
     const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(new DOMException('Checking your total took too long. Please try again.', 'TimeoutError')), 15000);
     fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: JSON.parse(signature) }), signal: controller.signal }).then(async r => {
       const data = await r.json(); if (!r.ok) throw new Error(data.error); return data;
-    }).then(data => { setPriced({ signature, quote: data }); }).catch(e => { if (e.name !== 'AbortError') { setPriced(null); setError(e.message || 'Could not check your total. Please try again.'); } });
-    return () => controller.abort();
+    }).then(data => { setPriced({ signature, quote: data }); setError(''); }).catch(e => { if (e.name !== 'AbortError') { setPriced(null); setError(e.message || 'Could not check your total. Please try again.'); } }).finally(() => clearTimeout(timer));
+    return () => { clearTimeout(timer); controller.abort(); };
   }, [signature, config, revision, receipt]);
   async function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault(); if (busy || !quote) return;
+    event.preventDefault(); if (submitting.current || busy || !quote) return;
     const form = new FormData(event.currentTarget);
     if (step === 1) {
       const details = Object.fromEntries(['name', 'phone', 'email', 'address', 'city', 'province', 'postcode', 'notes'].map(name => [name, String(form.get(name) ?? '').trim()]));
@@ -48,19 +51,24 @@ export function Checkout() {
     }
     if (!config?.enabled) return;
     const payload = { items, customer, expectedTotal: quote.total, payment: 'cod', consent: form.get('consent') === 'on' };
-    // Persist only the retry key and a hash, never the address or phone.
-    const hash = [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(JSON.stringify(payload))))].map(b => b.toString(16).padStart(2, '0')).join('');
-    try { const old = JSON.parse(sessionStorage.getItem('voss-checkout-attempt') || 'null'); key.current = old?.hash === hash ? old.key : crypto.randomUUID(); sessionStorage.setItem('voss-checkout-attempt', JSON.stringify({ hash, key: key.current })); } catch { key.current ||= crypto.randomUUID(); }
+    submitting.current = true;
     setBusy(true); setError('');
     try {
-      const response = await fetch('/api/orders', { signal: AbortSignal.timeout(20000), method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...payload, idempotencyKey: key.current }) });
+      // Keep the same retry key for the same order, including when browser storage is blocked.
+      // Save only a hash and key; never persist a customer's contact/address in browser storage.
+      const hash = [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(JSON.stringify(payload))))].map(b => b.toString(16).padStart(2, '0')).join('');
+      let old = attempt.current;
+      try { old = JSON.parse(sessionStorage.getItem('voss-checkout-attempt') || 'null') ?? old; } catch {}
+      attempt.current = old?.hash === hash && /^[0-9a-f-]{36}$/i.test(old.key) ? old : { hash, key: crypto.randomUUID() };
+      try { sessionStorage.setItem('voss-checkout-attempt', JSON.stringify(attempt.current)); } catch {}
+      const response = await fetch('/api/orders', { signal: AbortSignal.timeout(20000), method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...payload, idempotencyKey: attempt.current.key }) });
       const data = await response.json();
       if (!response.ok) { if (response.status === 409) setRevision(n => n + 1); throw new Error(data.error); }
       setReceipt(data); save([]);
       try { sessionStorage.removeItem('voss-checkout-attempt'); } catch {}
       window.scrollTo({ top: 0, behavior: 'instant' });
-    } catch (e) { setError(e instanceof Error ? e.message : 'Your order could not be submitted. Please retry.'); requestAnimationFrame(() => errorBox.current?.focus()); }
-    finally { setBusy(false); }
+    } catch (e) { setError(e instanceof Error && (e.name === 'TimeoutError' || e.name === 'AbortError' || e.name === 'TypeError') ? 'We could not confirm the response. Your bag is saved. Retry the same order to check safely without creating a duplicate.' : e instanceof Error ? e.message : 'Your order could not be submitted. Please retry.'); requestAnimationFrame(() => errorBox.current?.focus()); }
+    finally { submitting.current = false; setBusy(false); }
   }
   if (receipt) return <section className="v-order-received" aria-live="polite"><span className="v-kicker">Thank you for choosing VOSS</span><h2>Your order is in.</h2><p>Keep this reference: <strong>{receipt.reference}</strong></p><p>Pay <strong>{priceLabel(receipt.total)}</strong> on delivery. {receipt.freeDelivery ? 'Your delivery is free.' : `Delivery: ${priceLabel(receipt.delivery)}.`}</p><p>Delivery in 3–8 days.</p><p>VOSS will contact you on the mobile number provided to confirm your order and arrange delivery.</p><a className="v-button" href={whatsappLink(`Hi VOSS, I placed order ${receipt.reference}. Total: ${priceLabel(receipt.total)}. Please confirm my order.`)} target="_blank" rel="noreferrer">Share order reference on WhatsApp <ArrowIcon direction="up-right" /></a><p>Your order is already saved. WhatsApp opens a draft; tap Send to share it with VOSS.</p><Link className="v-text-link" href="/collection">Back to the collection <ArrowIcon direction="up-right" /></Link></section>;
   if (!items.length) return <div className="v-empty"><h2>Choose your first bag.</h2><Link className="v-button" href="/collection">Explore the collection <ArrowIcon direction="up-right" /></Link></div>;
@@ -79,14 +87,14 @@ export function Checkout() {
         <label className="v-field-wide">Delivery note <span>(optional)</span><textarea name="notes" maxLength={400} rows={2} /></label>
       </div></fieldset>
       {step === 2 && <><section className="v-delivery-review"><div><span className="v-kicker">Deliver to</span><button type="button" onClick={() => setStep(1)} disabled={busy}>Edit details <ArrowIcon direction="up-right" /></button></div><h3>{customer.name}</h3><p>{customer.address}<br />{customer.city}, {customer.province} {customer.postcode}</p><p>{customer.phone}{customer.email && <><br />{customer.email}</>}</p>{customer.notes && <p>Delivery note: {customer.notes}</p>}</section><div className="v-checkout-step"><span className="v-kicker">Payment</span><h2>Cash on delivery.</h2><p>Pay the order total when your parcel arrives. Delivery in 3–8 days.</p></div></>}
-      <p className="v-checkout-privacy">Your contact and address details are used to process your order, contact you and arrange delivery.</p>
+      <p className="v-checkout-privacy">Your contact and address details are used to process your order, contact you and arrange delivery. Read our <Link href="/privacy" target="_blank">privacy notice</Link> and <Link href="/returns" target="_blank">returns information</Link>.</p>
     </div>
     <aside className="v-checkout-summary"><span className="v-kicker">Your selection</span><Link className="v-checkout-edit" href="/bag">Edit bag <ArrowIcon direction="up-right" /></Link>
       {!quote ? <p role="status">Checking prices and delivery…</p> : <><div className="v-checkout-lines">{quote.items.map(line => <article key={`${line.slug}-${line.colour}`}><img src={line.image} alt={`${line.name} in ${line.colourName}`} width="88" height="110" /><div><h3>{line.name}</h3><p>{line.colourName} · Qty {line.quantity}</p><strong>{priceLabel(line.unitPrice * line.quantity)}</strong></div></article>)}</div>
       {quote.freeDelivery && <p className="v-checkout-offer">A little welcome from VOSS.<br /><strong>Free delivery on the first 30 website orders.</strong><small>Confirmed when your order is placed.</small></p>}
       <dl><div><dt>Subtotal</dt><dd>{priceLabel(quote.subtotal)}</dd></div><div><dt>Delivery</dt><dd>{quote.delivery === 0 ? 'Complimentary' : priceLabel(quote.delivery)}</dd></div><div className="v-checkout-total"><dt>Total <small>PKR</small></dt><dd>{priceLabel(quote.total)}</dd></div></dl>
-      {step === 2 && <label className="v-checkout-consent"><input type="checkbox" name="consent" required disabled={busy} />My selection, delivery details and total are correct.</label>}</>}
-      {error && <p role="alert" tabIndex={-1} ref={errorBox} className="v-checkout-error">{error}</p>}
+      {step === 2 && <label className="v-checkout-consent"><input type="checkbox" name="consent" required disabled={busy} /><span>My selection, delivery details and total are correct. I agree to the <Link href="/terms" target="_blank">terms & conditions</Link> and have read the <Link href="/returns" target="_blank">returns information</Link>.</span></label>}</>}
+      {error && <><p role="alert" tabIndex={-1} ref={errorBox} className="v-checkout-error">{error}</p>{!quote && <button type="button" className="v-text-link" onClick={() => { setError(''); setRevision(n => n + 1); }}>Check my total again <ArrowIcon direction="refresh" /></button>}</>}
       {step === 2 && !config.enabled && <p id="checkout-preview-reason" className="v-checkout-preview" role="status"><strong>Preview only — no order has been placed.</strong><br />Website ordering is not active yet. Your delivery details have not been submitted.</p>}
       <button className="v-button" aria-busy={busy} aria-describedby={step === 2 && !config.enabled ? 'checkout-preview-reason' : undefined} disabled={busy || !quote || (step === 2 && !config.enabled)} type="submit">{step === 1 ? 'Review my order' : !config.enabled ? 'Ordering not active yet' : busy ? 'Placing your order…' : 'Order now'} <span><ArrowIcon direction="up-right" /></span></button>
       {step === 2 && !config.enabled && <><a className="v-text-link" href={whatsappLink(`${bagMessage(items)}\n\nDelivery details:\n${customer.name}\n${customer.phone}\n${customer.address}\n${customer.city}, ${customer.province} ${customer.postcode || ''}${customer.notes ? `\nNote: ${customer.notes}` : ''}`)} target="_blank" rel="noreferrer">Send order request on WhatsApp <ArrowIcon direction="up-right" /></a><p className="v-checkout-note">Opens a draft with your selection and delivery details. Tap Send in WhatsApp. VOSS will confirm the request; it is not yet a website order.</p></>}

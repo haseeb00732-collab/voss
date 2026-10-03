@@ -1,0 +1,12 @@
+import type { Metadata } from 'next';
+import { PolicyPage } from '@/components/store/PolicyPage';
+export const metadata: Metadata = { title: 'Privacy Notice', description: 'How VOSS uses customer details, order information and browser storage.' };
+export default function Privacy() {
+  return <PolicyPage title="Your privacy." intro="The information we need, and what we use it for.">
+    <section><h2>Information you provide</h2><p>When you submit an order, we collect your name, mobile number, delivery address, city and province, along with your selected items, quantities and total. Email, postal code and delivery notes are optional. Messages you send our support accounts also contain any information you choose to share.</p></section>
+    <section><h2>How we use it</h2><p>We use order details to confirm availability, contact you about your purchase, arrange delivery, handle support requests and maintain order records. We also use technical information to operate the site and prevent abuse. Providing a phone number for an order does not sign you up for promotional messages.</p></section>
+    <section><h2>Storage and service providers</h2><p>Submitted website orders are stored in our private order database and are available to authorised VOSS staff. Hosting and database providers process data needed to run the store. Delivery partners receive the contact, address and parcel information needed to deliver your order and collect the cash-on-delivery amount.</p><p>We retain records for fulfilment, support and applicable record-keeping requirements. Contact us to ask about your data, correct it or request deletion. Some information may need to be retained to complete an order or meet a legal obligation.</p></section>
+    <section><h2>Your browser and external services</h2><p>Your bag is saved in this browser so it remains available when you return. Checkout uses a temporary retry identifier to help prevent duplicate orders; it does not store your address or phone in that identifier. Clearing site storage removes your saved bag.</p><p>Our hosting and security services may process technical request information such as IP addresses. If you choose WhatsApp, Instagram or Facebook, the information you send is also handled by that service under its own privacy terms. A prepared WhatsApp message is sent only when you press Send.</p></section>
+    <section><h2>Payment details</h2><p>Orders use cash on delivery. This site does not request or store payment card numbers.</p></section>
+  </PolicyPage>;
+}

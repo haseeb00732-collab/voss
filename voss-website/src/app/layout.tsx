@@ -4,6 +4,7 @@ import { StoreShell } from '@/components/store/StoreShell';
 import './globals.css';
 import './studio.css';
 import './header.css';
+import './policies.css';
 
 const jost=localFont({src:'./fonts/Jost-subset.woff2',variable:'--font-jost',display:'swap',weight:'100 900'});
 const site=process.env.NEXT_PUBLIC_SITE_URL;

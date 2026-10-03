@@ -87,7 +87,7 @@ export function StoreShell({children}: {children: React.ReactNode}) {
       <footer className="v-footer">
         <div className="v-footer-intro"><span className="v-kicker">A considered way to carry.</span><p>Good form.<br/>Every day.</p><Link className="v-text-link" href="/collection">Find your VOSS <span><ArrowIcon direction="up-right" /></span></Link></div>
         <div className="v-footer-links"><div><span className="v-kicker">Explore</span><Link href="/collection">The collection</Link><Link href="/about">About VOSS</Link><Link href="/bag">Your bag</Link></div><div><span className="v-kicker">Client care</span><Link href="/help">Ordering & delivery</Link><Link href="/help#exchanges">Exchanges</Link><Link href="/help#care">Bag care</Link><a href={igDirectMessage() ?? igProfile()} target="_blank" rel="noreferrer">Contact on Instagram <ArrowIcon direction="up-right" /></a></div></div>
-        <div className="v-footer-wordmark" aria-hidden="true">VOSS</div><div className="v-footer-base"><span>© {new Date().getFullYear()} VOSS</span><span>Pakistan · Prices in PKR</span><a href={igProfile()} target="_blank" rel="noreferrer">Instagram <ArrowIcon direction="up-right" /></a></div>
+        <div className="v-footer-wordmark" aria-hidden="true">VOSS</div><div className="v-footer-base"><span>© {new Date().getFullYear()} VOSS</span><span className="v-footer-policy-links"><Link href="/terms">Terms</Link><Link href="/privacy">Privacy</Link><Link href="/shipping">Delivery</Link><Link href="/returns">Returns</Link><Link href="/contact">Contact</Link></span><span>Pakistan · Prices in PKR</span></div>
       </footer>
     </div>
   </BagContext.Provider>;
