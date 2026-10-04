@@ -13,15 +13,15 @@
 
 ## Current state
 
-Local database seeded successfully. Local checkout is explicitly a design preview and cannot accept orders. A managed production PostgreSQL connection and owner-confirmed payment/delivery terms have not been supplied. No production checkout is enabled and no real customer orders were submitted during testing.
+Local database seeded successfully. Local checkout is explicitly a design preview and cannot accept orders. A managed production PostgreSQL connection has not been supplied. COD and Lahore-only delivery are confirmed. No production checkout is enabled and no real customer orders were submitted during testing.
 
-Cash on delivery is confirmed by the owner. Delivery takes 3–8 days. Bank transfer/card processing is not configured. The standard delivery fee and Pakistan-wide delivery eligibility must be confirmed before activation. The Rs 250 fee used in automated tests is a test fixture, not a proposed shipping policy.
+Cash on delivery is confirmed by the owner. Delivery takes 3–8 days. Bank transfer/card processing is not configured. Delivery is currently Lahore only. The owner mentioned a standard Rs 150 that depends on the address, but asked to defer later delivery rates. Leave VOSS_DELIVERY_FEE_PKR blank for launch: the server accepts the first 30 free-delivery orders and then requires manual delivery confirmation. Do not assume a fixed Rs 150 for every address. The Rs 250 fee used in automated tests is a test fixture, not a proposed shipping policy.
 
 ## Production activation
 
 1. Create or connect a managed PostgreSQL database (Supabase/Neon/PostgreSQL), using a server-side pooled connection with verified TLS. Put the connection in `DATABASE_URL` in the existing Vercel project. Never use a `NEXT_PUBLIC_` variable for database credentials.
 2. From this directory, run `npm run db:setup` with that database URL securely configured. It creates the tables and seeds the catalogue using existing white image copies. Use the table-owner migration connection; the application role must have the appropriate explicit access if it is a separate role. Tables have RLS enabled and no anonymous access policies.
-3. Set the owner-approved values: `VOSS_PAYMENT_METHOD=cod`, `VOSS_DELIVERY_FEE_PKR=<approved integer>`, `VOSS_DELIVERY_PAKISTAN=true` only if nationwide delivery is confirmed, and `NEXT_PUBLIC_SITE_URL=https://www.voss.pk`.
+3. Set the owner-approved values: `VOSS_PAYMENT_METHOD=cod`, `VOSS_DELIVERY_FEE_PKR=` (blank for the first-30 launch), `VOSS_DELIVERY_CITY=Lahore`, and `NEXT_PUBLIC_SITE_URL=https://www.voss.pk`.
 4. Run a controlled test against a separate staging database. Check order persistence, colour/quantity/total, retry behavior and the free-delivery limit. Automated tests are `npm run test:commerce`; they use an isolated in-memory PostgreSQL engine and never touch production.
 5. Set `VOSS_CHECKOUT_ENABLED=true` only after the above. Deploy through the existing GitHub → Vercel connection. Keep the current Cloudflare DNS routing; bypass caching for `/api/*`, `/checkout*` and `/bag*` if custom cache rules override origin headers. API responses already use `no-store, private`.
 6. Arrange order monitoring/fulfilment before opening checkout. Orders are shown by the separate `voss-business` app and authenticated database console. There is no storefront `/admin` page or admin API. No automatic email/SMS/WhatsApp notification service is connected.
@@ -42,3 +42,7 @@ The earlier interrupted local seed is retained privately in `.data`; it contains
 ## Separate business server
 
 Customer tracking was removed at the owner’s request. The owner app is in the sibling `voss-business` directory with its own server and environment. Local PGlite must not be opened concurrently by both apps; production uses managed PostgreSQL. Cloudflare must bypass caching for `/api/*`, `/checkout*` and `/bag*`.
+
+## Cloud readiness check
+
+After configuring the server-only Supabase transaction pooler connection (verified TLS) and running db:setup, run `npm run db:verify-cloud`. It reads product prices, variant image coverage, RLS, promotion usage and order count without printing customer details or creating orders. This does not replace a controlled end-to-end checkout test. Keep production ordering disabled until the database connection, order monitoring and end-to-end test are verified.

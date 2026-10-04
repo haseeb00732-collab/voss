@@ -9,6 +9,6 @@ export function DeliveryOffer() {
     }).catch(() => {});
     return () => controller.abort();
   }, []);
-  if (!remaining) return null;
-  return <div className="v-delivery-offer"><span>Our first thirty, delivered free.</span><span>Free delivery on the first 30 website orders. Applied at checkout.</span></div>;
+  if (remaining === 0) return <div className="v-delivery-offer"><span>Made for your every day.</span><span>Lahore delivery · 3–8 days · Cash on delivery</span></div>;
+  return <div className="v-delivery-offer"><span>Our first thirty, delivered free.</span><span>Free delivery on the first 30 website orders · Lahore only</span></div>;
 }

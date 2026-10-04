@@ -2,7 +2,7 @@ import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import { database, databaseConfigured, type Database, type DatabaseClient } from './database';
 
 export class CheckoutError extends Error { constructor(message: string, public status = 400) { super(message); } }
-export const PROVINCES = ['Punjab', 'Sindh', 'Khyber Pakhtunkhwa', 'Balochistan', 'Islamabad Capital Territory', 'Azad Jammu and Kashmir', 'Gilgit-Baltistan'];
+export const PROVINCES = ['Punjab'];
 export type CartLine = { slug: string; colour: string; quantity: number };
 export type Customer = { name: string; phone: string; email: string; address: string; city: string; province: string; postcode: string; notes: string };
 export type PricedLine = CartLine & { name: string; colourName: string; image: string; unitPrice: number };
@@ -13,7 +13,7 @@ export function settings() {
   const fee = process.env.VOSS_DELIVERY_FEE_PKR;
   const deliveryFee = fee !== undefined && /^\d+$/.test(fee) ? Number(fee) : null;
   const configured = databaseConfigured() && process.env.VOSS_CHECKOUT_ENABLED === 'true' && process.env.VOSS_PAYMENT_METHOD === 'cod'
-    && deliveryFee !== null && deliveryFee <= 10000 && process.env.VOSS_DELIVERY_PAKISTAN === 'true';
+    && (deliveryFee === null || deliveryFee <= 10000) && process.env.VOSS_DELIVERY_CITY === 'Lahore';
   return { enabled: configured, deliveryFee, payment: 'cod' as const };
 }
 export function cartInput(value: unknown): CartLine[] {
@@ -41,12 +41,13 @@ export function customerInput(value: unknown): Customer {
   const email = field('email', 0, 120);
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new CheckoutError('Please check your email address.');
   const province = field('province', 3, 40);
-  if (!PROVINCES.includes(province)) throw new CheckoutError('Select your province or territory.');
+  const city = field('city', 2, 80);
+  if (city.toLowerCase() !== 'lahore' || province !== 'Punjab') throw new CheckoutError('We currently deliver within Lahore only. Please enter a Lahore delivery address.');
   const postcode = field('postcode', 0, 5);
   if (postcode && !/^\d{5}$/.test(postcode)) throw new CheckoutError('Enter a five-digit postal code or leave it blank.');
-  return { name: field('name', 2, 80), phone, email, address: field('address', 10, 300), city: field('city', 2, 80), province, postcode, notes: field('notes', 0, 400) };
+  return { name: field('name', 2, 80), phone, email, address: field('address', 10, 300), city: 'Lahore', province, postcode, notes: field('notes', 0, 400) };
 }
-async function quoteWith(client: DatabaseClient, cart: CartLine[], deliveryFee: number): Promise<Quote> {
+async function quoteWith(client: DatabaseClient, cart: CartLine[], deliveryFee: number | null): Promise<Quote> {
   const items: PricedLine[] = [];
   for (const line of cart) {
     const { rows } = await client.query<{ name: string; price_pkr: number; colour_name: string; white_url: string }>(
@@ -60,14 +61,15 @@ async function quoteWith(client: DatabaseClient, cart: CartLine[], deliveryFee: 
   const { rows: promos } = await client.query<{ used: number; maximum: number }>("SELECT used, maximum FROM voss_promotions WHERE code='FIRST30'");
   if (!promos[0]) throw new Error('VOSS_DATABASE_NOT_MIGRATED');
   const remaining = Math.max(0, promos[0].maximum - promos[0].used);
+  if (remaining === 0 && deliveryFee === null) throw new CheckoutError('The first 30 free-delivery orders have been claimed. Please contact VOSS on WhatsApp to confirm delivery for your address before ordering.', 409);
   const subtotal = items.reduce((sum, i) => sum + i.quantity * i.unitPrice, 0);
-  const delivery = remaining > 0 ? 0 : deliveryFee;
+  const delivery = remaining > 0 ? 0 : deliveryFee!;
   return { items, subtotal, delivery, total: subtotal + delivery, freeDelivery: remaining > 0, remaining };
 }
-export async function quote(cart: CartLine[], db?: Database, fee?: number) {
-  return (db ?? await database()).transaction(client => quoteWith(client, cart, fee ?? settings().deliveryFee!));
+export async function quote(cart: CartLine[], db?: Database, fee?: number | null) {
+  return (db ?? await database()).transaction(client => quoteWith(client, cart, fee === undefined ? settings().deliveryFee : fee));
 }
-export async function placeOrder(input: { items: unknown; customer: unknown; idempotencyKey: unknown; expectedTotal: unknown }, db?: Database, fee?: number): Promise<Receipt> {
+export async function placeOrder(input: { items: unknown; customer: unknown; idempotencyKey: unknown; expectedTotal: unknown }, db?: Database, fee?: number | null): Promise<Receipt> {
   const cart = cartInput(input.items), customer = customerInput(input.customer);
   if (typeof input.idempotencyKey !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(input.idempotencyKey)) throw new CheckoutError('Refresh checkout and try again.');
   if (!Number.isSafeInteger(input.expectedTotal) || Number(input.expectedTotal) <= 0) throw new CheckoutError('Review your order total first.');
@@ -83,7 +85,7 @@ export async function placeOrder(input: { items: unknown; customer: unknown; ide
     }
     const { rows: recent } = await client.query<{ count: string }>("SELECT count(*) FROM voss_orders WHERE phone=$1 AND created_at > now() - interval '1 hour'", [customer.phone]);
     if (Number(recent[0].count) >= 3) throw new CheckoutError('You have already placed several orders. Contact VOSS for help before ordering again.', 429);
-    const q = await quoteWith(client, cart, fee ?? settings().deliveryFee!);
+    const q = await quoteWith(client, cart, fee === undefined ? settings().deliveryFee : fee);
     if (q.total !== input.expectedTotal) throw new CheckoutError('Your total has changed. Please review the updated price and delivery charge before placing your order.', 409);
     const id = randomUUID(), reference = `VOSS-${randomBytes(6).toString('hex').toUpperCase()}`;
     await client.query(`INSERT INTO voss_orders(id,reference,idempotency_key,request_hash,customer_name,phone,email,address,city,province,postcode,notes,payment_method,subtotal_pkr,delivery_pkr,total_pkr,promotion_code)

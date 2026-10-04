@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "db:setup": "tsx scripts/setup-commerce.ts",
+    "db:verify-cloud": "tsx scripts/verify-cloud-commerce.ts",
     "test:commerce": "tsx scripts/test-commerce.ts",
     "db:migrate": "tsx scripts/migrate-commerce.ts"
   },

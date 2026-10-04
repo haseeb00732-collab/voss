@@ -16,9 +16,10 @@ export async function GET() {
 }
 export async function POST(request: Request) {
   try {
-    const preview = process.env.NODE_ENV !== 'production' && process.env.VOSS_LOCAL_DATABASE === '1';
-    if (!settings().enabled && !preview) throw new CheckoutError('Website checkout is being prepared. You can still order with VOSS on Instagram.', 503);
+    const config = settings();
+    const preview = !config.enabled && process.env.NODE_ENV !== 'production' && process.env.VOSS_LOCAL_DATABASE === '1';
+    if (!config.enabled && !preview) throw new CheckoutError('Website checkout is being prepared. You can still order with VOSS on WhatsApp.', 503);
     const body = await requestBody(request);
-    return Response.json(await quote(cartInput(body?.items), undefined, preview ? (settings().deliveryFee ?? 0) : undefined), { headers: privateHeaders });
+    return Response.json(await quote(cartInput(body?.items), undefined, preview ? (config.deliveryFee ?? 0) : undefined), { headers: privateHeaders });
   } catch (error) { return checkoutFailure(error); }
 }

@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   distDir: process.env.VOSS_RELEASE_CHECK === '1' ? '.next-release' : '.next',
+  ...(process.env.VOSS_RELEASE_CHECK === '1' ? { experimental: { cpus: 2 } } : {}),
   serverExternalPackages: ['@electric-sql/pglite', 'pg'],
   outputFileTracingExcludes: { '*': ['./.data/**/*', './outputs/**/*'] },
   devIndicators: false,
