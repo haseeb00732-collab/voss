@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS voss_orders (
   created_at timestamptz NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS voss_orders_phone_created ON voss_orders(phone, created_at);
+CREATE INDEX IF NOT EXISTS voss_orders_promotion_code_idx ON voss_orders(promotion_code);
 CREATE TABLE IF NOT EXISTS voss_order_items (
   order_id uuid NOT NULL REFERENCES voss_orders(id), product_slug text NOT NULL,
   colour_key text NOT NULL, name text NOT NULL, colour_name text NOT NULL,
@@ -55,6 +56,8 @@ CREATE TABLE IF NOT EXISTS voss_order_history (
   order_id uuid NOT NULL REFERENCES voss_orders(id), old_status text NOT NULL, new_status text NOT NULL,
   changed_at timestamptz NOT NULL DEFAULT now()
 );
+
+CREATE INDEX IF NOT EXISTS voss_order_history_order_id_idx ON voss_order_history(order_id);
 
 ALTER TABLE voss_order_history ENABLE ROW LEVEL SECURITY;
 
