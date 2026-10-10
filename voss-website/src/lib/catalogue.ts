@@ -2,7 +2,7 @@ import media from './studio-media.json';
 
 export type Colourway = { name: string; hex: string; image: number; key: string; alsoShotAs?: number[] };
 export type Piece = { slug: string; dir: string; name: string; label: string; imageCount: number; price: number | null; listPrice: number | null; colourways: Colourway[]; detailImages?: number[]; silhouette: string; note: string; description: string; coverColour: string };
-const hues: Record<string, string> = { green:'#344d35', black:'#222222', 'dark-brown':'#48332c', cognac:'#9e5e30', burgundy:'#702f3b', camel:'#b78955', ivory:'#e7e0d0', magenta:'#8a305d', mustard:'#ba9236', 'royal-blue':'#294b95', navy:'#253343', tan:'#a97643', taupe:'#9a8e7d', wine:'#6a3040', nude:'#c5a58f', brown:'#76503a', 'beige-natural':'#c5b798', blue:'#416888', grey:'#98958e', beige:'#c8b18a', 'grey-black':'#8b8b88', 'cream-black':'#e1d4bc', 'tan-black':'#b37847', 'burgundy-black':'#6a2c3b', 'cream-brown':'#dfd0b7' };
+const hues: Record<string, string> = { green:'#344d35', black:'#222222', 'dark-brown':'#48332c', cognac:'#9e5e30', burgundy:'#702f3b', camel:'#b78955', ivory:'#e7e0d0', magenta:'#8a305d', mustard:'#ba9236', 'royal-blue':'#294b95', navy:'#253343', tan:'#a97643', taupe:'#9a8e7d', wine:'#6a3040', nude:'#c5a58f', brown:'#76503a', 'beige-natural':'#c5b798', blue:'#416888', grey:'#98958e', beige:'#c8b18a', blush:'#c99689', 'grey-black':'#8b8b88', 'cream-black':'#e1d4bc', 'tan-black':'#b37847', 'burgundy-black':'#6a2c3b', 'cream-brown':'#dfd0b7' };
 const specs = [
   ['square-quilted-tote','Square Quilted Tote',3499,'Totes','camel','green,black,dark-brown,cognac,burgundy,camel','A clean grid of quilting, rounded handles and a quietly structured shape.','For days when you want a little structure. Square quilting gives this tote its rhythm, while rounded handles and small metal details keep the silhouette simple.'],
   ['floral-embossed-tote','Floral Embossed Bag',3899,'Top handle','magenta','ivory,black,magenta,mustard,royal-blue,navy','Floral texture and curved metal handles give this structured bag a distinctive outline.','Look closer: the floral pattern is part of the surface. A straight-sided body balances the curved handles, giving the bag a distinct outline without a busy print.'],
@@ -14,6 +14,8 @@ const specs = [
   ['two-tone-bag-set','Two Tone Bag Set',3749,'Totes','cream-brown','grey-black,cream-black,tan-black,burgundy-black,cream-brown','Contrasting panels connect a tote, a smaller zip bag and a rounded pouch.','Light against dark. This three-piece set brings together contrasting panels, a smaller bag with tassel details and a curved pouch. Choose the combination that works with your wardrobe.'],
   ['tassel-tote','Tassel Tote',3100,'Totes','black','green,cognac,burgundy,dark-brown,black,navy','A tapered tote with long handles, curved side seams and a hanging tassel.','A simple shape with a little movement. Long rounded handles frame the tapered body, while curved seams and a small tassel add detail. Choose from six colours and explore the studio photograph of each.'],
   ['structured-trio-bag-set','Structured Trio Bag Set',3400,'Bag sets','cognac','black,navy,burgundy,dark-brown,cognac','A structured top handle bag, zipped pouch and gold-bar flap purse in one matching set.','Three matching pieces, each with its own shape. Rounded handle tabs soften the main bag, a zipped pouch sits alongside it, and a slim gold bar finishes the flap purse. Compare five colours before choosing your set.'],
+  ['chic','Chic',2999,'Shoulder bag','blush','blush,beige,black,burgundy,ivory','A small glossy shoulder bag with a curved zip top, oval plaque and matching removable strap.','A softly tapered shape with rounded corners, fine stitching and gold-tone details. The glossy finish makes each colour distinct. A matching strap is shown with the available colour photographs.'],
+  ['croc-panel-dome-bag','Croc Panel Dome Bag',2999,'Top handle','beige','beige,tan,dark-brown,black','A domed zip-top bag with a crocodile-textured front panel and gold-tone handle details.','Long slender handles frame the rounded shape and textured front panel. The person-held studio photographs show the real bag design in four colours. A side ring for the additional strap is visible in the original product photographs.'],
 ] as const;
 export const CATALOGUE: Piece[] = specs.map((s, i) => {
   const dir = `product-${String(i + 1).padStart(2, '0')}`;
@@ -35,7 +37,7 @@ export const legacyImages = (piece?: Piece) => { void piece; return [] as string
 export const LEGACY_COUNTS: Record<string,number> = {};
 export const HUE_TOKENS = hues;
 export const STYLE_COUNT = CATALOGUE.length;
-export const styleCountWord = ['zero','one','two','three','four','five','six','seven','eight','nine','ten'][STYLE_COUNT] ?? String(STYLE_COUNT);
+export const styleCountWord = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'][STYLE_COUNT] ?? String(STYLE_COUNT);
 export const StyleCountWord = styleCountWord[0].toUpperCase() + styleCountWord.slice(1);
 export const getPiece = (slug: string) => CATALOGUE.find(p => p.slug === slug);
 export const relatedPieces = (slug: string, count = 3) => CATALOGUE.filter(p => p.slug !== slug).slice(0,count);

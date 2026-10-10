@@ -565,5 +565,86 @@
     "label": "Studio view",
     "width": 960,
     "height": 1200
+  },
+  {
+    "slug": "chic",
+    "colour": "blush",
+    "position": 0,
+    "white": "/catalogue-white/product-11-blush-primary.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chic",
+    "colour": "beige",
+    "position": 0,
+    "white": "/catalogue-white/product-11-beige-primary.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chic",
+    "colour": "black",
+    "position": 0,
+    "white": "/catalogue-white/product-11-black-primary.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chic",
+    "colour": "burgundy",
+    "position": 0,
+    "white": "/catalogue-white/product-11-burgundy-primary.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chic",
+    "colour": "ivory",
+    "position": 0,
+    "white": "/catalogue-white/product-11-ivory-primary.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "croc-panel-dome-bag",
+    "colour": "beige",
+    "position": 0,
+    "white": "/catalogue-white/product-12-beige-primary.webp",
+    "label": "Person-held studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "croc-panel-dome-bag",
+    "colour": "tan",
+    "position": 0,
+    "white": "/catalogue-white/product-12-tan-primary.webp",
+    "label": "Person-held studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "croc-panel-dome-bag",
+    "colour": "dark-brown",
+    "position": 0,
+    "white": "/catalogue-white/product-12-dark-brown-primary.webp",
+    "label": "Person-held studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "croc-panel-dome-bag",
+    "colour": "black",
+    "position": 0,
+    "white": "/catalogue-white/product-12-black-primary.webp",
+    "label": "Person-held studio view",
+    "width": 960,
+    "height": 1200
   }
 ]
