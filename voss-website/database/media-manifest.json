@@ -615,8 +615,8 @@
     "slug": "croc-panel-dome-bag",
     "colour": "beige",
     "position": 0,
-    "white": "/catalogue-white/product-12-beige-primary.webp",
-    "label": "Person-held studio view",
+    "white": "/catalogue-white/product-12-beige-studio.webp",
+    "label": "Studio view",
     "width": 960,
     "height": 1200
   },
@@ -624,8 +624,8 @@
     "slug": "croc-panel-dome-bag",
     "colour": "tan",
     "position": 0,
-    "white": "/catalogue-white/product-12-tan-primary.webp",
-    "label": "Person-held studio view",
+    "white": "/catalogue-white/product-12-tan-studio.webp",
+    "label": "Studio view",
     "width": 960,
     "height": 1200
   },
@@ -633,8 +633,8 @@
     "slug": "croc-panel-dome-bag",
     "colour": "dark-brown",
     "position": 0,
-    "white": "/catalogue-white/product-12-dark-brown-primary.webp",
-    "label": "Person-held studio view",
+    "white": "/catalogue-white/product-12-dark-brown-studio.webp",
+    "label": "Studio view",
     "width": 960,
     "height": 1200
   },
@@ -642,8 +642,8 @@
     "slug": "croc-panel-dome-bag",
     "colour": "black",
     "position": 0,
-    "white": "/catalogue-white/product-12-black-primary.webp",
-    "label": "Person-held studio view",
+    "white": "/catalogue-white/product-12-black-studio.webp",
+    "label": "Studio view",
     "width": 960,
     "height": 1200
   }
