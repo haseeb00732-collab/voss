@@ -1,7 +1,12 @@
 node_modules/
 .next/
+out/
 .env*
 !.env.example
 *.tsbuildinfo
 .data/
 .install-incomplete/
+
+runtime/
+write-check.tmp
+preview-*.log

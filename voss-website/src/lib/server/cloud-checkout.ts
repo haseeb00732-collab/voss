@@ -12,7 +12,7 @@ export async function cloudCheckout<T>(action: 'config' | 'quote' | 'place-order
     response = await fetch(endpoint, {
       method: 'POST', cache: 'no-store', signal: AbortSignal.timeout(16000),
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${publicKey}`, apikey: publicKey },
-      body: JSON.stringify({ action, ...payload }),
+      body: JSON.stringify({ ...payload, action }),
     });
   } catch {
     throw new CheckoutError('Checkout is temporarily unavailable. Your bag is saved. Please try again or contact VOSS on WhatsApp.', 503);

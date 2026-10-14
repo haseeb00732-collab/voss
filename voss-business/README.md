@@ -1,40 +1,122 @@
-# VOSS Business — separate private server
+# VOSS Business
 
-This is an independent Next.js application, not an `/admin` page on voss.pk. It has its own environment, login cookie, build and server. No AI service, AI subscription or running Codex session is required.
+A separate private owner dashboard. The public shop remains at https://www.voss.pk.
+Customers place cash-on-delivery orders on the website; no WhatsApp message is required.
+Orders are stored in the existing Supabase cloud project, not on this computer.
 
-## What it shows
+## Implemented
 
-- Website orders: customer/contact/address, items, colours, quantities, totals, order status. The list refreshes every 30 seconds while open.
-- Instagram: up to 12 recent posts, likes, comments, views, reach, saves, shares and a transparent engagement-by-reach calculation. Missing metrics display a dash, never a made-up zero.
-- Facebook: up to 12 recent posts, reactions, comments and shares. Facebook views/reach are not connected in this version.
-- Links to the VOSS accounts and Meta Business Suite inbox. Facebook, Instagram and WhatsApp messages are **not yet synchronized into this app**. Account linking in Meta is still required. No automatic WhatsApp alerts are active.
+- Owner sign-in, sign-out, password change and password recovery.
+- Overview of new orders, orders to prepare, dispatched orders, outstanding COD and money received.
+- Search/filter/paginate orders; export the current page as CSV.
+- Order details: customer contact/address, bags, colours, quantities, totals and customer notes.
+- Confirm, pack, dispatch, deliver, cancel or return an order through validated status transitions.
+- Courier references, private notes and an activity history.
+- Separate confirmation of COD money received; delivery alone does not count as payment.
+- Product catalogue from Supabase, including the white-background image references.
+- Mobile layout, keyboard-accessible order dialog, private data excluded from public previews.
+- New-order alert queue recorded in the same transaction as each order.
 
-The dashboard is read-only. It does not publish posts, send messages, change orders or book couriers. Order status fields must be updated by the fulfilment system or an authorized database operator; a courier webhook integration has not been supplied.
+## Current status — 14 October 2026
 
-## Run locally
+The cloud schema is installed in Supabase project `porncyiyigtvejpbsjwl` (VOSS Commerce).
+The dashboard is published on Cloudflare Workers Static Assets:
+https://voss-business.haseeb00732.workers.dev/ (private sign-in), with a fictional
+design preview at `/preview/`. Cloudflare OAuth is connected. Live responses were
+verified as HTTP 200 with no-store, noindex and frame-denial headers.
+Owner email confirmed by the user: haseeb00732@gmail.com. The owner Auth account has not
+been provisioned yet. Automatic email delivery and Meta integrations are NOT connected.
+The recipient is verified in Cloudflare. Public DNS uses Cloudflare nameservers,
+but the authorized account returns no accessible zones, including `voss.pk`.
+Email Routing/domain access must be resolved before official-domain sending works.
+The `/preview/` route contains fictional sample orders; it never writes them to Supabase.
+Catalogue editing and courier booking are not included in this release.
 
-1. Install Node.js and run `npm ci` in this directory.
-2. Copy `.env.example` to `.env.local`; configure credentials privately.
-3. Apply the storefront's `database/schema.sql` to PostgreSQL, followed by this app's `database/owner.sql`.
-4. Run `npm run dev`. The business app is at `http://localhost:3001`; the storefront remains on port 3000.
-5. `npm test` tests session security, protected endpoints and missing-data calculations. `npm run build` verifies the production build.
+## Local preview
 
-On the current development machine only, node_modules is a junction to the storefront's existing installed dependencies because npm downloads timed out. The committed package/lock files are standalone; deployments install their own dependencies with npm ci. `.install-incomplete` is ignored and contains the interrupted dependency download.
+Run `npm ci`, then `npm run build`, then `npm start` in `voss-business`.
+Open http://127.0.0.1:3001/preview/ for sample data, or `/` for owner sign-in.
+For development use `npm run dev`. This machine reuses installed dependencies through
+a local junction because disk space is low; the committed package files support a clean install.
+Run `npm test` for isolated database security and order-state checks. These create no production orders.
 
-## Owner access
+## Free deployment: Cloudflare Workers Static Assets
 
-The existing local owner key was preserved in `%LOCALAPPDATA%/VOSS/owner-access.txt`; the hash/session secret moved to this app's ignored environment. They were removed from the storefront environment. The old URL in that private file should now be read as `http://localhost:3001`.
+This is a Next.js static export, with Supabase handling authentication and data access.
+It is a SEPARATE Worker named `voss-business` in account
+`9d0d63daf3c22d34aa586059e6069f64`. The existing `voss` storefront proxy is untouched.
+The static export was uploaded through the authorized Cloudflare API; no paid plan
+or subscription was enabled. Future builds use:
 
-For a new deployment, configure `VOSS_OWNER_KEY_HASH` (SHA-256 of a random, high-entropy owner key) and `VOSS_OWNER_SESSION_SECRET` (at least 64 random characters) privately. Sessions last eight hours, cookies are HttpOnly/SameSite Strict and Secure in production, and sign-in attempts are throttled in PostgreSQL. Rotating the secret signs out all sessions.
+- Root directory: `voss-business`
+- Build command: `npm run build`
+- Output directory: `out`
+- No service-role key, database password or Meta secret in build variables.
+- Use the free plan; do not enable paid services.
 
-Deploy as a **separate project/server** with root directory `voss-business`, its own hostname and `BUSINESS_ORIGIN`. Do not add a reverse proxy under voss.pk/admin. Bypass CDN caching for the whole private app. No production business server has been provisioned yet.
+The public publishable key in `src/lib/business.ts` is intentional. Every read/write requires
+an authenticated user whose ID is in the private owner allowlist. Static hosting of the
+shell does not expose order data. `public/_headers` supplies no-store, noindex and security headers.
+`scripts/cloudflare-assets.mjs manifest` prepares a SHA-256 manifest. An authorized
+Cloudflare client creates an assets-upload-session and stores its response in ignored
+`runtime/assets-session.json`. Run `node scripts/cloudflare-assets.mjs upload`, then
+publish the Worker assets with the returned completion token and the contents of
+`public/_headers` in `assets.config._headers`. Enable its workers.dev subdomain.
+Tokens are temporary, remain ignored, and must never be committed. No GitHub automatic
+dashboard deployment is configured yet. Cloudflare static-asset limits apply:
+https://developers.cloudflare.com/workers/static-assets/.
 
-Use a restricted server database role with SELECT on orders/order items and SELECT/UPDATE on the owner login throttle row; configure appropriate RLS policies for that role. Never expose database credentials or Meta tokens to the browser. Local PGlite is for development only; production requires managed PostgreSQL. Do not run two local PGlite apps against the same directory at once; use managed PostgreSQL for simultaneous website/business testing.
+## Owner registration and activation
 
-## Meta connection still needed
+1. Add the exact dashboard HTTPS origin to Supabase Auth redirect URLs and use it for invite/recovery.
+2. Connect verified Brevo SMTP in Supabase Auth. Enable email confirmation and email signup.
+3. Haseeb registers with haseeb00732@gmail.com, sets his own password, verifies the email and signs in.
+   The single-use bootstrap reserves technical administration for this confirmed email only.
+4. Each owner opens the same dashboard link, chooses Create account, verifies their email and signs in.
+5. Haseeb approves their request under Settings → Team access. Registration alone never reveals orders.
+6. Verify real owner sign-in, order reading and sign-out. Never place real customer data in preview fixtures.
 
-Create the Meta developer app using Facebook Login for the Facebook Page and its linked Instagram professional account. Configure the Graph API version supported by your app, Page access token, Page ID and Instagram account ID in this server's environment. Verify the Page ID through Meta before activation; the supplied public Page link is Vosspk-61593772016374. Typical read permissions for this flow include pages_show_list, pages_read_engagement, instagram_basic and instagram_manage_insights; request only those needed and complete any Meta review required for your account/access level. Do not mix these with Instagram Login's separate permission family.
+Do not use user-editable metadata for authorization. Do not insert accounts directly into `auth.users`.
+Default Supabase email has delivery restrictions; configure a verified sender if it cannot deliver
+owner invites/recovery. Documentation: https://supabase.com/docs/guides/auth/auth-smtp.
 
-This version accepts a server-configured token; it does not yet implement an OAuth onboarding/refresh UI. Tokens and permissions need to remain valid. Metrics are requested from Meta's Graph API with a five-minute cache, not scraped. Per-metric failure stays unavailable. Live account results require verification after authorization.
+## Database
 
-Implementation references: Meta's [Instagram API collection](https://www.postman.com/meta/instagram/overview), [IG Media SDK](https://github.com/facebook/facebook-python-business-sdk/blob/main/facebook_business/adobjects/igmedia.py) and [Post SDK](https://github.com/facebook/facebook-python-business-sdk/blob/main/facebook_business/adobjects/post.py).
+`database/cloud-owner.sql` is the applied additive migration. The source of checkout data remains
+the storefront database schema. Private helpers enforce owner authorization and row locking;
+public wrappers use invoker permissions. All exposed tables have RLS and no public read policies.
+Order changes use version checks to stop one tab overwriting another tab's newer changes.
+Revoking the owner's allowlist entry immediately blocks subsequent data operations.
+
+## Notifications and social
+
+Dashboard data refreshes every 30 seconds while visible. Optional browser alerts work while its tab
+is open. The cloud continues accepting orders when the dashboard is closed. Email jobs are queued.
+The Brevo dispatcher source is implemented with service-only access, leases and bounded retries.
+It is inactive until BREVO_API_KEY and VOSS_EMAIL_FROM are set in Supabase Edge secrets.
+Supabase Auth also needs Brevo SMTP, correct dashboard redirects and verified sending access.
+Before activation, configure a private scheduled invocation for retries and verify an actual test
+message. Provider acceptance is not proof of inbox delivery. Customer details remain in the private
+dashboard; the alert contains the reference, amount and dashboard link only.
+No automatic WhatsApp messages are active. Meta Business Suite is linked for convenience;
+Facebook, Instagram and WhatsApp inboxes/analytics are not integrated into this dashboard yet.
+
+## Verification
+
+On 9 October: production build and TypeScript passed; all 21 isolated database tests
+passed. Live storefront configuration and a Black Tassel Tote quote returned COD,
+Rs 3,100 and free delivery, with 29 places remaining. No new production test order
+was created. The live preview opens order details and refuses to persist demo changes.
+Real owner sign-in and email delivery are still unverified and not activated.
+
+## Delivery rules
+
+Lahore only. Cash on delivery. Estimated 3–8 days. First 30 website orders get free delivery.
+After the first 30 website orders, the confirmed fee is a flat Rs 150 across Lahore.
+Changing order status does not book a courier, contact a customer or process a refund.
+
+## Legacy files
+
+`legacy/`, `database/owner.sql` and `src/lib/server/` retain the earlier server implementation for
+reference. They are not used by the static dashboard and are not deployed as API routes. Old owner
+keys and local database configuration do not grant access to this version.

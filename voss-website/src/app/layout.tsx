@@ -7,7 +7,7 @@ import './header.css';
 import './policies.css';
 
 const jost=localFont({src:'./fonts/Jost-subset.woff2',variable:'--font-jost',display:'swap',weight:'100 900'});
-const site=process.env.NEXT_PUBLIC_SITE_URL;
+const site=(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.voss.pk');
 export const metadata: Metadata = {
   ...(site?{metadataBase:new URL(site)}:{}),
   title:{default:'VOSS',template:'%s | VOSS'},

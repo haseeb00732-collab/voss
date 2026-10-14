@@ -1,2 +1,4 @@
 import type { NextConfig } from 'next';
-const config:NextConfig={serverExternalPackages:['pg','@electric-sql/pglite'],async headers(){return [{source:'/:path*',headers:[{key:'X-Robots-Tag',value:'noindex, nofollow'},{key:'Referrer-Policy',value:'no-referrer'},{key:'X-Frame-Options',value:'DENY'}]}]}};export default config;
+// A static shell keeps hosting free. Supabase authenticates and authorizes every data request.
+const config: NextConfig = { output: 'export', trailingSlash: true, images: { unoptimized: true }, experimental: { cpus: 1 }, webpack(config) { config.cache = false; return config; } };
+export default config;

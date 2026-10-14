@@ -1,7 +1,8 @@
 'use client';
+import { isReceipt } from '@/lib/receipt';
 import { ArrowIcon } from '@/components/ArrowIcon';
 import Link from 'next/link';
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type FormEvent } from 'react';
 import { useBag, OrderSummary, bagMessage } from './StoreShell';
 import { priceLabel } from '@/lib/catalogue';
 import { whatsappLink } from '@/lib/whatsapp';
@@ -9,13 +10,34 @@ import type { Quote, Receipt } from '@/lib/server/checkout';
 import './Checkout.css';
 
 type Config = { enabled: boolean; preview?: boolean; provinces: string[]; remaining?: number; error?: string };
+const subscribeReceipt = (notify: () => void) => {
+  window.addEventListener('storage', notify);
+  return () => window.removeEventListener('storage', notify);
+};
+const readSavedReceipt = () => {
+  try {
+    const raw = sessionStorage.getItem('voss-last-receipt');
+    const stored = JSON.parse(raw || 'null');
+    const age = Date.now() - stored?.savedAt;
+    return Number.isFinite(age) && age >= 0 && age < 86400000 ? raw : null;
+  } catch { return null; }
+};
+const serverReceipt = () => null;
 export function Checkout() {
   const { items, save } = useBag();
   const [config, setConfig] = useState<Config | null>(null);
   const [priced, setPriced] = useState<{ signature: string; quote: Quote } | null>(null);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
-  const [receipt, setReceipt] = useState<Receipt | null>(null);
+  const [newReceipt, setReceipt] = useState<Receipt | null>(null);
+  const savedReceipt = useSyncExternalStore(subscribeReceipt, readSavedReceipt, serverReceipt);
+  const restoredReceipt = useMemo(() => {
+    try { const stored=JSON.parse(savedReceipt || 'null');
+      if (stored && isReceipt(stored.receipt)) return stored.receipt as Receipt;
+    } catch {}
+    return null;
+  }, [savedReceipt]);
+  const receipt = newReceipt ?? restoredReceipt;
   const [revision, setRevision] = useState(0);
   const [step, setStep] = useState<1 | 2>(1);
   const [customer, setCustomer] = useState<Record<string, string>>({});
@@ -33,7 +55,7 @@ export function Checkout() {
     return () => { clearTimeout(timer); controller.abort(); };
   }, []);
   useEffect(() => {
-    if ((!config?.enabled && !config?.preview) || signature === '[]' || receipt) return;
+    if ((!config?.enabled && !config?.preview) || signature === '[]') return;
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(new DOMException('Checking your total took too long. Please try again.', 'TimeoutError')), 15000);
     fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: JSON.parse(signature) }), signal: controller.signal }).then(async r => {
@@ -64,13 +86,15 @@ export function Checkout() {
       const response = await fetch('/api/orders', { signal: AbortSignal.timeout(20000), method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...payload, idempotencyKey: attempt.current.key }) });
       const data = await response.json();
       if (!response.ok) { if (response.status === 409) setRevision(n => n + 1); throw new Error(data.error); }
+      if (!isReceipt(data)) throw new Error("We could not confirm the response. Your bag is saved. Retry safely.");
       setReceipt(data); save([]);
+      try { sessionStorage.setItem("voss-last-receipt",JSON.stringify({savedAt:Date.now(),receipt:data})); } catch {}
       try { sessionStorage.removeItem('voss-checkout-attempt'); } catch {}
       window.scrollTo({ top: 0, behavior: 'instant' });
     } catch (e) { setError(e instanceof Error && (e.name === 'TimeoutError' || e.name === 'AbortError' || e.name === 'TypeError') ? 'We could not confirm the response. Your bag is saved. Retry the same order to check safely without creating a duplicate.' : e instanceof Error ? e.message : 'Your order could not be submitted. Please retry.'); requestAnimationFrame(() => errorBox.current?.focus()); }
     finally { submitting.current = false; setBusy(false); }
   }
-  if (receipt) return <section className="v-order-received" aria-live="polite"><span className="v-kicker">Thank you for choosing VOSS</span><h2>Your order is in.</h2><p>We have received your order and delivery details. You’re all set—there’s nothing else to send.</p><p>Keep this reference: <strong>{receipt.reference}</strong></p><p>Pay <strong>{priceLabel(receipt.total)}</strong> on delivery. {receipt.freeDelivery ? 'Your delivery is free.' : `Delivery: ${priceLabel(receipt.delivery)}.`}</p><p>Lahore delivery in 3–8 days.</p><p>We’ll contact you on the mobile number you provided if we need any details to arrange delivery.</p><Link className="v-button" href="/collection">Continue shopping <ArrowIcon direction="up-right" /></Link></section>;
+  if (receipt && !items.length) return <section className="v-order-received" aria-live="polite"><span className="v-kicker">Thank you for choosing VOSS</span><h2>Your order is in.</h2><p>We have received your order and delivery details. You’re all set—there’s nothing else to send.</p><p>Keep this reference: <strong>{receipt.reference}</strong></p><p>Pay <strong>{priceLabel(receipt.total)}</strong> on delivery. {receipt.freeDelivery ? 'Your delivery is free.' : `Delivery: ${priceLabel(receipt.delivery)}.`}</p><p>Lahore delivery in 3–8 days.</p><p>We’ll contact you on the mobile number you provided if we need any details to arrange delivery.</p><button className="v-button" type="button" onClick={()=>window.print()}>Print / save receipt</button><Link className="v-button" onClick={()=>{try{sessionStorage.removeItem("voss-last-receipt");}catch{}setReceipt(null);}} href="/collection">Continue shopping <ArrowIcon direction="up-right" /></Link></section>;
   if (!items.length) return <div className="v-empty"><h2>Choose your first bag.</h2><Link className="v-button" href="/collection">Explore the collection <ArrowIcon direction="up-right" /></Link></div>;
   if (!config) return <p role="status">Preparing checkout…</p>;
   if (!config.enabled && !config.preview) return <div className="v-checkout-unavailable"><h2>Order with VOSS.</h2><p>Website checkout is being prepared. Send your selection on WhatsApp to confirm availability and delivery.</p><a className="v-button" href={whatsappLink(bagMessage(items))} target="_blank" rel="noreferrer">Send selection on WhatsApp <ArrowIcon direction="up-right" /></a><p>WhatsApp opens a draft. Tap Send there. This request is not saved as a website order.</p><OrderSummary text={bagMessage(items)} /></div>;
