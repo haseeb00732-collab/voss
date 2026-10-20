@@ -35,7 +35,10 @@ export type InventoryItem = {
 export type InventoryInput = Pick<InventoryItem,'product_slug'|'colour_key'|'version'|'stock_on_hand'|'unit_cost_pkr'|'note'>;
 export type FinanceHistory = {id:number;entity:string;entity_id:string;old_value:Record<string,unknown>|null;new_value:Record<string,unknown>;created_at:string;actor?:string};
 export type FinanceDefaults = {version:number;packaging_per_bag:number|null;courier_per_order:number|null;cod_per_order:number|null;marketing_per_bag:number|null;customer_delivery_pkr:number;packaging_mode:"expense"|"order";updated_at?:string};
+export type CostItem={recorded_total_pkr?:number;recorded_bills?:number;source_key?:string|null;id:string;version:number;name:string;category:FinanceCategory;rate_pkr:number|null;basis:"per_item"|"per_bag"|"per_order"|"per_month"|"one_off";active:boolean;note:string;updated_at?:string};
+export type CostItemInput=Omit<CostItem,"id"|"version">&{id?:string;version?:number;request_key?:string};
 export type FinanceData = {
+  cost_items?:CostItem[];
   defaults?:FinanceDefaults;
   analysis?:Analysis;
   promotion?:{code:'FIRST30';used:number;maximum:number};
@@ -50,6 +53,7 @@ async function call<T>(name:string,parameters:Record<string,unknown>) {
   return data as T;
 }
 export const readFinance=(from:string|null=null,to:string|null=null)=>call<FinanceData>('voss_finance_read',{p_from:from||null,p_to:to||null});
+export const saveCostItem=(item:CostItemInput)=>call<CostItem>('voss_finance_save',{p_entry:{action:'save_cost_item',item}});
 export const saveFinanceDefaults=(defaults:FinanceDefaults)=>call<FinanceDefaults>('voss_finance_save',{p_entry:{action:'save_defaults',version:defaults.version,defaults}});
 export const saveFinance=(entry:FinanceInput)=>call<FinanceEntry>('voss_finance_save',{p_entry:entry});
 export const voidFinance=(entry:Pick<FinanceEntry,'id'|'version'>,reason:string)=>call<FinanceEntry>('voss_finance_save',{p_entry:{id:entry.id,version:entry.version,void_reason:reason}});
