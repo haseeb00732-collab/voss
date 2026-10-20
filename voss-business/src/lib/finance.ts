@@ -34,7 +34,9 @@ export type InventoryItem = {
 };
 export type InventoryInput = Pick<InventoryItem,'product_slug'|'colour_key'|'version'|'stock_on_hand'|'unit_cost_pkr'|'note'>;
 export type FinanceHistory = {id:number;entity:string;entity_id:string;old_value:Record<string,unknown>|null;new_value:Record<string,unknown>;created_at:string;actor?:string};
+export type FinanceDefaults = {version:number;packaging_per_bag:number|null;courier_per_order:number|null;cod_per_order:number|null;marketing_per_bag:number|null;customer_delivery_pkr:number;packaging_mode:"expense"|"order";updated_at?:string};
 export type FinanceData = {
+  defaults?:FinanceDefaults;
   analysis?:Analysis;
   promotion?:{code:'FIRST30';used:number;maximum:number};
   entries:FinanceEntry[]; summary:FinanceSummary; weekly:(FinanceSummary & {week_start:string})[];
@@ -48,6 +50,7 @@ async function call<T>(name:string,parameters:Record<string,unknown>) {
   return data as T;
 }
 export const readFinance=(from:string|null=null,to:string|null=null)=>call<FinanceData>('voss_finance_read',{p_from:from||null,p_to:to||null});
+export const saveFinanceDefaults=(defaults:FinanceDefaults)=>call<FinanceDefaults>('voss_finance_save',{p_entry:{action:'save_defaults',version:defaults.version,defaults}});
 export const saveFinance=(entry:FinanceInput)=>call<FinanceEntry>('voss_finance_save',{p_entry:entry});
 export const voidFinance=(entry:Pick<FinanceEntry,'id'|'version'>,reason:string)=>call<FinanceEntry>('voss_finance_save',{p_entry:{id:entry.id,version:entry.version,void_reason:reason}});
 export const saveInventory=(item:InventoryInput)=>call<InventoryItem>('voss_inventory_save',{p_item:item});

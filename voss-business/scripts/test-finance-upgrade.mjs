@@ -5,10 +5,21 @@ import assert from 'node:assert/strict';
 const db=new PGlite(),owner=randomUUID(),viewer=randomUUID();
 try{
  await db.exec(`CREATE ROLE anon;CREATE ROLE authenticated;CREATE ROLE service_role;CREATE SCHEMA auth;CREATE TABLE auth.users(id uuid PRIMARY KEY,email text,email_confirmed_at timestamptz);CREATE FUNCTION auth.uid() RETURNS uuid LANGUAGE sql AS $$ SELECT nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;GRANT USAGE ON SCHEMA auth TO authenticated;`);
- for(const file of ['../../voss-website/database/schema.sql','../database/cloud-owner.sql','../database/team-access.sql','../database/finance.sql','../database/finance-upgrade.sql','../database/finance-order-costs.sql','../database/order-status-upgrade.sql','../database/viewer-roles.sql','../database/weekly-reports.sql'])await db.exec(await readFile(new URL(file,import.meta.url),'utf8'));
+ for(const file of ['../../voss-website/database/schema.sql','../database/cloud-owner.sql','../database/team-access.sql','../database/finance.sql','../database/finance-upgrade.sql','../database/finance-order-costs.sql','../database/order-status-upgrade.sql','../database/viewer-roles.sql','../database/weekly-reports.sql','../database/finance-defaults.sql'])await db.exec(await readFile(new URL(file,import.meta.url),'utf8'));
  await db.query("INSERT INTO auth.users VALUES($1,'owner@example.test',now()),($2,'stranger@example.test',now())",[owner,viewer]);await db.query('INSERT INTO voss_private.business_owners(user_id) VALUES($1)',[owner]);
  await db.exec("INSERT INTO public.voss_products VALUES('sample-bag','99','Synthetic test bag','Test','Totes',3000,true);INSERT INTO public.voss_variants VALUES('sample-bag','black','Black','#000',true)");
  await db.query("SELECT set_config('request.jwt.claim.sub',$1,false)",[owner]);await db.exec('SET ROLE authenticated');
+ const initialDefaults=(await db.query('select public.voss_finance_read() data')).rows[0].data.defaults;
+ assert.equal(initialDefaults.customer_delivery_pkr,150);assert.equal(initialDefaults.packaging_per_bag,null);
+ const defaultsSave=async(version,defaults)=>(await db.query('select public.voss_finance_save($1) data',[JSON.stringify({action:'save_defaults',version,defaults})])).rows[0].data;
+ const shared={...initialDefaults,packaging_per_bag:50.25,courier_per_order:200,cod_per_order:20,marketing_per_bag:100,packaging_mode:'order'};
+ const updatedDefaults=await defaultsSave(initialDefaults.version,shared);assert.equal(updatedDefaults.version,2);assert.equal(updatedDefaults.packaging_per_bag,50.25);
+ await assert.rejects(()=>defaultsSave(1,shared),/changed/);
+ await assert.rejects(()=>defaultsSave(2,{...shared,marketing_per_bag:-1}),/rupee|range/);
+ await assert.rejects(()=>defaultsSave(2,{...shared,packaging_per_bag:0.001}),/decimals/);
+ assert.equal((await db.query('select public.voss_finance_read() data')).rows[0].data.entries.length,0);
+ assert.equal((await db.query('select public.voss_finance_read() data')).rows[0].data.analysis.summary.total_spent,0);
+ await db.exec('RESET ROLE');assert.equal(Number((await db.query("select count(*) n from voss_private.finance_audit where entity='shared_costs'")).rows[0].n),1);await db.exec('SET ROLE authenticated');
  const base={kind:'sale',entry_date:'2026-10-12',settled_date:'2026-10-12',category:'product',description:'Synthetic test only',payer:'Test',payment_status:'collected',quantity:1,unit_cost_pkr:1000,product_slug:'sample-bag',colour_key:'black',notes:'',costs_complete:true,fulfillment_status:'delivered',free_delivery_offer:true};
  const save=async p=>(await db.query('select public.voss_finance_save($1) data',[JSON.stringify(p)])).rows[0].data;
  const read=async()=> (await db.query('select public.voss_finance_read() data')).rows[0].data;
@@ -32,7 +43,7 @@ try{
  await assert.rejects(()=>db.query("select public.voss_campaign_save($1)",[JSON.stringify({platform:'google',campaign_key:'test-campaign',name:'Duplicate',day:'2026-10-12',spend_pkr:100})]),/already exists/);
  await db.exec('RESET ROLE');await db.query("SELECT set_config('request.jwt.claim.sub',$1,false)",[viewer]);await db.exec('SET ROLE authenticated');
  await assert.rejects(()=>read(),/Business access/);await assert.rejects(()=>db.query('SELECT * FROM voss_private.campaign_daily'),/permission denied/);
- await db.exec('RESET ROLE');await db.query("INSERT INTO voss_private.business_owners(user_id,role) VALUES($1,'viewer')",[viewer]);await db.exec('SET ROLE authenticated');assert.equal((await read()).entries.length,3);await assert.rejects(()=>save({...first,request_key:randomUUID()}),/Owner access/);
+ await db.exec('RESET ROLE');await db.query("INSERT INTO voss_private.business_owners(user_id,role) VALUES($1,'viewer')",[viewer]);await db.exec('SET ROLE authenticated');assert.equal((await read()).defaults.version,2);await assert.rejects(()=>defaultsSave(2,shared),/Owner access/);assert.equal((await read()).entries.length,3);await assert.rejects(()=>save({...first,request_key:randomUUID()}),/Owner access/);
  await db.exec('RESET ROLE');await db.query('SELECT voss_private.generate_weekly_report()');await db.query('SELECT voss_private.generate_weekly_report()');assert.equal((await db.query('SELECT count(*) n FROM voss_private.weekly_reports')).rows[0].n,1);const pdf=(await db.query('SELECT pdf_base64 FROM voss_private.weekly_reports')).rows[0].pdf_base64;assert.match(Buffer.from(pdf,'base64').toString(),/^%PDF-1.4/);
  await db.query("SELECT set_config('request.jwt.claim.sub',$1,false)",[owner]);await db.exec('SET ROLE authenticated');
  const feeInput={...base,request_key:randomUUID(),amount_pkr:100,free_delivery_offer:false,cod_fee_pkr:25,return_courier_pkr:12,returns_loss_pkr:8,costs_paid:true,costs_settled_date:'2026-12-29',entry_date:'2026-12-15',settled_date:'2026-12-15'};
@@ -70,5 +81,5 @@ try{
  await db.query('SELECT public.voss_business_team($1,false)',[viewer]);
  await db.exec('RESET ROLE');await db.query("SELECT set_config('request.jwt.claim.sub',$1,false)",[viewer]);await db.exec('SET ROLE authenticated');
  await assert.rejects(()=>read(),/Business access/);
- console.log('PASS: collected revenue, return/refusal math, costs, immutable retries after edits/voids, fee settlement, payment/refund-only weeks, category reconciliation, campaign duplicates, viewer revocation and private access. No live records touched.');
+ console.log('PASS: shared cost precision, owner-only defaults, version conflicts, audit, no phantom spending; collected revenue, return/refusal math, costs, immutable retries after edits/voids, fee settlement, payment/refund-only weeks, category reconciliation, campaign duplicates, viewer revocation and private access. No live records touched.');
 }catch(e){console.error(e.message);process.exitCode=1;}finally{await db.close();}

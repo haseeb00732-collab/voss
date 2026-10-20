@@ -2,6 +2,16 @@
 
 Open https://voss-business.pages.dev/ and sign in with your approved Google account. Choose Finance.
 
+The six summary cards are at the top, directly under the reporting dates. They show only the selected period. Use All dates to include the whole preserved sheet.
+
+## Set usual costs once for both owners
+
+Under **Usual costs · set once**, select **Set / change usual costs**. Save your actual packaging cost for one bag, courier charge for one order, courier COD fee and a marketing budget per bag. The only initially confirmed rate is **Rs 150 customer delivery across Lahore**; this is not the courier's bill. The imported packaging bills do not establish how many packages were bought, so unknown unit rates stay blank rather than being guessed.
+
+Choose how packaging is recorded. If the bulk bill already appears in Expenses, its per-bag allowance is for planning only. If packaging is recorded per sale, the form multiplies the shared rate by bag quantity. The marketing allowance is always planning only; actual marketing spending is recorded once as an expense or campaign day. This avoids deducting the same bill twice.
+
+New sale forms fill the shared courier and COD charges and eligible packaging amount, then require review. The first-30 free-delivery checkbox makes customer delivery zero when selected. Owners can override an unusual order. Saved orders retain their historical costs when shared rates change, and changes to shared settings appear in audit history.
+
 ## Add a sale from Instagram, WhatsApp or in person
 
 1. Select **Add a sale**. Website checkout orders already appear automatically; do not enter them again.
