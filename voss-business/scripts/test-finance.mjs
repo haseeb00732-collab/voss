@@ -64,14 +64,15 @@ try{
   await websiteOrder('delivered','pending',1100);data=await read();assert.equal(data.summary.gross_profit_estimate_pkr,null);assert.equal(data.summary.net_profit_estimate_pkr,null);assert.equal(data.summary.missing_cost_sales,1);assert.equal(data.summary.estimated_order_dates,1);checks++;
   const oct=await read('2026-10-01','2026-10-31');assert.ok(oct.entries.every(e=>e.entry_date.startsWith('2026-10')));assert.equal(oct.entries.some(e=>e.id===future.id),false);assert.ok(oct.weekly.every(w=>new Date(`${w.week_start}T12:00:00Z`).getUTCDay()===1));checks++;
   const futureOnly=await read('2030-01-15','2030-01-15');assert.equal(futureOnly.summary.expenses_pkr,50);checks++;
+  // Keep the isolated history date away from today so current-day settlements cannot collide.
   // Legacy status history has the real delivery date, even without newer events.
   const historical=await websiteOrder('delivered','pending',700);
   await db.exec('RESET ROLE');
-  await db.query("INSERT INTO public.voss_order_history(order_id,old_status,new_status,changed_at) VALUES($1,'shipped','delivered','2026-10-20T20:15:00Z')",[historical]);
+  await db.query("INSERT INTO public.voss_order_history(order_id,old_status,new_status,changed_at) VALUES($1,'shipped','delivered','2090-10-20T20:15:00Z')",[historical]);
   await asUser(owner);
-  const oldBooking=await read('2026-10-01','2026-10-01'),legacyDelivery=await read('2026-10-21','2026-10-21');
+  const oldBooking=await read('2026-10-01','2026-10-01'),legacyDelivery=await read('2090-10-21','2090-10-21');
   assert.equal(oldBooking.summary.website_revenue_pkr,1100);assert.equal(legacyDelivery.summary.website_revenue_pkr,700);
-  assert.equal(legacyDelivery.summary.estimated_order_dates,0);assert.equal(legacyDelivery.weekly[0].week_start,'2026-10-19');checks++;
+  assert.equal(legacyDelivery.summary.estimated_order_dates,0);assert.equal(legacyDelivery.weekly[0].week_start,'2090-10-16');checks++;
   // Cash moves on the actual settlement day, not on an earlier sale/purchase date.
   const later=await save({...expense,kind:'sale',category:'product',description:'Separate settlement date',entry_date:'2028-01-01',amount_pkr:500,unit_cost_pkr:100,payment_status:'pending'});
   await save({...expense,id:later.id,version:later.version,kind:'sale',category:'product',description:'Separate settlement date',entry_date:'2028-01-01',amount_pkr:500,unit_cost_pkr:100,payment_status:'collected',settled_date:'2028-01-10'});

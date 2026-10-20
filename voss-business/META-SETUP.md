@@ -37,9 +37,19 @@ META_AD_ACCOUNT_ID      digits from Ads Manager, without act_
 ```
 
 16. Save/deploy the secret changes. Do not put tokens into a `NEXT_PUBLIC_` variable. This scheduled integration reads them only inside Cloudflare.
-17. The scheduled refresh runs at 00:15, 06:15, 12:15 and 18:15 UTC (05:15, 11:15, 17:15 and 23:15 Pakistan). In the dashboard's Social page, check the timestamp and connection message after a run.
-18. Match campaign keys on orders to `meta:CAMPAIGN_ID`. Only orders with known attribution contribute to that campaign's collected revenue and ROAS. An API campaign day cannot silently overwrite an owner's manual/CSV record; reconcile any reported conflict.
-19. Review the most recent seven days of campaign spend against Ads Manager. The current bounded sync supports up to 100 campaign-day records per run. If Meta returns more, use CSV until paginated sync is added. Do not also record the same ad spend as an expense or direct order cost.
+17. The scheduled refresh runs at 00:15, 06:15, 12:15 and 18:15 UTC (05:15, 11:15, 17:15 and 23:15 Pakistan). Use the existing **Worker** with the workers.dev address for these settings, not the Pages project that provides the professional dashboard link.
+18. The Social screen has a separate server connection. Open Supabase → VOSS Commerce → Edge Functions → Secrets and add the settings below. Obtain a **Page access token** for the VOSS Page using your VOSS app and authorized Page access. A Page token and a user/system-user token are not interchangeable. Never add these to frontend variables.
+
+```text
+META_PAGE_ACCESS_TOKEN    VOSS Page access token
+META_GRAPH_VERSION        supported version shown in your Meta app
+META_FACEBOOK_PAGE_ID     VOSS Facebook Page ID
+META_INSTAGRAM_ACCOUNT_ID digits from instagram_business_account.id
+```
+
+19. Open VOSS Business → Social → Connections. Refresh and check the account name, connection message and last successful update. Compare recent posts and campaign spend against Business Suite and Ads Manager. Metrics access alone does not enable the inbox or comment moderation; those require their own permissions and any review Meta requests.
+20. Match campaign keys on orders to `meta:CAMPAIGN_ID`. Only orders with known attribution contribute to that campaign's collected revenue and ROAS. An API campaign day cannot silently overwrite an owner's manual/CSV record; reconcile any reported conflict.
+21. Review the most recent seven days of campaign spend against Ads Manager. The current bounded sync supports up to 100 campaign-day records per run. If Meta returns more, use CSV until paginated sync is added. Do not also record the same ad spend as an expense or direct order cost.
 
 ## What appears, and what can be unavailable
 
