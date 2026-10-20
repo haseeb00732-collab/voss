@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {createBrandedEntrance} from '../worker/branded-entry.mjs';
+const origin='https://voss-business.pages.dev';
+let calls=[];
+const app=createBrandedEntrance(async(url,options)=>{calls.push({url:new URL(url),options});return new Response('ok',{headers:{'Set-Cookie':'must-not-leak'}});});
+let r=await app.fetch(new Request(origin+'/?code=private-callback',{headers:{Authorization:'Bearer private',Cookie:'private'}}));
+assert.equal(r.status,200);assert.equal(calls[0].url.search,'');assert.equal(calls[0].options.headers.Authorization,undefined);assert.equal(r.headers.get('set-cookie'),null);
+calls=[];r=await app.fetch(new Request(origin+'/cloud/auth/v1/settings',{headers:{Origin:origin}}));assert.equal(r.status,200);assert.equal(calls[0].url.origin,'https://porncyiyigtvejpbsjwl.supabase.co');
+calls=[];r=await app.fetch(new Request(origin+'/cloud/rest/v1/voss_orders'));assert.equal(r.status,404);assert.equal(calls.length,0);
+r=await app.fetch(new Request(origin+'/cloud/auth/v1/settings',{headers:{Origin:'https://evil.example'}}));assert.equal(r.status,403);
+r=await app.fetch(new Request(origin+'/',{method:'POST',body:'private'}));assert.equal(r.status,405);
+const bad=createBrandedEntrance(async()=>new Response(null,{status:302,headers:{Location:'https://evil.example'}}));assert.equal((await bad.fetch(new Request(origin+'/'))).status,502);
+const moved=createBrandedEntrance(async()=>new Response(null,{status:308,headers:{Location:'https://voss-business.haseeb00732.workers.dev/settings/'}}));r=await moved.fetch(new Request(origin+'/settings'));assert.equal(r.headers.get('Location'),origin+'/settings/');
+console.log('PASS: branded entrance keeps same-origin auth, blocks cross-origin access, strips asset credentials/callbacks, restricts methods and validates redirects.');
