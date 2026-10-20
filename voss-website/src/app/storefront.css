@@ -15,3 +15,11 @@ html{scroll-behavior:smooth;scroll-padding-top:96px}body{margin:0;background:var
 @media(max-width:760px){.v-hero-film{height:70%;object-position:85% center;mask-image:linear-gradient(to bottom,black 70%,transparent 100%)}.v-hero-shade{background:linear-gradient(0deg,var(--v-black) 10%,rgb(16 16 16 / .94) 23%,rgb(16 16 16 / .1) 62%,transparent)}.v-hero{min-height:620px}.v-hero-copy h1{font-size:72px}.v-filter-fields input,.v-filter-fields select,.v-bag-row select,.v-order-summary textarea{font-size:16px}.v-bag-row select{min-height:44px}}
 @media(max-width:370px){.v-hero-copy h1{font-size:65px}.v-hero-copy>.v-kicker{letter-spacing:.08em}.v-card-meta h3{font-size:12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.voss-site *{animation:none!important;transition:none!important}.v-product-photo:hover img{transform:none}}
+/* Compact product measurements stay visible before choosing a colour. */
+.v-product-size{margin-top:24px;padding:18px 0;border-block:1px solid var(--v-line)}
+.v-product-size h2{font-family:inherit;font-size:13px;font-weight:500;margin:0 0 14px}
+.v-product-size dl{display:flex;flex-wrap:wrap;gap:20px 28px;margin:0}
+.v-product-size dl>div{display:grid;gap:5px}
+.v-product-size dt{font-size:11px;color:var(--v-muted)}
+.v-product-size dd{margin:0;font-size:15px;font-variant-numeric:tabular-nums}
+.v-product-size p{font-size:11px;line-height:1.6;color:var(--v-muted);margin-top:12px}

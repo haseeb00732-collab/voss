@@ -646,5 +646,77 @@
     "label": "Studio view",
     "width": 960,
     "height": 1200
+  },
+  {
+    "slug": "kite-tote",
+    "colour": "ivory",
+    "position": 0,
+    "white": "/catalogue-white/product-13-ivory-studio.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "kite-tote",
+    "colour": "tan",
+    "position": 0,
+    "white": "/catalogue-white/product-13-tan-studio.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "kite-tote",
+    "colour": "black",
+    "position": 0,
+    "white": "/catalogue-white/product-13-black-studio.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "kite-tote",
+    "colour": "dark-brown",
+    "position": 0,
+    "white": "/catalogue-white/product-13-dark-brown-studio.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "buckle-panel-bag-set",
+    "colour": "green",
+    "position": 0,
+    "white": "/catalogue-white/product-14-green-studio.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "buckle-panel-bag-set",
+    "colour": "black",
+    "position": 0,
+    "white": "/catalogue-white/product-14-black-studio.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "buckle-panel-bag-set",
+    "colour": "dark-brown",
+    "position": 0,
+    "white": "/catalogue-white/product-14-dark-brown-studio.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "buckle-panel-bag-set",
+    "colour": "brown",
+    "position": 0,
+    "white": "/catalogue-white/product-14-brown-studio.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
   }
 ]

@@ -372,16 +372,113 @@
     ]
   },
   "product-11": {
-    "blush": [{ "src": "/studio-colours-v1/product-11-blush-primary-960.webp", "label": "Studio view" }],
-    "beige": [{ "src": "/studio-colours-v1/product-11-beige-primary-960.webp", "label": "Studio view" }],
-    "black": [{ "src": "/studio-colours-v1/product-11-black-primary-960.webp", "label": "Studio view" }],
-    "burgundy": [{ "src": "/studio-colours-v1/product-11-burgundy-primary-960.webp", "label": "Studio view" }],
-    "ivory": [{ "src": "/studio-colours-v1/product-11-ivory-primary-960.webp", "label": "Studio view" }]
+    "blush": [
+      {
+        "src": "/studio-colours-v1/product-11-blush-primary-960.webp",
+        "label": "Studio view"
+      }
+    ],
+    "beige": [
+      {
+        "src": "/studio-colours-v1/product-11-beige-primary-960.webp",
+        "label": "Studio view"
+      }
+    ],
+    "black": [
+      {
+        "src": "/studio-colours-v1/product-11-black-primary-960.webp",
+        "label": "Studio view"
+      }
+    ],
+    "burgundy": [
+      {
+        "src": "/studio-colours-v1/product-11-burgundy-primary-960.webp",
+        "label": "Studio view"
+      }
+    ],
+    "ivory": [
+      {
+        "src": "/studio-colours-v1/product-11-ivory-primary-960.webp",
+        "label": "Studio view"
+      }
+    ]
   },
   "product-12": {
-    "beige": [{ "src": "/studio-colours-v1/product-12-beige-studio-960.webp", "label": "Studio view" }],
-    "tan": [{ "src": "/studio-colours-v1/product-12-tan-studio-960.webp", "label": "Studio view" }],
-    "dark-brown": [{ "src": "/studio-colours-v1/product-12-dark-brown-studio-960.webp", "label": "Studio view" }],
-    "black": [{ "src": "/studio-colours-v1/product-12-black-studio-960.webp", "label": "Studio view" }]
+    "beige": [
+      {
+        "src": "/studio-colours-v1/product-12-beige-studio-960.webp",
+        "label": "Studio view"
+      }
+    ],
+    "tan": [
+      {
+        "src": "/studio-colours-v1/product-12-tan-studio-960.webp",
+        "label": "Studio view"
+      }
+    ],
+    "dark-brown": [
+      {
+        "src": "/studio-colours-v1/product-12-dark-brown-studio-960.webp",
+        "label": "Studio view"
+      }
+    ],
+    "black": [
+      {
+        "src": "/studio-colours-v1/product-12-black-studio-960.webp",
+        "label": "Studio view"
+      }
+    ]
+  },
+  "product-13": {
+    "ivory": [
+      {
+        "src": "/studio-colours-v1/product-13-ivory-studio-960.webp",
+        "label": "Studio view"
+      }
+    ],
+    "tan": [
+      {
+        "src": "/studio-colours-v1/product-13-tan-studio-960.webp",
+        "label": "Studio view"
+      }
+    ],
+    "black": [
+      {
+        "src": "/studio-colours-v1/product-13-black-studio-960.webp",
+        "label": "Studio view"
+      }
+    ],
+    "dark-brown": [
+      {
+        "src": "/studio-colours-v1/product-13-dark-brown-studio-960.webp",
+        "label": "Studio view"
+      }
+    ]
+  },
+  "product-14": {
+    "green": [
+      {
+        "src": "/studio-colours-v1/product-14-green-studio-960.webp",
+        "label": "Studio view"
+      }
+    ],
+    "black": [
+      {
+        "src": "/studio-colours-v1/product-14-black-studio-960.webp",
+        "label": "Studio view"
+      }
+    ],
+    "dark-brown": [
+      {
+        "src": "/studio-colours-v1/product-14-dark-brown-studio-960.webp",
+        "label": "Studio view"
+      }
+    ],
+    "brown": [
+      {
+        "src": "/studio-colours-v1/product-14-brown-studio-960.webp",
+        "label": "Studio view"
+      }
+    ]
   }
 }

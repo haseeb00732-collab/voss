@@ -16,6 +16,8 @@ const specs = [
   ['structured-trio-bag-set','Structured Trio Bag Set',3400,'Bag sets','cognac','black,navy,burgundy,dark-brown,cognac','A structured top handle bag, zipped pouch and gold-bar flap purse in one matching set.','Three matching pieces, each with its own shape. Rounded handle tabs soften the main bag, a zipped pouch sits alongside it, and a slim gold bar finishes the flap purse. Compare five colours before choosing your set.'],
   ['chic','Chic',2999,'Shoulder bag','blush','blush,beige,black,burgundy,ivory','A small glossy shoulder bag with a curved zip top, oval plaque and matching removable strap.','A softly tapered shape with rounded corners, fine stitching and gold-tone details. The glossy finish makes each colour distinct. A matching strap is shown with the available colour photographs.'],
   ['croc-panel-dome-bag','Croc Panel Dome Bag',2999,'Top handle','beige','beige,tan,dark-brown,black','A domed zip-top bag with a crocodile-textured front panel and gold-tone handle details.','Long slender handles frame the rounded shape and textured front panel. Gold-tone details finish the handles, while a curved zip top follows the shape of the bag. Choose from beige, tan, dark brown and black.'],
+  ['kite-tote','Kite Tote',2649,'Totes','ivory','ivory,tan,black,dark-brown','A woven-texture bag with winged sides, smooth trim and a matching long strap.','A distinctive kite-shaped outline brings texture and structure together. Rounded handles and smooth vertical trim frame the woven-look panels. A matching long strap is pictured with each colour.'],
+  ['buckle-panel-bag-set','Buckle Panel Bag Set',2799,'Bag sets','green','green,black,dark-brown,brown','A rectangular handbag and matching flap wallet, finished with buckle details.','Croc-textured side panels meet a smooth centre panel on this structured handbag. Rounded handles, gold-tone buckles and a coordinated flap wallet complete the set.'],
 ] as const;
 export const CATALOGUE: Piece[] = specs.map((s, i) => {
   const dir = `product-${String(i + 1).padStart(2, '0')}`;
@@ -37,7 +39,7 @@ export const legacyImages = (piece?: Piece) => { void piece; return [] as string
 export const LEGACY_COUNTS: Record<string,number> = {};
 export const HUE_TOKENS = hues;
 export const STYLE_COUNT = CATALOGUE.length;
-export const styleCountWord = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'][STYLE_COUNT] ?? String(STYLE_COUNT);
+export const styleCountWord = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen'][STYLE_COUNT] ?? String(STYLE_COUNT);
 export const StyleCountWord = styleCountWord[0].toUpperCase() + styleCountWord.slice(1);
 export const getPiece = (slug: string) => CATALOGUE.find(p => p.slug === slug);
 export const relatedPieces = (slug: string, count = 3) => CATALOGUE.filter(p => p.slug !== slug).slice(0,count);
