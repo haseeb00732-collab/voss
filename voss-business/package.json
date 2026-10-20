@@ -6,7 +6,7 @@
     "dev": "next dev --webpack -p 3001",
     "build": "next build --webpack",
     "start": "node scripts/serve-preview.mjs",
-    "test": "node scripts/test-cloud-owner.mjs && node scripts/test-team-checkout.mjs && node scripts/test-email-outbox.mjs"
+    "test": "node scripts/test-cloud-owner.mjs && node scripts/test-team-checkout.mjs && node scripts/test-email-outbox.mjs && node scripts/test-finance.mjs && node scripts/test-finance-upgrade.mjs && node scripts/test-social.mjs && node scripts/test-auth.mjs && node scripts/test-proxy.mjs"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.8",

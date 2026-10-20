@@ -41,6 +41,7 @@
   "exclude": [
     "node_modules",
     "legacy",
-    "runtime"
+    "runtime",
+    "supabase"
   ]
 }

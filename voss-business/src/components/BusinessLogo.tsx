@@ -1,0 +1,4 @@
+export function BusinessLogo({compact=false,onActivate}:{compact?:boolean;onActivate?:()=>void}) {
+  const content=<span className={`business-logo${compact?' compact':''}`} aria-label="VOSS Business"><svg viewBox="0 0 100 81.152" fill="currentColor" aria-hidden="true"><path d="M 0.374 0.327 L 50 80.555 L 50 66.562 L 12.432 5.301 C 19.124 8.165, 25.699 11.113, 29.338 17.016 L 50 50.56 L 50 36.236 L 38.125 17.016 C 30.793 5.122, 13.747 1.844, 0.374 0.327 Z"/><path d="M 99.626 0.327 L 50 80.555 L 50 66.562 L 87.568 5.301 C 80.876 8.165, 74.301 11.113, 70.662 17.016 L 50 50.56 L 50 36.236 L 61.875 17.016 C 69.207 5.122, 86.253 1.844, 99.626 0.327 Z"/></svg><span>VOSS<small>BUSINESS</small></span></span>;
+  return onActivate?<button type="button" className="business-logo-button" aria-label="VOSS Business overview" onClick={onActivate}>{content}</button>:content;
+}

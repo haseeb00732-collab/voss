@@ -9,4 +9,4 @@ http.createServer(async(req,res)=>{
     if((await stat(file)).isDirectory())file=path.join(file,'index.html');
     const bytes=await readFile(file);res.writeHead(200,{'Content-Type':types[path.extname(file)]||'application/octet-stream','Cache-Control':'no-store','X-Robots-Tag':'noindex, nofollow'}).end(bytes);
   }catch{res.writeHead(404,{'Content-Type':'text/plain'}).end('Not found');}
-}).listen(3001,'127.0.0.1',()=>console.log('VOSS Business preview: http://127.0.0.1:3001/preview/'));
+}).listen(3001,'127.0.0.1',()=>console.log('VOSS Business: http://127.0.0.1:3001/'));

@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {collectMeta,jobRpc,runScheduled} from '../worker/jobs.mjs';
+assert.equal((await collectMeta({})).state,'disconnected');
+await assert.rejects(()=>jobRpc({},'backup'),/credentials/);
+const calls=[];
+const mock=async(url,options)=>{calls.push({url:String(url),options});const path=new URL(url).pathname;if(path.endsWith('/media'))return Response.json({data:[]});if(path.endsWith('/insights'))return Response.json({data:[]});return Response.json({id:'123',username:'voss',followers_count:20,media_count:2});};
+const result=await collectMeta({META_ACCESS_TOKEN:'private-test-token',META_GRAPH_VERSION:'v99.0',META_IG_ACCOUNT_ID:'123'},mock);
+assert.equal(result.instagram.followers,20);assert.equal(result.instagram.posts.length,0);
+assert(calls.every(c=>!c.url.includes('private-test-token')),'Token must stay out of query strings');
+assert(calls.every(c=>c.options.headers.Authorization==='Bearer private-test-token'));
+await assert.rejects(()=>collectMeta({META_ACCESS_TOKEN:'x',META_GRAPH_VERSION:'v99.0',META_AD_ACCOUNT_ID:'123'},async()=>Response.json({currency:'USD'})),/not PKR/);
+await assert.rejects(()=>runScheduled({cron:'0 3 * * *'},{}),/backup job failed/);
+console.log('PASS: scheduled job safety, disconnected fallback, server-only token headers, unsupported currency rejection.');

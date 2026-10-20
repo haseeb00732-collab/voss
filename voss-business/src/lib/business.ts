@@ -1,16 +1,22 @@
 import { createClient } from '@supabase/supabase-js';
 
 // Publishable key only. Every operation is checked against the private owner allowlist.
+// Keep database traffic on the dashboard connection in browsers. The Worker
+// forwards only the named owner APIs and never adds privileged credentials.
+export const supabaseUrl = typeof window === 'undefined'
+  ? 'https://porncyiyigtvejpbsjwl.supabase.co'
+  : `${window.location.origin}/cloud`;
+export const supabasePublishableKey = 'sb_publishable_yyzuSdZT41Mlon7BU2XV_g_jNk2gCrq';
 export const cloud = createClient(
-  'https://porncyiyigtvejpbsjwl.supabase.co',
-  'sb_publishable_yyzuSdZT41Mlon7BU2XV_g_jNk2gCrq',
-  { auth: { storage: typeof window === 'undefined' ? undefined : window.sessionStorage, persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+  supabaseUrl,
+  supabasePublishableKey,
+  { auth: { storage: typeof window === 'undefined' ? undefined : window.sessionStorage, persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: 'pkce' },
     global: { fetch: (input, init) => fetch(input, { ...init, signal: init?.signal ? AbortSignal.any([init.signal, AbortSignal.timeout(20000)]) : AbortSignal.timeout(20000) }) } }
 );
-export const statuses = ['received','confirmed','packed','shipped','delivered','cancelled','returned'] as const;
+export const statuses = ['received','confirmed','packed','shipped','delivered','cancelled','returned','refused'] as const;
 export type Status = typeof statuses[number];
-export const statusLabel: Record<Status,string> = { received: 'New order', confirmed: 'Confirmed', packed: 'Packed', shipped: 'Dispatched', delivered: 'Delivered', cancelled: 'Cancelled', returned: 'Returned' };
-export const nextStatuses: Record<Status, Status[]> = { received:['confirmed','cancelled'],confirmed:['packed','cancelled'],packed:['shipped','cancelled'],shipped:['delivered','returned'],delivered:['returned'],cancelled:[],returned:[] };
+export const statusLabel: Record<Status,string> = { received: 'New order', confirmed: 'Confirmed', packed: 'Packed', shipped: 'Dispatched', delivered: 'Delivered', cancelled: 'Cancelled', returned: 'Returned', refused:'Refused' };
+export const nextStatuses: Record<Status, Status[]> = { received:['confirmed','cancelled'],confirmed:['packed','cancelled'],packed:['shipped','cancelled'],shipped:['delivered','returned','refused'],delivered:['returned'],cancelled:[],returned:[],refused:[] };
 export type Item = {name:string; colour_name:string; quantity:number; image_url:string; unit_price_pkr:number};
 export type Order = {id:string;reference:string;customer_name:string;phone:string;city:string;status:Status;payment_status:'pending'|'collected';total_pkr:number;created_at:string;version:number;items:Item[]};
 export type Event = {id:number; action:string; old_value:string|null;new_value:string|null;note:string;created_at:string};
