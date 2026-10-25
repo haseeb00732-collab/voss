@@ -11,6 +11,4 @@ export const PRODUCT_MEASUREMENTS: Record<string, BagMeasurements> = {
   'textured-dome-satchel': { width: 13, height: 11 },
   'two-tone-bag-set': { width: 16, height: 11 },
   'tassel-tote': { width: 17, height: 11 },
-  'structured-trio-bag-set': { width: 10, height: 9 },
-  'croc-panel-dome-bag': { width: 10.5, height: 8.5 },
 };

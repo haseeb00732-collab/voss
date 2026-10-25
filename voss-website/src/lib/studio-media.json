@@ -42,74 +42,96 @@
     ]
   },
   "product-02": {
-    "ivory": [
-      {
-        "src": "/studio-colours-v1/product-02-ivory-primary-960.webp",
-        "label": "Studio view"
-      }
-    ],
     "black": [
       {
-        "src": "/studio-colours-v1/product-02-black-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-02-black-960.webp",
+        "label": "Front view"
       },
       {
-        "src": "/studio-colours-v1/product-02-black-review-front-960.webp",
-        "label": "Front view"
-      }
-    ],
-    "magenta": [
+        "src": "/studio-colours-v1/product-02-black-side-960.webp",
+        "label": "Side and texture"
+      },
       {
-        "src": "/studio-cutouts/product-02-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-02-black-top-960.webp",
+        "label": "Top and central zip"
+      },
+      {
+        "src": "/studio-colours-v1/product-02-black-interior-960.webp",
+        "label": "Interior"
+      },
+      {
+        "src": "/studio-colours-v1/product-02-black-size-960.webp",
+        "label": "Size guide"
       }
     ],
     "mustard": [
       {
-        "src": "/studio-colours-v1/product-02-mustard-primary-960.webp",
-        "label": "Studio view"
-      }
-    ],
-    "royal-blue": [
-      {
-        "src": "/studio-colours-v1/product-02-royal-blue-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-02-mustard-960.webp",
+        "label": "Front view"
       }
     ],
     "navy": [
       {
-        "src": "/studio-colours-v1/product-02-navy-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-02-navy-960.webp",
+        "label": "Front view"
+      }
+    ],
+    "beige": [
+      {
+        "src": "/studio-colours-v1/product-02-beige-960.webp",
+        "label": "Front view"
+      }
+    ],
+    "burgundy": [
+      {
+        "src": "/studio-colours-v1/product-02-burgundy-960.webp",
+        "label": "Front view"
       }
     ]
   },
   "product-03": {
     "dark-brown": [
       {
-        "src": "/studio-colours-v1/product-03-dark-brown-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-03-dark-brown-960.webp",
+        "label": "Front view"
+      },
+      {
+        "src": "/studio-colours-v1/product-03-dark-brown-back-960.webp",
+        "label": "Back zip pocket"
+      },
+      {
+        "src": "/studio-colours-v1/product-03-dark-brown-side-960.webp",
+        "label": "Side and croc texture"
+      },
+      {
+        "src": "/studio-colours-v1/product-03-dark-brown-top-960.webp",
+        "label": "Top and central zip"
+      },
+      {
+        "src": "/studio-colours-v1/product-03-dark-brown-interior-960.webp",
+        "label": "Interior"
+      },
+      {
+        "src": "/studio-colours-v1/product-03-dark-brown-size-960.webp",
+        "label": "Size guide"
       }
     ],
     "green": [
       {
-        "src": "/studio-colours-v1/product-03-green-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-03-green-960.webp",
+        "label": "Front view"
       }
     ],
     "tan": [
       {
-        "src": "/studio-colours-v1/product-03-tan-primary-960.webp",
-        "label": "Studio view"
-      },
-      {
-        "src": "/studio-colours-v1/product-03-tan-review-front-960.webp",
+        "src": "/studio-colours-v1/product-03-tan-960.webp",
         "label": "Front view"
       }
     ],
     "black": [
       {
-        "src": "/studio-cutouts/product-03-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-03-black-960.webp",
+        "label": "Front view"
       }
     ]
   },
@@ -146,228 +168,326 @@
   "product-05": {
     "tan": [
       {
-        "src": "/studio-colours-v1/product-05-tan-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-05-tan-960.webp",
+        "label": "Front view"
+      },
+      {
+        "src": "/studio-colours-v1/product-05-tan-wallet-960.webp",
+        "label": "Matching wallet"
       }
     ],
     "black": [
       {
-        "src": "/studio-colours-v1/product-05-black-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-05-black-960.webp",
+        "label": "Front view"
       },
       {
-        "src": "/studio-colours-v1/product-05-black-review-front-960.webp",
-        "label": "Front view"
+        "src": "/studio-colours-v1/product-05-black-wallet-960.webp",
+        "label": "Matching wallet"
+      },
+      {
+        "src": "/studio-colours-v1/product-05-black-side-960.webp",
+        "label": "Side view"
+      },
+      {
+        "src": "/studio-colours-v1/product-05-black-top-960.webp",
+        "label": "Top and central zip"
+      },
+      {
+        "src": "/studio-colours-v1/product-05-black-interior-960.webp",
+        "label": "Interior zip pocket"
+      },
+      {
+        "src": "/studio-colours-v1/product-05-black-size-960.webp",
+        "label": "Size guide"
       }
     ],
     "nude": [
       {
-        "src": "/studio-colours-v1/product-05-nude-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-05-nude-960.webp",
+        "label": "Front view"
+      },
+      {
+        "src": "/studio-colours-v1/product-05-nude-wallet-960.webp",
+        "label": "Matching wallet"
       }
     ],
     "dark-brown": [
       {
-        "src": "/studio-colours-v1/product-05-dark-brown-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-05-dark-brown-960.webp",
+        "label": "Front view"
+      },
+      {
+        "src": "/studio-colours-v1/product-05-dark-brown-wallet-960.webp",
+        "label": "Matching wallet"
       }
     ],
     "green": [
       {
-        "src": "/studio-cutouts/product-05-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-05-green-960.webp",
+        "label": "Front view"
+      },
+      {
+        "src": "/studio-colours-v1/product-05-green-wallet-960.webp",
+        "label": "Matching wallet"
       }
     ]
   },
   "product-06": {
     "black": [
       {
-        "src": "/studio-cutouts/product-06-960.webp",
-        "label": "Studio view"
-      },
-      {
-        "src": "/studio-colours-v1/product-06-black-review-front-960.webp",
+        "src": "/studio-colours-v1/product-06-black-960.webp",
         "label": "Front view"
-      },
-      {
-        "src": "/studio-colours-v1/product-06-black-review-interior-960.webp",
-        "label": "Inside the bag"
       }
     ],
     "brown": [
       {
-        "src": "/studio-colours-v1/product-06-brown-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-06-brown-960.webp",
+        "label": "Front view"
+      },
+      {
+        "src": "/studio-colours-v1/product-06-brown-back-960.webp",
+        "label": "Back view"
+      },
+      {
+        "src": "/studio-colours-v1/product-06-brown-side-960.webp",
+        "label": "Side and compartments"
+      },
+      {
+        "src": "/studio-colours-v1/product-06-brown-top-960.webp",
+        "label": "Top view"
+      },
+      {
+        "src": "/studio-colours-v1/product-06-brown-interior-960.webp",
+        "label": "Interior divisions"
+      },
+      {
+        "src": "/studio-colours-v1/product-06-brown-size-960.webp",
+        "label": "Size guide"
       }
     ],
     "tan": [
       {
-        "src": "/studio-colours-v1/product-06-tan-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-06-tan-960.webp",
+        "label": "Front view"
       }
     ],
     "beige-natural": [
       {
-        "src": "/studio-colours-v1/product-06-beige-natural-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-06-beige-natural-960.webp",
+        "label": "Front view"
       }
     ],
     "navy": [
       {
-        "src": "/studio-colours-v1/product-06-navy-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-06-navy-960.webp",
+        "label": "Front view"
       }
     ]
   },
   "product-07": {
     "blue": [
       {
-        "src": "/studio-colours-v1/product-07-blue-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-07-blue-960.webp",
+        "label": "Front view"
       }
     ],
     "black": [
       {
-        "src": "/studio-colours-v1/product-07-black-primary-960.webp",
-        "label": "Studio view"
-      },
-      {
-        "src": "/studio-colours-v1/product-07-black-review-front-960.webp",
+        "src": "/studio-colours-v1/product-07-black-960.webp",
         "label": "Front view"
-      },
-      {
-        "src": "/studio-colours-v1/product-07-black-review-tote-960.webp",
-        "label": "The tote"
-      },
-      {
-        "src": "/studio-colours-v1/product-07-black-review-accessories-960.webp",
-        "label": "The smaller pieces"
       }
     ],
     "grey": [
       {
-        "src": "/studio-colours-v1/product-07-grey-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-07-grey-960.webp",
+        "label": "Front view"
       }
     ],
     "beige": [
       {
-        "src": "/studio-cutouts/product-07-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-07-beige-960.webp",
+        "label": "Front view"
+      },
+      {
+        "src": "/studio-colours-v1/product-07-beige-side-960.webp",
+        "label": "Side view"
+      },
+      {
+        "src": "/studio-colours-v1/product-07-beige-back-960.webp",
+        "label": "Back view"
+      },
+      {
+        "src": "/studio-colours-v1/product-07-beige-interior-960.webp",
+        "label": "Interior"
       }
     ]
   },
   "product-08": {
     "grey-black": [
       {
-        "src": "/studio-colours-v1/product-08-grey-black-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-08-grey-black-front-960.webp",
+        "label": "Front view"
+      },
+      {
+        "src": "/studio-colours-v1/product-08-grey-black-960.webp",
+        "label": "Back zip pocket"
+      },
+      {
+        "src": "/studio-colours-v1/product-08-grey-black-small-bag-960.webp",
+        "label": "Matching smaller bag"
+      },
+      {
+        "src": "/studio-colours-v1/product-08-black-pouch-960.webp",
+        "label": "Matching rounded pouch"
       }
     ],
     "cream-black": [
       {
-        "src": "/studio-colours-v1/product-08-cream-black-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-08-cream-black-front-960.webp",
+        "label": "Front view"
+      },
+      {
+        "src": "/studio-colours-v1/product-08-cream-black-960.webp",
+        "label": "Back zip pocket"
+      },
+      {
+        "src": "/studio-colours-v1/product-08-cream-black-small-bag-960.webp",
+        "label": "Matching smaller bag"
+      },
+      {
+        "src": "/studio-colours-v1/product-08-black-pouch-960.webp",
+        "label": "Matching rounded pouch"
       }
     ],
     "tan-black": [
       {
-        "src": "/studio-colours-v1/product-08-tan-black-primary-960.webp",
-        "label": "Studio view"
-      },
-      {
-        "src": "/studio-colours-v1/product-08-tan-black-review-front-960.webp",
+        "src": "/studio-colours-v1/product-08-tan-black-front-960.webp",
         "label": "Front view"
       },
       {
-        "src": "/studio-colours-v1/product-08-tan-black-review-tote-960.webp",
-        "label": "The tote"
+        "src": "/studio-colours-v1/product-08-tan-black-960.webp",
+        "label": "Back zip pocket"
       },
       {
-        "src": "/studio-colours-v1/product-08-tan-black-review-accessories-960.webp",
-        "label": "The smaller pieces"
+        "src": "/studio-colours-v1/product-08-tan-black-small-bag-960.webp",
+        "label": "Matching smaller bag"
+      },
+      {
+        "src": "/studio-colours-v1/product-08-black-pouch-960.webp",
+        "label": "Matching rounded pouch"
       }
     ],
     "burgundy-black": [
       {
-        "src": "/studio-colours-v1/product-08-burgundy-black-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-08-burgundy-black-front-960.webp",
+        "label": "Front view"
+      },
+      {
+        "src": "/studio-colours-v1/product-08-burgundy-black-960.webp",
+        "label": "Back zip pocket"
+      },
+      {
+        "src": "/studio-colours-v1/product-08-burgundy-black-small-bag-960.webp",
+        "label": "Matching smaller bag"
+      },
+      {
+        "src": "/studio-colours-v1/product-08-black-pouch-960.webp",
+        "label": "Matching rounded pouch"
       }
     ],
     "cream-brown": [
       {
-        "src": "/studio-cutouts/product-08-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-08-cream-brown-front-960.webp",
+        "label": "Front view"
+      },
+      {
+        "src": "/studio-colours-v1/product-08-cream-brown-960.webp",
+        "label": "Back zip pocket"
+      },
+      {
+        "src": "/studio-colours-v1/product-08-cream-brown-side-960.webp",
+        "label": "Side view"
+      },
+      {
+        "src": "/studio-colours-v1/product-08-cream-brown-interior-960.webp",
+        "label": "Tote interior"
+      },
+      {
+        "src": "/studio-colours-v1/product-08-cream-brown-small-bag-960.webp",
+        "label": "Matching smaller bag"
+      },
+      {
+        "src": "/studio-colours-v1/product-08-cream-brown-pouch-960.webp",
+        "label": "Matching rounded pouch"
+      },
+      {
+        "src": "/studio-colours-v1/product-08-cream-brown-size-960.webp",
+        "label": "Size guide"
       }
     ]
   },
   "product-09": {
     "cognac": [
       {
-        "src": "/studio-colours-v1/product-09-cognac-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-09-cognac-960.webp",
+        "label": "Front view"
       }
     ],
     "green": [
       {
-        "src": "/studio-colours-v1/product-09-green-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-09-green-960.webp",
+        "label": "Front view"
       }
     ],
     "burgundy": [
       {
-        "src": "/studio-colours-v1/product-09-burgundy-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-09-burgundy-960.webp",
+        "label": "Front view"
       }
     ],
     "dark-brown": [
       {
-        "src": "/studio-colours-v1/product-09-dark-brown-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-09-dark-brown-960.webp",
+        "label": "Front view"
       }
     ],
     "black": [
       {
-        "src": "/studio-colours-v1/product-09-black-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-09-black-960.webp",
+        "label": "Front view"
       }
     ],
     "navy": [
       {
-        "src": "/studio-colours-v1/product-09-navy-primary-960.webp",
-        "label": "Studio view"
-      }
-    ]
-  },
-  "product-10": {
-    "cognac": [
-      {
-        "src": "/studio-colours-v1/product-10-cognac-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-09-navy-960.webp",
+        "label": "Front view"
       }
     ],
-    "black": [
+    "grey": [
       {
-        "src": "/studio-colours-v1/product-10-black-primary-960.webp",
-        "label": "Studio view"
-      }
-    ],
-    "navy": [
+        "src": "/studio-colours-v1/product-09-grey-960.webp",
+        "label": "Front view"
+      },
       {
-        "src": "/studio-colours-v1/product-10-navy-primary-960.webp",
-        "label": "Studio view"
-      }
-    ],
-    "burgundy": [
+        "src": "/studio-colours-v1/product-09-grey-back-960.webp",
+        "label": "Back view"
+      },
       {
-        "src": "/studio-colours-v1/product-10-burgundy-primary-960.webp",
-        "label": "Studio view"
-      }
-    ],
-    "dark-brown": [
+        "src": "/studio-colours-v1/product-09-grey-side-960.webp",
+        "label": "Side and shoulder strap"
+      },
       {
-        "src": "/studio-colours-v1/product-10-dark-brown-primary-960.webp",
-        "label": "Studio view"
+        "src": "/studio-colours-v1/product-09-grey-top-960.webp",
+        "label": "Top and central zip"
+      },
+      {
+        "src": "/studio-colours-v1/product-09-grey-interior-960.webp",
+        "label": "Interior zip pocket"
+      },
+      {
+        "src": "/studio-colours-v1/product-09-grey-size-960.webp",
+        "label": "Size guide"
       }
     ]
   },
@@ -403,32 +523,6 @@
       }
     ]
   },
-  "product-12": {
-    "beige": [
-      {
-        "src": "/studio-colours-v1/product-12-beige-studio-960.webp",
-        "label": "Studio view"
-      }
-    ],
-    "tan": [
-      {
-        "src": "/studio-colours-v1/product-12-tan-studio-960.webp",
-        "label": "Studio view"
-      }
-    ],
-    "dark-brown": [
-      {
-        "src": "/studio-colours-v1/product-12-dark-brown-studio-960.webp",
-        "label": "Studio view"
-      }
-    ],
-    "black": [
-      {
-        "src": "/studio-colours-v1/product-12-black-studio-960.webp",
-        "label": "Studio view"
-      }
-    ]
-  },
   "product-13": {
     "ivory": [
       {
@@ -460,24 +554,52 @@
       {
         "src": "/studio-colours-v1/product-14-green-studio-960.webp",
         "label": "Studio view"
+      },
+      {
+        "src": "/studio-colours-v1/product-14-green-back-960.webp",
+        "label": "Full-croc back view"
       }
     ],
     "black": [
       {
         "src": "/studio-colours-v1/product-14-black-studio-960.webp",
         "label": "Studio view"
+      },
+      {
+        "src": "/studio-colours-v1/product-14-black-back-960.webp",
+        "label": "Full-croc back view"
+      },
+      {
+        "src": "/studio-colours-v1/product-14-black-side-960.webp",
+        "label": "Side view"
+      },
+      {
+        "src": "/studio-colours-v1/product-14-black-top-960.webp",
+        "label": "Top and central zip"
+      },
+      {
+        "src": "/studio-colours-v1/product-14-black-interior-960.webp",
+        "label": "Interior zip pocket"
       }
     ],
     "dark-brown": [
       {
         "src": "/studio-colours-v1/product-14-dark-brown-studio-960.webp",
         "label": "Studio view"
+      },
+      {
+        "src": "/studio-colours-v1/product-14-dark-brown-back-960.webp",
+        "label": "Full-croc back view"
       }
     ],
     "brown": [
       {
         "src": "/studio-colours-v1/product-14-brown-studio-960.webp",
         "label": "Studio view"
+      },
+      {
+        "src": "/studio-colours-v1/product-14-brown-back-960.webp",
+        "label": "Full-croc back view"
       }
     ]
   }
