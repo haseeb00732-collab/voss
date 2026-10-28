@@ -10,12 +10,12 @@ import { CATALOGUE, colourwayImage, colourwaySrcSet, priceLabel } from '@/lib/ca
 import './ColourCampaign.css';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
-const piece = CATALOGUE[8];
+const piece = CATALOGUE.find(p => p.slug === 'tassel-tote')!;
 const colours = ['cognac', 'burgundy', 'black'].map(key => piece.colourways.find(c => c.key === key)!);
 
 export function ColourCampaign() {
   const root = useRef<HTMLElement>(null);
-  const [active, setActive] = useState(colours.findIndex(c => c.key === piece.coverColour));
+  const [active, setActive] = useState(Math.max(0, colours.findIndex(c => c.key === piece.coverColour)));
   useGSAP(() => {
     const media = gsap.matchMedia();
     media.add('(prefers-reduced-motion: no-preference)', () => {
