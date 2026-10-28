@@ -7,6 +7,7 @@ import {Piece,studioPhotos,studioPhotoSrcSet,priceLabel} from '@/lib/catalogue';
 import {useBag} from './StoreShell';
 import {InstagramOrder} from './InstagramOrder';
 import {PRODUCT_MEASUREMENTS} from '@/lib/product-measurements';
+import {BagSizeGuide} from './BagSizeGuide';
 
 export function ProductDetail({piece}: {piece:Piece}) {
   const router = useRouter();
@@ -15,18 +16,21 @@ export function ProductDetail({piece}: {piece:Piece}) {
   const [added,setAdded]=useState(false);
   const {items,save,storageError}=useBag();
   const colour=piece.colourways.find(c=>c.key===colourKey)!;
-  const images=studioPhotos(piece,colour);
+  const images=studioPhotos(piece,colour).filter(image=>image.label.toLowerCase()!=='size guide');
   const photo=images[Math.min(frame,images.length-1)];
   const measurements=PRODUCT_MEASUREMENTS[piece.slug];
+  const galleryCount=images.length+(measurements?1:0);
+  const showingSize=!!measurements&&frame===images.length;
+  function showSize() { setFrame(images.length); document.getElementById('product-gallery')?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'}); }
   function add() { const found=items.find(i=>i.slug===piece.slug&&i.colour===colourKey); save(found?items.map(i=>i===found?{...i,quantity:Math.min(20,i.quantity+1)}:i):[...items,{slug:piece.slug,colour:colourKey,quantity:1}]); setAdded(true); }
   return <div className="v-detail">
-    <div className="v-gallery">
+    <div className="v-gallery" id="product-gallery">
       <div className="v-main-photo v-studio-photo">
-        <img key={photo.src} src={photo.src} srcSet={studioPhotoSrcSet(photo)} sizes="(max-width: 760px) 100vw, 55vw" alt={`${piece.name}, ${colour.name} — ${photo.label}`} width="1122" height="1402" fetchPriority="high"/>
-        <span className="v-image-index">{String(frame+1).padStart(2,'0')} / {String(images.length).padStart(2,'0')}</span>
+        {showingSize&&measurements?<BagSizeGuide name={piece.name} colour={colour.name} image={images[0].src} measurements={measurements}/>:<img key={photo.src} src={photo.src} srcSet={studioPhotoSrcSet(photo)} sizes="(max-width: 760px) 100vw, 55vw" alt={`${piece.name}, ${colour.name} — ${photo.label}`} width="1122" height="1402" fetchPriority="high"/>}
+        <span className="v-image-index">{String(frame+1).padStart(2,'0')} / {String(galleryCount).padStart(2,'0')}</span>
       </div>
-      {images.length>1&&<div className="v-gallery-thumbs">{images.map((image,i)=><button key={image.src} aria-label={`View ${image.label.toLowerCase()}`} aria-pressed={frame===i} onClick={()=>setFrame(i)}><img src={image.src} alt="" width="64" height="80" loading="lazy"/></button>)}</div>}
-      <p className="v-photo-note">{photo.label} · Colours may vary with lighting and screen settings.</p>
+      {galleryCount>1&&<div className="v-gallery-thumbs">{images.map((image,i)=><button key={image.src} aria-label={`View ${image.label.toLowerCase()}`} aria-pressed={frame===i} onClick={()=>setFrame(i)}><img src={image.src} alt="" width="64" height="80" loading="lazy"/></button>)}{measurements&&<button className="v-size-guide-thumb" aria-label="View size guide" aria-pressed={showingSize} onClick={()=>setFrame(images.length)}><span aria-hidden="true">↔</span><small>Size guide</small></button>}</div>}
+      <p className="v-photo-note">{showingSize?'Size guide · confirmed measurements in inches.':`${photo.label} · Colours may vary with lighting and screen settings.`}</p>
     </div>
     <div className="v-product-info">
       <div className="v-kicker">{piece.label} / {piece.silhouette}</div>
@@ -35,7 +39,7 @@ export function ProductDetail({piece}: {piece:Piece}) {
       <p className="v-product-description">{piece.description}</p>
       <section className="v-product-size" aria-label="Bag measurements">
         <h2>Size & fit</h2>
-        {measurements ? <><dl>{Object.entries(measurements).map(([key,value])=><div key={key}><dt>{key==='handleDrop'?'Handle drop':key[0].toUpperCase()+key.slice(1)}</dt><dd>{value} in</dd></div>)}</dl><p>Main bag measurements, excluding handles. Accessories are measured separately.</p></> : <p>Measurements are awaiting confirmation. Contact VOSS for sizing help before ordering.</p>}
+        {measurements ? <><dl>{Object.entries(measurements).map(([key,value])=><div key={key}><dt>{key==='handleDrop'?'Handle drop':key[0].toUpperCase()+key.slice(1)}</dt><dd>{value} in</dd></div>)}</dl><p>Main bag measurements, excluding handles. Accessories are measured separately.</p><button className="v-size-guide-link" onClick={showSize}>View dimension image ↗</button></> : <p>Measurements are awaiting confirmation. Contact VOSS for sizing help before ordering.</p>}
       </section>
       <fieldset className="v-colour-picker"><legend>Colour <strong>{colour.name}</strong></legend><div>{piece.colourways.map(c=><button key={c.key} aria-label={c.name} aria-pressed={colourKey===c.key} title={c.name} onClick={()=>{setColourKey(c.key);setFrame(0);setAdded(false);}}><span style={{backgroundColor:c.hex}}/></button>)}</div></fieldset>
       <div className="v-buy-actions"><button className="v-button" onClick={() => { if (!items.some(i => i.slug === piece.slug && i.colour === colourKey)) add(); router.push('/checkout'); }}>Order now <span><ArrowIcon direction="up-right" /></span></button><button className="v-text-link" onClick={add}>{added ? 'Add another to bag +' : 'Add to bag +'}</button>{added&&<Link className="v-text-link" href="/bag">View my bag <ArrowIcon direction="up-right" /></Link>}<span role="status">{storageError || (added?`${piece.name} in ${colour.name} is in your bag.`:'Choose your colour. Order in two easy steps.')}</span></div>
