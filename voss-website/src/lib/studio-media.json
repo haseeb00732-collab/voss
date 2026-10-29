@@ -553,21 +553,21 @@
     "green": [
       {
         "src": "/studio-colours-v1/product-14-green-studio-960.webp",
-        "label": "Studio view"
+        "label": "Front view — smooth centre panel"
       },
       {
         "src": "/studio-colours-v1/product-14-green-back-960.webp",
-        "label": "Full-croc back view"
+        "label": "Back view — full croc texture"
       }
     ],
     "black": [
       {
         "src": "/studio-colours-v1/product-14-black-studio-960.webp",
-        "label": "Studio view"
+        "label": "Front view — smooth centre panel"
       },
       {
         "src": "/studio-colours-v1/product-14-black-back-960.webp",
-        "label": "Full-croc back view"
+        "label": "Back view — full croc texture"
       },
       {
         "src": "/studio-colours-v1/product-14-black-side-960.webp",
@@ -585,21 +585,21 @@
     "dark-brown": [
       {
         "src": "/studio-colours-v1/product-14-dark-brown-studio-960.webp",
-        "label": "Studio view"
+        "label": "Front view — smooth centre panel"
       },
       {
         "src": "/studio-colours-v1/product-14-dark-brown-back-960.webp",
-        "label": "Full-croc back view"
+        "label": "Back view — full croc texture"
       }
     ],
     "brown": [
       {
         "src": "/studio-colours-v1/product-14-brown-studio-960.webp",
-        "label": "Studio view"
+        "label": "Front view — smooth centre panel"
       },
       {
         "src": "/studio-colours-v1/product-14-brown-back-960.webp",
-        "label": "Full-croc back view"
+        "label": "Back view — full croc texture"
       }
     ]
   }
