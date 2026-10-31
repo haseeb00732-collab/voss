@@ -8,6 +8,8 @@ import {useBag} from './StoreShell';
 import {InstagramOrder} from './InstagramOrder';
 import {PRODUCT_MEASUREMENTS} from '@/lib/product-measurements';
 import {BagSizeGuide} from './BagSizeGuide';
+import {PurchaseDetails} from './PurchaseDetails';
+import {DELIVERY_ESTIMATE,EXCHANGE_SUMMARY} from '@/lib/website-copy';
 
 export function ProductDetail({piece}: {piece:Piece}) {
   const router = useRouter();
@@ -43,11 +45,12 @@ export function ProductDetail({piece}: {piece:Piece}) {
       </section>
       <fieldset className="v-colour-picker"><legend>Colour <strong>{colour.name}</strong></legend><div>{piece.colourways.map(c=><button key={c.key} aria-label={c.name} aria-pressed={colourKey===c.key} title={c.name} onClick={()=>{setColourKey(c.key);setFrame(0);setAdded(false);}}><span style={{backgroundColor:c.hex}}/></button>)}</div></fieldset>
       <div className="v-buy-actions"><button className="v-button" onClick={() => { if (!items.some(i => i.slug === piece.slug && i.colour === colourKey)) add(); router.push('/checkout'); }}>Order now <span><ArrowIcon direction="up-right" /></span></button><button className="v-text-link" onClick={add}>{added ? 'Add another to bag +' : 'Add to bag +'}</button>{added&&<Link className="v-text-link" href="/bag">View my bag <ArrowIcon direction="up-right" /></Link>}<span role="status">{storageError || (added?`${piece.name} in ${colour.name} is in your bag.`:'Choose your colour. Order in two easy steps.')}</span></div>
+      <PurchaseDetails/>
       <InstagramOrder key={colour.key} piece={piece} colour={colour}/>
       <div className="v-accordions">
         <details open><summary>A closer look</summary><p>{piece.note}</p><p>Explore the studio photographs for your chosen colour. Contact VOSS for help with material and included accessories before ordering.</p></details>
-        <details><summary>Ordering & delivery</summary><p>Add your selection to your bag and continue to checkout. Pay cash on delivery. Delivery takes 3–8 days; the delivery charge is shown before you place your order. You can also contact VOSS on Instagram for help.</p><Link href="/help">Read the ordering guide <ArrowIcon direction="up-right" /></Link></details>
-        <details><summary>Exchanges & care</summary><p>Confirm the exchange terms before placing your order. For care advice, use the instructions appropriate to your bag’s confirmed material.</p><Link href="/help#care">More about bag care <ArrowIcon direction="up-right" /></Link></details>
+        <details><summary>Ordering & delivery</summary><p>Add your selection to your bag and continue to checkout. Pay cash on delivery. Estimated delivery is {DELIVERY_ESTIMATE} within Lahore; the delivery charge is shown before you place your order. You can also contact VOSS on WhatsApp for order help.</p><Link href="/help">Read the ordering guide <ArrowIcon direction="up-right" /></Link></details>
+        <details><summary>Exchanges & care</summary><p>{EXCHANGE_SUMMARY} For care advice, use the instructions appropriate to your bag’s confirmed material.</p><Link href="/returns">Read Returns & Exchanges <ArrowIcon direction="up-right" /></Link></details>
       </div>
     </div>
   </div>;

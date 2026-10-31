@@ -36,9 +36,9 @@ export function ColourCampaign() {
     return () => media.revert();
   }, { scope: root });
   return <section className="v-colour-campaign" ref={root} aria-labelledby="colour-campaign-title">
-    <div className="v-colour-campaign-copy"><span className="v-kicker">The colour story / VOSS</span><h2 id="colour-campaign-title">Same bag.<br /><em>Different mood.</em></h2><p>A warm cognac. A deep burgundy. An always-right black.<br />Make the everyday your own.</p>
+    <div className="v-colour-campaign-copy"><span className="v-kicker">The colour story / VOSS</span><h2 id="colour-campaign-title">Same bag.<br /><em>Different mood.</em></h2><p>Black for everything. Neutrals for every day.<br />A bold colour when you feel like it.</p>
       <div className="v-campaign-swatches" aria-label="Explore the Tassel Tote colours">{colours.map((c, i) => <button key={c.key} aria-label={`Show ${c.name} Tassel Tote`} aria-pressed={active === i} onClick={() => setActive(i)}><i style={{ background: c.hex }} /><span>{c.name}</span></button>)}</div>
-      <Link className="v-text-link" href={`/collection/${piece.slug}`}>Discover the Tassel Tote <span><ArrowIcon direction="up-right" /></span></Link>
+      <Link className="v-text-link" href={`/collection/${piece.slug}`}>Explore Colours <span><ArrowIcon direction="up-right" /></span></Link>
     </div>
     <div className="v-colour-campaign-stage"><span className="v-campaign-outline" aria-hidden="true">V</span><div className="v-colour-campaign-art"><div className="v-colour-campaign-follow">{colours.map((c, i) => <img key={c.key} className={active === i ? 'is-active' : ''} src={colourwayImage(piece, c)} srcSet={colourwaySrcSet(piece, c)} sizes="(max-width:760px) 90vw, 44vw" width="1122" height="1402" alt={active === i ? `${piece.name} in ${c.name}` : ''} aria-hidden={active !== i} loading="lazy" />)}</div></div><div className="v-campaign-caption" aria-live="polite"><span>{colours[active].name} / Article 09</span><span>{priceLabel(piece.price)}</span></div></div>
   </section>;

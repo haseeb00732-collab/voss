@@ -1,1 +1,20 @@
 .v-policy-layout{display:grid;grid-template-columns:220px minmax(0,760px);gap:6vw;align-items:start}.v-policy-layout nav{display:flex;flex-direction:column;gap:4px;position:sticky;top:110px}.v-policy-layout nav a{padding:12px 0;font-size:14px;text-decoration:none}.v-policy-copy section{padding:0 0 30px;margin:0 0 30px;border-bottom:1px solid #bfc5bf}.v-policy-copy h2{font-size:clamp(23px,3vw,32px);font-weight:400;letter-spacing:-.02em;margin:0 0 16px}.v-policy-copy p{font-size:16px;line-height:1.8;color:#465049;margin:12px 0}.v-policy-copy a,.v-checkout-privacy a,.v-checkout-consent a{text-decoration:underline;text-underline-offset:4px}.v-policy-layout a:focus-visible{outline:2px solid #98783d;outline-offset:4px}.v-footer-base .v-footer-policy-links{display:flex;gap:20px;flex-wrap:wrap}.v-footer-policy-links a{min-height:44px;display:inline-flex;align-items:center}@media(max-width:760px){.v-policy-layout{grid-template-columns:1fr;gap:30px}.v-policy-layout nav{position:static;flex-direction:row;flex-wrap:wrap;gap:0 22px;border-bottom:1px solid #bfc5bf;padding-bottom:16px}.v-policy-copy p{font-size:15px}.v-policy-page .v-page-heading{margin-bottom:30px}}
+.v-help-content section{scroll-margin-top:110px}
+.v-help-content section section{margin:26px 0;padding:0;border:0}
+.v-help-content h3{font-size:20px;font-weight:500;line-height:1.4;margin:0 0 12px}
+.v-support-actions{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:25px}
+.v-support-actions a{min-height:44px}
+.v-faq-group{margin:32px 0}
+.v-faq-group details{border-bottom:1px solid var(--v-line);padding:16px 0}
+.v-faq-group summary{cursor:pointer;font-size:15px;line-height:1.5;min-height:28px}
+.v-faq-group details p{margin:12px 0 4px}
+.v-purchase-details{padding:20px 0;margin:0 0 24px;border-top:1px solid var(--v-line);border-bottom:1px solid var(--v-line)}
+.v-purchase-details p,.v-purchase-details dl{font-size:12px;line-height:1.7;color:var(--v-muted);margin:12px 0}
+.v-purchase-details dl>div{display:grid;grid-template-columns:65px 1fr;gap:12px;margin:5px 0}
+.v-purchase-details dd{margin:0;color:var(--v-ink)}
+.v-purchase-details a,.v-bag-policy a{font-size:12px;text-decoration:underline;text-underline-offset:4px}
+.v-footer-closing{display:block;font-size:13px;line-height:1.7;max-width:330px;margin:20px 0}
+.v-brand-story .v-about-intro h1{max-width:700px;font-size:clamp(48px,6vw,90px)}
+.v-story-cta{padding-top:35px}
+.v-home-story p{font-size:clamp(18px,2vw,25px);line-height:1.65}
+@media(max-width:760px){.v-support-actions{flex-direction:column;align-items:flex-start}.v-brand-story .v-about-intro h1{font-size:52px}.v-faq-group summary{font-size:14px}.v-footer-closing{font-size:12px}}

@@ -1,10 +1,6 @@
-import type { Metadata } from 'next';
-import { PolicyPage } from '@/components/store/PolicyPage';
-import { FACEBOOK_PAGE } from '@/lib/whatsapp';
-export const metadata: Metadata = { title: 'Contact VOSS', description: 'Contact the VOSS online store on WhatsApp, Instagram or Facebook for product and order help.' };
-export default function Contact() {
-  return <PolicyPage title="Here to help." intro="A question about a colour, your order or the next steps? Talk to us.">
-    <section><h2>An online-only store</h2><p>VOSS does not have a physical shop open to visitors. Please contact our official accounts for product questions and order support.</p><p>You can also find us on <a href={FACEBOOK_PAGE} target="_blank" rel="noreferrer">Facebook: Vosspk</a>.</p></section>
-    <section><h2>Help us find your order</h2><p>Include your order reference, if you have one, and the mobile number used when ordering. Send personal order details privately, rather than in a public comment.</p></section>
-  </PolicyPage>;
-}
+import type {Metadata} from 'next';
+import {PolicyPage} from '@/components/store/PolicyPage';
+import {FACEBOOK_PAGE,whatsappLink} from '@/lib/whatsapp';
+import {igProfile} from '@/lib/instagram';
+export const metadata:Metadata={title:'Contact VOSS',description:'WhatsApp 0310 7417990 for orders, delivery, returns and exchanges. VOSS is online-only and based in Lahore.'};
+export default function Contact(){return <PolicyPage title="Let’s talk." intro="A question about a bag, an order or something that doesn’t feel right? We’re here to help."><section><h2>WhatsApp</h2><p>0310 7417990 / Orders, delivery, returns and exchanges.</p><a className="v-button" href={whatsappLink('Hello VOSS, I have a question: ')} target="_blank" rel="noreferrer">Chat on WhatsApp ↗</a></section><section><h2>Instagram</h2><p>@voss.pk / New arrivals, styling and product questions.</p><a href={igProfile()} target="_blank" rel="noreferrer">Visit Instagram ↗</a></section><section><h2>Facebook</h2><p>Vosspk / Follow the latest from VOSS.</p><a href={FACEBOOK_PAGE} target="_blank" rel="noreferrer">Follow Vosspk ↗</a></section><section><h2>Help us help you</h2><p>For an existing order, please include its reference number. Keep your phone number and address in private messages, not public comments. VOSS is online-only and based in Lahore.</p></section></PolicyPage>;}

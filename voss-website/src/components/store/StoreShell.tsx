@@ -8,6 +8,7 @@ import { CATALOGUE, getPiece, priceLabel, coverImage } from '@/lib/catalogue';
 import { igProfile, igDirectMessage, IG_HANDLE } from '@/lib/instagram';
 import { FloatingHeader } from './FloatingHeader';
 import { HeaderSearch } from './HeaderSearch';
+import {whatsappLink} from '@/lib/whatsapp';
 
 export type BagItem = { slug: string; colour: string; quantity: number };
 const STORAGE = 'voss-bag-v1';
@@ -85,8 +86,8 @@ export function StoreShell({children}: {children: React.ReactNode}) {
         </div>
       </dialog>
       <footer className="v-footer">
-        <div className="v-footer-intro"><span className="v-kicker">A considered way to carry.</span><p>Good form.<br/>Every day.</p><Link className="v-text-link" href="/collection">Find your VOSS <span><ArrowIcon direction="up-right" /></span></Link></div>
-        <div className="v-footer-links"><div><span className="v-kicker">Explore</span><Link href="/collection">The collection</Link><Link href="/about">About VOSS</Link><Link href="/bag">Your bag</Link></div><div><span className="v-kicker">Client care</span><Link href="/help">Ordering & delivery</Link><Link href="/help#exchanges">Exchanges</Link><Link href="/help#care">Bag care</Link><a href={igDirectMessage() ?? igProfile()} target="_blank" rel="noreferrer">Contact on Instagram <ArrowIcon direction="up-right" /></a></div></div>
+        <div className="v-footer-intro"><span className="v-kicker">VOSS</span><p>Found your VOSS?</p><span className="v-footer-closing">Pick your favourite. Choose your colour. Make it yours.</span><Link className="v-text-link" href="/collection">Shop the Collection <span><ArrowIcon direction="up-right" /></span></Link></div>
+        <div className="v-footer-links"><div><span className="v-kicker">Explore</span><Link href="/collection">The collection</Link><Link href="/about">About VOSS</Link><Link href="/bag">Your bag</Link></div><div><span className="v-kicker">Client care</span><Link href="/help">Ordering & delivery</Link><Link href="/returns">Returns & exchanges</Link><Link href="/help#faqs">FAQs</Link><Link href="/help#care">Bag care</Link><a href={whatsappLink()} target="_blank" rel="noreferrer">Chat on WhatsApp <ArrowIcon direction="up-right" /></a></div></div>
         <div className="v-footer-wordmark" aria-hidden="true">VOSS</div><div className="v-footer-base"><span>© {new Date().getFullYear()} VOSS</span><span className="v-footer-policy-links"><Link href="/terms">Terms</Link><Link href="/privacy">Privacy</Link><Link href="/shipping">Delivery</Link><Link href="/returns">Returns</Link><Link href="/contact">Contact</Link></span><span>Pakistan · Prices in PKR</span></div>
       </footer>
     </div>
