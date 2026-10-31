@@ -17,10 +17,11 @@ const specs = [
   ['kite-tote','Kite Tote',2649,'Totes','ivory','ivory,tan,black,dark-brown','A woven-texture bag with winged sides, smooth trim and a matching long strap.','A distinctive kite-shaped outline brings texture and structure together. Rounded handles and smooth vertical trim frame the woven-look panels. A matching long strap is pictured with each colour.'],
   ['buckle-panel-bag-set','Buckle Panel Bag Set',2799,'Bag sets','green','green,black,dark-brown,brown','A rectangular handbag and matching flap wallet, finished with buckle details.','Croc-textured side panels meet a smooth centre panel on this structured handbag. Rounded handles, gold-tone buckles and a coordinated flap wallet complete the set.'],
 ] as const;
-const articleNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 14] as const;
+// Photo directories keep their original IDs; storefront labels follow the current edit.
+const mediaNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 14] as const;
 export const CATALOGUE: Piece[] = specs.map((s, i) => {
-  const articleNumber = String(articleNumbers[i]).padStart(2, '0');
-  const dir = `product-${articleNumber}`;
+  const articleNumber = String(i + 1).padStart(2, '0');
+  const dir = `product-${String(mediaNumbers[i]).padStart(2, '0')}`;
   return { slug:s[0], dir, name:s[1], label:`Article ${articleNumber}`, price:s[2], listPrice:null, silhouette:s[3], coverColour:s[4], colourways:s[5].split(',').map((key, n) => ({key, name:key.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(' '), hex:hues[key], image:n + 1})), imageCount:s[5].split(',').length, note:s[6], description:s[7] };
 });
 export type StudioPhoto = { src: string; label: string };
