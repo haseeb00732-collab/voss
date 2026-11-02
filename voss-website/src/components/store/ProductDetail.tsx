@@ -3,7 +3,7 @@ import { ArrowIcon } from '@/components/ArrowIcon';
 import Link from 'next/link';
 import {useState} from 'react';
 import {useRouter} from 'next/navigation';
-import {Piece,studioPhotos,studioPhotoSrcSet,priceLabel} from '@/lib/catalogue';
+import {Piece,studioPhotos,studioPhotoSrcSet,priceLabel,includedPieces} from '@/lib/catalogue';
 import {useBag} from './StoreShell';
 import {InstagramOrder} from './InstagramOrder';
 import {PRODUCT_MEASUREMENTS} from '@/lib/product-measurements';
@@ -39,6 +39,7 @@ export function ProductDetail({piece}: {piece:Piece}) {
       <h1>{piece.name}</h1>
       <p className="v-product-price">{priceLabel(piece.price)} <span>PKR</span></p>
       <p className="v-product-description">{piece.description}</p>
+      {includedPieces(piece) && <p className="v-included-pieces"><strong>What is included</strong><br/>{includedPieces(piece)}. All pieces are included in the displayed price.</p>}
       <section className="v-product-size" aria-label="Bag measurements">
         <h2>Size & fit</h2>
         {measurements ? <><dl>{Object.entries(measurements).map(([key,value])=><div key={key}><dt>{key==='handleDrop'?'Handle drop':key[0].toUpperCase()+key.slice(1)}</dt><dd>{value} in</dd></div>)}</dl><p>Main bag measurements, excluding handles. Accessories are measured separately.</p><button className="v-size-guide-link" onClick={showSize}>View dimension image ↗</button></> : <p>Measurements are awaiting confirmation. Contact VOSS for sizing help before ordering.</p>}

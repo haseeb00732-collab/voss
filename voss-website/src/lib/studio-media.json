@@ -2,41 +2,41 @@
   "product-01": {
     "green": [
       {
-        "src": "/studio-colours-v1/product-01-green-primary-960.webp",
+        "src": "/studio-grounded-v2/product-01-green-0-960.webp",
         "label": "Studio view"
       }
     ],
     "black": [
       {
-        "src": "/studio-colours-v1/product-01-black-primary-960.webp",
+        "src": "/studio-grounded-v2/product-01-black-0-960.webp",
         "label": "Studio view"
       }
     ],
     "dark-brown": [
       {
-        "src": "/studio-colours-v1/product-01-dark-brown-primary-960.webp",
+        "src": "/studio-grounded-v2/product-01-dark-brown-0-960.webp",
         "label": "Studio view"
       }
     ],
     "cognac": [
       {
-        "src": "/studio-colours-v1/product-01-cognac-primary-960.webp",
+        "src": "/studio-grounded-v2/product-01-cognac-0-960.webp",
         "label": "Studio view"
       }
     ],
     "burgundy": [
       {
-        "src": "/studio-colours-v1/product-01-burgundy-primary-960.webp",
+        "src": "/studio-grounded-v2/product-01-burgundy-0-960.webp",
         "label": "Studio view"
       }
     ],
     "camel": [
       {
-        "src": "/studio-cutouts/product-01-960.webp",
+        "src": "/studio-grounded-v2/product-01-camel-0-960.webp",
         "label": "Studio view"
       },
       {
-        "src": "/studio-colours-v1/product-01-camel-review-front-960.webp",
+        "src": "/studio-grounded-v2/product-01-camel-1-960.webp",
         "label": "Front view"
       }
     ]
@@ -44,19 +44,19 @@
   "product-02": {
     "black": [
       {
-        "src": "/studio-colours-v1/product-02-black-960.webp",
+        "src": "/studio-grounded-v2/product-02-black-0-960.webp",
         "label": "Front view"
       },
       {
-        "src": "/studio-colours-v1/product-02-black-side-960.webp",
+        "src": "/studio-grounded-v2/product-02-black-1-960.webp",
         "label": "Side and texture"
       },
       {
-        "src": "/studio-colours-v1/product-02-black-top-960.webp",
+        "src": "/studio-grounded-v2/product-02-black-2-960.webp",
         "label": "Top and central zip"
       },
       {
-        "src": "/studio-colours-v1/product-02-black-interior-960.webp",
+        "src": "/studio-grounded-v2/product-02-black-3-960.webp",
         "label": "Interior"
       },
       {
@@ -66,25 +66,25 @@
     ],
     "mustard": [
       {
-        "src": "/studio-colours-v1/product-02-mustard-960.webp",
+        "src": "/studio-grounded-v2/product-02-mustard-0-960.webp",
         "label": "Front view"
       }
     ],
     "navy": [
       {
-        "src": "/studio-colours-v1/product-02-navy-960.webp",
+        "src": "/studio-grounded-v2/product-02-navy-0-960.webp",
         "label": "Front view"
       }
     ],
     "beige": [
       {
-        "src": "/studio-colours-v1/product-02-beige-960.webp",
+        "src": "/studio-grounded-v2/product-02-beige-0-960.webp",
         "label": "Front view"
       }
     ],
     "burgundy": [
       {
-        "src": "/studio-colours-v1/product-02-burgundy-960.webp",
+        "src": "/studio-grounded-v2/product-02-burgundy-0-960.webp",
         "label": "Front view"
       }
     ]
@@ -92,23 +92,23 @@
   "product-03": {
     "dark-brown": [
       {
-        "src": "/studio-colours-v1/product-03-dark-brown-960.webp",
+        "src": "/studio-grounded-v2/product-03-dark-brown-0-960.webp",
         "label": "Front view"
       },
       {
-        "src": "/studio-colours-v1/product-03-dark-brown-back-960.webp",
+        "src": "/studio-grounded-v2/product-03-dark-brown-1-960.webp",
         "label": "Back zip pocket"
       },
       {
-        "src": "/studio-colours-v1/product-03-dark-brown-side-960.webp",
+        "src": "/studio-grounded-v2/product-03-dark-brown-2-960.webp",
         "label": "Side and croc texture"
       },
       {
-        "src": "/studio-colours-v1/product-03-dark-brown-top-960.webp",
+        "src": "/studio-grounded-v2/product-03-dark-brown-3-960.webp",
         "label": "Top and central zip"
       },
       {
-        "src": "/studio-colours-v1/product-03-dark-brown-interior-960.webp",
+        "src": "/studio-grounded-v2/product-03-dark-brown-4-960.webp",
         "label": "Interior"
       },
       {
@@ -118,19 +118,19 @@
     ],
     "green": [
       {
-        "src": "/studio-colours-v1/product-03-green-960.webp",
+        "src": "/studio-grounded-v2/product-03-green-0-960.webp",
         "label": "Front view"
       }
     ],
     "tan": [
       {
-        "src": "/studio-colours-v1/product-03-tan-960.webp",
+        "src": "/studio-grounded-v2/product-03-tan-0-960.webp",
         "label": "Front view"
       }
     ],
     "black": [
       {
-        "src": "/studio-colours-v1/product-03-black-960.webp",
+        "src": "/studio-grounded-v2/product-03-black-0-960.webp",
         "label": "Front view"
       }
     ]
@@ -138,29 +138,29 @@
   "product-04": {
     "taupe": [
       {
-        "src": "/studio-colours-v1/product-04-taupe-primary-960.webp",
+        "src": "/studio-grounded-v2/product-04-taupe-0-960.webp",
         "label": "Studio view"
       }
     ],
     "green": [
       {
-        "src": "/studio-colours-v1/product-04-green-primary-960.webp",
+        "src": "/studio-grounded-v2/product-04-green-0-960.webp",
         "label": "Studio view"
       },
       {
-        "src": "/studio-colours-v1/product-04-green-review-front-960.webp",
+        "src": "/studio-grounded-v2/product-04-green-1-960.webp",
         "label": "Front view"
       }
     ],
     "wine": [
       {
-        "src": "/studio-colours-v1/product-04-wine-primary-960.webp",
+        "src": "/studio-grounded-v2/product-04-wine-0-960.webp",
         "label": "Studio view"
       }
     ],
     "black": [
       {
-        "src": "/studio-cutouts/product-04-960.webp",
+        "src": "/studio-grounded-v2/product-04-black-0-960.webp",
         "label": "Studio view"
       }
     ]
@@ -168,33 +168,41 @@
   "product-05": {
     "tan": [
       {
-        "src": "/studio-colours-v1/product-05-tan-960.webp",
+        "src": "/studio-grounded-v2/product-05-tan-complete-set-960.webp",
+        "label": "Complete set"
+      },
+      {
+        "src": "/studio-grounded-v2/product-05-tan-0-960.webp",
         "label": "Front view"
       },
       {
-        "src": "/studio-colours-v1/product-05-tan-wallet-960.webp",
+        "src": "/studio-grounded-v2/product-05-tan-1-960.webp",
         "label": "Matching wallet"
       }
     ],
     "black": [
       {
-        "src": "/studio-colours-v1/product-05-black-960.webp",
+        "src": "/studio-grounded-v2/product-05-black-complete-set-960.webp",
+        "label": "Complete set"
+      },
+      {
+        "src": "/studio-grounded-v2/product-05-black-0-960.webp",
         "label": "Front view"
       },
       {
-        "src": "/studio-colours-v1/product-05-black-wallet-960.webp",
+        "src": "/studio-grounded-v2/product-05-black-1-960.webp",
         "label": "Matching wallet"
       },
       {
-        "src": "/studio-colours-v1/product-05-black-side-960.webp",
+        "src": "/studio-grounded-v2/product-05-black-2-960.webp",
         "label": "Side view"
       },
       {
-        "src": "/studio-colours-v1/product-05-black-top-960.webp",
+        "src": "/studio-grounded-v2/product-05-black-3-960.webp",
         "label": "Top and central zip"
       },
       {
-        "src": "/studio-colours-v1/product-05-black-interior-960.webp",
+        "src": "/studio-grounded-v2/product-05-black-4-960.webp",
         "label": "Interior zip pocket"
       },
       {
@@ -204,31 +212,43 @@
     ],
     "nude": [
       {
-        "src": "/studio-colours-v1/product-05-nude-960.webp",
+        "src": "/studio-grounded-v2/product-05-nude-complete-set-960.webp",
+        "label": "Complete set"
+      },
+      {
+        "src": "/studio-grounded-v2/product-05-nude-0-960.webp",
         "label": "Front view"
       },
       {
-        "src": "/studio-colours-v1/product-05-nude-wallet-960.webp",
+        "src": "/studio-grounded-v2/product-05-nude-1-960.webp",
         "label": "Matching wallet"
       }
     ],
     "dark-brown": [
       {
-        "src": "/studio-colours-v1/product-05-dark-brown-960.webp",
+        "src": "/studio-grounded-v2/product-05-dark-brown-complete-set-960.webp",
+        "label": "Complete set"
+      },
+      {
+        "src": "/studio-grounded-v2/product-05-dark-brown-0-960.webp",
         "label": "Front view"
       },
       {
-        "src": "/studio-colours-v1/product-05-dark-brown-wallet-960.webp",
+        "src": "/studio-grounded-v2/product-05-dark-brown-1-960.webp",
         "label": "Matching wallet"
       }
     ],
     "green": [
       {
-        "src": "/studio-colours-v1/product-05-green-960.webp",
+        "src": "/studio-grounded-v2/product-05-green-complete-set-960.webp",
+        "label": "Complete set"
+      },
+      {
+        "src": "/studio-grounded-v2/product-05-green-0-960.webp",
         "label": "Front view"
       },
       {
-        "src": "/studio-colours-v1/product-05-green-wallet-960.webp",
+        "src": "/studio-grounded-v2/product-05-green-1-960.webp",
         "label": "Matching wallet"
       }
     ]
@@ -236,29 +256,29 @@
   "product-06": {
     "black": [
       {
-        "src": "/studio-colours-v1/product-06-black-960.webp",
+        "src": "/studio-grounded-v2/product-06-black-0-960.webp",
         "label": "Front view"
       }
     ],
     "brown": [
       {
-        "src": "/studio-colours-v1/product-06-brown-960.webp",
+        "src": "/studio-grounded-v2/product-06-brown-0-960.webp",
         "label": "Front view"
       },
       {
-        "src": "/studio-colours-v1/product-06-brown-back-960.webp",
+        "src": "/studio-grounded-v2/product-06-brown-1-960.webp",
         "label": "Back view"
       },
       {
-        "src": "/studio-colours-v1/product-06-brown-side-960.webp",
+        "src": "/studio-grounded-v2/product-06-brown-2-960.webp",
         "label": "Side and compartments"
       },
       {
-        "src": "/studio-colours-v1/product-06-brown-top-960.webp",
+        "src": "/studio-grounded-v2/product-06-brown-3-960.webp",
         "label": "Top view"
       },
       {
-        "src": "/studio-colours-v1/product-06-brown-interior-960.webp",
+        "src": "/studio-grounded-v2/product-06-brown-4-960.webp",
         "label": "Interior divisions"
       },
       {
@@ -268,19 +288,19 @@
     ],
     "tan": [
       {
-        "src": "/studio-colours-v1/product-06-tan-960.webp",
+        "src": "/studio-grounded-v2/product-06-tan-0-960.webp",
         "label": "Front view"
       }
     ],
     "beige-natural": [
       {
-        "src": "/studio-colours-v1/product-06-beige-natural-960.webp",
+        "src": "/studio-grounded-v2/product-06-beige-natural-0-960.webp",
         "label": "Front view"
       }
     ],
     "navy": [
       {
-        "src": "/studio-colours-v1/product-06-navy-960.webp",
+        "src": "/studio-grounded-v2/product-06-navy-0-960.webp",
         "label": "Front view"
       }
     ]
@@ -288,37 +308,37 @@
   "product-07": {
     "blue": [
       {
-        "src": "/studio-colours-v1/product-07-blue-960.webp",
+        "src": "/studio-grounded-v2/product-07-blue-0-960.webp",
         "label": "Front view"
       }
     ],
     "black": [
       {
-        "src": "/studio-colours-v1/product-07-black-960.webp",
+        "src": "/studio-grounded-v2/product-07-black-0-960.webp",
         "label": "Front view"
       }
     ],
     "grey": [
       {
-        "src": "/studio-colours-v1/product-07-grey-960.webp",
+        "src": "/studio-grounded-v2/product-07-grey-0-960.webp",
         "label": "Front view"
       }
     ],
     "beige": [
       {
-        "src": "/studio-colours-v1/product-07-beige-960.webp",
+        "src": "/studio-grounded-v2/product-07-beige-0-960.webp",
         "label": "Front view"
       },
       {
-        "src": "/studio-colours-v1/product-07-beige-side-960.webp",
+        "src": "/studio-grounded-v2/product-07-beige-1-960.webp",
         "label": "Side view"
       },
       {
-        "src": "/studio-colours-v1/product-07-beige-back-960.webp",
+        "src": "/studio-grounded-v2/product-07-beige-2-960.webp",
         "label": "Back view"
       },
       {
-        "src": "/studio-colours-v1/product-07-beige-interior-960.webp",
+        "src": "/studio-grounded-v2/product-07-beige-3-960.webp",
         "label": "Interior"
       }
     ]
@@ -326,99 +346,119 @@
   "product-08": {
     "grey-black": [
       {
-        "src": "/studio-colours-v1/product-08-grey-black-front-960.webp",
+        "src": "/studio-grounded-v2/product-08-grey-black-complete-set-960.webp",
+        "label": "Complete set"
+      },
+      {
+        "src": "/studio-grounded-v2/product-08-grey-black-0-960.webp",
         "label": "Front view"
       },
       {
-        "src": "/studio-colours-v1/product-08-grey-black-960.webp",
+        "src": "/studio-grounded-v2/product-08-grey-black-1-960.webp",
         "label": "Back zip pocket"
       },
       {
-        "src": "/studio-colours-v1/product-08-grey-black-small-bag-960.webp",
+        "src": "/studio-grounded-v2/product-08-grey-black-2-960.webp",
         "label": "Matching smaller bag"
       },
       {
-        "src": "/studio-colours-v1/product-08-black-pouch-960.webp",
+        "src": "/studio-grounded-v2/product-08-grey-black-3-960.webp",
         "label": "Matching rounded pouch"
       }
     ],
     "cream-black": [
       {
-        "src": "/studio-colours-v1/product-08-cream-black-front-960.webp",
+        "src": "/studio-grounded-v2/product-08-cream-black-complete-set-960.webp",
+        "label": "Complete set"
+      },
+      {
+        "src": "/studio-grounded-v2/product-08-cream-black-0-960.webp",
         "label": "Front view"
       },
       {
-        "src": "/studio-colours-v1/product-08-cream-black-960.webp",
+        "src": "/studio-grounded-v2/product-08-cream-black-1-960.webp",
         "label": "Back zip pocket"
       },
       {
-        "src": "/studio-colours-v1/product-08-cream-black-small-bag-960.webp",
+        "src": "/studio-grounded-v2/product-08-cream-black-2-960.webp",
         "label": "Matching smaller bag"
       },
       {
-        "src": "/studio-colours-v1/product-08-black-pouch-960.webp",
+        "src": "/studio-grounded-v2/product-08-cream-black-3-960.webp",
         "label": "Matching rounded pouch"
       }
     ],
     "tan-black": [
       {
-        "src": "/studio-colours-v1/product-08-tan-black-front-960.webp",
+        "src": "/studio-grounded-v2/product-08-tan-black-complete-set-960.webp",
+        "label": "Complete set"
+      },
+      {
+        "src": "/studio-grounded-v2/product-08-tan-black-0-960.webp",
         "label": "Front view"
       },
       {
-        "src": "/studio-colours-v1/product-08-tan-black-960.webp",
+        "src": "/studio-grounded-v2/product-08-tan-black-1-960.webp",
         "label": "Back zip pocket"
       },
       {
-        "src": "/studio-colours-v1/product-08-tan-black-small-bag-960.webp",
+        "src": "/studio-grounded-v2/product-08-tan-black-2-960.webp",
         "label": "Matching smaller bag"
       },
       {
-        "src": "/studio-colours-v1/product-08-black-pouch-960.webp",
+        "src": "/studio-grounded-v2/product-08-tan-black-3-960.webp",
         "label": "Matching rounded pouch"
       }
     ],
     "burgundy-black": [
       {
-        "src": "/studio-colours-v1/product-08-burgundy-black-front-960.webp",
+        "src": "/studio-grounded-v2/product-08-burgundy-black-complete-set-960.webp",
+        "label": "Complete set"
+      },
+      {
+        "src": "/studio-grounded-v2/product-08-burgundy-black-0-960.webp",
         "label": "Front view"
       },
       {
-        "src": "/studio-colours-v1/product-08-burgundy-black-960.webp",
+        "src": "/studio-grounded-v2/product-08-burgundy-black-1-960.webp",
         "label": "Back zip pocket"
       },
       {
-        "src": "/studio-colours-v1/product-08-burgundy-black-small-bag-960.webp",
+        "src": "/studio-grounded-v2/product-08-burgundy-black-2-960.webp",
         "label": "Matching smaller bag"
       },
       {
-        "src": "/studio-colours-v1/product-08-black-pouch-960.webp",
+        "src": "/studio-grounded-v2/product-08-burgundy-black-3-960.webp",
         "label": "Matching rounded pouch"
       }
     ],
     "cream-brown": [
       {
-        "src": "/studio-colours-v1/product-08-cream-brown-front-960.webp",
+        "src": "/studio-grounded-v2/product-08-cream-brown-complete-set-960.webp",
+        "label": "Complete set"
+      },
+      {
+        "src": "/studio-grounded-v2/product-08-cream-brown-0-960.webp",
         "label": "Front view"
       },
       {
-        "src": "/studio-colours-v1/product-08-cream-brown-960.webp",
+        "src": "/studio-grounded-v2/product-08-cream-brown-1-960.webp",
         "label": "Back zip pocket"
       },
       {
-        "src": "/studio-colours-v1/product-08-cream-brown-side-960.webp",
+        "src": "/studio-grounded-v2/product-08-cream-brown-2-960.webp",
         "label": "Side view"
       },
       {
-        "src": "/studio-colours-v1/product-08-cream-brown-interior-960.webp",
+        "src": "/studio-grounded-v2/product-08-cream-brown-3-960.webp",
         "label": "Tote interior"
       },
       {
-        "src": "/studio-colours-v1/product-08-cream-brown-small-bag-960.webp",
+        "src": "/studio-grounded-v2/product-08-cream-brown-4-960.webp",
         "label": "Matching smaller bag"
       },
       {
-        "src": "/studio-colours-v1/product-08-cream-brown-pouch-960.webp",
+        "src": "/studio-grounded-v2/product-08-cream-brown-5-960.webp",
         "label": "Matching rounded pouch"
       },
       {
@@ -430,59 +470,59 @@
   "product-09": {
     "cognac": [
       {
-        "src": "/studio-colours-v1/product-09-cognac-960.webp",
+        "src": "/studio-grounded-v2/product-09-cognac-0-960.webp",
         "label": "Front view"
       }
     ],
     "green": [
       {
-        "src": "/studio-colours-v1/product-09-green-960.webp",
+        "src": "/studio-grounded-v2/product-09-green-0-960.webp",
         "label": "Front view"
       }
     ],
     "burgundy": [
       {
-        "src": "/studio-colours-v1/product-09-burgundy-960.webp",
+        "src": "/studio-grounded-v2/product-09-burgundy-0-960.webp",
         "label": "Front view"
       }
     ],
     "dark-brown": [
       {
-        "src": "/studio-colours-v1/product-09-dark-brown-960.webp",
+        "src": "/studio-grounded-v2/product-09-dark-brown-0-960.webp",
         "label": "Front view"
       }
     ],
     "black": [
       {
-        "src": "/studio-colours-v1/product-09-black-960.webp",
+        "src": "/studio-grounded-v2/product-09-black-0-960.webp",
         "label": "Front view"
       }
     ],
     "navy": [
       {
-        "src": "/studio-colours-v1/product-09-navy-960.webp",
+        "src": "/studio-grounded-v2/product-09-navy-0-960.webp",
         "label": "Front view"
       }
     ],
     "grey": [
       {
-        "src": "/studio-colours-v1/product-09-grey-960.webp",
+        "src": "/studio-grounded-v2/product-09-grey-0-960.webp",
         "label": "Front view"
       },
       {
-        "src": "/studio-colours-v1/product-09-grey-back-960.webp",
+        "src": "/studio-grounded-v2/product-09-grey-1-960.webp",
         "label": "Back view"
       },
       {
-        "src": "/studio-colours-v1/product-09-grey-side-960.webp",
+        "src": "/studio-grounded-v2/product-09-grey-2-960.webp",
         "label": "Side and shoulder strap"
       },
       {
-        "src": "/studio-colours-v1/product-09-grey-top-960.webp",
+        "src": "/studio-grounded-v2/product-09-grey-3-960.webp",
         "label": "Top and central zip"
       },
       {
-        "src": "/studio-colours-v1/product-09-grey-interior-960.webp",
+        "src": "/studio-grounded-v2/product-09-grey-4-960.webp",
         "label": "Interior zip pocket"
       },
       {
@@ -494,31 +534,31 @@
   "product-11": {
     "blush": [
       {
-        "src": "/studio-colours-v1/product-11-blush-primary-960.webp",
+        "src": "/studio-grounded-v2/product-11-blush-0-960.webp",
         "label": "Studio view"
       }
     ],
     "beige": [
       {
-        "src": "/studio-colours-v1/product-11-beige-primary-960.webp",
+        "src": "/studio-grounded-v2/product-11-beige-0-960.webp",
         "label": "Studio view"
       }
     ],
     "black": [
       {
-        "src": "/studio-colours-v1/product-11-black-primary-960.webp",
+        "src": "/studio-grounded-v2/product-11-black-0-960.webp",
         "label": "Studio view"
       }
     ],
     "burgundy": [
       {
-        "src": "/studio-colours-v1/product-11-burgundy-primary-960.webp",
+        "src": "/studio-grounded-v2/product-11-burgundy-0-960.webp",
         "label": "Studio view"
       }
     ],
     "ivory": [
       {
-        "src": "/studio-colours-v1/product-11-ivory-primary-960.webp",
+        "src": "/studio-grounded-v2/product-11-ivory-0-960.webp",
         "label": "Studio view"
       }
     ]
@@ -526,25 +566,25 @@
   "product-13": {
     "ivory": [
       {
-        "src": "/studio-colours-v1/product-13-ivory-studio-960.webp",
+        "src": "/studio-grounded-v2/product-13-ivory-0-960.webp",
         "label": "Studio view"
       }
     ],
     "tan": [
       {
-        "src": "/studio-colours-v1/product-13-tan-studio-960.webp",
+        "src": "/studio-grounded-v2/product-13-tan-0-960.webp",
         "label": "Studio view"
       }
     ],
     "black": [
       {
-        "src": "/studio-colours-v1/product-13-black-studio-960.webp",
+        "src": "/studio-grounded-v2/product-13-black-0-960.webp",
         "label": "Studio view"
       }
     ],
     "dark-brown": [
       {
-        "src": "/studio-colours-v1/product-13-dark-brown-studio-960.webp",
+        "src": "/studio-grounded-v2/product-13-dark-brown-0-960.webp",
         "label": "Studio view"
       }
     ]
@@ -552,54 +592,54 @@
   "product-14": {
     "green": [
       {
-        "src": "/studio-colours-v1/product-14-green-studio-960.webp",
-        "label": "Front view — smooth centre panel"
+        "src": "/studio-grounded-v2/product-14-green-0-960.webp",
+        "label": "Front view \u00e2\u20ac\u201d smooth centre panel"
       },
       {
-        "src": "/studio-colours-v1/product-14-green-back-960.webp",
-        "label": "Back view — full croc texture"
+        "src": "/studio-grounded-v2/product-14-green-1-960.webp",
+        "label": "Back view \u00e2\u20ac\u201d full croc texture"
       }
     ],
     "black": [
       {
-        "src": "/studio-colours-v1/product-14-black-studio-960.webp",
-        "label": "Front view — smooth centre panel"
+        "src": "/studio-grounded-v2/product-14-black-0-960.webp",
+        "label": "Front view \u00e2\u20ac\u201d smooth centre panel"
       },
       {
-        "src": "/studio-colours-v1/product-14-black-back-960.webp",
-        "label": "Back view — full croc texture"
+        "src": "/studio-grounded-v2/product-14-black-1-960.webp",
+        "label": "Back view \u00e2\u20ac\u201d full croc texture"
       },
       {
-        "src": "/studio-colours-v1/product-14-black-side-960.webp",
+        "src": "/studio-grounded-v2/product-14-black-2-960.webp",
         "label": "Side view"
       },
       {
-        "src": "/studio-colours-v1/product-14-black-top-960.webp",
+        "src": "/studio-grounded-v2/product-14-black-3-960.webp",
         "label": "Top and central zip"
       },
       {
-        "src": "/studio-colours-v1/product-14-black-interior-960.webp",
+        "src": "/studio-grounded-v2/product-14-black-4-960.webp",
         "label": "Interior zip pocket"
       }
     ],
     "dark-brown": [
       {
-        "src": "/studio-colours-v1/product-14-dark-brown-studio-960.webp",
-        "label": "Front view — smooth centre panel"
+        "src": "/studio-grounded-v2/product-14-dark-brown-0-960.webp",
+        "label": "Front view \u00e2\u20ac\u201d smooth centre panel"
       },
       {
-        "src": "/studio-colours-v1/product-14-dark-brown-back-960.webp",
-        "label": "Back view — full croc texture"
+        "src": "/studio-grounded-v2/product-14-dark-brown-1-960.webp",
+        "label": "Back view \u00e2\u20ac\u201d full croc texture"
       }
     ],
     "brown": [
       {
-        "src": "/studio-colours-v1/product-14-brown-studio-960.webp",
-        "label": "Front view — smooth centre panel"
+        "src": "/studio-grounded-v2/product-14-brown-0-960.webp",
+        "label": "Front view \u00e2\u20ac\u201d smooth centre panel"
       },
       {
-        "src": "/studio-colours-v1/product-14-brown-back-960.webp",
-        "label": "Back view — full croc texture"
+        "src": "/studio-grounded-v2/product-14-brown-1-960.webp",
+        "label": "Back view \u00e2\u20ac\u201d full croc texture"
       }
     ]
   }

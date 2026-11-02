@@ -1,0 +1,7 @@
+.v-bag-instructions{font-size:13px;line-height:1.7;margin-bottom:22px;color:var(--v-muted)}
+.v-bag-options{display:flex;flex-wrap:wrap;gap:12px;margin:10px 0}
+.v-bag-options select{min-height:44px;max-width:100%;color:inherit;font:inherit}
+.v-bag-row .v-remove{min-height:44px;padding-left:0}
+.v-bag-row img{object-fit:contain}
+.v-bag-summary>.v-button{width:100%;margin:18px 0 10px}
+.v-bag-layout [role=status]{font-size:13px;line-height:1.7;margin:16px 0}

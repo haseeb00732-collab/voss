@@ -3,7 +3,7 @@
     "slug": "square-quilted-tote",
     "colour": "green",
     "position": 0,
-    "white": "/catalogue-white/product-01-green-primary.webp",
+    "white": "/studio-grounded-v2/product-01-green-0-960.webp",
     "label": "Studio view",
     "width": 960,
     "height": 1200
@@ -12,7 +12,7 @@
     "slug": "square-quilted-tote",
     "colour": "black",
     "position": 0,
-    "white": "/catalogue-white/product-01-black-primary.webp",
+    "white": "/studio-grounded-v2/product-01-black-0-960.webp",
     "label": "Studio view",
     "width": 960,
     "height": 1200
@@ -21,7 +21,7 @@
     "slug": "square-quilted-tote",
     "colour": "dark-brown",
     "position": 0,
-    "white": "/catalogue-white/product-01-dark-brown-primary.webp",
+    "white": "/studio-grounded-v2/product-01-dark-brown-0-960.webp",
     "label": "Studio view",
     "width": 960,
     "height": 1200
@@ -30,7 +30,7 @@
     "slug": "square-quilted-tote",
     "colour": "cognac",
     "position": 0,
-    "white": "/catalogue-white/product-01-cognac-primary.webp",
+    "white": "/studio-grounded-v2/product-01-cognac-0-960.webp",
     "label": "Studio view",
     "width": 960,
     "height": 1200
@@ -39,16 +39,7 @@
     "slug": "square-quilted-tote",
     "colour": "burgundy",
     "position": 0,
-    "white": "/catalogue-white/product-01-burgundy-primary.webp",
-    "label": "Studio view",
-    "width": 960,
-    "height": 1200
-  },
-  {
-    "slug": "square-quilted-tote",
-    "colour": "camel",
-    "position": 0,
-    "white": "/catalogue-white/product-01.webp",
+    "white": "/studio-grounded-v2/product-01-burgundy-0-960.webp",
     "label": "Studio view",
     "width": 960,
     "height": 1200
@@ -56,434 +47,65 @@
   {
     "slug": "square-quilted-tote",
     "colour": "camel",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-01-camel-0-960.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "square-quilted-tote",
+    "colour": "camel",
     "position": 1,
-    "white": "/catalogue-white/product-01-camel-review-front.webp",
+    "white": "/studio-grounded-v2/product-01-camel-1-960.webp",
     "label": "Front view",
     "width": 960,
     "height": 1200
   },
   {
-    "slug": "croc-top-handle-bag",
-    "colour": "taupe",
-    "position": 0,
-    "white": "/catalogue-white/product-04-taupe-primary.webp",
-    "label": "Studio view",
-    "width": 960,
-    "height": 1200
-  },
-  {
-    "slug": "croc-top-handle-bag",
-    "colour": "green",
-    "position": 0,
-    "white": "/catalogue-white/product-04-green-primary.webp",
-    "label": "Studio view",
-    "width": 960,
-    "height": 1200
-  },
-  {
-    "slug": "croc-top-handle-bag",
-    "colour": "green",
-    "position": 1,
-    "white": "/catalogue-white/product-04-green-review-front.webp",
-    "label": "Front view",
-    "width": 960,
-    "height": 1200
-  },
-  {
-    "slug": "croc-top-handle-bag",
-    "colour": "wine",
-    "position": 0,
-    "white": "/catalogue-white/product-04-wine-primary.webp",
-    "label": "Studio view",
-    "width": 960,
-    "height": 1200
-  },
-  {
-    "slug": "croc-top-handle-bag",
-    "colour": "black",
-    "position": 0,
-    "white": "/catalogue-white/product-04.webp",
-    "label": "Studio view",
-    "width": 960,
-    "height": 1200
-  },
-  {
-    "slug": "chic",
-    "colour": "blush",
-    "position": 0,
-    "white": "/catalogue-white/product-11-blush-primary.webp",
-    "label": "Studio view",
-    "width": 960,
-    "height": 1200
-  },
-  {
-    "slug": "chic",
+    "slug": "floral-embossed-tote",
     "colour": "beige",
     "position": 0,
-    "white": "/catalogue-white/product-11-beige-primary.webp",
-    "label": "Studio view",
+    "white": "/studio-grounded-v2/product-02-beige-0-960.webp",
+    "label": "Front view",
     "width": 960,
     "height": 1200
-  },
-  {
-    "slug": "chic",
-    "colour": "black",
-    "position": 0,
-    "white": "/catalogue-white/product-11-black-primary.webp",
-    "label": "Studio view",
-    "width": 960,
-    "height": 1200
-  },
-  {
-    "slug": "chic",
-    "colour": "burgundy",
-    "position": 0,
-    "white": "/catalogue-white/product-11-burgundy-primary.webp",
-    "label": "Studio view",
-    "width": 960,
-    "height": 1200
-  },
-  {
-    "slug": "chic",
-    "colour": "ivory",
-    "position": 0,
-    "white": "/catalogue-white/product-11-ivory-primary.webp",
-    "label": "Studio view",
-    "width": 960,
-    "height": 1200
-  },
-  {
-    "slug": "kite-tote",
-    "colour": "ivory",
-    "position": 0,
-    "white": "/catalogue-white/product-13-ivory-studio.webp",
-    "label": "Studio view",
-    "width": 960,
-    "height": 1200
-  },
-  {
-    "slug": "kite-tote",
-    "colour": "tan",
-    "position": 0,
-    "white": "/catalogue-white/product-13-tan-studio.webp",
-    "label": "Studio view",
-    "width": 960,
-    "height": 1200
-  },
-  {
-    "slug": "kite-tote",
-    "colour": "black",
-    "position": 0,
-    "white": "/catalogue-white/product-13-black-studio.webp",
-    "label": "Studio view",
-    "width": 960,
-    "height": 1200
-  },
-  {
-    "slug": "kite-tote",
-    "colour": "dark-brown",
-    "position": 0,
-    "white": "/catalogue-white/product-13-dark-brown-studio.webp",
-    "label": "Studio view",
-    "width": 960,
-    "height": 1200
-  },
-  {
-    "slug": "arc-handle-bag-set",
-    "colour": "blue",
-    "position": 0,
-    "white": "/catalogue-white/product-07-blue.webp",
-    "label": "Front view",
-    "width": 1024,
-    "height": 1536
-  },
-  {
-    "slug": "arc-handle-bag-set",
-    "colour": "black",
-    "position": 0,
-    "white": "/catalogue-white/product-07-black.webp",
-    "label": "Front view",
-    "width": 1024,
-    "height": 1536
-  },
-  {
-    "slug": "arc-handle-bag-set",
-    "colour": "grey",
-    "position": 0,
-    "white": "/catalogue-white/product-07-grey.webp",
-    "label": "Front view",
-    "width": 1024,
-    "height": 1536
-  },
-  {
-    "slug": "arc-handle-bag-set",
-    "colour": "beige",
-    "position": 0,
-    "white": "/catalogue-white/product-07-beige.webp",
-    "label": "Front view",
-    "width": 1024,
-    "height": 1536
-  },
-  {
-    "slug": "arc-handle-bag-set",
-    "colour": "beige",
-    "position": 1,
-    "white": "/catalogue-white/product-07-beige-side.webp",
-    "label": "Side view",
-    "width": 1024,
-    "height": 1536
-  },
-  {
-    "slug": "arc-handle-bag-set",
-    "colour": "beige",
-    "position": 2,
-    "white": "/catalogue-white/product-07-beige-back.webp",
-    "label": "Back view",
-    "width": 941,
-    "height": 1672
-  },
-  {
-    "slug": "arc-handle-bag-set",
-    "colour": "beige",
-    "position": 3,
-    "white": "/catalogue-white/product-07-beige-interior.webp",
-    "label": "Interior",
-    "width": 941,
-    "height": 1672
-  },
-  {
-    "slug": "textured-dome-satchel",
-    "colour": "black",
-    "position": 0,
-    "white": "/catalogue-white/product-06-black.webp",
-    "label": "Front view",
-    "width": 1086,
-    "height": 1448
-  },
-  {
-    "slug": "textured-dome-satchel",
-    "colour": "brown",
-    "position": 0,
-    "white": "/catalogue-white/product-06-brown.webp",
-    "label": "Front view",
-    "width": 1086,
-    "height": 1448
-  },
-  {
-    "slug": "textured-dome-satchel",
-    "colour": "brown",
-    "position": 1,
-    "white": "/catalogue-white/product-06-brown-back.webp",
-    "label": "Back view",
-    "width": 1086,
-    "height": 1448
-  },
-  {
-    "slug": "textured-dome-satchel",
-    "colour": "brown",
-    "position": 2,
-    "white": "/catalogue-white/product-06-brown-side.webp",
-    "label": "Side and compartments",
-    "width": 1086,
-    "height": 1448
-  },
-  {
-    "slug": "textured-dome-satchel",
-    "colour": "brown",
-    "position": 3,
-    "white": "/catalogue-white/product-06-brown-top.webp",
-    "label": "Top view",
-    "width": 1086,
-    "height": 1448
-  },
-  {
-    "slug": "textured-dome-satchel",
-    "colour": "brown",
-    "position": 4,
-    "white": "/catalogue-white/product-06-brown-interior.webp",
-    "label": "Interior divisions",
-    "width": 1086,
-    "height": 1448
-  },
-  {
-    "slug": "textured-dome-satchel",
-    "colour": "brown",
-    "position": 5,
-    "white": "/catalogue-white/product-06-brown-size.webp",
-    "label": "Size guide",
-    "width": 1300,
-    "height": 1440
-  },
-  {
-    "slug": "textured-dome-satchel",
-    "colour": "tan",
-    "position": 0,
-    "white": "/catalogue-white/product-06-tan.webp",
-    "label": "Front view",
-    "width": 1086,
-    "height": 1448
-  },
-  {
-    "slug": "textured-dome-satchel",
-    "colour": "beige-natural",
-    "position": 0,
-    "white": "/catalogue-white/product-06-beige-natural.webp",
-    "label": "Front view",
-    "width": 1086,
-    "height": 1448
-  },
-  {
-    "slug": "textured-dome-satchel",
-    "colour": "navy",
-    "position": 0,
-    "white": "/catalogue-white/product-06-navy.webp",
-    "label": "Front view",
-    "width": 1086,
-    "height": 1448
-  },
-  {
-    "slug": "tassel-tote",
-    "colour": "cognac",
-    "position": 0,
-    "white": "/catalogue-white/product-09-cognac.webp",
-    "label": "Front view",
-    "width": 1143,
-    "height": 1376
-  },
-  {
-    "slug": "tassel-tote",
-    "colour": "green",
-    "position": 0,
-    "white": "/catalogue-white/product-09-green.webp",
-    "label": "Front view",
-    "width": 1143,
-    "height": 1376
-  },
-  {
-    "slug": "tassel-tote",
-    "colour": "burgundy",
-    "position": 0,
-    "white": "/catalogue-white/product-09-burgundy.webp",
-    "label": "Front view",
-    "width": 1143,
-    "height": 1376
-  },
-  {
-    "slug": "tassel-tote",
-    "colour": "dark-brown",
-    "position": 0,
-    "white": "/catalogue-white/product-09-dark-brown.webp",
-    "label": "Front view",
-    "width": 1143,
-    "height": 1376
-  },
-  {
-    "slug": "tassel-tote",
-    "colour": "black",
-    "position": 0,
-    "white": "/catalogue-white/product-09-black.webp",
-    "label": "Front view",
-    "width": 1143,
-    "height": 1376
-  },
-  {
-    "slug": "tassel-tote",
-    "colour": "navy",
-    "position": 0,
-    "white": "/catalogue-white/product-09-navy.webp",
-    "label": "Front view",
-    "width": 1143,
-    "height": 1376
-  },
-  {
-    "slug": "tassel-tote",
-    "colour": "grey",
-    "position": 0,
-    "white": "/catalogue-white/product-09-grey.webp",
-    "label": "Front view",
-    "width": 1143,
-    "height": 1376
-  },
-  {
-    "slug": "tassel-tote",
-    "colour": "grey",
-    "position": 1,
-    "white": "/catalogue-white/product-09-grey-back.webp",
-    "label": "Back view",
-    "width": 1672,
-    "height": 941
-  },
-  {
-    "slug": "tassel-tote",
-    "colour": "grey",
-    "position": 2,
-    "white": "/catalogue-white/product-09-grey-side.webp",
-    "label": "Side and shoulder strap",
-    "width": 941,
-    "height": 1672
-  },
-  {
-    "slug": "tassel-tote",
-    "colour": "grey",
-    "position": 3,
-    "white": "/catalogue-white/product-09-grey-top.webp",
-    "label": "Top and central zip",
-    "width": 1672,
-    "height": 941
-  },
-  {
-    "slug": "tassel-tote",
-    "colour": "grey",
-    "position": 4,
-    "white": "/catalogue-white/product-09-grey-interior.webp",
-    "label": "Interior zip pocket",
-    "width": 941,
-    "height": 1672
-  },
-  {
-    "slug": "tassel-tote",
-    "colour": "grey",
-    "position": 5,
-    "white": "/catalogue-white/product-09-grey-size.webp",
-    "label": "Size guide",
-    "width": 1300,
-    "height": 1440
   },
   {
     "slug": "floral-embossed-tote",
     "colour": "black",
     "position": 0,
-    "white": "/catalogue-white/product-02-black.webp",
+    "white": "/studio-grounded-v2/product-02-black-0-960.webp",
     "label": "Front view",
-    "width": 1305,
-    "height": 1205
+    "width": 960,
+    "height": 1200
   },
   {
     "slug": "floral-embossed-tote",
     "colour": "black",
     "position": 1,
-    "white": "/catalogue-white/product-02-black-side.webp",
+    "white": "/studio-grounded-v2/product-02-black-1-960.webp",
     "label": "Side and texture",
-    "width": 941,
-    "height": 1672
+    "width": 960,
+    "height": 1200
   },
   {
     "slug": "floral-embossed-tote",
     "colour": "black",
     "position": 2,
-    "white": "/catalogue-white/product-02-black-top.webp",
+    "white": "/studio-grounded-v2/product-02-black-2-960.webp",
     "label": "Top and central zip",
-    "width": 1672,
-    "height": 941
+    "width": 960,
+    "height": 1200
   },
   {
     "slug": "floral-embossed-tote",
     "colour": "black",
     "position": 3,
-    "white": "/catalogue-white/product-02-black-interior.webp",
+    "white": "/studio-grounded-v2/product-02-black-3-960.webp",
     "label": "Interior",
-    "width": 1672,
-    "height": 941
+    "width": 960,
+    "height": 1200
   },
   {
     "slug": "floral-embossed-tote",
@@ -496,417 +118,75 @@
   },
   {
     "slug": "floral-embossed-tote",
+    "colour": "burgundy",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-02-burgundy-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "floral-embossed-tote",
     "colour": "mustard",
     "position": 0,
-    "white": "/catalogue-white/product-02-mustard.webp",
+    "white": "/studio-grounded-v2/product-02-mustard-0-960.webp",
     "label": "Front view",
-    "width": 1305,
-    "height": 1206
+    "width": 960,
+    "height": 1200
   },
   {
     "slug": "floral-embossed-tote",
     "colour": "navy",
     "position": 0,
-    "white": "/catalogue-white/product-02-navy.webp",
+    "white": "/studio-grounded-v2/product-02-navy-0-960.webp",
     "label": "Front view",
-    "width": 1306,
-    "height": 1205
-  },
-  {
-    "slug": "floral-embossed-tote",
-    "colour": "beige",
-    "position": 0,
-    "white": "/catalogue-white/product-02-beige.webp",
-    "label": "Front view",
-    "width": 1305,
-    "height": 1205
-  },
-  {
-    "slug": "floral-embossed-tote",
-    "colour": "burgundy",
-    "position": 0,
-    "white": "/catalogue-white/product-02-burgundy.webp",
-    "label": "Front view",
-    "width": 1305,
-    "height": 1205
-  },
-  {
-    "slug": "chevron-quilted-satchel",
-    "colour": "tan",
-    "position": 0,
-    "white": "/catalogue-white/product-05-tan.webp",
-    "label": "Front view",
-    "width": 1199,
-    "height": 1312
-  },
-  {
-    "slug": "chevron-quilted-satchel",
-    "colour": "tan",
-    "position": 1,
-    "white": "/catalogue-white/product-05-tan-wallet.webp",
-    "label": "Matching wallet",
-    "width": 1122,
-    "height": 1402
-  },
-  {
-    "slug": "chevron-quilted-satchel",
-    "colour": "black",
-    "position": 0,
-    "white": "/catalogue-white/product-05-black.webp",
-    "label": "Front view",
-    "width": 1199,
-    "height": 1312
-  },
-  {
-    "slug": "chevron-quilted-satchel",
-    "colour": "black",
-    "position": 1,
-    "white": "/catalogue-white/product-05-black-wallet.webp",
-    "label": "Matching wallet",
-    "width": 1121,
-    "height": 1403
-  },
-  {
-    "slug": "chevron-quilted-satchel",
-    "colour": "black",
-    "position": 2,
-    "white": "/catalogue-white/product-05-black-side.webp",
-    "label": "Side view",
-    "width": 1152,
-    "height": 1365
-  },
-  {
-    "slug": "chevron-quilted-satchel",
-    "colour": "black",
-    "position": 3,
-    "white": "/catalogue-white/product-05-black-top.webp",
-    "label": "Top and central zip",
-    "width": 941,
-    "height": 1672
-  },
-  {
-    "slug": "chevron-quilted-satchel",
-    "colour": "black",
-    "position": 4,
-    "white": "/catalogue-white/product-05-black-interior.webp",
-    "label": "Interior zip pocket",
-    "width": 1672,
-    "height": 941
-  },
-  {
-    "slug": "chevron-quilted-satchel",
-    "colour": "black",
-    "position": 5,
-    "white": "/catalogue-white/product-05-black-size.webp",
-    "label": "Size guide",
-    "width": 1300,
-    "height": 1440
-  },
-  {
-    "slug": "chevron-quilted-satchel",
-    "colour": "nude",
-    "position": 0,
-    "white": "/catalogue-white/product-05-nude.webp",
-    "label": "Front view",
-    "width": 1199,
-    "height": 1312
-  },
-  {
-    "slug": "chevron-quilted-satchel",
-    "colour": "nude",
-    "position": 1,
-    "white": "/catalogue-white/product-05-nude-wallet.webp",
-    "label": "Matching wallet",
-    "width": 1122,
-    "height": 1402
-  },
-  {
-    "slug": "chevron-quilted-satchel",
-    "colour": "dark-brown",
-    "position": 0,
-    "white": "/catalogue-white/product-05-dark-brown.webp",
-    "label": "Front view",
-    "width": 1199,
-    "height": 1312
-  },
-  {
-    "slug": "chevron-quilted-satchel",
-    "colour": "dark-brown",
-    "position": 1,
-    "white": "/catalogue-white/product-05-dark-brown-wallet.webp",
-    "label": "Matching wallet",
-    "width": 1122,
-    "height": 1402
-  },
-  {
-    "slug": "chevron-quilted-satchel",
-    "colour": "green",
-    "position": 0,
-    "white": "/catalogue-white/product-05-green.webp",
-    "label": "Front view",
-    "width": 1199,
-    "height": 1312
-  },
-  {
-    "slug": "chevron-quilted-satchel",
-    "colour": "green",
-    "position": 1,
-    "white": "/catalogue-white/product-05-green-wallet.webp",
-    "label": "Matching wallet",
-    "width": 1122,
-    "height": 1402
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "grey-black",
-    "position": 0,
-    "white": "/catalogue-white/product-08-grey-black-front.webp",
-    "label": "Front view",
-    "width": 1536,
-    "height": 1024
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "grey-black",
-    "position": 1,
-    "white": "/catalogue-white/product-08-grey-black.webp",
-    "label": "Back zip pocket",
-    "width": 1536,
-    "height": 1024
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "grey-black",
-    "position": 2,
-    "white": "/catalogue-white/product-08-grey-black-small-bag.webp",
-    "label": "Matching smaller bag",
-    "width": 1396,
-    "height": 1127
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "grey-black",
-    "position": 3,
-    "white": "/catalogue-white/product-08-black-pouch.webp",
-    "label": "Matching rounded pouch",
-    "width": 1122,
-    "height": 1402
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "cream-black",
-    "position": 0,
-    "white": "/catalogue-white/product-08-cream-black-front.webp",
-    "label": "Front view",
-    "width": 1536,
-    "height": 1024
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "cream-black",
-    "position": 1,
-    "white": "/catalogue-white/product-08-cream-black.webp",
-    "label": "Back zip pocket",
-    "width": 1536,
-    "height": 1024
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "cream-black",
-    "position": 2,
-    "white": "/catalogue-white/product-08-cream-black-small-bag.webp",
-    "label": "Matching smaller bag",
-    "width": 1396,
-    "height": 1127
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "cream-black",
-    "position": 3,
-    "white": "/catalogue-white/product-08-black-pouch.webp",
-    "label": "Matching rounded pouch",
-    "width": 1122,
-    "height": 1402
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "tan-black",
-    "position": 0,
-    "white": "/catalogue-white/product-08-tan-black-front.webp",
-    "label": "Front view",
-    "width": 1536,
-    "height": 1024
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "tan-black",
-    "position": 1,
-    "white": "/catalogue-white/product-08-tan-black.webp",
-    "label": "Back zip pocket",
-    "width": 1536,
-    "height": 1024
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "tan-black",
-    "position": 2,
-    "white": "/catalogue-white/product-08-tan-black-small-bag.webp",
-    "label": "Matching smaller bag",
-    "width": 1396,
-    "height": 1127
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "tan-black",
-    "position": 3,
-    "white": "/catalogue-white/product-08-black-pouch.webp",
-    "label": "Matching rounded pouch",
-    "width": 1122,
-    "height": 1402
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "burgundy-black",
-    "position": 0,
-    "white": "/catalogue-white/product-08-burgundy-black-front.webp",
-    "label": "Front view",
-    "width": 1536,
-    "height": 1024
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "burgundy-black",
-    "position": 1,
-    "white": "/catalogue-white/product-08-burgundy-black.webp",
-    "label": "Back zip pocket",
-    "width": 1536,
-    "height": 1024
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "burgundy-black",
-    "position": 2,
-    "white": "/catalogue-white/product-08-burgundy-black-small-bag.webp",
-    "label": "Matching smaller bag",
-    "width": 1396,
-    "height": 1127
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "burgundy-black",
-    "position": 3,
-    "white": "/catalogue-white/product-08-black-pouch.webp",
-    "label": "Matching rounded pouch",
-    "width": 1122,
-    "height": 1402
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "cream-brown",
-    "position": 0,
-    "white": "/catalogue-white/product-08-cream-brown-front.webp",
-    "label": "Front view",
-    "width": 1536,
-    "height": 1024
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "cream-brown",
-    "position": 1,
-    "white": "/catalogue-white/product-08-cream-brown.webp",
-    "label": "Back zip pocket",
-    "width": 1536,
-    "height": 1024
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "cream-brown",
-    "position": 2,
-    "white": "/catalogue-white/product-08-cream-brown-side.webp",
-    "label": "Side view",
-    "width": 941,
-    "height": 1672
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "cream-brown",
-    "position": 3,
-    "white": "/catalogue-white/product-08-cream-brown-interior.webp",
-    "label": "Tote interior",
-    "width": 1672,
-    "height": 941
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "cream-brown",
-    "position": 4,
-    "white": "/catalogue-white/product-08-cream-brown-small-bag.webp",
-    "label": "Matching smaller bag",
-    "width": 1396,
-    "height": 1127
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "cream-brown",
-    "position": 5,
-    "white": "/catalogue-white/product-08-cream-brown-pouch.webp",
-    "label": "Matching rounded pouch",
-    "width": 1122,
-    "height": 1402
-  },
-  {
-    "slug": "two-tone-bag-set",
-    "colour": "cream-brown",
-    "position": 6,
-    "white": "/catalogue-white/product-08-cream-brown-size.webp",
-    "label": "Size guide",
-    "width": 1300,
-    "height": 1440
+    "width": 960,
+    "height": 1200
   },
   {
     "slug": "croc-panel-tote",
     "colour": "dark-brown",
     "position": 0,
-    "white": "/catalogue-white/product-03-dark-brown.webp",
+    "white": "/studio-grounded-v2/product-03-dark-brown-0-960.webp",
     "label": "Front view",
-    "width": 1086,
-    "height": 1448
+    "width": 960,
+    "height": 1200
   },
   {
     "slug": "croc-panel-tote",
     "colour": "dark-brown",
     "position": 1,
-    "white": "/catalogue-white/product-03-dark-brown-back.webp",
+    "white": "/studio-grounded-v2/product-03-dark-brown-1-960.webp",
     "label": "Back zip pocket",
-    "width": 1129,
-    "height": 1393
+    "width": 960,
+    "height": 1200
   },
   {
     "slug": "croc-panel-tote",
     "colour": "dark-brown",
     "position": 2,
-    "white": "/catalogue-white/product-03-dark-brown-side.webp",
+    "white": "/studio-grounded-v2/product-03-dark-brown-2-960.webp",
     "label": "Side and croc texture",
-    "width": 1086,
-    "height": 1448
+    "width": 960,
+    "height": 1200
   },
   {
     "slug": "croc-panel-tote",
     "colour": "dark-brown",
     "position": 3,
-    "white": "/catalogue-white/product-03-dark-brown-top.webp",
+    "white": "/studio-grounded-v2/product-03-dark-brown-3-960.webp",
     "label": "Top and central zip",
-    "width": 1086,
-    "height": 1448
+    "width": 960,
+    "height": 1200
   },
   {
     "slug": "croc-panel-tote",
     "colour": "dark-brown",
     "position": 4,
-    "white": "/catalogue-white/product-03-dark-brown-interior.webp",
+    "white": "/studio-grounded-v2/product-03-dark-brown-4-960.webp",
     "label": "Interior",
-    "width": 1086,
-    "height": 1448
+    "width": 960,
+    "height": 1200
   },
   {
     "slug": "croc-panel-tote",
@@ -921,7 +201,7 @@
     "slug": "croc-panel-tote",
     "colour": "green",
     "position": 0,
-    "white": "/catalogue-white/product-03-green.webp",
+    "white": "/studio-grounded-v2/product-03-green-0-960.webp",
     "label": "Front view",
     "width": 960,
     "height": 1200
@@ -930,7 +210,7 @@
     "slug": "croc-panel-tote",
     "colour": "tan",
     "position": 0,
-    "white": "/catalogue-white/product-03-tan.webp",
+    "white": "/studio-grounded-v2/product-03-tan-0-960.webp",
     "label": "Front view",
     "width": 960,
     "height": 1200
@@ -939,16 +219,817 @@
     "slug": "croc-panel-tote",
     "colour": "black",
     "position": 0,
-    "white": "/catalogue-white/product-03-black.webp",
+    "white": "/studio-grounded-v2/product-03-black-0-960.webp",
     "label": "Front view",
-    "width": 1086,
-    "height": 1448
+    "width": 960,
+    "height": 1200
   },
   {
-    "slug": "buckle-panel-bag-set",
+    "slug": "croc-top-handle-bag",
+    "colour": "taupe",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-04-taupe-0-960.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "croc-top-handle-bag",
     "colour": "green",
     "position": 0,
-    "white": "/catalogue-white/product-14-green-studio.webp",
+    "white": "/studio-grounded-v2/product-04-green-0-960.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "croc-top-handle-bag",
+    "colour": "green",
+    "position": 1,
+    "white": "/studio-grounded-v2/product-04-green-1-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "croc-top-handle-bag",
+    "colour": "wine",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-04-wine-0-960.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "croc-top-handle-bag",
+    "colour": "black",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-04-black-0-960.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chevron-quilted-satchel",
+    "colour": "tan",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-05-tan-complete-set-960.webp",
+    "label": "Complete set",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chevron-quilted-satchel",
+    "colour": "tan",
+    "position": 1,
+    "white": "/studio-grounded-v2/product-05-tan-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chevron-quilted-satchel",
+    "colour": "tan",
+    "position": 2,
+    "white": "/studio-grounded-v2/product-05-tan-1-960.webp",
+    "label": "Matching wallet",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chevron-quilted-satchel",
+    "colour": "black",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-05-black-complete-set-960.webp",
+    "label": "Complete set",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chevron-quilted-satchel",
+    "colour": "black",
+    "position": 1,
+    "white": "/studio-grounded-v2/product-05-black-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chevron-quilted-satchel",
+    "colour": "black",
+    "position": 2,
+    "white": "/studio-grounded-v2/product-05-black-1-960.webp",
+    "label": "Matching wallet",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chevron-quilted-satchel",
+    "colour": "black",
+    "position": 3,
+    "white": "/studio-grounded-v2/product-05-black-2-960.webp",
+    "label": "Side view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chevron-quilted-satchel",
+    "colour": "black",
+    "position": 4,
+    "white": "/studio-grounded-v2/product-05-black-3-960.webp",
+    "label": "Top and central zip",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chevron-quilted-satchel",
+    "colour": "black",
+    "position": 5,
+    "white": "/studio-grounded-v2/product-05-black-4-960.webp",
+    "label": "Interior zip pocket",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chevron-quilted-satchel",
+    "colour": "black",
+    "position": 6,
+    "white": "/catalogue-white/product-05-black-size.webp",
+    "label": "Size guide",
+    "width": 1300,
+    "height": 1440
+  },
+  {
+    "slug": "chevron-quilted-satchel",
+    "colour": "nude",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-05-nude-complete-set-960.webp",
+    "label": "Complete set",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chevron-quilted-satchel",
+    "colour": "nude",
+    "position": 1,
+    "white": "/studio-grounded-v2/product-05-nude-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chevron-quilted-satchel",
+    "colour": "nude",
+    "position": 2,
+    "white": "/studio-grounded-v2/product-05-nude-1-960.webp",
+    "label": "Matching wallet",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chevron-quilted-satchel",
+    "colour": "dark-brown",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-05-dark-brown-complete-set-960.webp",
+    "label": "Complete set",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chevron-quilted-satchel",
+    "colour": "dark-brown",
+    "position": 1,
+    "white": "/studio-grounded-v2/product-05-dark-brown-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chevron-quilted-satchel",
+    "colour": "dark-brown",
+    "position": 2,
+    "white": "/studio-grounded-v2/product-05-dark-brown-1-960.webp",
+    "label": "Matching wallet",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chevron-quilted-satchel",
+    "colour": "green",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-05-green-complete-set-960.webp",
+    "label": "Complete set",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chevron-quilted-satchel",
+    "colour": "green",
+    "position": 1,
+    "white": "/studio-grounded-v2/product-05-green-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chevron-quilted-satchel",
+    "colour": "green",
+    "position": 2,
+    "white": "/studio-grounded-v2/product-05-green-1-960.webp",
+    "label": "Matching wallet",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "textured-dome-satchel",
+    "colour": "black",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-06-black-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "textured-dome-satchel",
+    "colour": "brown",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-06-brown-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "textured-dome-satchel",
+    "colour": "brown",
+    "position": 1,
+    "white": "/studio-grounded-v2/product-06-brown-1-960.webp",
+    "label": "Back view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "textured-dome-satchel",
+    "colour": "brown",
+    "position": 2,
+    "white": "/studio-grounded-v2/product-06-brown-2-960.webp",
+    "label": "Side and compartments",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "textured-dome-satchel",
+    "colour": "brown",
+    "position": 3,
+    "white": "/studio-grounded-v2/product-06-brown-3-960.webp",
+    "label": "Top view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "textured-dome-satchel",
+    "colour": "brown",
+    "position": 4,
+    "white": "/studio-grounded-v2/product-06-brown-4-960.webp",
+    "label": "Interior divisions",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "textured-dome-satchel",
+    "colour": "brown",
+    "position": 5,
+    "white": "/catalogue-white/product-06-brown-size.webp",
+    "label": "Size guide",
+    "width": 1300,
+    "height": 1440
+  },
+  {
+    "slug": "textured-dome-satchel",
+    "colour": "tan",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-06-tan-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "textured-dome-satchel",
+    "colour": "beige-natural",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-06-beige-natural-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "textured-dome-satchel",
+    "colour": "navy",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-06-navy-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "arc-handle-bag-set",
+    "colour": "blue",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-07-blue-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "arc-handle-bag-set",
+    "colour": "black",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-07-black-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "arc-handle-bag-set",
+    "colour": "grey",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-07-grey-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "arc-handle-bag-set",
+    "colour": "beige",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-07-beige-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "arc-handle-bag-set",
+    "colour": "beige",
+    "position": 1,
+    "white": "/studio-grounded-v2/product-07-beige-1-960.webp",
+    "label": "Side view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "arc-handle-bag-set",
+    "colour": "beige",
+    "position": 2,
+    "white": "/studio-grounded-v2/product-07-beige-2-960.webp",
+    "label": "Back view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "arc-handle-bag-set",
+    "colour": "beige",
+    "position": 3,
+    "white": "/studio-grounded-v2/product-07-beige-3-960.webp",
+    "label": "Interior",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "grey-black",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-08-grey-black-complete-set-960.webp",
+    "label": "Complete set",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "grey-black",
+    "position": 1,
+    "white": "/studio-grounded-v2/product-08-grey-black-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "grey-black",
+    "position": 2,
+    "white": "/studio-grounded-v2/product-08-grey-black-1-960.webp",
+    "label": "Back zip pocket",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "grey-black",
+    "position": 3,
+    "white": "/studio-grounded-v2/product-08-grey-black-2-960.webp",
+    "label": "Matching smaller bag",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "grey-black",
+    "position": 4,
+    "white": "/studio-grounded-v2/product-08-grey-black-3-960.webp",
+    "label": "Matching rounded pouch",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "cream-black",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-08-cream-black-complete-set-960.webp",
+    "label": "Complete set",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "cream-black",
+    "position": 1,
+    "white": "/studio-grounded-v2/product-08-cream-black-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "cream-black",
+    "position": 2,
+    "white": "/studio-grounded-v2/product-08-cream-black-1-960.webp",
+    "label": "Back zip pocket",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "cream-black",
+    "position": 3,
+    "white": "/studio-grounded-v2/product-08-cream-black-2-960.webp",
+    "label": "Matching smaller bag",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "cream-black",
+    "position": 4,
+    "white": "/studio-grounded-v2/product-08-cream-black-3-960.webp",
+    "label": "Matching rounded pouch",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "tan-black",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-08-tan-black-complete-set-960.webp",
+    "label": "Complete set",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "tan-black",
+    "position": 1,
+    "white": "/studio-grounded-v2/product-08-tan-black-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "tan-black",
+    "position": 2,
+    "white": "/studio-grounded-v2/product-08-tan-black-1-960.webp",
+    "label": "Back zip pocket",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "tan-black",
+    "position": 3,
+    "white": "/studio-grounded-v2/product-08-tan-black-2-960.webp",
+    "label": "Matching smaller bag",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "tan-black",
+    "position": 4,
+    "white": "/studio-grounded-v2/product-08-tan-black-3-960.webp",
+    "label": "Matching rounded pouch",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "burgundy-black",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-08-burgundy-black-complete-set-960.webp",
+    "label": "Complete set",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "burgundy-black",
+    "position": 1,
+    "white": "/studio-grounded-v2/product-08-burgundy-black-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "burgundy-black",
+    "position": 2,
+    "white": "/studio-grounded-v2/product-08-burgundy-black-1-960.webp",
+    "label": "Back zip pocket",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "burgundy-black",
+    "position": 3,
+    "white": "/studio-grounded-v2/product-08-burgundy-black-2-960.webp",
+    "label": "Matching smaller bag",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "burgundy-black",
+    "position": 4,
+    "white": "/studio-grounded-v2/product-08-burgundy-black-3-960.webp",
+    "label": "Matching rounded pouch",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "cream-brown",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-08-cream-brown-complete-set-960.webp",
+    "label": "Complete set",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "cream-brown",
+    "position": 1,
+    "white": "/studio-grounded-v2/product-08-cream-brown-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "cream-brown",
+    "position": 2,
+    "white": "/studio-grounded-v2/product-08-cream-brown-1-960.webp",
+    "label": "Back zip pocket",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "cream-brown",
+    "position": 3,
+    "white": "/studio-grounded-v2/product-08-cream-brown-2-960.webp",
+    "label": "Side view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "cream-brown",
+    "position": 4,
+    "white": "/studio-grounded-v2/product-08-cream-brown-3-960.webp",
+    "label": "Tote interior",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "cream-brown",
+    "position": 5,
+    "white": "/studio-grounded-v2/product-08-cream-brown-4-960.webp",
+    "label": "Matching smaller bag",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "cream-brown",
+    "position": 6,
+    "white": "/studio-grounded-v2/product-08-cream-brown-5-960.webp",
+    "label": "Matching rounded pouch",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "two-tone-bag-set",
+    "colour": "cream-brown",
+    "position": 7,
+    "white": "/catalogue-white/product-08-cream-brown-size.webp",
+    "label": "Size guide",
+    "width": 1300,
+    "height": 1440
+  },
+  {
+    "slug": "tassel-tote",
+    "colour": "grey",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-09-grey-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "tassel-tote",
+    "colour": "grey",
+    "position": 1,
+    "white": "/studio-grounded-v2/product-09-grey-1-960.webp",
+    "label": "Back view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "tassel-tote",
+    "colour": "grey",
+    "position": 2,
+    "white": "/studio-grounded-v2/product-09-grey-2-960.webp",
+    "label": "Side and shoulder strap",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "tassel-tote",
+    "colour": "grey",
+    "position": 3,
+    "white": "/studio-grounded-v2/product-09-grey-3-960.webp",
+    "label": "Top and central zip",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "tassel-tote",
+    "colour": "grey",
+    "position": 4,
+    "white": "/studio-grounded-v2/product-09-grey-4-960.webp",
+    "label": "Interior zip pocket",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "tassel-tote",
+    "colour": "grey",
+    "position": 5,
+    "white": "/catalogue-white/product-09-grey-size.webp",
+    "label": "Size guide",
+    "width": 1300,
+    "height": 1440
+  },
+  {
+    "slug": "tassel-tote",
+    "colour": "green",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-09-green-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "tassel-tote",
+    "colour": "cognac",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-09-cognac-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "tassel-tote",
+    "colour": "burgundy",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-09-burgundy-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "tassel-tote",
+    "colour": "dark-brown",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-09-dark-brown-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "tassel-tote",
+    "colour": "black",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-09-black-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "tassel-tote",
+    "colour": "navy",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-09-navy-0-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chic",
+    "colour": "blush",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-11-blush-0-960.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chic",
+    "colour": "beige",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-11-beige-0-960.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chic",
+    "colour": "black",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-11-black-0-960.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chic",
+    "colour": "burgundy",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-11-burgundy-0-960.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "chic",
+    "colour": "ivory",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-11-ivory-0-960.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "kite-tote",
+    "colour": "ivory",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-13-ivory-0-960.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "kite-tote",
+    "colour": "tan",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-13-tan-0-960.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "kite-tote",
+    "colour": "black",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-13-black-0-960.webp",
+    "label": "Studio view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "kite-tote",
+    "colour": "dark-brown",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-13-dark-brown-0-960.webp",
     "label": "Studio view",
     "width": 960,
     "height": 1200
@@ -956,18 +1037,27 @@
   {
     "slug": "buckle-panel-bag-set",
     "colour": "green",
+    "position": 0,
+    "white": "/studio-grounded-v2/product-14-green-0-960.webp",
+    "label": "Front view â€” smooth centre panel",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "buckle-panel-bag-set",
+    "colour": "green",
     "position": 1,
-    "white": "/catalogue-white/product-14-green-back.webp",
-    "label": "Full-croc back view",
-    "width": 1402,
-    "height": 1122
+    "white": "/studio-grounded-v2/product-14-green-1-960.webp",
+    "label": "Back view â€” full croc texture",
+    "width": 960,
+    "height": 1200
   },
   {
     "slug": "buckle-panel-bag-set",
     "colour": "black",
     "position": 0,
-    "white": "/catalogue-white/product-14-black-studio.webp",
-    "label": "Studio view",
+    "white": "/studio-grounded-v2/product-14-black-0-960.webp",
+    "label": "Front view â€” smooth centre panel",
     "width": 960,
     "height": 1200
   },
@@ -975,44 +1065,44 @@
     "slug": "buckle-panel-bag-set",
     "colour": "black",
     "position": 1,
-    "white": "/catalogue-white/product-14-black-back.webp",
-    "label": "Full-croc back view",
-    "width": 1402,
-    "height": 1122
+    "white": "/studio-grounded-v2/product-14-black-1-960.webp",
+    "label": "Back view â€” full croc texture",
+    "width": 960,
+    "height": 1200
   },
   {
     "slug": "buckle-panel-bag-set",
     "colour": "black",
     "position": 2,
-    "white": "/catalogue-white/product-14-black-side.webp",
+    "white": "/studio-grounded-v2/product-14-black-2-960.webp",
     "label": "Side view",
-    "width": 941,
-    "height": 1672
+    "width": 960,
+    "height": 1200
   },
   {
     "slug": "buckle-panel-bag-set",
     "colour": "black",
     "position": 3,
-    "white": "/catalogue-white/product-14-black-top.webp",
+    "white": "/studio-grounded-v2/product-14-black-3-960.webp",
     "label": "Top and central zip",
-    "width": 1168,
-    "height": 1346
+    "width": 960,
+    "height": 1200
   },
   {
     "slug": "buckle-panel-bag-set",
     "colour": "black",
     "position": 4,
-    "white": "/catalogue-white/product-14-black-interior.webp",
+    "white": "/studio-grounded-v2/product-14-black-4-960.webp",
     "label": "Interior zip pocket",
-    "width": 1672,
-    "height": 941
+    "width": 960,
+    "height": 1200
   },
   {
     "slug": "buckle-panel-bag-set",
     "colour": "dark-brown",
     "position": 0,
-    "white": "/catalogue-white/product-14-dark-brown-studio.webp",
-    "label": "Studio view",
+    "white": "/studio-grounded-v2/product-14-dark-brown-0-960.webp",
+    "label": "Front view â€” smooth centre panel",
     "width": 960,
     "height": 1200
   },
@@ -1020,17 +1110,17 @@
     "slug": "buckle-panel-bag-set",
     "colour": "dark-brown",
     "position": 1,
-    "white": "/catalogue-white/product-14-dark-brown-back.webp",
-    "label": "Full-croc back view",
-    "width": 1402,
-    "height": 1122
+    "white": "/studio-grounded-v2/product-14-dark-brown-1-960.webp",
+    "label": "Back view â€” full croc texture",
+    "width": 960,
+    "height": 1200
   },
   {
     "slug": "buckle-panel-bag-set",
     "colour": "brown",
     "position": 0,
-    "white": "/catalogue-white/product-14-brown-studio.webp",
-    "label": "Studio view",
+    "white": "/studio-grounded-v2/product-14-brown-0-960.webp",
+    "label": "Front view â€” smooth centre panel",
     "width": 960,
     "height": 1200
   },
@@ -1038,9 +1128,9 @@
     "slug": "buckle-panel-bag-set",
     "colour": "brown",
     "position": 1,
-    "white": "/catalogue-white/product-14-brown-back.webp",
-    "label": "Full-croc back view",
-    "width": 1402,
-    "height": 1122
+    "white": "/studio-grounded-v2/product-14-brown-1-960.webp",
+    "label": "Back view â€” full croc texture",
+    "width": 960,
+    "height": 1200
   }
 ]

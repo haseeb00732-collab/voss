@@ -2,12 +2,14 @@
 
 import { ArrowIcon } from '@/components/ArrowIcon';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useId, useRef, useState } from 'react';
-import { Piece, coverImage, coverSrcSet, colourwayImage, colourwaySrcSet, priceLabel } from '@/lib/catalogue';
+import { Piece, coverImage, coverSrcSet, colourwayImage, colourwaySrcSet, priceLabel, includedPieces } from '@/lib/catalogue';
 import { useBag } from './StoreShell';
 import { InstagramOrder } from './InstagramOrder';
 
 export function ProductCard({ piece, priority = false }: { piece: Piece; priority?: boolean }) {
+  const router = useRouter();
   const dialog = useRef<HTMLDialogElement>(null);
   const titleId = useId();
   const [open, setOpen] = useState(false);
@@ -57,6 +59,7 @@ export function ProductCard({ piece, priority = false }: { piece: Piece; priorit
       <h3><Link href={`/collection/${piece.slug}`}>{piece.name}</Link></h3>
       <span>{priceLabel(piece.price)}</span>
     </div>
+    {includedPieces(piece) && <p className="v-included-pieces">{includedPieces(piece)}</p>}
     <div className="v-card-colours">
       <span>{piece.colourways.length} colours</span>
       <div className="v-card-swatches" aria-label={`Preview ${piece.name} colours`}>
@@ -82,6 +85,7 @@ export function ProductCard({ piece, priority = false }: { piece: Piece; priorit
           <h2 id={titleId}>{piece.name}</h2>
           <p className="v-quick-price">{priceLabel(piece.price)} <span>PKR</span></p>
           <p>{piece.note}</p>
+          {includedPieces(piece) && <p className="v-included-pieces">{includedPieces(piece)} · Included in the price.</p>}
           <fieldset className="v-colour-picker">
             <legend>Colour <strong>{colour.name}</strong></legend>
             <div>{piece.colourways.map(c => <button key={c.key} title={c.name} aria-label={c.name}
@@ -89,6 +93,11 @@ export function ProductCard({ piece, priority = false }: { piece: Piece; priorit
               <span style={{ backgroundColor: c.hex }} />
             </button>)}</div>
           </fieldset>
+          <button className="v-button" onClick={() => {
+            if (!items.some(i => i.slug === piece.slug && i.colour === colourKey)) save([...items, {slug:piece.slug,colour:colourKey,quantity:1}]);
+            dialog.current?.close();
+            router.push('/checkout');
+          }}>Order now <ArrowIcon direction="up-right" /></button>
           <button className="v-button" onClick={add}>{added ? 'Added to your bag ✓' : 'Add to bag'} <span aria-hidden="true"><ArrowIcon direction="up-right" /></span></button>
           <p className="v-quick-status" role="status">{storageError || (added ? `${colour.name} added. Your selection is saved.` : 'Select your colour. Confirm availability with VOSS.')}</p>
           <InstagramOrder key={colour.key} piece={piece} colour={colour}/>

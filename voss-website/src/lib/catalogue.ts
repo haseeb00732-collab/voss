@@ -24,6 +24,11 @@ export const CATALOGUE: Piece[] = specs.map((s, i) => {
   const dir = `product-${String(mediaNumbers[i]).padStart(2, '0')}`;
   return { slug:s[0], dir, name:s[1], label:`Article ${articleNumber}`, price:s[2], listPrice:null, silhouette:s[3], coverColour:s[4], colourways:s[5].split(',').map((key, n) => ({key, name:key.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(' '), hex:hues[key], image:n + 1})), imageCount:s[5].split(',').length, note:s[6], description:s[7] };
 });
+export const includedPieces = (p: Piece): string | null => ({
+  'chevron-quilted-satchel': '2-piece set · Tote + matching wallet',
+  'two-tone-bag-set': '3-piece set · Tote + smaller zip bag + rounded pouch',
+  'buckle-panel-bag-set': '2-piece set · Handbag + matching wallet',
+}[p.slug] ?? null);
 export type StudioPhoto = { src: string; label: string };
 const assets = media as Record<string, Record<string, StudioPhoto[]>>;
 export const coverImage = (p: Piece) => studioPhotos(p, p.colourways.find(c => c.key === p.coverColour)!)[0].src;

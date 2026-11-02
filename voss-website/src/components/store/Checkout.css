@@ -7,3 +7,7 @@
 @media(prefers-reduced-motion:no-preference){.v-order-received{animation:voss-receipt-in .4s ease-out}.v-checkout-progress [aria-current="step"]{transition:color .2s ease}}
 @keyframes voss-receipt-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @media print{.v-header-space,.v-footer,.v-order-received button,.v-order-received a{display:none!important}.v-order-received{color:#000;background:#fff}}
+.v-checkout-unavailable>.v-button{margin:12px 0;width:100%}
+.v-checkout-lines img{background:transparent}
+.v-checkout-step h2:focus{outline:none}
+.v-checkout-progress button:focus-visible,.v-bag-options select:focus-visible{outline:2px solid #98783d;outline-offset:3px}

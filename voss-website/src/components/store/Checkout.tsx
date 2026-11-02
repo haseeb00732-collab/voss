@@ -27,6 +27,7 @@ const serverReceipt = () => null;
 export function Checkout() {
   const { items, save } = useBag();
   const [config, setConfig] = useState<Config | null>(null);
+  const [configRevision, setConfigRevision] = useState(0);
   const [priced, setPriced] = useState<{ signature: string; quote: Quote } | null>(null);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -43,18 +44,19 @@ export function Checkout() {
   const [step, setStep] = useState<1 | 2>(1);
   const [customer, setCustomer] = useState<Record<string, string>>({});
   const stepHeading = useRef<HTMLHeadingElement>(null);
+  const phoneInput = useRef<HTMLInputElement>(null);
   const attempt = useRef<{ hash: string; key: string } | null>(null);
   const submitting = useRef(false);
   const signature = JSON.stringify(items);
   const quote = priced?.signature === signature ? priced.quote : null;
   const errorBox = useRef<HTMLParagraphElement>(null);
-  useEffect(() => { if (step === 2) { stepHeading.current?.focus(); stepHeading.current?.scrollIntoView({ block: 'start', behavior: 'instant' }); } }, [step]);
+  useEffect(() => { stepHeading.current?.focus(); stepHeading.current?.scrollIntoView({ block: 'start', behavior: 'instant' }); }, [step]);
   useEffect(() => {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(new DOMException('Checkout took too long to load.', 'TimeoutError')), 15000);
     fetch('/api/checkout', { signal: controller.signal, cache: 'no-store' }).then(async r => { if (!r.ok) throw new Error('Could not load checkout.'); return r.json(); }).then(setConfig).catch(e => { if (e.name !== 'AbortError') setConfig({ enabled: false, provinces: [] }); }).finally(() => clearTimeout(timer));
     return () => { clearTimeout(timer); controller.abort(); };
-  }, []);
+  }, [configRevision]);
   useEffect(() => {
     if ((!config?.enabled && !config?.preview) || signature === '[]') return;
     const controller = new AbortController();
@@ -69,7 +71,7 @@ export function Checkout() {
     const form = new FormData(event.currentTarget);
     if (step === 1) {
       const details = Object.fromEntries(['name', 'phone', 'email', 'address', 'city', 'province', 'postcode', 'notes'].map(name => [name, String(form.get(name) ?? '').trim()]));
-      if (!/^03\d{9}$/.test(details.phone.replace(/[\s()-]/g, '').replace(/^\+92|^0092/, '0'))) { setError('Please enter a Pakistani mobile number, like 0300 1234567.'); return; }
+      if (!/^03\d{9}$/.test(details.phone.replace(/[\s()-]/g, '').replace(/^\+92|^0092/, '0'))) { setError('Please enter a Pakistani mobile number, like 0300 1234567.'); phoneInput.current?.focus(); return; }
       setCustomer(details); setStep(2); setError(''); return;
     }
     if (!config?.enabled) return;
@@ -98,12 +100,12 @@ export function Checkout() {
   if (receipt && !items.length) return <section className="v-order-received" aria-live="polite"><span className="v-kicker">Thank you for choosing VOSS</span><h2>Your order is in.</h2><p>Thank you for shopping with VOSS. Save your order reference. We will get in touch if anything needs confirming before dispatch.</p><p>Keep this reference: <strong>{receipt.reference}</strong></p><p>Pay <strong>{priceLabel(receipt.total)}</strong> on delivery. {receipt.freeDelivery ? 'Your delivery is free.' : `Delivery: ${priceLabel(receipt.delivery)}.`}</p><p>Estimated Lahore delivery: {DELIVERY_ESTIMATE}.</p><p>We’ll contact you on the mobile number you provided if we need any details to arrange delivery.</p><Link className="v-text-link" href={whatsappLink("Hello VOSS, please help me with order "+receipt.reference)} target="_blank" rel="noreferrer">Get order help ↗</Link><button className="v-button" type="button" onClick={()=>window.print()}>Print / save receipt</button><Link className="v-button" onClick={()=>{try{sessionStorage.removeItem("voss-last-receipt");}catch{}setReceipt(null);}} href="/collection">Continue shopping <ArrowIcon direction="up-right" /></Link></section>;
   if (!items.length) return <div className="v-empty"><h2>Choose your first bag.</h2><Link className="v-button" href="/collection">Explore the collection <ArrowIcon direction="up-right" /></Link></div>;
   if (!config) return <p role="status">Preparing checkout…</p>;
-  if (!config.enabled && !config.preview) return <div className="v-checkout-unavailable"><h2>Order with VOSS.</h2><p>Checkout is temporarily unavailable. Send your selection on WhatsApp for help with availability and delivery.</p><a className="v-button" href={whatsappLink(bagMessage(items))} target="_blank" rel="noreferrer">Send selection on WhatsApp <ArrowIcon direction="up-right" /></a><p>WhatsApp opens a draft. Tap Send there. This request is not saved as a website order.</p><OrderSummary text={bagMessage(items)} /></div>;
+  if (!config.enabled && !config.preview) return <div className="v-checkout-unavailable"><h2>Order with VOSS.</h2><p>Checkout is temporarily unavailable. Your selection is still here. Try again, or send it to VOSS on WhatsApp.</p><button type="button" className="v-button v-button-outline" onClick={() => { setConfig(null); setConfigRevision(value => value + 1); }}>Try checkout again <ArrowIcon direction="refresh" /></button><a className="v-button" href={whatsappLink(bagMessage(items))} target="_blank" rel="noreferrer">Send selection on WhatsApp <ArrowIcon direction="up-right" /></a><p>WhatsApp opens a draft. Tap Send there. This request is not saved as a website order.</p><OrderSummary text={bagMessage(items)} /></div>;
   return <><nav className="v-checkout-progress" aria-label="Checkout progress"><button type="button" aria-current={step === 1 ? 'step' : undefined} onClick={() => {setStep(1);setError('');}} disabled={busy}><span>01</span> Delivery details</button><span aria-hidden="true"><ArrowIcon direction="right" /></span><span aria-current={step === 2 ? 'step' : undefined}><b>02</b> Review & order</span></nav><form className="v-checkout-layout" onSubmit={submit}>
     <div className="v-checkout-fields">{!config.enabled && <p className="v-checkout-preview" role="status">Local design preview. Orders are disabled until payment, delivery and the production database are configured. Cash on delivery is shown for review.</p>}<div className="v-checkout-step"><span className="v-kicker">Step {step} of 2</span><h2 ref={stepHeading} tabIndex={-1}>{step === 1 ? 'Where shall we send it?' : 'Everything look good?'}</h2></div>
       <fieldset disabled={busy || step !== 1} hidden={step !== 1}><legend className="v-visually-hidden">Contact and delivery address</legend><div className="v-checkout-field-grid">
         <label>Full name<input name="name" autoComplete="name" required minLength={2} maxLength={80} /></label>
-        <label>Mobile number<input name="phone" type="tel" autoComplete="tel" placeholder="0300 1234567" required maxLength={20} /></label>
+        <label>Mobile number<input ref={phoneInput} name="phone" type="tel" autoComplete="tel" placeholder="0300 1234567" required maxLength={20} /></label>
         <label className="v-field-wide">Email <span>(optional)</span><input name="email" type="email" autoComplete="email" maxLength={120} /></label>
         <label className="v-field-wide">Street address<textarea name="address" autoComplete="street-address" placeholder="House, street, area and a nearby landmark" required minLength={10} maxLength={300} rows={2} /></label>
         <label>City<input name="city" autoComplete="address-level2" required value="Lahore" readOnly /><small>We currently deliver within Lahore only.</small></label>
@@ -115,14 +117,14 @@ export function Checkout() {
       <p className="v-checkout-privacy">Your contact and address details are used to process your order, contact you and arrange delivery. Read our <Link href="/privacy" target="_blank">privacy notice</Link> and <Link href="/returns" target="_blank">returns information</Link>.</p>
     </div>
     <aside className="v-checkout-summary"><span className="v-kicker">Your selection</span><Link className="v-checkout-edit" href="/bag">Edit bag <ArrowIcon direction="up-right" /></Link>
-      {!quote ? <p role="status">Checking prices and delivery…</p> : <><div className="v-checkout-lines">{quote.items.map(line => <article key={`${line.slug}-${line.colour}`}><img src={line.image} alt={`${line.name} in ${line.colourName}`} width="88" height="110" /><div><h3>{line.name}</h3><p>{line.colourName} · Qty {line.quantity}</p><strong>{priceLabel(line.unitPrice * line.quantity)}</strong></div></article>)}</div>
+      {!quote ? <p role="status">{error ? 'Your total could not be confirmed yet. Your selection is saved.' : 'Checking prices and delivery…'}</p> : <><div className="v-checkout-lines">{quote.items.map(line => <article key={`${line.slug}-${line.colour}`}><img src={line.image} alt={`${line.name} in ${line.colourName}`} width="88" height="110" /><div><h3>{line.name}</h3><p>{line.colourName} · Qty {line.quantity}</p><strong>{priceLabel(line.unitPrice * line.quantity)}</strong></div></article>)}</div>
       {quote.freeDelivery && <p className="v-checkout-offer">A little welcome from VOSS.<br /><strong>Free delivery on the first 30 website orders in Lahore.</strong><small>Confirmed when your order is placed.</small></p>}
       <dl><div><dt>Subtotal</dt><dd>{priceLabel(quote.subtotal)}</dd></div><div><dt>Delivery</dt><dd>{quote.delivery === 0 ? 'Complimentary' : priceLabel(quote.delivery)}</dd></div><div className="v-checkout-total"><dt>Total <small>PKR</small></dt><dd>{priceLabel(quote.total)}</dd></div></dl>
       {step === 2 && <label className="v-checkout-consent"><input type="checkbox" name="consent" required disabled={busy} /><span>My selection, delivery details and total are correct. I agree to the <Link href="/terms" target="_blank">terms & conditions</Link> and have read the <Link href="/returns" target="_blank">returns information</Link>.</span></label>}</>}
       {error && <><p role="alert" tabIndex={-1} ref={errorBox} className="v-checkout-error">{error}</p>{!quote && <button type="button" className="v-text-link" onClick={() => { setError(''); setRevision(n => n + 1); }}>Check my total again <ArrowIcon direction="refresh" /></button>}</>}
       {error.includes('first 30 free-delivery orders') && <><a className="v-text-link" href={whatsappLink(`${bagMessage(items)}\n\nPlease confirm current delivery availability and the fee for my Lahore address before I place this order.`)} target="_blank" rel="noreferrer">Ask VOSS to confirm delivery on WhatsApp <ArrowIcon direction="up-right" /></a><p className="v-checkout-note">Your request opens as a draft. Nothing is ordered until VOSS confirms the address-based delivery charge and you send the message.</p></>}
       {step === 2 && !config.enabled && <p id="checkout-preview-reason" className="v-checkout-preview" role="status"><strong>Preview only — no order has been placed.</strong><br />Website ordering is not active yet. Your delivery details have not been submitted.</p>}
-      <button className="v-button" aria-busy={busy} aria-describedby={step === 2 && !config.enabled ? 'checkout-preview-reason' : undefined} disabled={busy || !quote || (step === 2 && !config.enabled)} type="submit">{step === 1 ? 'Review my order' : !config.enabled ? 'Ordering not active yet' : busy ? 'Placing your order…' : 'Place order'} <span><ArrowIcon direction="up-right" /></span></button>
+      <button className="v-button" aria-busy={busy} aria-describedby={step === 2 && !config.enabled ? 'checkout-preview-reason' : undefined} disabled={busy || !quote || (step === 2 && !config.enabled)} type="submit">{step === 1 ? 'Review my order' : !config.enabled ? 'Ordering not active yet' : busy ? 'Placing your order…' : `Place order · ${quote ? priceLabel(quote.total) : ''}`} <span><ArrowIcon direction="up-right" /></span></button>
       {step === 2 && !config.enabled && <><a className="v-text-link" href={whatsappLink(`${bagMessage(items)}\n\nDelivery details:\n${customer.name}\n${customer.phone}\n${customer.address}\n${customer.city}, ${customer.province} ${customer.postcode || ''}${customer.notes ? `\nNote: ${customer.notes}` : ''}`)} target="_blank" rel="noreferrer">Send order request on WhatsApp <ArrowIcon direction="up-right" /></a><p className="v-checkout-note">Opens a draft with your selection and delivery details. Tap Send in WhatsApp. VOSS will confirm the request; it is not yet a website order.</p></>}
       <p className="v-checkout-note">Lahore delivery is Rs 150, or free for the first 30 eligible website orders. Your applicable delivery charge is calculated above. {EXCHANGE_SUMMARY} Return shipping normally applies, subject to law. <Link href="/returns" target="_blank">Read Returns & Exchanges</Link>.</p><p className="v-checkout-note">No payment is collected online.</p>
     </aside>
