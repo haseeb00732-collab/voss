@@ -1,3 +1,4 @@
+export const revalidate = 60;
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import { StoreShell } from '@/components/store/StoreShell';

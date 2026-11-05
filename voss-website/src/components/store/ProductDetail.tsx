@@ -1,9 +1,10 @@
 'use client';
 import { ArrowIcon } from '@/components/ArrowIcon';
 import Link from 'next/link';
+import { SalePrice } from './SalePrice';
 import {useState} from 'react';
 import {useRouter} from 'next/navigation';
-import {Piece,studioPhotos,studioPhotoSrcSet,priceLabel,includedPieces} from '@/lib/catalogue';
+import {Piece,studioPhotos,studioPhotoSrcSet,includedPieces} from '@/lib/catalogue';
 import {useBag} from './StoreShell';
 import {InstagramOrder} from './InstagramOrder';
 import {PRODUCT_MEASUREMENTS} from '@/lib/product-measurements';
@@ -37,7 +38,7 @@ export function ProductDetail({piece}: {piece:Piece}) {
     <div className="v-product-info">
       <div className="v-kicker">{piece.label} / {piece.silhouette}</div>
       <h1>{piece.name}</h1>
-      <p className="v-product-price">{priceLabel(piece.price)} <span>PKR</span></p>
+      <p className="v-product-price"><SalePrice piece={piece}/> <span>PKR</span></p>
       <p className="v-product-description">{piece.description}</p>
       {includedPieces(piece) && <p className="v-included-pieces"><strong>What is included</strong><br/>{includedPieces(piece)}. All pieces are included in the displayed price.</p>}
       <section className="v-product-size" aria-label="Bag measurements">

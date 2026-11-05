@@ -1,3 +1,4 @@
+import { SALE_PRICES, saleActive } from './sale';
 import media from './studio-media.json';
 
 export type Colourway = { name: string; hex: string; image: number; key: string; alsoShotAs?: number[] };
@@ -22,7 +23,8 @@ const mediaNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 14] as const;
 export const CATALOGUE: Piece[] = specs.map((s, i) => {
   const articleNumber = String(i + 1).padStart(2, '0');
   const dir = `product-${String(mediaNumbers[i]).padStart(2, '0')}`;
-  return { slug:s[0], dir, name:s[1], label:`Article ${articleNumber}`, price:s[2], listPrice:null, silhouette:s[3], coverColour:s[4], colourways:s[5].split(',').map((key, n) => ({key, name:key.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(' '), hex:hues[key], image:n + 1})), imageCount:s[5].split(',').length, note:s[6], description:s[7] };
+  const coverColour = s[5].split(',').includes('black') ? 'black' : s[0] === 'two-tone-bag-set' ? 'cream-black' : s[4];
+  return { slug:s[0], dir, name:s[1], label:`Article ${articleNumber}`, get price(){ return saleActive() ? SALE_PRICES[s[0]] ?? s[2] : s[2]; }, get listPrice(){ return saleActive() && SALE_PRICES[s[0]] ? s[2] : null; }, silhouette:s[3], coverColour, colourways:s[5].split(',').map((key, n) => ({key, name:key.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(' '), hex:hues[key], image:n + 1})), imageCount:s[5].split(',').length, note:s[6], description:s[7] };
 });
 export const includedPieces = (p: Piece): string | null => ({
   'chevron-quilted-satchel': '2-piece set · Tote + matching wallet',

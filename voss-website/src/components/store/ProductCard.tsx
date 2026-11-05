@@ -2,9 +2,10 @@
 
 import { ArrowIcon } from '@/components/ArrowIcon';
 import Link from 'next/link';
+import { SalePrice } from './SalePrice';
 import { useRouter } from 'next/navigation';
 import { useId, useRef, useState } from 'react';
-import { Piece, coverImage, coverSrcSet, colourwayImage, colourwaySrcSet, priceLabel, includedPieces } from '@/lib/catalogue';
+import { Piece, coverImage, coverSrcSet, colourwayImage, colourwaySrcSet,  includedPieces } from '@/lib/catalogue';
 import { useBag } from './StoreShell';
 import { InstagramOrder } from './InstagramOrder';
 
@@ -57,7 +58,7 @@ export function ProductCard({ piece, priority = false }: { piece: Piece; priorit
     </div>
     <div className="v-card-meta">
       <h3><Link href={`/collection/${piece.slug}`}>{piece.name}</Link></h3>
-      <span>{priceLabel(piece.price)}</span>
+      <span><SalePrice piece={piece}/></span>
     </div>
     {includedPieces(piece) && <p className="v-included-pieces">{includedPieces(piece)}</p>}
     <div className="v-card-colours">
@@ -83,7 +84,7 @@ export function ProductCard({ piece, priority = false }: { piece: Piece; priorit
         <div className="v-quick-info">
           <span className="v-kicker">{piece.label} / A closer look</span>
           <h2 id={titleId}>{piece.name}</h2>
-          <p className="v-quick-price">{priceLabel(piece.price)} <span>PKR</span></p>
+          <p className="v-quick-price"><SalePrice piece={piece}/> <span>PKR</span></p>
           <p>{piece.note}</p>
           {includedPieces(piece) && <p className="v-included-pieces">{includedPieces(piece)} · Included in the price.</p>}
           <fieldset className="v-colour-picker">

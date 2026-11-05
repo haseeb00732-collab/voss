@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { createContext, useContext, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { CATALOGUE, getPiece, priceLabel, coverImage } from '@/lib/catalogue';
 import { igProfile, igDirectMessage, IG_HANDLE } from '@/lib/instagram';
+import { DeliveryOffer } from './DeliveryOffer';
 import { FloatingHeader } from './FloatingHeader';
 import { HeaderSearch } from './HeaderSearch';
 import {whatsappLink} from '@/lib/whatsapp';
@@ -60,7 +61,7 @@ export function StoreShell({children}: {children: React.ReactNode}) {
         <nav className="v-header-categories" aria-label="Shop navigation"><Link href="/collection">Handbags</Link><Link href="/collection?shape=Totes">Totes</Link><Link href="/collection?shape=Top%20handle">Top handle</Link><Link href="/collection?shape=Bag%20sets">Bag sets</Link><Link href="/about" aria-current={pathname==='/about'?'page':undefined}>About VOSS</Link></nav>
         <Link href="/" className="v-wordmark" aria-label="VOSS home">VOSS</Link>
         <div className="v-header-tools"><Link className="v-header-care" href="/help">Client care</Link><HeaderSearch/><a className="v-header-instagram" href={igDirectMessage() ?? igProfile()} target="_blank" rel="noreferrer" aria-label="Order with VOSS on Instagram"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.7" r=".7"/></svg></a><Link href="/bag" className="v-bag-link" aria-label={`Shopping bag, ${items.reduce((n,i)=>n+i.quantity,0)} items`}><svg viewBox="0 0 24 26" fill="none" aria-hidden="true"><path d="M4 8h16l1 16H3L4 8Z M8 9V6a4 4 0 0 1 8 0v3"/></svg><span>{items.reduce((n,i)=>n+i.quantity,0)}</span></Link></div>
-      </FloatingHeader>
+      </FloatingHeader><DeliveryOffer/>
       <dialog ref={menu} className="v-menu" onClick={e=>{if(e.target === e.currentTarget) menu.current?.close();}}>
         <div className="v-menu-inner"><div className="v-menu-top"><span className="v-kicker">The VOSS edit</span><button onClick={()=>menu.current?.close()} aria-label="Close menu">Close ×</button></div>
           <nav aria-label="Main navigation"><Link href="/collection" onClick={()=>menu.current?.close()}>The collection <span>01</span></Link><Link href="/about" onClick={()=>menu.current?.close()}>Our point of view <span>02</span></Link><Link href="/help" onClick={()=>menu.current?.close()}>Here to help <span>03</span></Link><Link href="/bag" onClick={()=>menu.current?.close()}>Your bag <span>04</span></Link></nav>
