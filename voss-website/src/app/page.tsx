@@ -1,3 +1,4 @@
+import { SalePanel } from '@/components/store/SalePanel';
 import { Hero } from '@/components/Hero';
 import { StudioCollection } from '@/components/store/StudioCollection';
 import { ColourCampaign } from '@/components/store/ColourCampaign';
@@ -13,6 +14,7 @@ export default function Home() {
     <Hero />
 
     <div className="v-service-strip"><span>{StyleCountWord} handbag styles</span><i /><span>Prices in PKR</span><i /><span>Cash on Delivery</span></div>
+    <SalePanel />
     <StudioCollection />
     <ColourCampaign />
     <DesertCampaign />

@@ -3,9 +3,9 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-import { saleActive } from '@/lib/sale';
 
-import {DELIVERY_ESTIMATE} from '@/lib/website-copy';
+
+
 
 export function DeliveryOffer() {
 
@@ -25,7 +25,5 @@ export function DeliveryOffer() {
 
   }, []);
 
-  return <aside className="v-promotion-strip" aria-label="Current offers">{saleActive() && <Link href="/collection"><strong>10% OFF 5 SELECTED BAGS</strong><span>Sale prices shown · Ends 16 November</span></Link>}<div><strong>{remaining === null ? 'FREE DELIVERY ON THE FIRST 30 QUALIFYING ORDERS' : remaining > 0 ? 'FREE LAHORE DELIVERY' : 'LAHORE DELIVERY · RS 150'}</strong><span>{remaining !== null && remaining > 0 ? `${remaining} qualifying deliveries remaining · ` : ''}{DELIVERY_ESTIMATE} · Cash on delivery</span></div></aside>;
-
+  return <aside className="v-delivery-announcement" aria-label="Lahore delivery"><span>{remaining === null ? 'Free Lahore delivery on the first 30 qualifying orders.' : remaining > 0 ? 'Free Lahore delivery · First 30 qualifying orders.' : 'Lahore delivery · Rs 150.'}</span><Link href="/shipping">Delivery details ↗</Link></aside>;
 }
-
