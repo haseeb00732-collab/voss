@@ -38,15 +38,15 @@ export function ProductDetail({piece}: {piece:Piece}) {
     <div className="v-product-info">
       <div className="v-kicker">{piece.label} / {piece.silhouette}</div>
       <h1>{piece.name}</h1>
-      <p className="v-product-price"><SalePrice piece={piece}/> <span>PKR</span></p>
+      <p className="v-product-price"><SalePrice piece={piece}/></p>
+      <fieldset className="v-colour-picker"><legend>Colour <strong>{colour.name}</strong></legend><div>{piece.colourways.map(c=><button key={c.key} aria-label={c.name} aria-pressed={colourKey===c.key} title={c.name} onClick={()=>{setColourKey(c.key);setFrame(0);setAdded(false);}}><span style={{backgroundColor:c.hex}}/></button>)}</div></fieldset>
+      <div className="v-buy-actions"><button className="v-button" onClick={() => { if (!items.some(i => i.slug === piece.slug && i.colour === colourKey)) add(); router.push('/checkout'); }}>Order now <span><ArrowIcon direction="up-right" /></span></button><button className="v-text-link" onClick={add}>{added ? 'Add another to bag +' : 'Add to bag +'}</button>{added&&<Link className="v-text-link" href="/bag">View my bag <ArrowIcon direction="up-right" /></Link>}<span role="status">{storageError || (added?`${piece.name} in ${colour.name} is in your bag.`:'Choose your colour. Order in two easy steps.')}</span></div>
       <p className="v-product-description">{piece.description}</p>
       {includedPieces(piece) && <p className="v-included-pieces"><strong>What is included</strong><br/>{includedPieces(piece)}. All pieces are included in the displayed price.</p>}
       <section className="v-product-size" aria-label="Bag measurements">
         <h2>Size & fit</h2>
-        {measurements ? <><dl>{Object.entries(measurements).map(([key,value])=><div key={key}><dt>{key==='handleDrop'?'Handle drop':key[0].toUpperCase()+key.slice(1)}</dt><dd>{value} in</dd></div>)}</dl><p>Main bag measurements, excluding handles. Accessories are measured separately.</p><button className="v-size-guide-link" onClick={showSize}>View dimension image ↗</button></> : <p>Measurements are awaiting confirmation. Contact VOSS for sizing help before ordering.</p>}
+        {measurements ? <><dl>{Object.entries(measurements).map(([key,value])=><div key={key}><dt>{key==='handleDrop'?'Handle drop':key[0].toUpperCase()+key.slice(1)}</dt><dd>{value} in</dd></div>)}</dl><p>Main bag measurements, excluding handles. Accessories are measured separately.</p><button className="v-size-guide-link" onClick={showSize}>View dimension image <ArrowIcon /></button></> : <p>Measurements are awaiting confirmation. Contact VOSS for sizing help before ordering.</p>}
       </section>
-      <fieldset className="v-colour-picker"><legend>Colour <strong>{colour.name}</strong></legend><div>{piece.colourways.map(c=><button key={c.key} aria-label={c.name} aria-pressed={colourKey===c.key} title={c.name} onClick={()=>{setColourKey(c.key);setFrame(0);setAdded(false);}}><span style={{backgroundColor:c.hex}}/></button>)}</div></fieldset>
-      <div className="v-buy-actions"><button className="v-button" onClick={() => { if (!items.some(i => i.slug === piece.slug && i.colour === colourKey)) add(); router.push('/checkout'); }}>Order now <span><ArrowIcon direction="up-right" /></span></button><button className="v-text-link" onClick={add}>{added ? 'Add another to bag +' : 'Add to bag +'}</button>{added&&<Link className="v-text-link" href="/bag">View my bag <ArrowIcon direction="up-right" /></Link>}<span role="status">{storageError || (added?`${piece.name} in ${colour.name} is in your bag.`:'Choose your colour. Order in two easy steps.')}</span></div>
       <PurchaseDetails/>
       <InstagramOrder key={colour.key} piece={piece} colour={colour}/>
       <div className="v-accordions">

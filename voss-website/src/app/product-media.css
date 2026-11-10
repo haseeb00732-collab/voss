@@ -47,3 +47,37 @@ img[src^="/studio-grounded-v2/"]{mix-blend-mode:normal}
 .v-original-desert img{display:block;width:100%;height:auto}.v-promotion-strip{display:flex;justify-content:center;gap:32px;padding:18px 24px;background:#c2a15f;color:#161713;text-align:center}.v-promotion-strip a,.v-promotion-strip>div{display:flex;flex-direction:column;gap:4px}.v-promotion-strip strong{font-size:14px;letter-spacing:.06em}.v-promotion-strip span{font-size:12px}.v-sale-price{display:inline-flex;align-items:center;flex-wrap:wrap;gap:8px}.v-sale-price del{font-size:.75em;opacity:.65}.v-sale-price strong{font-size:10px;padding:4px 6px;background:#c2a15f;color:#161713}@media(max-width:600px){.v-promotion-strip{flex-direction:column;gap:12px;padding:12px}}
 
 .v-delivery-announcement{display:flex;justify-content:center;gap:18px;align-items:center;padding:10px 20px;background:#ece8df;color:#33362f;font-size:12px;line-height:1.5}.v-delivery-announcement a{text-decoration:underline;text-underline-offset:3px;white-space:nowrap}.v-sale-panel{margin:36px auto 0;padding:38px 5%;width:calc(100% - 10%);background:#e9e4d9;color:#252820;display:flex;justify-content:space-between;align-items:center;gap:32px}.v-sale-panel h2{font-size:clamp(28px,3.2vw,48px);font-weight:400;line-height:1.15;margin:12px 0}.v-sale-panel p{font-size:14px;line-height:1.7;margin:0}.v-sale-panel>.v-text-link{white-space:nowrap}.v-sale-price strong{padding:0;background:transparent;color:#784a39;font-weight:500;font-size:10px}.v-sale-price del{font-size:.82em}.v-sale-filter{display:flex;align-items:center;gap:8px;font-size:13px;margin-top:18px}.v-sale-filter input{accent-color:#252820}#sale-results{scroll-margin-top:100px}@media(max-width:600px){.v-delivery-announcement{font-size:11px;gap:10px;padding:9px 12px;flex-wrap:wrap}.v-sale-panel{padding:26px 22px;display:block;margin-top:22px;width:calc(100% - 32px)}.v-sale-panel>.v-text-link{margin-top:22px}.v-sale-panel h2{font-size:30px}.v-sale-panel p{font-size:13px}}
+
+.v-sale-panel { display: block; }
+.v-sale-heading { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.v-sale-featured { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; list-style: none; padding: 0; margin: 22px 0 0; }
+.v-sale-featured a { display: grid; gap: 7px; padding: 8px; color: inherit; text-decoration: none; }
+.v-sale-featured a:hover .v-sale-featured-name { text-decoration: underline; }
+.v-sale-featured img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
+.v-sale-featured-name { font-size: 14px; line-height: 1.3; }
+.v-sale-price strong { display: inline-block; padding: 3px 7px; background: #5e3229; color: #fff9ee; font-size: 11px; font-weight: 600; white-space: nowrap; }
+.v-product-info .v-product-price > .v-sale-price { padding-left: 0; color: var(--v-ink); font-size: 1em; letter-spacing: normal; }
+.v-delivery-announcement a { display: inline-flex; align-items: center; gap: 4px; }
+
+@media (min-width: 761px) and (min-height: 520px) {
+  .v-detail > .v-gallery { position: sticky; top: 86px; }
+  .v-detail .v-main-photo { height: min(68svh, 760px); min-height: 0; }
+  .v-detail .v-gallery-thumbs { flex-wrap: nowrap; overflow-x: auto; }
+  .v-detail .v-gallery-thumbs button { flex-shrink: 0; }
+}
+
+@media (max-width: 760px) {
+  .v-sale-heading { display: block; }
+  .v-sale-heading .v-text-link { margin-top: 14px; }
+  .v-sale-featured { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 8px; }
+  .v-sale-featured a { padding: 4px; }
+  .v-detail .v-main-photo { aspect-ratio: 1; }
+  .v-detail .v-gallery-thumbs { flex-wrap: nowrap; overflow-x: auto; margin-top: 4px; }
+  .v-detail .v-gallery-thumbs button { flex: 0 0 auto; min-width: 44px; min-height: 44px; }
+  .v-detail .v-gallery-thumbs img { height: 48px; }
+  .v-detail .v-product-info { padding-top: 18px; }
+  .v-detail .v-product-info h1 { font-size: clamp(28px, 8vw, 38px); }
+  .v-detail .v-product-info > .v-kicker { margin-bottom: 8px; }
+  .v-detail .v-product-info .v-product-price { margin-top: 10px !important; }
+  .v-detail .v-product-info .v-colour-picker { margin: 16px 0; }
+}
