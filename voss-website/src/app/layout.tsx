@@ -1,6 +1,7 @@
 export const revalidate = 60;
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
+import { MetaPixel } from '@/components/store/MetaPixel';
 import { StoreShell } from '@/components/store/StoreShell';
 import './globals.css';
 import './studio.css';
@@ -18,4 +19,4 @@ export const metadata: Metadata = {
   robots:{index:true,follow:true},
 };
 export const viewport: Viewport={themeColor:'#101010',width:'device-width',initialScale:1};
-export default function RootLayout({children}:{children:React.ReactNode}) {return <html lang="en" data-scroll-behavior="smooth" className={jost.variable}><body><StoreShell>{children}</StoreShell></body></html>;}
+export default function RootLayout({children}:{children:React.ReactNode}) {return <html lang="en" data-scroll-behavior="smooth" className={jost.variable}><body><StoreShell>{children}</StoreShell><MetaPixel /></body></html>;}
