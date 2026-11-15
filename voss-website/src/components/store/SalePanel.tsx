@@ -11,7 +11,7 @@ export function SalePanel() {
     <div className="v-sale-heading">
       <div>
         <span className="v-kicker">The November edit</span>
-        <h2 id="november-edit">Five favourites. 30% off.</h2>
+        <h2 id="november-edit">Five favourites. 10% off.</h2>
         <p>Prices already reduced. Through 16 November.</p>
       </div>
       <Link href="/collection?sale=true#sale-results" className="v-text-link">Shop the sale <ArrowIcon /></Link>
