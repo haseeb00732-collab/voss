@@ -1132,5 +1132,203 @@
     "label": "Back view â€” full croc texture",
     "width": 960,
     "height": 1200
+  },
+  {
+    "slug": "jewel-bow-clutch",
+    "colour": "dark-brown",
+    "position": 0,
+    "white": "/luxury-studio/jewel-bow-clutch-dark-brown-front-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "jewel-bow-clutch",
+    "colour": "dark-brown",
+    "position": 1,
+    "white": "/luxury-studio/jewel-bow-clutch-dark-brown-back-960.webp",
+    "label": "Back view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "jewel-bow-clutch",
+    "colour": "dark-brown",
+    "position": 2,
+    "white": "/luxury-studio/jewel-bow-clutch-dark-brown-side-960.webp",
+    "label": "Side view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "jewel-bow-clutch",
+    "colour": "dark-brown",
+    "position": 3,
+    "white": "/luxury-studio/jewel-bow-clutch-dark-brown-interior-960.webp",
+    "label": "Interior view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "double-buckle-flap-bag",
+    "colour": "charcoal",
+    "position": 0,
+    "white": "/luxury-studio/double-buckle-flap-bag-charcoal-front-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "double-buckle-flap-bag",
+    "colour": "charcoal",
+    "position": 1,
+    "white": "/luxury-studio/double-buckle-flap-bag-charcoal-back-960.webp",
+    "label": "Back view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "double-buckle-flap-bag",
+    "colour": "charcoal",
+    "position": 2,
+    "white": "/luxury-studio/double-buckle-flap-bag-charcoal-side-960.webp",
+    "label": "Side view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "double-buckle-flap-bag",
+    "colour": "charcoal",
+    "position": 3,
+    "white": "/luxury-studio/double-buckle-flap-bag-charcoal-interior-960.webp",
+    "label": "Interior view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "double-buckle-flap-bag",
+    "colour": "brown",
+    "position": 0,
+    "white": "/luxury-studio/double-buckle-flap-bag-brown-front-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "square-stitch-box-bag",
+    "colour": "dark-brown",
+    "position": 0,
+    "white": "/luxury-studio/square-stitch-box-bag-dark-brown-front-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "square-stitch-box-bag",
+    "colour": "dark-brown",
+    "position": 1,
+    "white": "/luxury-studio/square-stitch-box-bag-dark-brown-back-960.webp",
+    "label": "Back view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "square-stitch-box-bag",
+    "colour": "dark-brown",
+    "position": 2,
+    "white": "/luxury-studio/square-stitch-box-bag-dark-brown-side-960.webp",
+    "label": "Side view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "square-stitch-box-bag",
+    "colour": "dark-brown",
+    "position": 3,
+    "white": "/luxury-studio/square-stitch-box-bag-dark-brown-interior-960.webp",
+    "label": "Interior view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "square-stitch-box-bag",
+    "colour": "tan",
+    "position": 0,
+    "white": "/luxury-studio/square-stitch-box-bag-tan-front-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "square-stitch-box-bag",
+    "colour": "black",
+    "position": 0,
+    "white": "/luxury-studio/square-stitch-box-bag-black-front-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "square-stitch-box-bag",
+    "colour": "ivory",
+    "position": 0,
+    "white": "/luxury-studio/square-stitch-box-bag-ivory-front-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "bow-charm-zip-satchel",
+    "colour": "tan",
+    "position": 0,
+    "white": "/luxury-studio/bow-charm-zip-satchel-tan-front-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "bow-charm-zip-satchel",
+    "colour": "tan",
+    "position": 1,
+    "white": "/luxury-studio/bow-charm-zip-satchel-tan-back-960.webp",
+    "label": "Back view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "bow-charm-zip-satchel",
+    "colour": "tan",
+    "position": 2,
+    "white": "/luxury-studio/bow-charm-zip-satchel-tan-side-960.webp",
+    "label": "Side view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "bow-charm-zip-satchel",
+    "colour": "tan",
+    "position": 3,
+    "white": "/luxury-studio/bow-charm-zip-satchel-tan-interior-960.webp",
+    "label": "Interior view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "bow-charm-zip-satchel",
+    "colour": "brown",
+    "position": 0,
+    "white": "/luxury-studio/bow-charm-zip-satchel-brown-front-960.webp",
+    "label": "Front view",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "slug": "bow-charm-zip-satchel",
+    "colour": "brown",
+    "position": 1,
+    "white": "/luxury-studio/bow-charm-zip-satchel-brown-back-960.webp",
+    "label": "Back view",
+    "width": 960,
+    "height": 1200
   }
 ]

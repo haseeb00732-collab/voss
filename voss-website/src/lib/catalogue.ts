@@ -3,7 +3,7 @@ import media from './studio-media.json';
 
 export type Colourway = { name: string; hex: string; image: number; key: string; alsoShotAs?: number[] };
 export type Piece = { slug: string; dir: string; name: string; label: string; imageCount: number; price: number | null; listPrice: number | null; colourways: Colourway[]; detailImages?: number[]; silhouette: string; note: string; description: string; coverColour: string };
-const hues: Record<string, string> = { green:'#344d35', black:'#222222', 'dark-brown':'#48332c', cognac:'#9e5e30', burgundy:'#702f3b', camel:'#b78955', ivory:'#e7e0d0', magenta:'#8a305d', mustard:'#ba9236', 'royal-blue':'#294b95', navy:'#253343', tan:'#a97643', taupe:'#9a8e7d', wine:'#6a3040', nude:'#c5a58f', brown:'#76503a', 'beige-natural':'#c5b798', blue:'#416888', grey:'#98958e', beige:'#c8b18a', blush:'#c99689', 'grey-black':'#8b8b88', 'cream-black':'#e1d4bc', 'tan-black':'#b37847', 'burgundy-black':'#6a2c3b', 'cream-brown':'#dfd0b7' };
+const hues: Record<string, string> = { charcoal:"#464851", green:'#344d35', black:'#222222', 'dark-brown':'#48332c', cognac:'#9e5e30', burgundy:'#702f3b', camel:'#b78955', ivory:'#e7e0d0', magenta:'#8a305d', mustard:'#ba9236', 'royal-blue':'#294b95', navy:'#253343', tan:'#a97643', taupe:'#9a8e7d', wine:'#6a3040', nude:'#c5a58f', brown:'#76503a', 'beige-natural':'#c5b798', blue:'#416888', grey:'#98958e', beige:'#c8b18a', blush:'#c99689', 'grey-black':'#8b8b88', 'cream-black':'#e1d4bc', 'tan-black':'#b37847', 'burgundy-black':'#6a2c3b', 'cream-brown':'#dfd0b7' };
 const specs = [
   ['square-quilted-tote','Square Quilted Tote',3499,'Totes','camel','green,black,dark-brown,cognac,burgundy,camel','A clean grid of quilting, rounded handles and a quietly structured shape.','For days when you want a little structure. Square quilting gives this tote its rhythm, while rounded handles and small metal details keep the silhouette simple.'],
   ['floral-embossed-tote','Floral Embossed Bag',3899,'Top handle','black','beige,black,burgundy,mustard,navy','Floral embossing and curved gold metal handles give this structured bag a distinctive outline.','The floral pattern is embossed into the surface. A straight-sided body, curved gold handles, and a central zipped section define the bag.'],
@@ -17,13 +17,17 @@ const specs = [
   ['chic','Chic',2999,'Shoulder bag','blush','blush,beige,black,burgundy,ivory','A small glossy shoulder bag with a curved zip top, oval plaque and matching removable strap.','A softly tapered shape with rounded corners, fine stitching and gold-tone details. The glossy finish makes each colour distinct. A matching strap is shown with the available colour photographs.'],
   ['kite-tote','Kite Tote',2649,'Totes','ivory','ivory,tan,black,dark-brown','A woven-texture bag with winged sides, smooth trim and a matching long strap.','A distinctive kite-shaped outline brings texture and structure together. Rounded handles and smooth vertical trim frame the woven-look panels. A matching long strap is pictured with each colour.'],
   ['buckle-panel-bag-set','Buckle Panel Bag Set',2799,'Bag sets','green','green,black,dark-brown,brown','A rectangular handbag and matching flap wallet, finished with buckle details.','Croc-textured side panels meet a smooth centre panel on this structured handbag. Rounded handles, gold-tone buckles and a coordinated flap wallet complete the set.'],
+  ['jewel-bow-clutch','Jewel Bow Clutch',2499,'Luxury','dark-brown','dark-brown','A structured evening clutch with croc embossing, a rounded handle and a jewel-centred bow.','A structured evening clutch with croc embossing, a rounded handle and a jewel-centred bow.'],
+  ['double-buckle-flap-bag','Double Buckle Flap Bag',2399,'Luxury','charcoal','charcoal,brown','A compact top-handle bag with a front flap, twin buckles and a zipped interior pocket.','A compact top-handle bag with a front flap, twin buckles and a zipped interior pocket.'],
+  ['square-stitch-box-bag','Square Stitch Box Bag',2899,'Luxury','dark-brown','dark-brown,tan,black,ivory','A structured box bag with square stitching, rounded handles and a central zip compartment.','A structured box bag with square stitching, rounded handles and a central zip compartment.'],
+  ['bow-charm-zip-satchel','Bow Charm Zip Satchel',3099,'Luxury','tan','tan,brown','A rounded satchel with a front zip pocket, a bow charm and a central zipped divider.','A rounded satchel with a front zip pocket, a bow charm and a central zipped divider.'],
 ] as const;
 // Photo directories keep their original IDs; storefront labels follow the current edit.
-const mediaNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 14] as const;
+const mediaNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 14, 15, 16, 17, 18] as const;
 export const CATALOGUE: Piece[] = specs.map((s, i) => {
   const articleNumber = String(i + 1).padStart(2, '0');
   const dir = `product-${String(mediaNumbers[i]).padStart(2, '0')}`;
-  const coverColour = ['dark-brown','black','dark-brown','black','dark-brown','brown','beige','cream-brown','navy','burgundy','dark-brown','dark-brown'][i];
+  const coverColour = ['dark-brown','black','dark-brown','black','dark-brown','brown','beige','cream-brown','navy','burgundy','dark-brown','dark-brown'][i] ?? s[4];
   return { slug:s[0], dir, name:s[1], label:`Article ${articleNumber}`, get price(){ return saleActive() ? SALE_PRICES[s[0]] ?? s[2] : s[2]; }, get listPrice(){ return saleActive() && SALE_PRICES[s[0]] ? s[2] : null; }, silhouette:s[3], coverColour, colourways:s[5].split(',').map((key, n) => ({key, name:key.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(' '), hex:hues[key], image:n + 1})), imageCount:s[5].split(',').length, note:s[6], description:s[7] };
 });
 export const includedPieces = (p: Piece): string | null => ({
@@ -47,7 +51,7 @@ export const legacyImages = (piece?: Piece) => { void piece; return [] as string
 export const LEGACY_COUNTS: Record<string,number> = {};
 export const HUE_TOKENS = hues;
 export const STYLE_COUNT = CATALOGUE.length;
-export const styleCountWord = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen'][STYLE_COUNT] ?? String(STYLE_COUNT);
+export const styleCountWord = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen'][STYLE_COUNT] ?? String(STYLE_COUNT);
 export const StyleCountWord = styleCountWord[0].toUpperCase() + styleCountWord.slice(1);
 export const getPiece = (slug: string) => CATALOGUE.find(p => p.slug === slug);
 export const relatedPieces = (slug: string, count = 3) => CATALOGUE.filter(p => p.slug !== slug).slice(0,count);

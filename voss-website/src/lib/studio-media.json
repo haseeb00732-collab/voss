@@ -593,21 +593,21 @@
     "green": [
       {
         "src": "/studio-grounded-v2/product-14-green-0-960.webp",
-        "label": "Front view \u00e2\u20ac\u201d smooth centre panel"
+        "label": "Front view â€” smooth centre panel"
       },
       {
         "src": "/studio-grounded-v2/product-14-green-1-960.webp",
-        "label": "Back view \u00e2\u20ac\u201d full croc texture"
+        "label": "Back view â€” full croc texture"
       }
     ],
     "black": [
       {
         "src": "/studio-grounded-v2/product-14-black-0-960.webp",
-        "label": "Front view \u00e2\u20ac\u201d smooth centre panel"
+        "label": "Front view â€” smooth centre panel"
       },
       {
         "src": "/studio-grounded-v2/product-14-black-1-960.webp",
-        "label": "Back view \u00e2\u20ac\u201d full croc texture"
+        "label": "Back view â€” full croc texture"
       },
       {
         "src": "/studio-grounded-v2/product-14-black-2-960.webp",
@@ -625,21 +625,135 @@
     "dark-brown": [
       {
         "src": "/studio-grounded-v2/product-14-dark-brown-0-960.webp",
-        "label": "Front view \u00e2\u20ac\u201d smooth centre panel"
+        "label": "Front view â€” smooth centre panel"
       },
       {
         "src": "/studio-grounded-v2/product-14-dark-brown-1-960.webp",
-        "label": "Back view \u00e2\u20ac\u201d full croc texture"
+        "label": "Back view â€” full croc texture"
       }
     ],
     "brown": [
       {
         "src": "/studio-grounded-v2/product-14-brown-0-960.webp",
-        "label": "Front view \u00e2\u20ac\u201d smooth centre panel"
+        "label": "Front view â€” smooth centre panel"
       },
       {
         "src": "/studio-grounded-v2/product-14-brown-1-960.webp",
-        "label": "Back view \u00e2\u20ac\u201d full croc texture"
+        "label": "Back view â€” full croc texture"
+      }
+    ]
+  },
+  "product-15": {
+    "dark-brown": [
+      {
+        "src": "/luxury-studio/jewel-bow-clutch-dark-brown-front-960.webp",
+        "label": "Front view"
+      },
+      {
+        "src": "/luxury-studio/jewel-bow-clutch-dark-brown-back-960.webp",
+        "label": "Back view"
+      },
+      {
+        "src": "/luxury-studio/jewel-bow-clutch-dark-brown-side-960.webp",
+        "label": "Side view"
+      },
+      {
+        "src": "/luxury-studio/jewel-bow-clutch-dark-brown-interior-960.webp",
+        "label": "Interior view"
+      }
+    ]
+  },
+  "product-16": {
+    "charcoal": [
+      {
+        "src": "/luxury-studio/double-buckle-flap-bag-charcoal-front-960.webp",
+        "label": "Front view"
+      },
+      {
+        "src": "/luxury-studio/double-buckle-flap-bag-charcoal-back-960.webp",
+        "label": "Back view"
+      },
+      {
+        "src": "/luxury-studio/double-buckle-flap-bag-charcoal-side-960.webp",
+        "label": "Side view"
+      },
+      {
+        "src": "/luxury-studio/double-buckle-flap-bag-charcoal-interior-960.webp",
+        "label": "Interior view"
+      }
+    ],
+    "brown": [
+      {
+        "src": "/luxury-studio/double-buckle-flap-bag-brown-front-960.webp",
+        "label": "Front view"
+      }
+    ]
+  },
+  "product-17": {
+    "dark-brown": [
+      {
+        "src": "/luxury-studio/square-stitch-box-bag-dark-brown-front-960.webp",
+        "label": "Front view"
+      },
+      {
+        "src": "/luxury-studio/square-stitch-box-bag-dark-brown-back-960.webp",
+        "label": "Back view"
+      },
+      {
+        "src": "/luxury-studio/square-stitch-box-bag-dark-brown-side-960.webp",
+        "label": "Side view"
+      },
+      {
+        "src": "/luxury-studio/square-stitch-box-bag-dark-brown-interior-960.webp",
+        "label": "Interior view"
+      }
+    ],
+    "tan": [
+      {
+        "src": "/luxury-studio/square-stitch-box-bag-tan-front-960.webp",
+        "label": "Front view"
+      }
+    ],
+    "black": [
+      {
+        "src": "/luxury-studio/square-stitch-box-bag-black-front-960.webp",
+        "label": "Front view"
+      }
+    ],
+    "ivory": [
+      {
+        "src": "/luxury-studio/square-stitch-box-bag-ivory-front-960.webp",
+        "label": "Front view"
+      }
+    ]
+  },
+  "product-18": {
+    "tan": [
+      {
+        "src": "/luxury-studio/bow-charm-zip-satchel-tan-front-960.webp",
+        "label": "Front view"
+      },
+      {
+        "src": "/luxury-studio/bow-charm-zip-satchel-tan-back-960.webp",
+        "label": "Back view"
+      },
+      {
+        "src": "/luxury-studio/bow-charm-zip-satchel-tan-side-960.webp",
+        "label": "Side view"
+      },
+      {
+        "src": "/luxury-studio/bow-charm-zip-satchel-tan-interior-960.webp",
+        "label": "Interior view"
+      }
+    ],
+    "brown": [
+      {
+        "src": "/luxury-studio/bow-charm-zip-satchel-brown-front-960.webp",
+        "label": "Front view"
+      },
+      {
+        "src": "/luxury-studio/bow-charm-zip-satchel-brown-back-960.webp",
+        "label": "Back view"
       }
     ]
   }
