@@ -666,20 +666,12 @@
   "product-16": {
     "charcoal": [
       {
-        "src": "/luxury-studio/double-buckle-flap-bag-charcoal-front-960.webp",
-        "label": "Front view"
+        "src": "/luxury-studio/double-buckle-flap-bag-dark-blue-front-v2-960.webp",
+        "label": "Front view with strap"
       },
       {
-        "src": "/luxury-studio/double-buckle-flap-bag-charcoal-back-960.webp",
-        "label": "Back view"
-      },
-      {
-        "src": "/luxury-studio/double-buckle-flap-bag-charcoal-side-960.webp",
-        "label": "Side view"
-      },
-      {
-        "src": "/luxury-studio/double-buckle-flap-bag-charcoal-interior-960.webp",
-        "label": "Interior view"
+        "src": "/luxury-studio/double-buckle-flap-bag-dark-blue-interior-v2-960.webp",
+        "label": "Interior reference photo"
       }
     ],
     "brown": [
@@ -687,20 +679,32 @@
         "src": "/luxury-studio/double-buckle-flap-bag-brown-front-960.webp",
         "label": "Front view"
       }
+    ],
+    "black": [
+      {
+        "src": "/luxury-studio/double-buckle-flap-bag-black-front-v2-960.webp",
+        "label": "Black reference photo"
+      }
+    ],
+    "white": [
+      {
+        "src": "/luxury-studio/double-buckle-flap-bag-white-front-v2-960.webp",
+        "label": "White reference photo"
+      }
     ]
   },
   "product-17": {
     "dark-brown": [
       {
-        "src": "/luxury-studio/square-stitch-box-bag-dark-brown-front-960.webp",
+        "src": "/luxury-studio/square-stitch-box-bag-dark-brown-bamboo-front-960.webp",
         "label": "Front view"
       },
       {
-        "src": "/luxury-studio/square-stitch-box-bag-dark-brown-back-960.webp",
+        "src": "/luxury-studio/square-stitch-box-bag-dark-brown-bamboo-back-960.webp",
         "label": "Back view"
       },
       {
-        "src": "/luxury-studio/square-stitch-box-bag-dark-brown-side-960.webp",
+        "src": "/luxury-studio/square-stitch-box-bag-dark-brown-bamboo-side-960.webp",
         "label": "Side view"
       },
       {
@@ -710,19 +714,19 @@
     ],
     "tan": [
       {
-        "src": "/luxury-studio/square-stitch-box-bag-tan-front-960.webp",
+        "src": "/luxury-studio/square-stitch-box-bag-tan-bamboo-front-960.webp",
         "label": "Front view"
       }
     ],
     "black": [
       {
-        "src": "/luxury-studio/square-stitch-box-bag-black-front-960.webp",
+        "src": "/luxury-studio/square-stitch-box-bag-black-bamboo-front-960.webp",
         "label": "Front view"
       }
     ],
     "ivory": [
       {
-        "src": "/luxury-studio/square-stitch-box-bag-ivory-front-960.webp",
+        "src": "/luxury-studio/square-stitch-box-bag-ivory-bamboo-front-960.webp",
         "label": "Front view"
       }
     ]
@@ -750,9 +754,15 @@
       {
         "src": "/luxury-studio/bow-charm-zip-satchel-brown-front-960.webp",
         "label": "Front view"
+      }
+    ],
+    "navy": [
+      {
+        "src": "/luxury-studio/bow-charm-zip-satchel-navy-front-v2-960.webp",
+        "label": "Front view"
       },
       {
-        "src": "/luxury-studio/bow-charm-zip-satchel-brown-back-960.webp",
+        "src": "/luxury-studio/bow-charm-zip-satchel-navy-back-v2-960.webp",
         "label": "Back view"
       }
     ]
