@@ -670,8 +670,8 @@
         "label": "Front view with strap"
       },
       {
-        "src": "/luxury-studio/double-buckle-flap-bag-dark-blue-interior-v2-960.webp",
-        "label": "Interior reference photo"
+        "src": "/luxury-studio/double-buckle-flap-bag-dark-blue-interior-studio-v3-960.webp",
+        "label": "Interior view"
       }
     ],
     "brown": [
@@ -682,14 +682,14 @@
     ],
     "black": [
       {
-        "src": "/luxury-studio/double-buckle-flap-bag-black-front-v2-960.webp",
-        "label": "Black reference photo"
+        "src": "/luxury-studio/double-buckle-flap-bag-black-front-studio-v3-960.webp",
+        "label": "Front view"
       }
     ],
     "white": [
       {
-        "src": "/luxury-studio/double-buckle-flap-bag-white-front-v2-960.webp",
-        "label": "White reference photo"
+        "src": "/luxury-studio/double-buckle-flap-bag-white-front-studio-v3-960.webp",
+        "label": "Front view"
       }
     ]
   },

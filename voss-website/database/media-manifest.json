@@ -1227,8 +1227,8 @@
     "slug": "double-buckle-flap-bag",
     "colour": "charcoal",
     "position": 1,
-    "white": "/luxury-studio/double-buckle-flap-bag-dark-blue-interior-v2-960.webp",
-    "label": "Interior reference photo",
+    "white": "/luxury-studio/double-buckle-flap-bag-dark-blue-interior-studio-v3-960.webp",
+    "label": "Interior view",
     "width": 960,
     "height": 1200
   },
@@ -1236,8 +1236,8 @@
     "slug": "double-buckle-flap-bag",
     "colour": "black",
     "position": 0,
-    "white": "/luxury-studio/double-buckle-flap-bag-black-front-v2-960.webp",
-    "label": "Black reference photo",
+    "white": "/luxury-studio/double-buckle-flap-bag-black-front-studio-v3-960.webp",
+    "label": "Front view",
     "width": 960,
     "height": 1200
   },
@@ -1245,8 +1245,8 @@
     "slug": "double-buckle-flap-bag",
     "colour": "white",
     "position": 0,
-    "white": "/luxury-studio/double-buckle-flap-bag-white-front-v2-960.webp",
-    "label": "White reference photo",
+    "white": "/luxury-studio/double-buckle-flap-bag-white-front-studio-v3-960.webp",
+    "label": "Front view",
     "width": 960,
     "height": 1200
   },
